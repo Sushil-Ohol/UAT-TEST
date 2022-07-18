@@ -1,46 +1,102 @@
-# Getting Started with Create React App
+# ConstructivIQ - Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Reach.js
 
-## Available Scripts
+# Table of contents:
 
-In the project directory, you can run:
+- [Pre-reqs](#pre-reqs)
+- [Getting started](#getting-started)
+- [TypeScript + React JS](#typescript--node)
+  - [Getting TypeScript](#getting-typescript)
+  - [Project Structure](#project-structure)
+- [Dependencies](#dependencies)
+  - [`dependencies`](#dependencies)
+  - [`devDependencies`](#devdependencies)
 
-### `npm start`
+# Pre-reqs
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To build and run this app locally you will need a few things:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Install [Node.js](https://nodejs.org/en/)
+- Install [VS Code](https://code.visualstudio.com/)
+- If you don't have an `.env` file yet, create a copy of `.env.example` and rename it to `.env` and follow the comments from file to update the values in that file.
 
-### `npm test`
+# Getting started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Clone the repository
 
-### `npm run build`
+```
+git clone --depth=1 https://github.com/ConstructivIQ/client.git
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Install dependencies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+cd <project_name>
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Build and run the project
 
-### `npm run eject`
+```
+npm run build
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Finally, navigate to `http://localhost:3000` and you should see the template being served and rendered locally!
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The most obvious difference in a TypeScript + Node project is the folder structure.
+In a TypeScript project, it's best to have separate _source_ and _distributable_ files.
+TypeScript (`.ts`) files live in your `src` folder and after compilation are output as JavaScript (`.js`) in the `dist` folder.
+The `test` and `views` folders remain top level as expected.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The full folder structure of this app is explained below:
 
-## Learn More
+> **Note!** Make sure you have already built the app using `npm run build`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Name              | Description                                                                                                |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| **.vscode**       | Contains VS Code specific settings                                                                         |
+| **.github**       | Contains GitHub settings and configurations, including the GitHub Actions workflows                        |
+| **dist**          | Contains the distributable (or output) from your TypeScript build. This is the code you ship               |
+| **node_modules**  | Contains all your npm dependencies                                                                         |
+| **src**           | Contains your source code that will be compiled to the dist requests                                       |
+| **src/models**    | Response Type                                                                                              |
+| **src/services**  | Axios package used to interact with server                                                                 |
+| **src/index.tsx** | Center point of the application                                                                            |
+| **src/index.css** | Common css                                                                                                 |
+| **src/App.tsx**   | App component                                                                                              |
+| **src/App.css**   | Component level styles                                                                                     |
+|                   |
+| package.json      | File that contains npm dependencies as well as [build scripts](#what-if-a-library-isnt-on-definitelytyped) |
+| tsconfig.json     | Config settings for compiling server code written in TypeScript                                            |
+| .eslintrc         | Config settings for ESLint code style checking                                                             |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Dependencies
+
+Dependencies are managed through `package.json`.
+In that file you'll find two sections:
+
+## `dependencies`
+
+| Package            | Description                                                                   |
+| ------------------ | ----------------------------------------------------------------------------- |
+| bootstrap          | Current version of the bootstrap file.                                        |
+| react              | Current version of react.                                                     |
+| react-router-dom   | Current version of react-router-dom.                                          |
+| axios              | Package used to interact with http call.(https://www.npmjs.com/package/axios) |
+| axios-auth-refresh | Used to intercept request and tokens.                                         |
+
+## `devDependencies`
+
+| Package | Description                                                         |
+| ------- | ------------------------------------------------------------------- |
+| @types  | Dependencies in this folder are `.d.ts` files used to provide types |
+
+To install or update these dependencies you can use `npm install` or `npm update`.
+
+## License
+
+Copyright (c) ConstructiveIQ. All rights reserved.
