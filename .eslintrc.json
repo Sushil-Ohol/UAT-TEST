@@ -21,11 +21,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
     "quotes": [
       "error",
@@ -41,18 +37,10 @@
         "avoidEscape": true
       }
     ],
-    "react/jsx-uses-react": [
-      "off"
-    ],
-    "react/react-in-jsx-scope": [
-      "off"
-    ],
-    "react/jsx-props-no-spreading": [
-      "warn"
-    ],
+    "react/jsx-uses-react": ["off"],
+    "react/react-in-jsx-scope": ["off"],
+    "react/jsx-props-no-spreading": ["warn"],
     "no-shadow": "off",
-    "no-unused-vars": [
-      "error"
-    ]
+    "no-unused-vars": ["error"]
   }
 }
