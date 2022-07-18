@@ -29,6 +29,54 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### 'dev.yml'
+Events
+1> TRIGGERS :-
+PULL AND PUSH_REQUEST to dev branch.
+In future, we can include Production, Staging, Development.
+
+The dev.yml consist of two JOBS.
+1>BUILD 
+2>DEPLOY
+
+### BUILD JOB:
+1> BUILD/SELECT MACHINE/PLATFORM 
+    The machine is ubuntu-latest
+
+2> CHECKOUT :
+    Checkout code.
+
+3> INSTALL NODE_JS :
+      node-version: 13.x
+
+4> INSTALL NPM PACKAGES :
+      npm install
+
+5> CONTINUOUS INTEGRAGTION :
+      npm ci
+
+6> BUILD : Build project
+      npm run build
+
+7> TEST : Run tests
+   npm run test.
+   
+8> UPLOAD THE ARTIFACT : Upload production-ready build files
+      name: production-files
+      path: ./build
+      
+ ### DEPLOY JOB
+ 
+ 1> After the successful completion of JOB BUILD this job will be triggered.
+ 
+ 2> Download artifact
+     name: production-files
+     path: ./build
+  
+ 3> Deploy to gh-pages
+     uses: peaceiris/actions-gh-pages@v3
+     publish_dir: ./build
+
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
