@@ -3,11 +3,10 @@ name: Build & deploy
 on:
   push:
     branches:
-      - feature/SushilO/githubWorkflow
+      - dev
   pull_request:
     branches:
-      - feature/SushilO/githubWorkflow
-
+      - dev
 jobs:
   build:
     name: Build
@@ -44,7 +43,7 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/feature/SushilO/githubWorkflow'
+    if: github.ref == 'refs/heads/dev'
     
     steps:
     - name: Download artifact
