@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+/* This file helps to interact with server with interceptors */
 import axios, { AxiosError } from "axios";
 import { AxiosAuthRefreshRequestConfig } from "axios-auth-refresh";
 import { SuccessResult, ErrorResult } from "models/base";

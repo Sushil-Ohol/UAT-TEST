@@ -1,3 +1,4 @@
+/* This file helps to interact with response type */
 export type ServerError = {
   status?: number;
   errors: string;
