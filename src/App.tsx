@@ -1,5 +1,5 @@
 function App() {
-  return <div className="App">Constructive IQ</div>;
+  return <div className="App">ConstructivIQ</div>;
 }
 
 export default App;

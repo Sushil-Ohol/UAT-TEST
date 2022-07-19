@@ -17,7 +17,7 @@ function FileUpload(props: FileUploadProps) {
   const [message, setMessage] = useState("");
   const { title, extensions } = props;
 
-  // Once the file is selected from 'Exploreer UI'
+  // Once the file is selected from 'File Selection UI'
   const upload = () => {
     if (selectedFiles) {
       const selectedFile = selectedFiles[0];
