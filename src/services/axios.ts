@@ -90,35 +90,37 @@ const request = async <T>(
         }
       };
     }
-    if (error) {
-      if (error.response) {
-        const axiosError = error as any; // AxiosError<ServerError>
-        if (axiosError.response?.data) {
-          let errorMessage = axiosError.response.data.errors;
-          // message.error(errorMessage);
-          // check for 500 to handle message defined by the app
-          if (axiosError.response.status === 500) {
-            errorMessage = "Internal Server Error!";
-          } else if (axiosError.response.status === 401) {
-            errorMessage = "Login Expired!";
-          } else {
-            errorMessage = error.response.data.Error;
-          }
-          return {
-            remote: "failure",
-            error: {
-              status: axiosError.response.status,
-              errors: errorMessage
-            }
-          };
+
+    if (error && error.response) {
+      const axiosError = error as any; // AxiosError<ServerError>
+      if (axiosError.response?.data) {
+        let errorMessage = axiosError.response.data.errors;
+        // message.error(errorMessage);
+        // check for 500 to handle message defined by the app
+        if (axiosError.response.status === 500) {
+          errorMessage = "Internal Server Error!";
+        } else if (axiosError.response.status === 401) {
+          errorMessage = "Login Expired!";
+        } else {
+          errorMessage = error.response.data.Error;
         }
         return {
           remote: "failure",
           error: {
-            errors: error.response.data.message
+            status: axiosError.response.status,
+            errors: errorMessage
           }
         };
       }
+      return {
+        remote: "failure",
+        error: {
+          errors: error.response.data.message
+        }
+      };
+    }
+
+    if (error) {
       const axiosError = error as AxiosError;
       let errorMessage = axiosError.message;
       // message.error(errorMessage);
