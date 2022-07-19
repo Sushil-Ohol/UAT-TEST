@@ -17,6 +17,7 @@ function FileUpload(props: FileUploadProps) {
   const [message, setMessage] = useState("");
   const { title, extensions } = props;
 
+  // Once the file is selected from 'Exploreer UI'
   const upload = () => {
     if (selectedFiles) {
       const selectedFile = selectedFiles[0];
@@ -25,6 +26,7 @@ function FileUpload(props: FileUploadProps) {
     }
   };
 
+  // Once the file is dragged-dropped into the control
   const onDrop = (files: any) => {
     setMessage("");
     setSelectedFiles(undefined);
