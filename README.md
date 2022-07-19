@@ -88,7 +88,7 @@ In that file you'll find two sections:
 | react-router-dom   | Current version of react-router-dom.                                          |
 | axios              | Package used to interact with http call.(https://www.npmjs.com/package/axios) |
 | axios-auth-refresh | Used to intercept request and tokens.                                         |
-
+| react-dropzone | React hook to create a HTML5-compliant drag'n'drop zone for files.(https://react-dropzone.js.org/).                                         |
 ## `devDependencies`
 
 | Package | Description                                                         |
