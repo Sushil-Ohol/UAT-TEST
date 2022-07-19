@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable react/button-has-type */
 /* Project Details Page */
 function ProjectDetails() {
   return (
