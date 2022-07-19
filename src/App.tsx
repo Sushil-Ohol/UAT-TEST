@@ -5,11 +5,13 @@ import {
   ProjectCreatePage,
   ProjectDetailsPage
 } from "pages";
+import { Navbar } from "components";
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <Navbar />
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/projects" component={ProjectsListpage} />
