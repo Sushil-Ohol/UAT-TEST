@@ -12,6 +12,9 @@ React.js - Web Application for ConstructivIQ
 - [Dependencies](#dependencies)
   - [`dependencies`](#dependencies)
   - [`devDependencies`](#devdependencies)
+- [CI/CD - Github Actions](#github-action---cicd)
+  - [Dev Branch Pipeline](#for-development-branch---devyml)
+    
 
 # Pre-reqs
 
@@ -96,6 +99,54 @@ In that file you'll find two sections:
 | @types  | Dependencies in this folder are `.d.ts` files used to provide types |
 
 To install or update these dependencies you can use `npm install` or `npm update`.
+
+# Github Action - CI/CD
+### For Development Branch - 'dev.yml'
+
+### `TRIGGERS` :- PR Merge.
+Two jobs are configured as below
+1) BUILD 
+2) DEPLOY
+
+
+#### `BUILD JOB - Steps`: 
+1) BUILD/SELECT MACHINE/PLATFORM 
+    The machine is ubuntu-latest
+
+2) CHECKOUT :
+    Checkout code.
+
+3) INSTALL NODE_JS :
+      node-version: 13.x
+
+4) INSTALL NPM PACKAGES :
+      npm install
+
+5) CONTINUOUS INTEGRAGTION :
+      npm ci
+
+6) BUILD : Build project
+      npm run build
+
+7) TEST : Run tests
+   npm run test.
+   
+8) UPLOAD THE ARTIFACT : Upload production-ready build files
+      name: production-files
+      path: ./build
+      
+ #### `DEPLOY JOB`
+ 
+ 1) After the successful completion of JOB BUILD this job will be triggered.
+ 
+ 2) Download artifact
+     name: production-files
+     path: ./build
+  
+ 3) Deploy to gh-pages
+     uses: peaceiris/actions-gh-pages@v3
+     publish_dir: ./build
+
 
 ## License
 
