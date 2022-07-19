@@ -1,6 +1,6 @@
 # ConstructivIQ - Web Application
 
-Reach.js
+React.js - Web Application for ConstructivIQ
 
 # Table of contents:
 
