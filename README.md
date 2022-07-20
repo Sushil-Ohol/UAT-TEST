@@ -93,6 +93,9 @@ In that file you'll find two sections:
 | axios-auth-refresh | Used to intercept request and tokens.                                         |
 | react-dropzone | React hook to create a HTML5-compliant drag'n'drop zone for files.(https://react-dropzone.js.org/).                                         |
 | antd design              | Package used to for React UI component.(https://www.npmjs.com/package/antd) |
+| ag grid            | AG Grid is a fully-featured and highly customizable JavaScript data grid.(https://www.npmjs.com/package/ag-grid-react) |
+| ag grid community  | AG Grid Community is free and open-sourced under the MIT license.(https://www.npmjs.com/package/ag-grid-community) |
+
 
 ## `devDependencies`
 
