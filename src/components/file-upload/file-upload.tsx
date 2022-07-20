@@ -2,12 +2,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from "react";
 import Dropzone from "react-dropzone";
-import { FileTypes } from "models/enums";
 import "./file-upload.css";
 
 type FileUploadProps = {
   title: string;
-  docType: FileTypes;
   extensions: Array<string>;
 };
 
