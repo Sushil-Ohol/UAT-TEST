@@ -1,6 +1,7 @@
 /* Project Create Page Component */
 import { Button, Card, Col, Row, Typography } from "antd";
 import Dropzone from "components/file-upload/file-upload";
+import "./project-create.css";
 
 function ProjectCreate() {
   const { Text } = Typography;
@@ -8,7 +9,7 @@ function ProjectCreate() {
   return (
     <Row>
       <Col span={10} offset={7}>
-        <Card style={{ width: "100%" }}>
+        <Card className="Cardskip">
           <Row justify="center">
             <strong>Upload any of the document to get started!</strong>
           </Row>
@@ -31,7 +32,7 @@ function ProjectCreate() {
                 you can add any of these any later, but ConstructivIQ <br /> can
                 helpyou more if you add them now.
                 <br />
-                <Button type="text">
+                <Button type="text" className="skipBtn">
                   <Text strong>Skip this step</Text>
                 </Button>
               </p>

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
 import Hexagon from "components/hexagon/hexagon";
 import React, { useState } from "react";
