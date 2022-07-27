@@ -1,21 +1,26 @@
 .dropzone {
-    text-align: center;
-    padding: 30px;
-    border: 3px dashed #eeeeee;
-    background-color: #fafafa;
-    color: #bdbdbd;
-    cursor: pointer;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .selected-file-wrapper {
-    text-align: center;
-  }
-  
-  .selected-file {
-    color: #000; 
-    font-weight: bold;
-  }
+  text-align: center;
+  padding: 30px;
+  border: 3px dashed #eeeeee;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected-file-wrapper {
+  text-align: center;
+}
+.FileError {
+  position: absolute;
+  color: red;
+  display: none;
+}
+
+.selected-file {
+  color: #000;
+  font-weight: bold;
+}

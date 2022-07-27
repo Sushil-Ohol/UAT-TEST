@@ -59,13 +59,14 @@ export default class Hexagon extends Component {
       borderRadius,
       elevation,
       shadow,
-      img,
+      // img,
       text,
       textStyle,
       href,
       target,
       onClick,
-      fill
+      fill,
+      icon
     } = this.props;
     const { thHexagonStyle } = this.state;
 
@@ -79,14 +80,11 @@ export default class Hexagon extends Component {
     const hexagon = (
       <>
         <path fill={fill} d={generateHexSVG(sideLength, borderRadius)} />
-        <image
-          href={img}
-          width={0.7 * width}
-          height={0.7 * height}
-          x={0.15 * width}
-          y={0.12 * height}
-        />
+        {/* <image href={img} style={{}} /> */}
         <text fill="#bbb" strokeWidth="0" style={textStyle}>
+          <tspan x={width / 2} y={80 + fontSizeOffset} textAnchor="middle">
+            {icon}
+          </tspan>
           <tspan
             x={width / 2}
             y={height / 2 + fontSizeOffset}
@@ -140,7 +138,8 @@ Hexagon.defaultProps = {
   strokeWidth: 0,
   elevation: 12,
   shadow: "#e2e2e2",
-  img: "",
+  // img: "",
+  icon: "",
   text: "",
   textStyle: {},
   styles: {
@@ -161,7 +160,8 @@ Hexagon.propTypes = {
   strokeWidth: PropTypes.number,
   elevation: PropTypes.number,
   shadow: PropTypes.string,
-  img: PropTypes.string,
+  // img: PropTypes.string,
+  icon: PropTypes.any,
   text: PropTypes.string,
   textStyle: PropTypes.object,
   styles: PropTypes.shape({

@@ -9,3 +9,6 @@ Button {
 .Cardskip {
   background: transparent;
 }
+.FileError {
+  color: red;
+}

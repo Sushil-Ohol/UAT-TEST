@@ -1,14 +1,23 @@
 /* Project Create Page Component */
 import { Button, Card, Col, Row, Typography } from "antd";
 import Dropzone from "components/file-upload/file-upload";
+
 import "./project-create.css";
 
 function ProjectCreate() {
   const { Text } = Typography;
-
+  // const [FileError, setFileError] = useState("");
   return (
-    <Row>
-      <Col span={10} offset={7}>
+    <Row justify="center">
+      {/* <Col span={8} offset={3}>
+        {" "}
+        {FileError && (
+          <small style={{ color: "red", textAlign: "center" }}>
+            {FileError}
+          </small>
+        )}
+      </Col> */}
+      <Col span={24} offset={0}>
         <Card className="Cardskip">
           <Row justify="center">
             <strong>Upload any of the document to get started!</strong>
