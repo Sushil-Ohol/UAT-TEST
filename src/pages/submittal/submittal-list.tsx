@@ -17,6 +17,8 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 
 import "./submittal-list.css";
 
+import { BellOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons";
+
 interface SubmittalGrid {
     id:number;
     submittal: string;
@@ -181,7 +183,84 @@ function SubmittalList() {
 
   return (
     <>
-      <Row className="FilterRow" />
+      <Row className="FilterRow">
+        <Col span={24}>
+          <Space>
+            <Input
+              type="text"
+              id="filter-text-box"
+              placeholder="Search"
+              onInput={onFilterTextBoxChanged}
+              prefix={<SearchOutlined />}
+            />
+            <Input.Group compact>
+              <Input style={{ width: "10%" }} defaultValue="Floor" disabled />
+              <Select
+                style={{ width: 100 }}
+                onChange={(value: any) => {
+                  gridRef.current!.api.setQuickFilter(value);
+                }}
+                defaultValue="Floor 1"
+              >
+                <Option value="0">Floor 1</Option>
+                <Option value="1">Floor 2</Option>
+                <Option value="2">Floor 3</Option>
+                <Option value="3">Floor 4</Option>
+                <Option value="4">Floor 5</Option>
+                <Option value="5">Floor 6</Option>
+              </Select>
+              {/* </Input.Group> */}
+              &nbsp;&nbsp;
+              {/* <Input.Group compact> */}
+              <Input style={{ width: "10%" }} defaultValue="Status" disabled />
+              <Select
+                style={{ width: 85 }}
+                onChange={(value: any) => {
+                  gridRef.current!.api.setQuickFilter(value);
+                }}
+                defaultValue="All"
+              >
+                <Option value="0">All</Option>
+                <Option value="1">Assigned</Option>
+                <Option value="2">In Review</Option>
+                <Option value="3">Communicated</Option>
+                <Option value="4">Resolved</Option>
+                <Option value="5">Closed</Option>
+              </Select>
+              {/* </Input.Group> */}
+              &nbsp;&nbsp;
+              {/* <Input.Group compact> */}
+              <Input style={{ width: "10%" }} defaultValue="Contractor" disabled />
+
+              <Select
+                style={{ width: 85 }}
+                onChange={(value: any) => {
+                  gridRef.current!.api.setQuickFilter(value);
+                }}
+                defaultValue="All"
+              >
+                <Option value="0">ABC Construction</Option>
+                <Option value="1">Test Construction</Option>
+              </Select>
+              {/* </Input.Group> */}
+              &nbsp;&nbsp;
+              {/* <Input.Group compact> */}
+              <Input style={{ width: "10%" }} defaultValue="Pass" disabled />
+
+              <Select
+                style={{ width: 100 }}
+                onChange={(value: any) => {
+                  gridRef.current!.api.setQuickFilter(value);
+                }}
+                defaultValue="Past due"
+              >
+                <Option value="0">Past due</Option>
+              </Select>
+            </Input.Group>
+
+          </Space>
+        </Col>
+      </Row>
              <Row>
         <Col span={24}>
           <div style={gridStyle} className="ag-theme-alpine">
