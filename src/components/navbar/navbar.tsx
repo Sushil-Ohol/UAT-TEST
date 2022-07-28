@@ -1,25 +1,29 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import { Link } from "react-router-dom";
+/* Navigation Component */
+import { Col, PageHeader, Row } from "antd";
 import "./navbar.css";
 
-function Title() {
-  return (
-    <label>
-      Constructiv<strong>IQ</strong>
-    </label>
-  );
-}
-/* Navigation Component */
 function Nav() {
   return (
-    <div className="navbar">
-      <div className="logo">
-        <Title />
-      </div>
-      <ul className="nav-links">
-        <Link to="/projects">All Projects</Link>
-      </ul>
-    </div>
+    <Row className="Navbar">
+      <Col span={2} offset={0}>
+        <span className="brandName">
+          Constructiv<strong>IQ</strong>
+        </span>
+      </Col>
+      <Col span={17} offset={1}>
+        <PageHeader
+          className="site-page-header"
+          onBack={() => null}
+          title="All Projects"
+          subTitle="Creating new project"
+        />
+      </Col>
+      <Col
+        span={3}
+        offset={1}
+        style={{ textAlign: "end", paddingRight: "10px" }}
+      />
+    </Row>
   );
 }
 export default Nav;
