@@ -43,7 +43,7 @@ function Nav() {
               Schedule
             </Menu.Item>
           </Link>
-          <Link to="/Material">
+          <Link to="/materials">
             <Menu.Item key="keys6" style={style}>
               Materials
             </Menu.Item>

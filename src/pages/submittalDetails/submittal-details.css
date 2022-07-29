@@ -1,0 +1,11 @@
+@import '~antd/dist/antd.css';
+.site-card-wrapper {
+  padding: 15px;
+  background: #ececec;
+}
+.HedingColor{
+    font-weight: 500;
+    color: gray;
+    font-size: "7px";
+    opacity: 0.5;
+}

@@ -1,0 +1,24 @@
+[{
+    "id": "1001",
+    "submittal": "Electrical Package",
+    "notification": 2,
+    "comments": 4,
+    "revision": 3,
+    "status": "Approved", 
+    "dueBy": "20-08-2022",
+    "contractor": "ABC Construction",
+    "dependsOn": "1079",
+    "assigned": "Luke"  
+},
+{
+    "id": "1002",
+    "submittal": "Piping Package",
+    "notification": 2,
+    "comments": 4,
+    "revision": 3,
+    "status": "In Review", 
+    "dueBy": "20-08-2022",
+    "contractor": "ABC Construction",
+    "dependsOn": "2098",
+    "assigned": "Luke"  
+}]

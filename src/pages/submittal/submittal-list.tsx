@@ -19,6 +19,8 @@ import "./submittal-list.css";
 
 import { BellOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons";
 
+import jsonData from "./data.json";
+
 interface SubmittalGrid {
     id:number;
     submittal: string;
@@ -41,8 +43,8 @@ function SubmittalList() {
     { field: "id", headerName: "ID",
     checkboxSelection: true,
     headerCheckboxSelection: true,
-    cellRendererParams: {checkbox: true}
-      },
+    cellRendererParams: {checkbox: true},
+    },
     { field: "submittal", headerName: "SUBMITTAL" },
     { field: "notification", headerName: "NOTIFICATION", icons: {menu: '<i class="fa fa-bell" aria-hidden="true"/>',}},
     { field: "comments", headerName: "COMMENTS", icons: {menu: '<i class="far fa-comments" aria-hidden="true"/>',}},
@@ -71,8 +73,8 @@ function SubmittalList() {
 
   const autoGroupColumnDef = useMemo(() => {
     return {
-      headerName: "Athlete",
-      field: "athlete",
+      headerName: "",
+      field: "",
       minWidth: 250,
       cellRenderer: "agGroupCellRenderer",
       cellRendererParams: {
@@ -130,39 +132,17 @@ function SubmittalList() {
 
 
   const onGridReady = useCallback(() => {
-    // fetch("https://www.ag-grid.com/example-assets/master-detail-data.json")
+    // fetch("http://localhost:3000/src/pages/submittal/data.json")
     //   .then((resp) => resp.json())
     //   .then((data: any) => {
+    //     console.log(data);
     //     setRowData([...data]);
     //   })
 
-    const data:any = [{
-        "id": "1001",
-        "submittal": "Electrical Package",
-        "notification": 2,
-        "comments": 4,
-        "revision": 3,
-        "status": "Approved", 
-        "dueBy": "20-08-2022",
-        "contractor": "ABC Construction",
-        "dependsOn": "1079",
-        "assigned": "Luke"  
-    },
-    {
-        "id": "1002",
-        "submittal": "Piping Package",
-        "notification": 2,
-        "comments": 4,
-        "revision": 3,
-        "status": "In Review", 
-        "dueBy": "20-08-2022",
-        "contractor": "ABC Construction",
-        "dependsOn": "2098",
-        "assigned": "Luke"  
-    }];
-
-    setRowData([...data]);
+      const data:any = jsonData;
+      setRowData([...data]);
     
+
 
   }, []);
 
