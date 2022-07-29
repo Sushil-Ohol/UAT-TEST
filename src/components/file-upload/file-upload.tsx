@@ -15,19 +15,25 @@ function DropzoneFile({
   title,
   extension,
   icon,
-  IconStyle
+  IconStyle,
+  setSkipBtn,
+  setState,
+  setCount
 }: {
   title: string;
   extension: string[];
   icon: string;
   IconStyle: object;
+  setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
+  setState: any;
+  setCount: any;
 }) {
   const [selectedFile, setSelectedFile] = useState("");
   const [FileError, setFileError] = useState("");
   const maxfilesize = 1048570;
   const textStyle = {
     fontFamily: "Source Sans Pro",
-    fontSize: "2evm",
+    fontSize: "12px",
     fill: FileError ? "red" : "grey"
   };
   const WrongIconStyle: any = {
@@ -57,12 +63,14 @@ function DropzoneFile({
   const onDrop = (acceptedFiles: File[]) => {
     acceptedFiles.forEach((file: any) => {
       extension.forEach((item: any) => {
-        if (
-          file.type === `application/${item}` ||
-          file.type === `text/${item}`
-        ) {
+        const splitedData = file.name.split(".");
+        const fileextension = splitedData[1];
+        if (item === fileextension) {
           if (file.size < maxfilesize) {
             setSelectedFile(file.path);
+            setSkipBtn(true);
+            setState({ ...file, title });
+            setCount((prev: number) => prev + 1);
             setFileError("");
           } else {
             setFileError("Please upload file less than 1MB");
