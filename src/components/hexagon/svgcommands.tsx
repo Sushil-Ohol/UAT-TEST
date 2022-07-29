@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
-import "./vec2";
+import { Vec2 } from "./vec2";
 
 export class SVGCommands {
+  commands: string[];
+
   constructor() {
     this.commands = [];
   }
@@ -12,19 +12,19 @@ export class SVGCommands {
   }
 
   // svg move to command
-  M(vec2) {
+  M(vec2: Vec2) {
     this.commands.push(`M${vec2.x} ${vec2.y}`);
     return this;
   }
 
   // svg draw line to point from current position command
-  L(vec2) {
+  L(vec2: Vec2) {
     this.commands.push(`L${vec2.x} ${vec2.y}`);
     return this;
   }
 
   // svg bezier quadratic curve command
-  Q(controlVec2, endVec2) {
+  Q(controlVec2: Vec2, endVec2: Vec2) {
     this.commands.push(
       `Q${controlVec2.x} ${controlVec2.y} ${endVec2.x} ${endVec2.y}`
     );

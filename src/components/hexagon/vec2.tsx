@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 export class Vec2 {
-  constructor(x, y) {
+  x: number;
+
+  y: number;
+
+  constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
   }
@@ -10,7 +14,7 @@ export class Vec2 {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
-  scalarMultiple(k) {
+  scalarMultiple(k: number) {
     return new Vec2(k * this.x, k * this.y);
   }
 
@@ -18,11 +22,11 @@ export class Vec2 {
     return this.scalarMultiple(1 / this.magnitude());
   }
 
-  add(v2) {
+  add(v2: Vec2) {
     return new Vec2(this.x + v2.x, this.y + v2.y);
   }
 
-  subtract(v2) {
+  subtract(v2: Vec2) {
     return this.add(v2.scalarMultiple(-1));
   }
 }

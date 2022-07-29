@@ -20,12 +20,6 @@ export function generateHexSVG(sideLength: number, borderRadius: number) {
     const pointyHexagon = new SVGCommands();
     return pointyHexagon.M(a).L(b).L(c).L(d).L(e).L(f).Z().toString();
   }
-
-  /* for hexagons with curved corners, we use the quadratic curve command
-	the vertex itself will be the control point
-	the start point will be a point slightly to the left of the vertex along the perimeter of the hexagon
-	and the end point will be a point slightly to the right of the vertex along the perimeter of the hexagon
-	the distance that the start and end points are along the adjacent sides is given by the curve radius */
   const dl = f.subtract(a).normalize().scalarMultiple(borderRadius);
   const dr = b.subtract(a).normalize().scalarMultiple(borderRadius);
   const dd = new Vec2(0, borderRadius);

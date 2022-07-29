@@ -1,5 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
+import {
+  FileDoneOutlined,
+  SettingOutlined,
+  CalendarOutlined,
+  WarningOutlined
+} from "@ant-design/icons";
 import Hexagon from "components/hexagon/hexagon";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
@@ -7,12 +13,14 @@ import "./file-upload.css";
 
 function DropzoneFile({
   title,
-  extension
-}: // setFileError
-{
+  extension,
+  icon,
+  IconStyle
+}: {
   title: string;
   extension: string[];
-  // setFileError: React.Dispatch<React.SetStateAction<string>>;
+  icon: string;
+  IconStyle: object;
 }) {
   const [selectedFile, setSelectedFile] = useState("");
   const [FileError, setFileError] = useState("");
@@ -20,8 +28,32 @@ function DropzoneFile({
   const textStyle = {
     fontFamily: "Source Sans Pro",
     fontSize: "2evm",
-    fill: "grey"
+    fill: FileError ? "red" : "grey"
   };
+  const WrongIconStyle: any = {
+    color: "red",
+    display: "inline-block",
+    position: "absolute",
+    top: "80px",
+    left: "73px",
+    fontSize: "30px"
+  };
+  function anticon() {
+    switch (icon) {
+      case "FileDoneOutlined":
+        return <FileDoneOutlined style={IconStyle} />;
+      case "SettingOutlined":
+        return <SettingOutlined style={IconStyle} />;
+      case "CalendarOutlined":
+        return <CalendarOutlined style={IconStyle} />;
+
+      default:
+        return "";
+    }
+  }
+  function iconfunction() {
+    return <WarningOutlined style={WrongIconStyle} />;
+  }
   const onDrop = (acceptedFiles: File[]) => {
     acceptedFiles.forEach((file: any) => {
       extension.forEach((item: any) => {
@@ -33,19 +65,13 @@ function DropzoneFile({
             setSelectedFile(file.path);
             setFileError("");
           } else {
-            setFileError("upload file less than 1 mb");
-            setInterval(() => {
-              setFileError("");
-            }, 6000);
+            setFileError("Please upload file less than 1MB");
           }
         } else {
           setFileError(() => {
-            if (title !== "Schedule") return "expected PDF";
-            return `Invalid file for ${title} field  and only allow xls,xlsx and csv file`;
+            if (title !== "Schedule") return "Only PDF file allowed";
+            return "Only xls,xlsx and csv file";
           });
-          setInterval(() => {
-            setFileError("");
-          }, 6000);
         }
       });
     });
@@ -58,7 +84,7 @@ function DropzoneFile({
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             <Hexagon
-              icon="aaa"
+              icon={FileError ? iconfunction : anticon}
               text={`${selectedFile}` || FileError || title}
               sideLength={100}
               borderRadius={0}
