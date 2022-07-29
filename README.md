@@ -14,7 +14,6 @@ React.js - Web Application for ConstructivIQ
   - [`devDependencies`](#devdependencies)
 - [CI/CD - Github Actions](#github-action---cicd)
   - [Dev Branch Pipeline](#for-development-branch---devyml)
-    
 
 # Pre-reqs
 
@@ -84,18 +83,19 @@ In that file you'll find two sections:
 
 ## `dependencies`
 
-| Package            | Description                                                                   |
-| ------------------ | ----------------------------------------------------------------------------- |
-| bootstrap          | Current version of the bootstrap file.                                        |
-| react              | Current version of react.                                                     |
-| react-router-dom   | Current version of react-router-dom.                                          |
-| axios              | Package used to interact with http call.(https://www.npmjs.com/package/axios) |
-| axios-auth-refresh | Used to intercept request and tokens.                                         |
-| react-dropzone | React hook to create a HTML5-compliant drag'n'drop zone for files.(https://react-dropzone.js.org/).                                         |
-| antd design              | Package used to for React UI component.(https://www.npmjs.com/package/antd) |
+| Package            | Description                                                                                                            |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| bootstrap          | Current version of the bootstrap file.                                                                                 |
+| react              | Current version of react.                                                                                              |
+| react-router-dom   | Current version of react-router-dom.                                                                                   |
+| axios              | Package used to interact with http call.(https://www.npmjs.com/package/axios)                                          |
+| axios-auth-refresh | Used to intercept request and tokens.                                                                                  |
+| react-dropzone     | React hook to create a HTML5-compliant drag'n'drop zone for files.(https://react-dropzone.js.org/).                    |
+| antd design        | Package used to for React UI component.(https://www.npmjs.com/package/antd)                                            |
 | ag grid            | AG Grid is a fully-featured and highly customizable JavaScript data grid.(https://www.npmjs.com/package/ag-grid-react) |
-| ag grid community  | AG Grid Community is free and open-sourced under the MIT license.(https://www.npmjs.com/package/ag-grid-community) |
-
+| ag grid community  | AG Grid Community is free and open-sourced under the MIT license.(https://www.npmjs.com/package/ag-grid-community)     |
+| prop-types         | Runtime type checking of props(https://www.npmjs.com/package/prop-types)                                               |
+| ant-design-icons   | Added antd icons(https://ant.design/components/icon/)                                                                  |
 
 ## `devDependencies`
 
@@ -106,52 +106,53 @@ In that file you'll find two sections:
 To install or update these dependencies you can use `npm install` or `npm update`.
 
 # Github Action - CI/CD
+
 ### For Development Branch - 'dev.yml'
 
 ### `TRIGGERS` :- PR Merge.
+
 Two jobs are configured as below
-1) BUILD 
-2) DEPLOY
 
+1. BUILD
+2. DEPLOY
 
-#### `BUILD JOB - Steps`: 
-1) BUILD/SELECT MACHINE/PLATFORM 
-    The machine is ubuntu-latest
+#### `BUILD JOB - Steps`:
 
-2) CHECKOUT :
-    Checkout code.
+1. BUILD/SELECT MACHINE/PLATFORM
+   The machine is ubuntu-latest
 
-3) INSTALL NODE_JS :
-      node-version: 13.x
+2. CHECKOUT :
+   Checkout code.
 
-4) INSTALL NPM PACKAGES :
-      npm install
+3. INSTALL NODE_JS :
+   node-version: 13.x
 
-5) CONTINUOUS INTEGRAGTION :
-      npm ci
+4. INSTALL NPM PACKAGES :
+   npm install
 
-6) BUILD : Build project
-      npm run build
+5. CONTINUOUS INTEGRAGTION :
+   npm ci
 
-7) TEST : Run tests
+6. BUILD : Build project
+   npm run build
+
+7. TEST : Run tests
    npm run test.
-   
-8) UPLOAD THE ARTIFACT : Upload production-ready build files
-      name: production-files
-      path: ./build
-      
- #### `DEPLOY JOB`
- 
- 1) After the successful completion of JOB BUILD this job will be triggered.
- 
- 2) Download artifact
-     name: production-files
-     path: ./build
-  
- 3) Deploy to gh-pages
-     uses: peaceiris/actions-gh-pages@v3
-     publish_dir: ./build
+8. UPLOAD THE ARTIFACT : Upload production-ready build files
+   name: production-files
+   path: ./build
 
+#### `DEPLOY JOB`
+
+1.  After the successful completion of JOB BUILD this job will be triggered.
+
+2.  Download artifact
+    name: production-files
+    path: ./build
+
+3.  Deploy to gh-pages
+    uses: peaceiris/actions-gh-pages@v3
+    publish_dir: ./build
 
 ## License
 
