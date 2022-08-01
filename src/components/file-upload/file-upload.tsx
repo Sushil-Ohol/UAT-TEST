@@ -28,14 +28,13 @@ function DropzoneFile({
   setState: any;
   setCount: any;
 }) {
-  const [selectedFile, setSelectedFile] = useState("");
+  // const [selectedFile, setSelectedFile] = useState("");
   const [FileError, setFileError] = useState("");
   const maxfilesize = 1048570;
-  const textStyle = {
-    fontFamily: "Source Sans Pro",
-    fontSize: "12px",
-    fill: FileError ? "red" : "grey"
-  };
+  // const textStyle = {
+  //   fontFamily: "Source Sans Pro",
+  //   fontSize: "12px"
+  // };
   const WrongIconStyle: any = {
     color: "red",
     display: "inline-block",
@@ -67,19 +66,25 @@ function DropzoneFile({
         const fileextension = splitedData[1];
         if (item === fileextension) {
           if (file.size < maxfilesize) {
-            setSelectedFile(file.path);
             setSkipBtn(true);
+
             setState({ ...file, title });
             setCount((prev: number) => prev + 1);
             setFileError("");
           } else {
             setFileError("Please upload file less than 1MB");
+            setInterval(() => {
+              setFileError("");
+            }, 4000);
           }
         } else {
           setFileError(() => {
             if (title !== "Schedule") return "Only PDF file allowed";
             return "Only xls,xlsx and csv file";
           });
+          setInterval(() => {
+            setFileError("");
+          }, 4000);
         }
       });
     });
@@ -87,18 +92,22 @@ function DropzoneFile({
 
   return (
     <Dropzone onDrop={onDrop} multiple={false}>
-      {({ getRootProps, getInputProps }) => (
+      {({ getRootProps, getInputProps, isDragActive }) => (
         <section>
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             <Hexagon
               icon={FileError ? iconfunction : anticon}
-              text={`${selectedFile}` || FileError || title}
+              text={FileError || (isDragActive ? "Drag file here" : title)}
               sideLength={100}
               borderRadius={0}
               fill="rgba(128, 128, 128, 0.001)"
-              shadow="#e2e2e2"
-              textStyle={textStyle}
+              shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
+              textStyle={{
+                fontFamily: "Source Sans Pro",
+                fontSize: "12px",
+                fill: FileError ? "red" : "grey"
+              }}
             />
           </div>
         </section>

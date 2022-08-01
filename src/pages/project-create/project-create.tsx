@@ -9,13 +9,20 @@ import {
   FileDoneOutlined,
   ArrowLeftOutlined,
   ArrowRightOutlined,
-  CloseOutlined
+  CloseOutlined,
+  RadarChartOutlined,
+  SelectOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
 
 function ProjectCreate() {
   const [SkipBtn, setSkipBtn] = useState(false);
   const [current, setCurrent] = useState(0);
+
+  const [CogIconProject, setCogIconProject] = useState(false);
+  const [CogIconDetails, setCogIconDetails] = useState(false);
+  const [InputEdited, setInputEdited] = useState(false);
+  const [DetailsEdited, setDetailsEdited] = useState(false);
   const { Text } = Typography;
   const { Step } = Steps;
   const [SpecificationDoc, setSpecificationDoc] = useState({
@@ -118,119 +125,237 @@ function ProjectCreate() {
 
   const HandleSkipEvent = () => {
     setSkipBtn(true);
+    setCogIconProject(false);
+    setCogIconDetails(false);
+    setInputEdited(false);
+    setDetailsEdited(false);
   };
 
   return (
     <Row justify="center">
-      <Col span={10} offset={0}>
+      <Col span={24}>
         {SkipBtn ? (
           <>
             {steps[current]?.content === "Details" && (
               <div className="steps-content">
-                <Card className="detailsForm">
-                  <h2>Creating new project / Details</h2>
-                  <Form layout="vertical" autoComplete="off">
-                    {defaultInputvalue.map((item: any) => {
-                      return (
-                        item.lable.length > 0 && (
-                          <Form.Item
-                            key={item.name}
-                            className="FileInput"
-                            label={item.lable}
-                            name={item.name}
-                            initialValue={item.initialValue}
-                          >
-                            <Input
-                              defaultValue={item.path}
-                              readOnly
-                              addonAfter={item.addonAfter}
-                              prefix={<FileDoneOutlined />}
-                              placeholder="input placeholder"
-                            />
+                <Row justify="center">
+                  <Col span={10}>
+                    <Card className="detailsForm">
+                      <h2>Creating new project / Details</h2>
+                      <Form layout="vertical" autoComplete="off">
+                        {defaultInputvalue?.map((item: any) => {
+                          return (
+                            item.lable.length > 0 && (
+                              <Form.Item
+                                key={item.name}
+                                className="FileInput"
+                                label={item.lable}
+                                name={item.name}
+                                initialValue={item.initialValue}
+                              >
+                                <Input.Group>
+                                  <Row>
+                                    <Col span={22}>
+                                      <Input
+                                        defaultValue={item.defaultValue}
+                                        readOnly
+                                        addonAfter={
+                                          <SelectOutlined className="IconBlue" />
+                                        }
+                                        prefix={<FileDoneOutlined />}
+                                        placeholder="input placeholder"
+                                      />
+                                    </Col>
+                                    <Col span={2}>{item.addonAfter}</Col>
+                                  </Row>
+                                </Input.Group>
+                              </Form.Item>
+                            )
+                          );
+                        })}
+
+                        <Input.Group>
+                          <Form.Item label="Project Name" name="projectname">
+                            <Row>
+                              <Col span={InputEdited ? 24 : 22}>
+                                {!InputEdited && !CogIconProject && (
+                                  <RadarChartOutlined className="cogDetails" />
+                                )}
+                                <Input
+                                  type="text"
+                                  defaultValue={defaultValue.ProjectName}
+                                  placeholder="input placeholder"
+                                  onChange={() => {
+                                    setInputEdited(true);
+                                    setCogIconProject(true);
+                                  }}
+                                />
+                              </Col>
+                              <Col span={2}>
+                                {!InputEdited && (
+                                  <CheckOutlined
+                                    className="CheckIconDetails"
+                                    onClick={() => setCogIconProject(true)}
+                                  />
+                                )}
+                              </Col>
+                            </Row>
                           </Form.Item>
-                        )
-                      );
-                    })}
+                        </Input.Group>
+                        <Input.Group>
+                          <Form.Item
+                            label="Details"
+                            name="details"
+                            initialValue={defaultValue.details}
+                            style={{ position: "relative" }}
+                          >
+                            <Row>
+                              <Col span={DetailsEdited ? 24 : 22}>
+                                <TextArea
+                                  defaultValue={defaultValue.details}
+                                  rows={6}
+                                  onChange={() => {
+                                    setDetailsEdited(true);
+                                    setCogIconDetails(true);
+                                  }}
+                                  placeholder="enter your project details"
+                                  style={{
+                                    width: "100%",
+                                    textAlign: "justify"
+                                  }}
+                                />
+                                {!DetailsEdited && !CogIconDetails && (
+                                  <RadarChartOutlined className="cogDetails" />
+                                )}
+                              </Col>
 
-                    <Form.Item
-                      label="Project Name"
-                      name="username"
-                      initialValue={defaultValue.ProjectName}
-                    >
-                      <Input
-                        placeholder="input placeholder"
-                        addonAfter={<CheckOutlined />}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      label="Details"
-                      name="details"
-                      initialValue={defaultValue.details}
-                    >
-                      <TextArea
-                        rows={4}
-                        placeholder="enter your project details"
-                        maxLength={6}
-                      />
-                    </Form.Item>
-                    <Row justify="center" style={{ position: "relative" }}>
-                      {SpecificationDoc.title !== "Specification Document" && (
-                        <Col>
-                          <Dropzone
-                            setCount={setCount}
-                            icon="FileDoneOutlined"
-                            IconStyle={IconStyle}
-                            title="Specification Document"
-                            extension={["pdf"]}
-                            setSkipBtn={setSkipBtn}
-                            setState={setSpecificationDoc}
-                          />
-                        </Col>
-                      )}
-                      {siteDrawing.title !== "Site Drawing" && (
-                        <Col offset={1}>
-                          <Dropzone
-                            setCount={setCount}
-                            icon="SettingOutlined"
-                            IconStyle={IconStyle}
-                            title="Site Drawing"
-                            extension={["pdf"]}
-                            setSkipBtn={setSkipBtn}
-                            setState={setsiteDrawing}
-                          />
-                        </Col>
-                      )}
-                      {schedule.title !== "Schedule" && (
-                        <Col offset={1}>
-                          <Dropzone
-                            setCount={setCount}
-                            icon="CalendarOutlined"
-                            IconStyle={IconStyle}
-                            title="Schedule"
-                            extension={["xls", "xlsx", "csv"]}
-                            setSkipBtn={setSkipBtn}
-                            setState={setschedule}
-                          />
-                        </Col>
-                      )}
-                    </Row>
+                              <Col span={2}>
+                                {!DetailsEdited && (
+                                  <CheckOutlined
+                                    onClick={() => setCogIconDetails(true)}
+                                    className="CheckIconDetails"
+                                  />
+                                )}
+                              </Col>
+                            </Row>
+                          </Form.Item>
+                        </Input.Group>
+                        <Row justify="center" style={{ position: "relative" }}>
+                          {SpecificationDoc.title !==
+                            "Specification Document" && (
+                            <Col>
+                              <Dropzone
+                                setCount={setCount}
+                                icon="FileDoneOutlined"
+                                IconStyle={IconStyle}
+                                title="Specification Document"
+                                extension={["pdf"]}
+                                setSkipBtn={setSkipBtn}
+                                setState={setSpecificationDoc}
+                              />
+                            </Col>
+                          )}
+                          {siteDrawing.title !== "Site Drawing" && (
+                            <Col offset={1}>
+                              <Dropzone
+                                setCount={setCount}
+                                icon="SettingOutlined"
+                                IconStyle={IconStyle}
+                                title="Site Drawing"
+                                extension={["pdf"]}
+                                setSkipBtn={setSkipBtn}
+                                setState={setsiteDrawing}
+                              />
+                            </Col>
+                          )}
+                          {schedule.title !== "Schedule" && (
+                            <Col offset={1}>
+                              <Dropzone
+                                setCount={setCount}
+                                icon="CalendarOutlined"
+                                IconStyle={IconStyle}
+                                title="Schedule"
+                                extension={["xls", "xlsx", "csv"]}
+                                setSkipBtn={setSkipBtn}
+                                setState={setschedule}
+                              />
+                            </Col>
+                          )}
+                        </Row>
 
-                    <Row justify="center">
-                      <Col span={24}>
-                        <p className="footerText">
-                          you can add any of these any later, but ConstructivIQ{" "}
-                          <br /> can helpyou more if you add them now.
-                        </p>
-                      </Col>
-                    </Row>
-                  </Form>
-                </Card>
+                        <Row justify="center">
+                          <Col span={24}>
+                            <p className="footerText">
+                              you can add any of these any later, but
+                              ConstructivIQ <br /> can helpyou more if you add
+                              them now.
+                            </p>
+                          </Col>
+                        </Row>
+                      </Form>
+                    </Card>
+                  </Col>
+                </Row>
               </div>
             )}
             <Row>
               {steps[current].content === "Finish" && (
                 <div className="steps-content">
-                  <h1>Finish component</h1>
+                  <Col span={24}>
+                    <Card className="CardFinish">
+                      <Row>
+                        <Col span={12} offset={6}>
+                          <h4 className="subHeading">You are all set!</h4>
+                        </Col>
+                        <Col span={12} offset={6}>
+                          <strong className="HeadingHospitalName">
+                            Northgate Hospital
+                          </strong>
+                        </Col>
+                        <Col span={12} offset={6}>
+                          <p className="ParaFinishScreen1">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Ducimus corporis ex accusantium! Qui aut,
+                            voluptatibus debitis magnam rerum excepturi,
+                            molestiae aspernatur odit maxime blanditiis ipsam
+                            itaque perspiciatis. Doloribus, saepe. Ea eligendi
+                            sed autem consequuntur neque sint maiores
+                            consectetur cumque natus!
+                          </p>
+                          <Row justify="center">
+                            <Col span={3} offset={0}>
+                              <strong>12</strong> <br />
+                              <strong>Uploaded Document</strong>
+                            </Col>
+                            <Col span={3} offset={3}>
+                              <strong>9</strong> <br />
+                              <strong>Floors Identified</strong>
+                            </Col>
+                            <Col span={3} offset={3}>
+                              <strong>193</strong> <br />
+                              <strong>Materials Identified</strong>
+                            </Col>
+                            <Col span={4} offset={3}>
+                              <strong>2383</strong> <br />
+                              <strong>Submittals auto created</strong>
+                            </Col>
+                          </Row>
+                        </Col>
+                        <Col span={12} offset={6}>
+                          <p className="ParaFinishScreen2">
+                            We have identified 3283 submittals from the
+                            specification document. You can confirm,change,
+                            split or merge them in the next step
+                          </p>
+                        </Col>
+                        <Col span={12} offset={6}>
+                          <Button type="link">
+                            View submittals <ArrowRightOutlined />
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Card>
+                  </Col>
                 </div>
               )}
             </Row>
@@ -262,7 +387,7 @@ function ProjectCreate() {
                       danger
                       className="stepperPrevBtn"
                       style={{ display: "flex", alignItems: "center" }}
-                      onClick={() => prev()}
+                      onClick={() => (current > 0 ? prev() : setSkipBtn(false))}
                       icon={<ArrowLeftOutlined />}
                     >
                       Prev
@@ -275,7 +400,7 @@ function ProjectCreate() {
         ) : (
           <Card className="Cardskip">
             <Row justify="center">
-              <strong>Upload any of the document to get started!</strong>
+              <h2>Upload any of the document to get started!</h2>
             </Row>
             <Row justify="center" style={{ position: "relative" }}>
               <Col>
