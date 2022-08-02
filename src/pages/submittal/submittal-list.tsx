@@ -5,11 +5,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* Project Details Page */
-import { Row, Col, Input, Space, Select, Button } from "antd";
+import { Row, Col, Input, Space, Select, Button, Card } from "antd";
 
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
 import { AgGridReact } from "ag-grid-react";
+
+import { GridOptions, ICellRendererParams } from "ag-grid-community";
 
 import "ag-grid-community/styles/ag-grid.css";
 
@@ -20,6 +22,8 @@ import "./submittal-list.css";
 import { BellOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons";
 
 import jsonData from "./data.json";
+
+import CreateSubmittal from "./create-submittal";
 
 interface SubmittalGrid {
     id:number;
@@ -33,6 +37,56 @@ interface SubmittalGrid {
     dependsOn: string;
     assigned: string;
 }
+
+export type AppProps = {
+  // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
+  onClick?: () => void;
+  // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
+  gridOptions?: GridOptions;
+};
+// eslint-disable-next-line react/function-component-definition
+const Buttons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
+  return (
+    // eslint-disable-next-line react/button-has-type
+    <button
+      style={{
+        border: "none",
+        padding: 0,
+        background: "none"
+      }}
+      onClick={() => {
+        // eslint-disable-next-line react/destructuring-assignment
+        params.onClick?.();
+      }}
+    >
+      <MoreOutlined />
+    </button>
+  );
+};
+
+// eslint-disable-next-line react/function-component-definition
+const CommentButtons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
+  return (
+    <i className="far fa-comments mx-auto btn-lg" aria-hidden="true" />
+  );
+};
+
+
+// eslint-disable-next-line react/function-component-definition
+const NotificationBellButtons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
+  return (
+    <i className="far fa-bell align-items-center d-flex col-md-6 btn-lg" aria-hidden="true" />
+  );
+};
+
+
+// eslint-disable-next-line react/function-component-definition
+const RevisionButtons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
+  return (
+    <i className="far fa-file align-items-center d-flex col-md-6 btn-lg" aria-hidden="true" />
+  );
+};
+
 function SubmittalList() {
   const { Option } = Select;
   const gridRef = useRef<AgGridReact<SubmittalGrid>>(null);
@@ -46,9 +100,9 @@ function SubmittalList() {
     cellRendererParams: {checkbox: true},
     },
     { field: "submittal", headerName: "SUBMITTAL" },
-    { field: "notification", headerName: "NOTIFICATION", icons: {menu: '<i class="fa fa-bell" aria-hidden="true"/>',}},
-    { field: "comments", headerName: "COMMENTS", icons: {menu: '<i class="far fa-comments" aria-hidden="true"/>',}},
-    { field: "revision", headerName: "REVISION", icons: {menu: '<i class="fa fa-file" aria-hidden="true"/>',}},
+    { field: "notification", headerName: "", headerComponentFramework: NotificationBellButtons},
+    { field: "comments", headerName: "", headerComponentFramework: CommentButtons},
+    { field: "revision", headerName: "", headerComponentFramework: RevisionButtons},
     {
       field: "status", headerName: "STATUS",
       cellStyle: (params: { value: string; }) => {
@@ -66,7 +120,7 @@ function SubmittalList() {
     { field: "contractor", headerName: "CONTRACTOR" },
     { field: "dependsOn", headerName: "DEPENDS ON" },
     { field: "assigned", headerName: "ASSIGNED" },
-    { cellRenderer: "iconComponent" }
+    { cellRendererFramework: Buttons}
 
   
   ]);
@@ -90,7 +144,11 @@ function SubmittalList() {
       minWidth: 100,
       editable: true,
       resizable: true,
-      filter: true
+      filter: true,
+      wrapHeaderText: true,
+      autoHeaderHeight: true,
+      wrapText: true,     // <-- HERE
+      autoHeight: true,   // <-- & HERE  
     };
   }, []);
   const detailCellRendererParams = useMemo<any>(() => {
@@ -236,13 +294,10 @@ function SubmittalList() {
               >
                 <Option value="0">Past due</Option>
               </Select>
-
               &nbsp;&nbsp;&nbsp;&nbsp;
-
-<section >
-    <Button>+  New Submittal</Button>
-
-</section>
+              <section >
+              <CreateSubmittal/>
+              </section>
             </Input.Group>
 
           </Space>
@@ -271,7 +326,41 @@ function SubmittalList() {
               onCellEditRequest={onCellEditRequest}
             />
           </div>
-        </Col>
+
+         {/* bottom part */}
+         <section className="blue-grid">
+            <Card bordered={false} style={{ width: "auto", border: "0.2px solid #e5e5e5" }}>
+              <Row gutter={12}>
+                <Col span={2}>
+                  <div>
+                    <span>3 Selected</span>
+                  </div>
+                </Col>
+                <Col span={3}>
+                  <div className="block">
+                    <Button block>
+                      Create a Package...
+                    </Button>
+                  </div>
+                </Col>
+                <Col span={3}>
+                  <div className="block">
+                    <Button block>
+                      Merge...
+                    </Button>
+                  </div>
+                </Col>
+                <Col span={3}>
+                  <div className="block">
+                    <Button block>
+                      Archieve
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            </Card>
+          </section>
+          </Col>
       </Row>
     </>
   );
