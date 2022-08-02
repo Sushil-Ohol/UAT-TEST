@@ -96,7 +96,7 @@ function SubmitalDetails() {
                                     <section>
                                         <span className="HedingColor">PACAKGE</span>
 
-                                        <Select style={{ width: 200 }} defaultValue="Slect packages">
+                                        <Select style={{ width: 200 }} defaultValue="Select packages">
                                             <option value="0">920:Electricals</option>
                                         </Select>
                                     </section>

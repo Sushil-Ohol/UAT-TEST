@@ -5,7 +5,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* Project Details Page */
-import { Row, Col, Input, Space, Select, Checkbox } from "antd";
+import { Row, Col, Input, Space, Select, Button } from "antd";
 
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
@@ -236,6 +236,13 @@ function SubmittalList() {
               >
                 <Option value="0">Past due</Option>
               </Select>
+
+              &nbsp;&nbsp;&nbsp;&nbsp;
+
+<section >
+    <Button>+  New Submittal</Button>
+
+</section>
             </Input.Group>
 
           </Space>
