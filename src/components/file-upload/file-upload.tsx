@@ -72,7 +72,7 @@ function DropzoneFile({
             setCount((prev: number) => prev + 1);
             setFileError("");
           } else {
-            setFileError("Please upload file less than 1MB");
+            setFileError("Upload file less than 1MB");
             setInterval(() => {
               setFileError("");
             }, 4000);
@@ -98,7 +98,7 @@ function DropzoneFile({
             <input {...getInputProps()} />
             <Hexagon
               icon={FileError ? iconfunction : anticon}
-              text={FileError || (isDragActive ? "Drag file here" : title)}
+              text={FileError || isDragActive ? "Drag file here" : title}
               sideLength={100}
               borderRadius={0}
               fill="rgba(128, 128, 128, 0.001)"

@@ -1,5 +1,5 @@
 .footerText {
-  margin-top: 10%;
+  /* margin-top: 10%; */
   text-align: center;
   color: grey;
 }
@@ -7,7 +7,13 @@ Button {
   margin-top: 10%;
 }
 .Cardskip {
+  padding: 0px;
+  margin: 0px;
+  /* height: 70vh; */
   background: transparent;
+}
+.ant-card-body {
+  padding: 0px;
 }
 .detailsForm {
   background: transparent;
@@ -211,7 +217,7 @@ textarea.ant-input {
   background: transparent;
 }
 .subHeading {
-  padding-top: 5%;
+  padding-top: 1%;
   color: grey;
   font-size: 25px;
   font-weight: 400;
@@ -220,17 +226,40 @@ textarea.ant-input {
   display: block;
   font-size: 25px;
   font-weight: 500;
-  padding-top: 8%;
+  padding-top: 3%;
   padding-bottom: 2%;
 }
 .ParaFinishScreen1 {
   color: grey;
   text-align: start;
-  padding-bottom: 10%;
+  padding-bottom: 5%;
 }
 .ParaFinishScreen2 {
   color: grey;
   text-align: start;
-  padding-top: 12%;
+  padding-top: 8%;
   padding-bottom: 0px;
+}
+p.projectnamehint {
+  color: grey;
+  margin-top: 10px;
+
+  text-align: start;
+  font-size: 11px;
+  font-weight: 400;
+}
+.hintcheckicon {
+  color: green;
+  margin: 3px;
+  background-color: white;
+}
+.ant-form-vertical .ant-form-item-label {
+  font-weight: 500;
+}
+.btnsubmittals {
+  margin-top: 1%;
+  margin-bottom: 4%;
+}
+.Number {
+  font-size: larger;
 }
