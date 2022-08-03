@@ -6,6 +6,7 @@ import {
   CalendarOutlined,
   WarningOutlined
 } from "@ant-design/icons";
+import axios from "axios";
 import Hexagon from "components/hexagon/hexagon";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
@@ -28,13 +29,9 @@ function DropzoneFile({
   setState: any;
   setCount: any;
 }) {
-  // const [selectedFile, setSelectedFile] = useState("");
   const [FileError, setFileError] = useState("");
-  const maxfilesize = 1048570;
-  // const textStyle = {
-  //   fontFamily: "Source Sans Pro",
-  //   fontSize: "12px"
-  // };
+  const maxfilesize = 100857000;
+  const [progress, setProgress] = useState(0);
   const WrongIconStyle: any = {
     color: "red",
     display: "inline-block",
@@ -60,33 +57,49 @@ function DropzoneFile({
     return <WarningOutlined style={WrongIconStyle} />;
   }
   const onDrop = (acceptedFiles: File[]) => {
-    acceptedFiles.forEach((file: any) => {
-      extension.forEach((item: any) => {
-        const splitedData = file.name.split(".");
-        const fileextension = splitedData[1];
-        if (item === fileextension) {
-          if (file.size < maxfilesize) {
-            setSkipBtn(true);
+    acceptedFiles.forEach(async (file: any) => {
+      const splitedData = file.name.split(".");
+      const fileextension = splitedData[1];
+      if (extension.includes(fileextension)) {
+        if (file.size < maxfilesize) {
+          const formData = new FormData();
+          formData.append("image", file);
+          formData.append("title", title);
 
+          await axios.post(
+            "http://localhost:5000/api/v1/fileUpload",
+            formData,
+            {
+              onUploadProgress: (progressEvent) => {
+                const progressCount = Math.ceil(
+                  (progressEvent.loaded / progressEvent.total) * 100
+                );
+                setProgress(progressCount);
+              }
+            }
+          );
+
+          setTimeout(() => {
+            setSkipBtn(true);
             setState({ ...file, title });
             setCount((prev: number) => prev + 1);
             setFileError("");
-          } else {
-            setFileError("Upload file less than 1MB");
-            setInterval(() => {
-              setFileError("");
-            }, 4000);
-          }
+          }, 4000);
         } else {
-          setFileError(() => {
-            if (title !== "Schedule") return "Only PDF file allowed";
-            return "Only xls,xlsx and csv file";
-          });
+          setFileError("Upload file less than 1MB");
           setInterval(() => {
             setFileError("");
           }, 4000);
         }
-      });
+      } else {
+        setFileError(() => {
+          if (title !== "Schedule") return "Only PDF file allowed";
+          return "Only xls,xlsx and csv file";
+        });
+        setInterval(() => {
+          setFileError("");
+        }, 4000);
+      }
     });
   };
 
@@ -97,8 +110,9 @@ function DropzoneFile({
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             <Hexagon
+              ProgressBar={progress}
               icon={FileError ? iconfunction : anticon}
-              text={FileError || isDragActive ? "Drag file here" : title}
+              text={isDragActive ? "Drag file here" : FileError || title}
               sideLength={100}
               borderRadius={0}
               fill="rgba(128, 128, 128, 0.001)"

@@ -118,18 +118,25 @@ function ProjectCreate() {
     }
   ];
 
-  const Getvalue = async () => {
-    if (current > 0) {
-      const result = await axios.get("http://localhost:5000/api/v1/value");
-      setProjectValue(result.data);
-    }
-  };
   useEffect(() => {
     if (count === 0) {
       setSkipBtn(false);
     }
-    Getvalue();
-  }, [count, current]);
+  }, [count]);
+  useEffect(() => {
+    const Getvalue = async () => {
+      const result = await axios.get("http://localhost:5000/api/v1/value");
+      setProjectValue(result.data);
+    };
+    if (current > 0) {
+      Getvalue();
+    }
+    if (!SkipBtn) {
+      setSpecificationDoc({ path: "", title: "" });
+      setsiteDrawing({ path: "", title: "" });
+      setschedule({ path: "", title: "" });
+    }
+  }, [count, current, SkipBtn]);
 
   const next = async () => {
     setCurrent(current + 1);
@@ -424,7 +431,9 @@ function ProjectCreate() {
                       style={{ display: "inline" }}
                       type="primary"
                       onClick={() => next()}
-                      disabled={!(SpecificationDoc.title.length > 0)}
+                      disabled={
+                        !(SpecificationDoc.title.length > 0) || !CogIconProject
+                      }
                     >
                       Next <ArrowRightOutlined />
                     </Button>
@@ -436,6 +445,7 @@ function ProjectCreate() {
 
                   {SkipBtn && (
                     <Button
+                      disabled={current === 1}
                       danger
                       className="stepperPrevBtn"
                       style={{ display: "flex", alignItems: "center" }}

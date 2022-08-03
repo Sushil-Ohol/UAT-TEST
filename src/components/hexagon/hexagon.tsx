@@ -1,6 +1,7 @@
 /* eslint-disable react/static-property-placement */
 /* eslint-disable react/forbid-prop-types */
 import React, { Component } from "react";
+import { Progress } from "antd";
 import PropTypes from "prop-types";
 import { generateHexSVG } from "./generateHex";
 
@@ -27,6 +28,7 @@ export default class Hexagon extends Component {
   thHexagonStyleActive: any;
 
   static defaultProps: {
+    ProgressBar: number;
     sideLength: number;
     borderRadius: number;
     fill: string;
@@ -45,6 +47,7 @@ export default class Hexagon extends Component {
   };
 
   static propTypes: {
+    ProgressBar: PropTypes.Requireable<number>;
     sideLength: PropTypes.Requireable<number>;
     borderRadius: PropTypes.Requireable<number>;
     fill: PropTypes.Requireable<string>;
@@ -103,6 +106,7 @@ export default class Hexagon extends Component {
 
   render() {
     const {
+      ProgressBar,
       sideLength,
       borderRadius,
       elevation,
@@ -142,7 +146,7 @@ export default class Hexagon extends Component {
             y={(1.2 * height) / 2 + fontSizeOffset}
             textAnchor="middle"
           >
-            {text}
+            {ProgressBar <= 0 && text}
           </tspan>
         </text>
       </>
@@ -154,7 +158,7 @@ export default class Hexagon extends Component {
           viewBox={`0 0 ${width} ${height}`}
           width={width}
           height={height}
-          stroke="grey"
+          stroke={ProgressBar > 0 ? "green" : "grey"}
           strokeDasharray="2,2"
         >
           <svg y={elevation}>
@@ -186,12 +190,25 @@ export default class Hexagon extends Component {
           </g>
         </svg>
         {icon()}
+        {ProgressBar > 0 && (
+          <Progress
+            style={{
+              width: "90%",
+              position: "absolute",
+              top: "115px",
+
+              left: "20px"
+            }}
+            percent={ProgressBar}
+          />
+        )}
       </>
     );
   }
 }
 
 Hexagon.defaultProps = {
+  ProgressBar: 0,
   sideLength: 100,
   borderRadius: 12,
   fill: "white",
@@ -214,6 +231,7 @@ Hexagon.defaultProps = {
 };
 
 Hexagon.propTypes = {
+  ProgressBar: PropTypes.number,
   sideLength: PropTypes.number,
   borderRadius: PropTypes.number,
   fill: PropTypes.string,
