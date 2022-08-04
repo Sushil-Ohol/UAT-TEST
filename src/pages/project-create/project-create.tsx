@@ -4,7 +4,7 @@ import { Button, Card, Col, Row, Typography, Steps, Form, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import axios from "axios";
 import Dropzone from "components/file-upload/file-upload";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   CheckOutlined,
   FileDoneOutlined,
@@ -21,7 +21,7 @@ function ProjectCreate() {
   const [SkipBtn, setSkipBtn] = useState(false);
   const [current, setCurrent] = useState(0);
   const [ProjectName, setProjectName] = useState("");
-
+  const ProjectNameRef: any = useRef(null);
   const [CogIconProject, setCogIconProject] = useState(false);
   const [CogIconDetails, setCogIconDetails] = useState(false);
   const [InputEdited, setInputEdited] = useState(false);
@@ -59,16 +59,15 @@ function ProjectCreate() {
     color: "grey",
     display: "inline-block",
     position: "absolute",
-    top: "80px",
-    left: "73px",
+    top: "65px",
+    left: "55px",
     fontSize: "30px"
   };
-  const defaultValue = {
-    details:
-      "  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel sint qui nulla necessitatibus odit ratione atque reiciendis delectus exercitationem omnis. Illo mollitia placeat dicta voluptatem amet rem repellendus, explicabo id.",
-    ProjectName: "Project demo",
-    FileName: "sample.pdf"
-  };
+  const [defaultValue, setdefaultValue] = useState({
+    details: "",
+    ProjectName: ""
+  });
+
   const [count, setCount] = useState(0);
   const defaultInputvalue = [
     {
@@ -119,14 +118,21 @@ function ProjectCreate() {
   ];
 
   useEffect(() => {
+    const ProjectDefaultValue = async () => {
+      const result = await axios.get("http://localhost:5000/api/v1/projectsug");
+      setdefaultValue(result.data);
+    };
     if (count === 0) {
       setSkipBtn(false);
+    }
+    if (count === 1) {
+      ProjectDefaultValue();
     }
   }, [count]);
   useEffect(() => {
     const Getvalue = async () => {
       const result = await axios.get("http://localhost:5000/api/v1/value");
-      setProjectValue(result.data);
+      setProjectValue({ ...result.data });
     };
     if (current > 0) {
       Getvalue();
@@ -136,10 +142,13 @@ function ProjectCreate() {
       setsiteDrawing({ path: "", title: "" });
       setschedule({ path: "", title: "" });
     }
-  }, [count, current, SkipBtn]);
+  }, [current, SkipBtn]);
 
   const next = async () => {
-    setCurrent(current + 1);
+    if (ProjectName.length > 0) {
+      setCurrent(current + 1);
+    }
+    ProjectNameRef.current.focus();
   };
 
   function prev() {
@@ -162,12 +171,14 @@ function ProjectCreate() {
 
   function HandleProjectName(e: any) {
     setProjectName(e.target.value);
+
     setInputEdited(true);
     setCogIconProject(true);
   }
   return (
     <Row justify="center">
       <Col span={24}>
+        {JSON.stringify(defaultValue)}
         {SkipBtn ? (
           <>
             {steps[current]?.content === "Details" && (
@@ -175,7 +186,7 @@ function ProjectCreate() {
                 <Row justify="center">
                   <Col span={8}>
                     <Card className="detailsForm">
-                      <h2>Creating new project / Details</h2>
+                      <h2>Creating new project / Details</h2> <br />
                       <Form layout="vertical" autoComplete="off">
                         {defaultInputvalue?.map((item: any) => {
                           return (
@@ -185,7 +196,6 @@ function ProjectCreate() {
                                 className="FileInput"
                                 label={item.lable}
                                 name={item.name}
-                                initialValue={item.initialValue}
                               >
                                 <Input.Group>
                                   <Row>
@@ -211,11 +221,21 @@ function ProjectCreate() {
                         <Form.Item label="Project Name" name="projectname">
                           <Input.Group>
                             <Row>
-                              <Col span={InputEdited ? 24 : 22}>
-                                {!InputEdited && !CogIconProject && (
-                                  <RadarChartOutlined className="cogDetails" />
-                                )}
+                              <Col
+                                span={
+                                  InputEdited ||
+                                  defaultValue.ProjectName.length <= 0
+                                    ? 24
+                                    : 22
+                                }
+                              >
+                                {!InputEdited &&
+                                  !CogIconProject &&
+                                  defaultValue.ProjectName.length > 0 && (
+                                    <RadarChartOutlined className="cogDetails" />
+                                  )}
                                 <Input
+                                  ref={ProjectNameRef}
                                   type="text"
                                   defaultValue={defaultValue.ProjectName}
                                   placeholder="input placeholder"
@@ -223,15 +243,18 @@ function ProjectCreate() {
                                 />
                               </Col>
                               <Col span={2}>
-                                {!InputEdited && (
-                                  <CheckOutlined
-                                    className="CheckIconDetails"
-                                    onClick={() => {
-                                      setProjectName(defaultValue.ProjectName);
-                                      setCogIconProject(true);
-                                    }}
-                                  />
-                                )}
+                                {!InputEdited &&
+                                  defaultValue.ProjectName.length > 0 && (
+                                    <CheckOutlined
+                                      className="CheckIconDetails"
+                                      onClick={() => {
+                                        setProjectName(
+                                          defaultValue.ProjectName
+                                        );
+                                        setCogIconProject(true);
+                                      }}
+                                    />
+                                  )}
                               </Col>
                             </Row>
                             <Row>
@@ -249,18 +272,24 @@ function ProjectCreate() {
                             </Row>
                           </Input.Group>
                         </Form.Item>
-                        <Input.Group>
-                          <Form.Item
-                            label="Details"
-                            name="details"
-                            initialValue={defaultValue.details}
-                            style={{ position: "relative" }}
-                          >
+                        <Form.Item
+                          label="Details"
+                          name="details"
+                          style={{ position: "relative" }}
+                        >
+                          <Input.Group>
                             <Row>
-                              <Col span={DetailsEdited ? 24 : 22}>
+                              <Col
+                                span={
+                                  DetailsEdited ||
+                                  defaultValue.details.length <= 0
+                                    ? 24
+                                    : 22
+                                }
+                              >
                                 <TextArea
+                                  rows={4}
                                   defaultValue={defaultValue.details}
-                                  rows={6}
                                   onChange={() => {
                                     setDetailsEdited(true);
                                     setCogIconDetails(true);
@@ -271,22 +300,25 @@ function ProjectCreate() {
                                     textAlign: "justify"
                                   }}
                                 />
-                                {!DetailsEdited && !CogIconDetails && (
-                                  <RadarChartOutlined className="cogDetails" />
-                                )}
+                                {!DetailsEdited &&
+                                  !CogIconDetails &&
+                                  defaultValue.details.length > 0 && (
+                                    <RadarChartOutlined className="cogDetails" />
+                                  )}
                               </Col>
 
                               <Col span={2}>
-                                {!DetailsEdited && (
-                                  <CheckOutlined
-                                    onClick={() => setCogIconDetails(true)}
-                                    className="CheckIconDetails"
-                                  />
-                                )}
+                                {!DetailsEdited &&
+                                  defaultValue.details.length > 0 && (
+                                    <CheckOutlined
+                                      onClick={() => setCogIconDetails(true)}
+                                      className="CheckIconDetails"
+                                    />
+                                  )}
                               </Col>
                             </Row>
-                          </Form.Item>
-                        </Input.Group>
+                          </Input.Group>
+                        </Form.Item>
                         <Row justify="center" style={{ position: "relative" }}>
                           {SpecificationDoc.title !==
                             "Specification Document" && (
@@ -317,7 +349,12 @@ function ProjectCreate() {
                           )}
 
                           {schedule.title !== "Schedule" && (
-                            <Col offset={1}>
+                            <Col
+                              style={{
+                                left: "-10px"
+                              }}
+                              offset={1}
+                            >
                               <Dropzone
                                 setCount={setCount}
                                 icon="CalendarOutlined"
@@ -335,7 +372,7 @@ function ProjectCreate() {
                           <Col span={24}>
                             <p className="footerText">
                               you can add any of these any later, but
-                              ConstructivIQ <br /> can helpyou more if you add
+                              ConstructivIQ <br /> can help you more if you add
                               them now.
                             </p>
                           </Col>
@@ -431,9 +468,6 @@ function ProjectCreate() {
                       style={{ display: "inline" }}
                       type="primary"
                       onClick={() => next()}
-                      disabled={
-                        !(SpecificationDoc.title.length > 0) || !CogIconProject
-                      }
                     >
                       Next <ArrowRightOutlined />
                     </Button>
@@ -496,7 +530,7 @@ function ProjectCreate() {
                 style={{
                   height: "190px",
                   position: "absolute",
-                  top: "-50px"
+                  top: "-40px"
                 }}
               >
                 <Dropzone
@@ -514,7 +548,7 @@ function ProjectCreate() {
               <Col>
                 <p className="footerText">
                   You can add any of these any later, but ConstructivIQ <br />{" "}
-                  can helpyou more if you add them now.
+                  can help you more if you add them now.
                   <br />
                   <Button
                     type="text"

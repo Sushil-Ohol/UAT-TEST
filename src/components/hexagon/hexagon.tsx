@@ -143,7 +143,7 @@ export default class Hexagon extends Component {
         <text fill="#bbb" strokeWidth="0" style={textStyle}>
           <tspan
             x={width / 2}
-            y={(1.2 * height) / 2 + fontSizeOffset}
+            y={(1.3 * height) / 2 + fontSizeOffset}
             textAnchor="middle"
           >
             {ProgressBar <= 0 && text}
@@ -195,7 +195,7 @@ export default class Hexagon extends Component {
             style={{
               width: "90%",
               position: "absolute",
-              top: "115px",
+              top: "105px",
 
               left: "20px"
             }}

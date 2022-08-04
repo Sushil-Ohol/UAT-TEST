@@ -27,7 +27,7 @@ function DropzoneFile({
   IconStyle: object;
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
   setState: any;
-  setCount: any;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [FileError, setFileError] = useState("");
   const maxfilesize = 100857000;
@@ -36,8 +36,8 @@ function DropzoneFile({
     color: "red",
     display: "inline-block",
     position: "absolute",
-    top: "80px",
-    left: "73px",
+    top: "65px",
+    left: "55px",
     fontSize: "30px"
   };
   function anticon() {
@@ -84,7 +84,7 @@ function DropzoneFile({
             setState({ ...file, title });
             setCount((prev: number) => prev + 1);
             setFileError("");
-          }, 4000);
+          }, 2000);
         } else {
           setFileError("Upload file less than 1MB");
           setInterval(() => {
@@ -113,12 +113,12 @@ function DropzoneFile({
               ProgressBar={progress}
               icon={FileError ? iconfunction : anticon}
               text={isDragActive ? "Drag file here" : FileError || title}
-              sideLength={100}
+              sideLength={80}
               borderRadius={0}
               fill="rgba(128, 128, 128, 0.001)"
               shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
               textStyle={{
-                fontFamily: "Source Sans Pro",
+                fontFamily: "sans-serif",
                 fontSize: "12px",
                 fill: FileError ? "red" : "grey"
               }}
