@@ -38,6 +38,10 @@ interface SubmittalGrid {
     assigned: string;
 }
 
+const statusValues = ["Approved", "In Review"];
+const ContractorValues = ["ABC Contractor", "Test Contractor"];
+const AssignValues = ["Luke", "jone doe","XYZ"];
+
 export type AppProps = {
   // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
   onClick?: () => void;
@@ -113,15 +117,21 @@ function SubmittalList() {
           return { color: "red" };
         }
         return { color: "black" };;
-      }
+      },
+      cellEditor: "agSelectCellEditor",
+      cellEditorParams: {
+        values: statusValues,
+      },
     },
     { field: "dueBy", headerName: "DUE BY" },
-    { field: "contractor", headerName: "CONTRACTOR" },
+    { field: "contractor", headerName: "CONTRACTOR", cellEditor: "agSelectCellEditor", cellEditorParams: {
+      values:ContractorValues,
+    }},
     { field: "dependsOn", headerName: "DEPENDS ON" },
-    { field: "assigned", headerName: "ASSIGNED" },
-    { cellRendererFramework: Buttons}
-
-  
+    { field: "assigned", headerName: "ASSIGNED", cellEditor: "agSelectCellEditor", cellEditorParams: {
+      values:AssignValues,
+    }},
+    { cellRendererFramework: Buttons, editable: false}
   ]);
 
   const autoGroupColumnDef = useMemo(() => {
@@ -132,21 +142,21 @@ function SubmittalList() {
       cellRenderer: "agGroupCellRenderer",
       cellRendererParams: {
       checkbox: true
-      }
+      },
+     cellEditorPopup: true,
     };
   }, []);
+
+
+  
 
   const defaultColDef: {} = useMemo(() => {
     return {
       flex: 1,
       sortable: true,
       editable: true,
-      resizable: true,
       filter: true,
-      wrapHeaderText: true,
-      autoHeaderHeight: true,
-      wrapText: true,     // <-- HERE
-      autoHeight: true,   // <-- & HERE  
+      width: 100
     };
   }, []);
 
@@ -205,12 +215,9 @@ function SubmittalList() {
                 }}
                 defaultValue="All"
               >
-                <Option value="0">All</Option>
-                <Option value="1">Assigned</Option>
-                <Option value="2">In Review</Option>
-                <Option value="3">Communicated</Option>
-                <Option value="4">Resolved</Option>
-                <Option value="5">Closed</Option>
+                <Option value="All">All</Option>
+                <Option value="Approved">Approved</Option>
+                <Option value="In Review">In Review</Option>
               </Select>
               {/* </Input.Group> */}
               &nbsp;&nbsp;
@@ -224,13 +231,14 @@ function SubmittalList() {
                 }}
                 defaultValue="All"
               >
-                <Option value="0">ABC Construction</Option>
-                <Option value="1">Test Construction</Option>
+                <Option value="All">All</Option>
+                <Option value="ABC Construction">ABC Construction</Option>
+                <Option value="Test Construction">Test Construction</Option>
               </Select>
               {/* </Input.Group> */}
               &nbsp;&nbsp;
               {/* <Input.Group compact> */}
-              <Input style={{ width: "10%" }} defaultValue="Pass" disabled />
+              <Input style={{ width: "10%" }} defaultValue="Due" disabled />
 
               <Select
                 style={{ width: 100 }}
@@ -239,7 +247,7 @@ function SubmittalList() {
                 }}
                 defaultValue="Past due"
               >
-                <Option value="0">Past due</Option>
+              <Option value="Past due">Past due</Option>
               </Select>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <section >
@@ -277,7 +285,7 @@ function SubmittalList() {
               <Row gutter={12}>
                 <Col span={2}>
                   <div>
-                    <span>3 Selected</span>
+                    <span>0 Selected</span>
                   </div>
                 </Col>
                 <Col span={3}>
