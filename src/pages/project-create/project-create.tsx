@@ -20,7 +20,6 @@ import "./project-create.css";
 function ProjectCreate() {
   const [SkipBtn, setSkipBtn] = useState(false);
   const [current, setCurrent] = useState(0);
-  const [ProjectName, setProjectName] = useState("");
   const ProjectNameRef: any = useRef(null);
   const [CogIconProject, setCogIconProject] = useState(false);
   const [CogIconDetails, setCogIconDetails] = useState(false);
@@ -61,8 +60,10 @@ function ProjectCreate() {
     position: "absolute",
     top: "65px",
     left: "55px",
-    fontSize: "30px"
+    fontSize: "30px",
+    textSize: "12px"
   };
+
   const [defaultValue, setdefaultValue] = useState({
     details: "",
     ProjectName: ""
@@ -118,16 +119,13 @@ function ProjectCreate() {
   ];
 
   useEffect(() => {
-    const ProjectDefaultValue = async () => {
-      const result = await axios.get("http://localhost:5000/api/v1/projectsug");
-      setdefaultValue(result.data);
-    };
     if (count === 0) {
       setSkipBtn(false);
     }
-    if (count === 1) {
-      ProjectDefaultValue();
-    }
+    setCogIconProject(false);
+    setCogIconDetails(false);
+    setInputEdited(false);
+    setDetailsEdited(false);
   }, [count]);
   useEffect(() => {
     const Getvalue = async () => {
@@ -141,11 +139,15 @@ function ProjectCreate() {
       setSpecificationDoc({ path: "", title: "" });
       setsiteDrawing({ path: "", title: "" });
       setschedule({ path: "", title: "" });
+      setdefaultValue({
+        details: "",
+        ProjectName: ""
+      });
     }
   }, [current, SkipBtn]);
 
   const next = async () => {
-    if (ProjectName.length > 0) {
+    if (defaultValue.ProjectName.length > 0 && InputEdited) {
       setCurrent(current + 1);
     }
     ProjectNameRef.current.focus();
@@ -170,15 +172,14 @@ function ProjectCreate() {
   };
 
   function HandleProjectName(e: any) {
-    setProjectName(e.target.value);
-
+    setdefaultValue({ ...defaultValue, ProjectName: e.target.value });
     setInputEdited(true);
     setCogIconProject(true);
   }
+
   return (
     <Row justify="center">
       <Col span={24}>
-        {JSON.stringify(defaultValue)}
         {SkipBtn ? (
           <>
             {steps[current]?.content === "Details" && (
@@ -186,7 +187,7 @@ function ProjectCreate() {
                 <Row justify="center">
                   <Col span={8}>
                     <Card className="detailsForm">
-                      <h2>Creating new project / Details</h2> <br />
+                      <h2>Creating new project / Details</h2>
                       <Form layout="vertical" autoComplete="off">
                         {defaultInputvalue?.map((item: any) => {
                           return (
@@ -204,7 +205,13 @@ function ProjectCreate() {
                                         defaultValue={item.defaultValue}
                                         readOnly
                                         addonAfter={
-                                          <SelectOutlined className="IconBlue" />
+                                          <a
+                                            href="https://www.google.com"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                          >
+                                            <SelectOutlined className="IconBlue" />
+                                          </a>
                                         }
                                         prefix={<FileDoneOutlined />}
                                         placeholder="input placeholder"
@@ -237,8 +244,8 @@ function ProjectCreate() {
                                 <Input
                                   ref={ProjectNameRef}
                                   type="text"
-                                  defaultValue={defaultValue.ProjectName}
-                                  placeholder="input placeholder"
+                                  value={defaultValue.ProjectName}
+                                  placeholder="Enter the project name"
                                   onChange={(e) => HandleProjectName(e)}
                                 />
                               </Col>
@@ -248,28 +255,38 @@ function ProjectCreate() {
                                     <CheckOutlined
                                       className="CheckIconDetails"
                                       onClick={() => {
-                                        setProjectName(
-                                          defaultValue.ProjectName
-                                        );
+                                        setdefaultValue({
+                                          ...defaultValue,
+                                          ProjectName: defaultValue.ProjectName
+                                        });
+                                        setInputEdited(true);
                                         setCogIconProject(true);
                                       }}
                                     />
                                   )}
                               </Col>
                             </Row>
-                            <Row>
-                              <Col>
-                                <p className="projectnamehint">
-                                  We guessed this name from your specification
-                                  document. So it has the <RadarChartOutlined />
-                                  symbol,
-                                  <br />
-                                  please correct if it is wrong. You can press
-                                  <CheckSquareOutlined className="hintcheckicon" />
-                                  tick to confirm
-                                </p>
-                              </Col>
-                            </Row>
+                            {defaultValue.ProjectName.length > 0 &&
+                              (SpecificationDoc.path.length > 0 ||
+                                siteDrawing.path.length > 0 ||
+                                schedule.path.length > 0) &&
+                              !InputEdited && (
+                                <Row>
+                                  <Col>
+                                    <p className="projectnamehint">
+                                      We guessed this name from your{" "}
+                                      Specification Document. So it has the
+                                      <RadarChartOutlined />
+                                      symbol,
+                                      <br />
+                                      please correct if it is wrong. You can
+                                      press
+                                      <CheckSquareOutlined className="hintcheckicon" />
+                                      tick to confirm
+                                    </p>
+                                  </Col>
+                                </Row>
+                              )}
                           </Input.Group>
                         </Form.Item>
                         <Form.Item
@@ -288,9 +305,13 @@ function ProjectCreate() {
                                 }
                               >
                                 <TextArea
-                                  rows={4}
-                                  defaultValue={defaultValue.details}
-                                  onChange={() => {
+                                  rows={2}
+                                  value={defaultValue.details}
+                                  onChange={(e) => {
+                                    setdefaultValue({
+                                      ...defaultValue,
+                                      details: e.target.value
+                                    });
                                     setDetailsEdited(true);
                                     setCogIconDetails(true);
                                   }}
@@ -319,53 +340,66 @@ function ProjectCreate() {
                             </Row>
                           </Input.Group>
                         </Form.Item>
-                        <Row justify="center" style={{ position: "relative" }}>
-                          {SpecificationDoc.title !==
-                            "Specification Document" && (
-                            <Col>
-                              <Dropzone
-                                setCount={setCount}
-                                icon="FileDoneOutlined"
-                                IconStyle={IconStyle}
-                                title="Specification Document"
-                                extension={["pdf"]}
-                                setSkipBtn={setSkipBtn}
-                                setState={setSpecificationDoc}
-                              />
-                            </Col>
-                          )}
-                          {siteDrawing.title !== "Drawing Set" && (
-                            <Col offset={1}>
-                              <Dropzone
-                                setCount={setCount}
-                                icon="SettingOutlined"
-                                IconStyle={IconStyle}
-                                title="Drawing Set"
-                                extension={["pdf"]}
-                                setSkipBtn={setSkipBtn}
-                                setState={setsiteDrawing}
-                              />
-                            </Col>
-                          )}
-
-                          {schedule.title !== "Schedule" && (
-                            <Col
-                              style={{
-                                left: "-10px"
-                              }}
-                              offset={1}
+                        <Row justify="center">
+                          <Col span={20}>
+                            <Row
+                              justify="center"
+                              style={{ position: "relative" }}
                             >
-                              <Dropzone
-                                setCount={setCount}
-                                icon="CalendarOutlined"
-                                IconStyle={IconStyle}
-                                title="Schedule"
-                                extension={["xls", "xlsx", "csv"]}
-                                setSkipBtn={setSkipBtn}
-                                setState={setschedule}
-                              />
-                            </Col>
-                          )}
+                              {SpecificationDoc.title !==
+                                "Specification Document" && (
+                                <Col>
+                                  <Dropzone
+                                    setdefaultValue={setdefaultValue}
+                                    setCount={setCount}
+                                    icon="FileDoneOutlined"
+                                    IconStyle={IconStyle}
+                                    title="Specification Document"
+                                    extension={["pdf"]}
+                                    setSkipBtn={setSkipBtn}
+                                    setState={setSpecificationDoc}
+                                  />
+                                </Col>
+                              )}
+                              {siteDrawing.title !== "Drawing Set" && (
+                                <Col offset={1}>
+                                  <Dropzone
+                                    setdefaultValue={setdefaultValue}
+                                    setCount={setCount}
+                                    icon="SettingOutlined"
+                                    IconStyle={IconStyle}
+                                    title="Drawing Set"
+                                    extension={["pdf"]}
+                                    setSkipBtn={setSkipBtn}
+                                    setState={setsiteDrawing}
+                                  />
+                                </Col>
+                              )}
+
+                              {schedule.title !== "Schedule" && (
+                                <Col
+                                  className={
+                                    SpecificationDoc.path.length <= 0 &&
+                                    siteDrawing.path.length <= 0
+                                      ? "scheduleHexagoan"
+                                      : ""
+                                  }
+                                  offset={1}
+                                >
+                                  <Dropzone
+                                    setdefaultValue={setdefaultValue}
+                                    setCount={setCount}
+                                    icon="CalendarOutlined"
+                                    IconStyle={IconStyle}
+                                    title="Schedule"
+                                    extension={["xls", "xlsx", "csv"]}
+                                    setSkipBtn={setSkipBtn}
+                                    setState={setschedule}
+                                  />
+                                </Col>
+                              )}
+                            </Row>
+                          </Col>
                         </Row>
 
                         <Row justify="center">
@@ -394,7 +428,7 @@ function ProjectCreate() {
                         </Col>
                         <Col span={12} offset={6}>
                           <strong className="HeadingHospitalName">
-                            {ProjectName}
+                            {defaultValue.ProjectName}
                           </strong>
                         </Col>
                         <Col span={12} offset={6}>
@@ -501,6 +535,7 @@ function ProjectCreate() {
             <Row justify="center" style={{ position: "relative" }}>
               <Col>
                 <Dropzone
+                  setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="FileDoneOutlined"
                   IconStyle={IconStyle}
@@ -512,6 +547,7 @@ function ProjectCreate() {
               </Col>
               <Col style={{ marginLeft: "1%" }}>
                 <Dropzone
+                  setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="SettingOutlined"
                   IconStyle={IconStyle}
@@ -534,6 +570,7 @@ function ProjectCreate() {
                 }}
               >
                 <Dropzone
+                  setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="CalendarOutlined"
                   IconStyle={IconStyle}

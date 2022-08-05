@@ -36,7 +36,7 @@ export default class Hexagon extends Component {
     strokeWidth: number;
     elevation: number;
     shadow: string;
-    img: string;
+
     icon: string;
     text: string;
     textStyle: {};
@@ -55,7 +55,7 @@ export default class Hexagon extends Component {
     strokeWidth: PropTypes.Requireable<number>;
     elevation: PropTypes.Requireable<number>;
     shadow: PropTypes.Requireable<string>;
-    img: PropTypes.Requireable<string>;
+
     icon: PropTypes.Requireable<any>;
     text: PropTypes.Requireable<string>;
     textStyle: PropTypes.Requireable<object>;
@@ -111,7 +111,7 @@ export default class Hexagon extends Component {
       borderRadius,
       elevation,
       shadow,
-      img,
+
       text,
       textStyle,
       href,
@@ -128,17 +128,9 @@ export default class Hexagon extends Component {
     const fontSizeOffset = textStyle.fontSize
       ? 0.3 * parseInt(textStyle.fontSize, 10)
       : 0;
-
     const hexagon = (
       <>
         <path fill={fill} d={generateHexSVG(sideLength, borderRadius)} />
-        <image
-          href={img}
-          width={0.7 * width}
-          height={0.3 * height}
-          x={0.1 * width}
-          y={0.2 * height}
-        />
 
         <text fill="#bbb" strokeWidth="0" style={textStyle}>
           <tspan
@@ -195,8 +187,7 @@ export default class Hexagon extends Component {
             style={{
               width: "90%",
               position: "absolute",
-              top: "105px",
-
+              top: "95px",
               left: "20px"
             }}
             percent={ProgressBar}
@@ -216,7 +207,7 @@ Hexagon.defaultProps = {
   strokeWidth: 0,
   elevation: 12,
   shadow: "#e2e2e2",
-  img: "",
+
   icon: "",
   text: "",
   textStyle: {},
@@ -239,7 +230,7 @@ Hexagon.propTypes = {
   strokeWidth: PropTypes.number,
   elevation: PropTypes.number,
   shadow: PropTypes.string,
-  img: PropTypes.string,
+
   icon: PropTypes.any,
   text: PropTypes.string,
   textStyle: PropTypes.object,

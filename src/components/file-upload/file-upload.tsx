@@ -19,15 +19,17 @@ function DropzoneFile({
   IconStyle,
   setSkipBtn,
   setState,
-  setCount
+  setCount,
+  setdefaultValue
 }: {
   title: string;
   extension: string[];
   icon: string;
-  IconStyle: object;
+  IconStyle: any;
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
   setState: any;
   setCount: React.Dispatch<React.SetStateAction<number>>;
+  setdefaultValue: any;
 }) {
   const [FileError, setFileError] = useState("");
   const maxfilesize = 100857000;
@@ -56,6 +58,11 @@ function DropzoneFile({
   function iconfunction() {
     return <WarningOutlined style={WrongIconStyle} />;
   }
+  const ProjectDefaultValue = async () => {
+    const result = await axios.get("http://localhost:5000/api/v1/projectsug");
+    setdefaultValue(result.data);
+  };
+
   const onDrop = (acceptedFiles: File[]) => {
     acceptedFiles.forEach(async (file: any) => {
       const splitedData = file.name.split(".");
@@ -81,6 +88,7 @@ function DropzoneFile({
 
           setTimeout(() => {
             setSkipBtn(true);
+            ProjectDefaultValue();
             setState({ ...file, title });
             setCount((prev: number) => prev + 1);
             setFileError("");
@@ -119,7 +127,7 @@ function DropzoneFile({
               shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
               textStyle={{
                 fontFamily: "sans-serif",
-                fontSize: "12px",
+                fontSize: IconStyle.textSize,
                 fill: FileError ? "red" : "grey"
               }}
             />
