@@ -24,7 +24,12 @@ function CreateSubmittal() {
   };
   return (
     <>
-      <Button onClick={showDrawer}>+ New Submittal</Button>
+      <Button
+        style={{ marginLeft: "320px", display: "flex" }}
+        onClick={showDrawer}
+      >
+        + New Submittal
+      </Button>
       <Drawer
         title="Create a new submittal"
         placement="right"
@@ -46,7 +51,7 @@ function CreateSubmittal() {
               </div>
             </section>
           </Col>
-          <Col span={24}>
+          <Col span={24} style={{ marginTop: "15px" }}>
             <section className="mt-2">
               <span className="HedingColor ">DISCRIPTION</span>
 
@@ -63,7 +68,7 @@ function CreateSubmittal() {
               />
             </section>
           </Col>
-          <Col span={24}>
+          <Col span={24} style={{ marginTop: "15px" }}>
             <section className="mt-2">
               <span className="HedingColor ">DUE BY</span>
               <br />
@@ -74,7 +79,7 @@ function CreateSubmittal() {
             </section>
           </Col>
 
-          <Col span={24}>
+          <Col span={24} style={{ marginTop: "15px" }}>
             <section className="mt-2">
               <span className="HedingColor">CONTRACTOR</span>
 
@@ -89,7 +94,7 @@ function CreateSubmittal() {
             </section>
           </Col>
 
-          <Col span={24}>
+          <Col span={24} style={{ marginTop: "15px" }}>
             <section className="mt-2">
               <span className="HedingColor ">ASSIGNED</span>
               <br />
@@ -101,18 +106,18 @@ function CreateSubmittal() {
             </section>
           </Col>
 
-          <Col span={24}>
+          <Col span={24} style={{ marginTop: "15px" }}>
             <section className="mt-2">
               <span className="HedingColor">PACAKGE</span>
               <br />
 
-              <Select style={{ width: 200 }} defaultValue="Slect packages">
+              <Select style={{ width: 200 }} defaultValue="Select packages">
                 <option value="0">920:Electricals</option>
               </Select>
             </section>
           </Col>
 
-          <Col span={12}>
+          <Col span={12} style={{ marginTop: "15px" }}>
             <div className="block">
               <section className="mt-2">
                 <span className="HedingColor">DEPENDS ON</span>
@@ -123,7 +128,7 @@ function CreateSubmittal() {
             </div>
           </Col>
 
-          <Col span={12}>
+          <Col span={12} style={{ marginTop: "15px" }}>
             <section className="mt-2">
               <div className="block">
                 <Button>+ 120 Electrical Wiring</Button>
@@ -133,7 +138,7 @@ function CreateSubmittal() {
             </section>
           </Col>
 
-          <Col span={12}>
+          <Col span={12} style={{ marginTop: "15px" }}>
             <div className="block">
               <section className="mt-2">
                 <span className="HedingColor">ATTACHMENTS</span>
@@ -148,7 +153,7 @@ function CreateSubmittal() {
               </section>
             </div>
           </Col>
-          <Col span={12}>
+          <Col span={12} style={{ marginTop: "15px" }}>
             <section className="mt-2">
               <span className="HedingColor">Suggested</span>
               <div className="block">

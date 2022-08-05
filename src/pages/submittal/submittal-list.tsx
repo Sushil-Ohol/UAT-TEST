@@ -93,7 +93,6 @@ function SubmittalList() {
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalGrid[]>();
   const [columnDefs, setColumnDefs] = useState([
-    // group cell renderer needed for expand / collapse icons
     { field: "id", headerName: "ID",
     checkboxSelection: true,
     headerCheckboxSelection: true,
@@ -141,7 +140,6 @@ function SubmittalList() {
     return {
       flex: 1,
       sortable: true,
-      minWidth: 100,
       editable: true,
       resizable: true,
       filter: true,
@@ -149,42 +147,6 @@ function SubmittalList() {
       autoHeaderHeight: true,
       wrapText: true,     // <-- HERE
       autoHeight: true,   // <-- & HERE  
-    };
-  }, []);
-  const detailCellRendererParams = useMemo<any>(() => {
-    return {
-      detailGridOptions: {
-        // rowSelection: "multiple",
-        suppressRowClickSelection: true,
-        enableRangeSelection: true,
-        rowSelection: "multiple",
-        pagination: true,
-        onSelectionChanged: (event: {
-          api: { getSelectedRows: () => any };
-        }) => {
-          console.log(event.api.getSelectedRows());
-        },
-        paginationAutoPageSize: true,
-        columnDefs: [
-          {
-            field: "callId",
-            checkboxSelection: true,
-            headerCheckboxSelection: true
-          },
-          { field: "direction" },
-          { field: "number", minWidth: 150 },
-          { field: "duration", valueFormatter: "x.toLocaleString() + 's'" },
-          { field: "switchCode", minWidth: 150 }
-        ],
-        defaultColDef: {
-          sortable: true,
-          flex: 1,
-          editable: true
-        }
-      },
-      getDetailRowData: (params: any) => {
-        params.successCallback(params.data.callRecords);
-      }
     };
   }, []);
 
@@ -232,22 +194,7 @@ function SubmittalList() {
               prefix={<SearchOutlined />}
             />
             <Input.Group compact>
-              <Input style={{ width: "10%" }} defaultValue="Floor" disabled />
-              <Select
-                style={{ width: 100 }}
-                onChange={(value: any) => {
-                  gridRef.current!.api.setQuickFilter(value);
-                }}
-                defaultValue="Floor 1"
-              >
-                <Option value="0">Floor 1</Option>
-                <Option value="1">Floor 2</Option>
-                <Option value="2">Floor 3</Option>
-                <Option value="3">Floor 4</Option>
-                <Option value="4">Floor 5</Option>
-                <Option value="5">Floor 6</Option>
-              </Select>
-              {/* </Input.Group> */}
+        
               &nbsp;&nbsp;
               {/* <Input.Group compact> */}
               <Input style={{ width: "10%" }} defaultValue="Status" disabled />
@@ -317,10 +264,7 @@ function SubmittalList() {
               suppressRowClickSelection
               suppressAggFuncInHeader
               readOnlyEdit
-              pagination
-              paginationAutoPageSize
               masterDetail 
-              detailCellRendererParams={detailCellRendererParams} 
               onGridReady={onGridReady} 
               onFirstDataRendered={onFirstDataRendered} 
               onCellEditRequest={onCellEditRequest}
