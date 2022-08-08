@@ -27,9 +27,9 @@ function DropzoneFile({
   icon: string;
   IconStyle: any;
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
-  setState: any;
+  setState: React.Dispatch<React.SetStateAction<any>>;
   setCount: React.Dispatch<React.SetStateAction<number>>;
-  setdefaultValue: any;
+  setdefaultValue: React.Dispatch<React.SetStateAction<any>>;
 }) {
   const [FileError, setFileError] = useState("");
   const maxfilesize = 100857000;
@@ -85,7 +85,6 @@ function DropzoneFile({
               }
             }
           );
-
           setTimeout(() => {
             setSkipBtn(true);
             ProjectDefaultValue();

@@ -184,6 +184,7 @@ export default class Hexagon extends Component {
         {icon()}
         {ProgressBar > 0 && (
           <Progress
+            className="progressBar"
             style={{
               width: "90%",
               position: "absolute",

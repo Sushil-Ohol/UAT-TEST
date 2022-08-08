@@ -147,7 +147,7 @@ function ProjectCreate() {
   }, [current, SkipBtn]);
 
   const next = async () => {
-    if (defaultValue.ProjectName.length > 0 && InputEdited) {
+    if (defaultValue.ProjectName.length > 0 && CogIconProject) {
       setCurrent(current + 1);
     }
     ProjectNameRef.current.focus();
@@ -259,7 +259,7 @@ function ProjectCreate() {
                                           ...defaultValue,
                                           ProjectName: defaultValue.ProjectName
                                         });
-                                        setInputEdited(true);
+                                        setInputEdited(false);
                                         setCogIconProject(true);
                                       }}
                                     />
