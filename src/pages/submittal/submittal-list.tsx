@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
-/* Project Details Page */
 import { Row, Col, Input, Space, Select, Button, Card } from "antd";
 
 import React, { useCallback, useMemo, useRef, useState } from "react";
@@ -162,18 +161,8 @@ function SubmittalList() {
 
 
   const onGridReady = useCallback(() => {
-    // fetch("http://localhost:3000/src/pages/submittal/data.json")
-    //   .then((resp) => resp.json())
-    //   .then((data: any) => {
-    //     console.log(data);
-    //     setRowData([...data]);
-    //   })
-
       const data:any = jsonData;
       setRowData([...data]);
-    
-
-
   }, []);
 
   const onFirstDataRendered = useCallback(() => {
@@ -186,9 +175,6 @@ function SubmittalList() {
     gridRef.current!.api.setQuickFilter(
       (document.getElementById("filter-text-box") as HTMLInputElement).value
     );
-  }, []);
-
-  const onCellEditRequest = useCallback((event) => {
   }, []);
 
   return (
@@ -275,7 +261,6 @@ function SubmittalList() {
               masterDetail 
               onGridReady={onGridReady} 
               onFirstDataRendered={onFirstDataRendered} 
-              onCellEditRequest={onCellEditRequest}
             />
           </div>
 
