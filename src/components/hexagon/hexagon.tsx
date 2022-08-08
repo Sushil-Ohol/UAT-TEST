@@ -111,7 +111,6 @@ export default class Hexagon extends Component {
       borderRadius,
       elevation,
       shadow,
-
       text,
       textStyle,
       href,

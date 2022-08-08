@@ -10,13 +10,13 @@ import axios from "axios";
 import Hexagon from "components/hexagon/hexagon";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
+import { FILESIZE, URL } from "../../constants/file-constant";
 import "./file-upload.css";
 
 function DropzoneFile({
   title,
   extension,
   icon,
-  IconStyle,
   setSkipBtn,
   setState,
   setCount,
@@ -25,41 +25,31 @@ function DropzoneFile({
   title: string;
   extension: string[];
   icon: string;
-  IconStyle: any;
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
   setState: React.Dispatch<React.SetStateAction<any>>;
   setCount: React.Dispatch<React.SetStateAction<number>>;
   setdefaultValue: React.Dispatch<React.SetStateAction<any>>;
 }) {
   const [FileError, setFileError] = useState("");
-  const maxfilesize = 100857000;
   const [progress, setProgress] = useState(0);
-  const WrongIconStyle: any = {
-    color: "red",
-    display: "inline-block",
-    position: "absolute",
-    top: "65px",
-    left: "55px",
-    fontSize: "30px"
-  };
+
   function anticon() {
     switch (icon) {
       case "FileDoneOutlined":
-        return <FileDoneOutlined style={IconStyle} />;
+        return <FileDoneOutlined className="icon-style" />;
       case "SettingOutlined":
-        return <SettingOutlined style={IconStyle} />;
+        return <SettingOutlined className="icon-style" />;
       case "CalendarOutlined":
-        return <CalendarOutlined style={IconStyle} />;
-
+        return <CalendarOutlined className="icon-style" />;
       default:
         return "";
     }
   }
   function iconfunction() {
-    return <WarningOutlined style={WrongIconStyle} />;
+    return <WarningOutlined className="icon-style-wrong" />;
   }
   const ProjectDefaultValue = async () => {
-    const result = await axios.get("http://localhost:5000/api/v1/projectsug");
+    const result = await axios.get(`${URL}/projectsug`);
     setdefaultValue(result.data);
   };
 
@@ -68,23 +58,19 @@ function DropzoneFile({
       const splitedData = file.name.split(".");
       const fileextension = splitedData[1];
       if (extension.includes(fileextension)) {
-        if (file.size < maxfilesize) {
+        if (file.size < FILESIZE) {
           const formData = new FormData();
           formData.append("image", file);
           formData.append("title", title);
 
-          await axios.post(
-            "http://localhost:5000/api/v1/fileUpload",
-            formData,
-            {
-              onUploadProgress: (progressEvent) => {
-                const progressCount = Math.ceil(
-                  (progressEvent.loaded / progressEvent.total) * 100
-                );
-                setProgress(progressCount);
-              }
+          await axios.post(`${URL}/fileUpload`, formData, {
+            onUploadProgress: (progressEvent) => {
+              const progressCount = Math.ceil(
+                (progressEvent.loaded / progressEvent.total) * 100
+              );
+              setProgress(progressCount);
             }
-          );
+          });
           setTimeout(() => {
             setSkipBtn(true);
             ProjectDefaultValue();
@@ -93,7 +79,7 @@ function DropzoneFile({
             setFileError("");
           }, 2000);
         } else {
-          setFileError("Upload file less than 1MB");
+          setFileError("Upload file less than 100MB");
           setInterval(() => {
             setFileError("");
           }, 4000);
@@ -111,7 +97,7 @@ function DropzoneFile({
   };
 
   return (
-    <Dropzone onDrop={onDrop} multiple={false}>
+    <Dropzone onDrop={onDrop} multiple>
       {({ getRootProps, getInputProps, isDragActive }) => (
         <section>
           <div {...getRootProps()}>
@@ -126,7 +112,7 @@ function DropzoneFile({
               shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
               textStyle={{
                 fontFamily: "sans-serif",
-                fontSize: IconStyle.textSize,
+                fontSize: "12px",
                 fill: FileError ? "red" : "grey"
               }}
             />

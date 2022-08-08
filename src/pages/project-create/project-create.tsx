@@ -16,15 +16,16 @@ import {
   CheckSquareOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
+import { URL } from "constants/file-constant";
 
 function ProjectCreate() {
   const [SkipBtn, setSkipBtn] = useState(false);
   const [current, setCurrent] = useState(0);
-  const ProjectNameRef: any = useRef(null);
-  const [CogIconProject, setCogIconProject] = useState(false);
-  const [CogIconDetails, setCogIconDetails] = useState(false);
-  const [InputEdited, setInputEdited] = useState(false);
-  const [DetailsEdited, setDetailsEdited] = useState(false);
+  const ProjectInputRef: any = useRef(null);
+  const [CogIconProjectInput, setCogIconProjectInput] = useState(false);
+  const [CogIconDetailsTextArea, setCogIconDetailsTextArea] = useState(false);
+  const [ProjectInputEdited, setProjectInputEdited] = useState(false);
+  const [TextAreaEdited, setTextAreaEdited] = useState(false);
   const [projectValue, setProjectValue] = useState({
     floors: 0,
     materials: 0,
@@ -54,15 +55,6 @@ function ProjectCreate() {
       content: "Finish"
     }
   ];
-  const IconStyle: any = {
-    color: "grey",
-    display: "inline-block",
-    position: "absolute",
-    top: "65px",
-    left: "55px",
-    fontSize: "30px",
-    textSize: "12px"
-  };
 
   const [defaultValue, setdefaultValue] = useState({
     details: "",
@@ -70,7 +62,7 @@ function ProjectCreate() {
   });
 
   const [count, setCount] = useState(0);
-  const defaultInputvalue = [
+  const FileInputs = [
     {
       lable: SpecificationDoc.title,
       name: "specificationDoc",
@@ -78,7 +70,7 @@ function ProjectCreate() {
       initialValue: SpecificationDoc.path,
       addonAfter: (
         <CloseOutlined
-          className="CloseIcon"
+          className="close-icon"
           onClick={() => {
             setSpecificationDoc({ path: "", title: "" });
             setCount((val) => val - 1);
@@ -93,7 +85,7 @@ function ProjectCreate() {
       defaultValue: siteDrawing.path,
       addonAfter: (
         <CloseOutlined
-          className="CloseIcon"
+          className="close-icon"
           onClick={() => {
             setsiteDrawing({ path: "", title: "" });
             setCount((val) => val - 1);
@@ -108,7 +100,7 @@ function ProjectCreate() {
       defaultValue: schedule.path,
       addonAfter: (
         <CloseOutlined
-          className="CloseIcon"
+          className="close-icon"
           onClick={() => {
             setschedule({ path: "", title: "" });
             setCount((val) => val - 1);
@@ -122,14 +114,14 @@ function ProjectCreate() {
     if (count === 0) {
       setSkipBtn(false);
     }
-    setCogIconProject(false);
-    setCogIconDetails(false);
-    setInputEdited(false);
-    setDetailsEdited(false);
+    setCogIconProjectInput(false);
+    setCogIconDetailsTextArea(false);
+    setProjectInputEdited(false);
+    setTextAreaEdited(false);
   }, [count]);
   useEffect(() => {
     const Getvalue = async () => {
-      const result = await axios.get("http://localhost:5000/api/v1/value");
+      const result = await axios.get(`${URL}/value`);
       setProjectValue({ ...result.data });
     };
     if (current > 0) {
@@ -147,34 +139,34 @@ function ProjectCreate() {
   }, [current, SkipBtn]);
 
   const next = async () => {
-    if (defaultValue.ProjectName.length > 0 && CogIconProject) {
+    if (defaultValue.ProjectName.length > 0 && CogIconProjectInput) {
       setCurrent(current + 1);
     }
-    ProjectNameRef.current.focus();
+    ProjectInputRef.current.focus();
   };
 
   function prev() {
     if (current === 0) {
-      setCogIconProject(false);
-      setCogIconDetails(false);
-      setInputEdited(false);
-      setDetailsEdited(false);
+      setCogIconProjectInput(false);
+      setCogIconDetailsTextArea(false);
+      setProjectInputEdited(false);
+      setTextAreaEdited(false);
     }
     setCurrent(current - 1);
   }
 
   const HandleSkipEvent = () => {
     setSkipBtn(true);
-    setCogIconProject(false);
-    setCogIconDetails(false);
-    setInputEdited(false);
-    setDetailsEdited(false);
+    setCogIconProjectInput(false);
+    setCogIconDetailsTextArea(false);
+    setProjectInputEdited(false);
+    setTextAreaEdited(false);
   };
 
   function HandleProjectName(e: any) {
     setdefaultValue({ ...defaultValue, ProjectName: e.target.value });
-    setInputEdited(true);
-    setCogIconProject(true);
+    setProjectInputEdited(true);
+    setCogIconProjectInput(true);
   }
 
   return (
@@ -186,15 +178,15 @@ function ProjectCreate() {
               <div className="steps-content">
                 <Row justify="center">
                   <Col span={8}>
-                    <Card className="detailsForm">
+                    <Card className="details-form">
                       <h2>Creating new project / Details</h2>
                       <Form layout="vertical" autoComplete="off">
-                        {defaultInputvalue?.map((item: any) => {
+                        {FileInputs?.map((item: any) => {
                           return (
                             item.lable.length > 0 && (
                               <Form.Item
                                 key={item.name}
-                                className="FileInput"
+                                className="file-input"
                                 label={item.lable}
                                 name={item.name}
                               >
@@ -210,7 +202,7 @@ function ProjectCreate() {
                                             target="_blank"
                                             rel="noreferrer"
                                           >
-                                            <SelectOutlined className="IconBlue" />
+                                            <SelectOutlined className="icon-blue" />
                                           </a>
                                         }
                                         prefix={<FileDoneOutlined />}
@@ -224,25 +216,24 @@ function ProjectCreate() {
                             )
                           );
                         })}
-
                         <Form.Item label="Project Name" name="projectname">
                           <Input.Group>
                             <Row>
                               <Col
                                 span={
-                                  InputEdited ||
+                                  ProjectInputEdited ||
                                   defaultValue.ProjectName.length <= 0
                                     ? 24
                                     : 22
                                 }
                               >
-                                {!InputEdited &&
-                                  !CogIconProject &&
+                                {!ProjectInputEdited &&
+                                  !CogIconProjectInput &&
                                   defaultValue.ProjectName.length > 0 && (
-                                    <RadarChartOutlined className="cogDetails" />
+                                    <RadarChartOutlined className="cog-details" />
                                   )}
                                 <Input
-                                  ref={ProjectNameRef}
+                                  ref={ProjectInputRef}
                                   type="text"
                                   value={defaultValue.ProjectName}
                                   placeholder="Enter the project name"
@@ -250,17 +241,17 @@ function ProjectCreate() {
                                 />
                               </Col>
                               <Col span={2}>
-                                {!InputEdited &&
+                                {!ProjectInputEdited &&
                                   defaultValue.ProjectName.length > 0 && (
                                     <CheckOutlined
-                                      className="CheckIconDetails"
+                                      className="check-icon-details"
                                       onClick={() => {
                                         setdefaultValue({
                                           ...defaultValue,
                                           ProjectName: defaultValue.ProjectName
                                         });
-                                        setInputEdited(false);
-                                        setCogIconProject(true);
+                                        setProjectInputEdited(false);
+                                        setCogIconProjectInput(true);
                                       }}
                                     />
                                   )}
@@ -270,10 +261,10 @@ function ProjectCreate() {
                               (SpecificationDoc.path.length > 0 ||
                                 siteDrawing.path.length > 0 ||
                                 schedule.path.length > 0) &&
-                              !InputEdited && (
+                              !ProjectInputEdited && (
                                 <Row>
                                   <Col>
-                                    <p className="projectnamehint">
+                                    <p className="project-name-hint">
                                       We guessed this name from your{" "}
                                       Specification Document. So it has the
                                       <RadarChartOutlined />
@@ -281,7 +272,7 @@ function ProjectCreate() {
                                       <br />
                                       please correct if it is wrong. You can
                                       press
-                                      <CheckSquareOutlined className="hintcheckicon" />
+                                      <CheckSquareOutlined className="hint-check-icon" />
                                       tick to confirm
                                     </p>
                                   </Col>
@@ -289,16 +280,12 @@ function ProjectCreate() {
                               )}
                           </Input.Group>
                         </Form.Item>
-                        <Form.Item
-                          label="Details"
-                          name="details"
-                          style={{ position: "relative" }}
-                        >
+                        <Form.Item label="Details" name="details">
                           <Input.Group>
                             <Row>
                               <Col
                                 span={
-                                  DetailsEdited ||
+                                  TextAreaEdited ||
                                   defaultValue.details.length <= 0
                                     ? 24
                                     : 22
@@ -312,28 +299,25 @@ function ProjectCreate() {
                                       ...defaultValue,
                                       details: e.target.value
                                     });
-                                    setDetailsEdited(true);
-                                    setCogIconDetails(true);
+                                    setTextAreaEdited(true);
+                                    setCogIconDetailsTextArea(true);
                                   }}
                                   placeholder="enter your project details"
-                                  style={{
-                                    width: "100%",
-                                    textAlign: "justify"
-                                  }}
                                 />
-                                {!DetailsEdited &&
-                                  !CogIconDetails &&
+                                {!TextAreaEdited &&
+                                  !CogIconDetailsTextArea &&
                                   defaultValue.details.length > 0 && (
-                                    <RadarChartOutlined className="cogDetails" />
+                                    <RadarChartOutlined className="cog-details" />
                                   )}
                               </Col>
-
                               <Col span={2}>
-                                {!DetailsEdited &&
+                                {!TextAreaEdited &&
                                   defaultValue.details.length > 0 && (
                                     <CheckOutlined
-                                      onClick={() => setCogIconDetails(true)}
-                                      className="CheckIconDetails"
+                                      onClick={() =>
+                                        setCogIconDetailsTextArea(true)
+                                      }
+                                      className="check-icon-details"
                                     />
                                   )}
                               </Col>
@@ -342,10 +326,7 @@ function ProjectCreate() {
                         </Form.Item>
                         <Row justify="center">
                           <Col span={20}>
-                            <Row
-                              justify="center"
-                              style={{ position: "relative" }}
-                            >
+                            <Row justify="center">
                               {SpecificationDoc.title !==
                                 "Specification Document" && (
                                 <Col>
@@ -353,7 +334,6 @@ function ProjectCreate() {
                                     setdefaultValue={setdefaultValue}
                                     setCount={setCount}
                                     icon="FileDoneOutlined"
-                                    IconStyle={IconStyle}
                                     title="Specification Document"
                                     extension={["pdf"]}
                                     setSkipBtn={setSkipBtn}
@@ -367,7 +347,6 @@ function ProjectCreate() {
                                     setdefaultValue={setdefaultValue}
                                     setCount={setCount}
                                     icon="SettingOutlined"
-                                    IconStyle={IconStyle}
                                     title="Drawing Set"
                                     extension={["pdf"]}
                                     setSkipBtn={setSkipBtn}
@@ -381,7 +360,7 @@ function ProjectCreate() {
                                   className={
                                     SpecificationDoc.path.length <= 0 &&
                                     siteDrawing.path.length <= 0
-                                      ? "scheduleHexagoan"
+                                      ? "schedule-hexagoan"
                                       : ""
                                   }
                                   offset={1}
@@ -390,7 +369,6 @@ function ProjectCreate() {
                                     setdefaultValue={setdefaultValue}
                                     setCount={setCount}
                                     icon="CalendarOutlined"
-                                    IconStyle={IconStyle}
                                     title="Schedule"
                                     extension={["xls", "xlsx", "csv"]}
                                     setSkipBtn={setSkipBtn}
@@ -404,7 +382,7 @@ function ProjectCreate() {
 
                         <Row justify="center">
                           <Col span={24}>
-                            <p className="footerText">
+                            <p className="footer-text">
                               you can add any of these any later, but
                               ConstructivIQ <br /> can help you more if you add
                               them now.
@@ -421,18 +399,18 @@ function ProjectCreate() {
               {steps[current].content === "Finish" && (
                 <div className="steps-content">
                   <Col span={24}>
-                    <Card className="CardFinish">
+                    <Card className="card-finish">
                       <Row>
                         <Col span={12} offset={6}>
-                          <h4 className="subHeading">You are all set!</h4>
+                          <h4 className="sub-heading">You are all set!</h4>
                         </Col>
                         <Col span={12} offset={6}>
-                          <strong className="HeadingHospitalName">
+                          <strong className="heading-hospital-name">
                             {defaultValue.ProjectName}
                           </strong>
                         </Col>
                         <Col span={12} offset={6}>
-                          <p className="ParaFinishScreen1">
+                          <p className="para-finish-screen">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Ducimus corporis ex accusantium! Qui aut,
                             voluptatibus debitis magnam rerum excepturi,
@@ -443,26 +421,26 @@ function ProjectCreate() {
                           </p>
                           <Row justify="center">
                             <Col span={3} offset={0}>
-                              <strong className="Number">12</strong>
+                              <strong className="number">12</strong>
                               <br />
                               <strong>Uploaded Document</strong>
                             </Col>
                             <Col span={3} offset={3}>
-                              <strong className="Number">
+                              <strong className="number">
                                 {projectValue.floors}
                               </strong>
                               <br />
                               <strong>Floors Identified</strong>
                             </Col>
                             <Col span={3} offset={3}>
-                              <strong className="Number">
+                              <strong className="number">
                                 {projectValue.materials}
                               </strong>
                               <br />
                               <strong>Materials Identified</strong>
                             </Col>
                             <Col span={4} offset={3}>
-                              <strong className="Number">
+                              <strong className="number">
                                 {projectValue.submittals}
                               </strong>
                               <br />
@@ -471,14 +449,14 @@ function ProjectCreate() {
                           </Row>
                         </Col>
                         <Col span={12} offset={6}>
-                          <p className="ParaFinishScreen2">
+                          <p className="para-finish-screenp">
                             We have identified 3283 submittals from the
                             specification document. You can confirm,change,
                             split or merge them in the next step <br />
                           </p>
                         </Col>
                         <Col span={12} offset={6}>
-                          <Button type="link" className="btnsubmittals">
+                          <Button type="link" className="btn-submittals">
                             View submittals <ArrowRightOutlined />
                           </Button>
                         </Col>
@@ -488,18 +466,17 @@ function ProjectCreate() {
                 </div>
               )}
             </Row>
-            <Row justify="center" style={{ position: "relative" }}>
+            <Row justify="center">
               <Col>
                 <div className="steps-action">
                   {current === steps.length - 1 && (
-                    <Button className="stepperDoneBtn" type="primary">
+                    <Button className="stepper-done-btn" type="primary">
                       View project
                     </Button>
                   )}
                   {current < steps.length - 1 && (
                     <Button
-                      className="stepperNextBtn"
-                      style={{ display: "inline" }}
+                      className="stepper-next-btn"
                       type="primary"
                       onClick={() => next()}
                     >
@@ -511,12 +488,11 @@ function ProjectCreate() {
                     <Step title="Finish" />
                   </Steps>
 
-                  {SkipBtn && (
+                  {SkipBtn && current !== 1 && (
                     <Button
                       disabled={current === 1}
                       danger
-                      className="stepperPrevBtn"
-                      style={{ display: "flex", alignItems: "center" }}
+                      className="stepper-prev-btn"
                       onClick={() => (current > 0 ? prev() : setSkipBtn(false))}
                       icon={<ArrowLeftOutlined />}
                     >
@@ -528,29 +504,27 @@ function ProjectCreate() {
             </Row>
           </>
         ) : (
-          <Card className="Cardskip">
+          <Card className="card-skip">
             <Row justify="center">
               <h2>Upload any of the document to get started!</h2>
             </Row>
-            <Row justify="center" style={{ position: "relative" }}>
+            <Row justify="center">
               <Col>
                 <Dropzone
                   setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="FileDoneOutlined"
-                  IconStyle={IconStyle}
                   title="Specification Document"
                   extension={["pdf"]}
                   setSkipBtn={setSkipBtn}
                   setState={setSpecificationDoc}
                 />
               </Col>
-              <Col style={{ marginLeft: "1%" }}>
+              <Col className="hexagon-drawing-set">
                 <Dropzone
                   setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="SettingOutlined"
-                  IconStyle={IconStyle}
                   title="Drawing Set"
                   extension={["pdf"]}
                   setSkipBtn={setSkipBtn}
@@ -558,22 +532,12 @@ function ProjectCreate() {
                 />
               </Col>
             </Row>
-            <Row
-              justify="center"
-              style={{ height: "150px", position: "relative" }}
-            >
-              <Col
-                style={{
-                  height: "190px",
-                  position: "absolute",
-                  top: "-40px"
-                }}
-              >
+            <Row justify="center" className="hexagon-schedule-row">
+              <Col className="hexagon-schedule">
                 <Dropzone
                   setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="CalendarOutlined"
-                  IconStyle={IconStyle}
                   title="Schedule"
                   extension={["xls", "xlsx", "csv"]}
                   setSkipBtn={setSkipBtn}
@@ -583,13 +547,13 @@ function ProjectCreate() {
             </Row>
             <Row justify="center">
               <Col>
-                <p className="footerText">
+                <p className="footer-text">
                   You can add any of these any later, but ConstructivIQ <br />{" "}
                   can help you more if you add them now.
                   <br />
                   <Button
                     type="text"
-                    className="skipBtn"
+                    className="skip-btn"
                     onClick={HandleSkipEvent}
                   >
                     <Text strong>Skip this step</Text>

@@ -6,6 +6,7 @@ import {
   ProjectDetailsPage
 } from "pages";
 import { Navbar } from "components";
+import "index.css";
 
 function App() {
   return (

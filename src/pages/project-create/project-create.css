@@ -1,13 +1,4 @@
-.footerText {
-  margin-top: 2%;
-  margin-bottom: 1rem;
-  text-align: center;
-  color: grey;
-}
-Button {
-  margin-top: 10%;
-}
-.Cardskip {
+.card-skip {
   padding: 0px;
   padding-top: 40px;
   margin: 0px;
@@ -16,17 +7,10 @@ Button {
 .ant-card-body {
   padding: 0px;
 }
-.detailsForm {
+.details-form {
   padding-top: 10px;
   border: 0px;
   background: transparent;
-}
-.FileError {
-  color: red;
-}
-
-Button {
-  margin-top: 10%;
 }
 .steps-content {
   min-height: 200px;
@@ -47,20 +31,23 @@ Button {
   align-items: center;
   justify-content: space-evenly;
 }
-Card {
+card {
   background: transparent;
 }
-.stepperPrevBtn {
+.stepper-prev-btn {
+  margin-top: 10%;
   position: absolute;
   top: -55px;
   left: 10px;
 }
-.stepperNextBtn {
+.stepper-next-btn {
+  margin-top: 10%;
   position: absolute;
   top: -55px;
   right: 10px;
 }
-.stepperDoneBtn {
+.stepper-done-btn {
+  margin-top: 10%;
   position: absolute;
   top: -55px;
   right: 10px;
@@ -87,7 +74,7 @@ Card {
 .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
   border: 0px dotted grey;
 }
-.ant-input-affix-wrapper > .FileInput {
+.ant-input-affix-wrapper > .file-input {
   color: red;
   border: 0px;
 }
@@ -128,11 +115,6 @@ textarea.ant-input {
   color: white;
   background-color: #1890ff;
 }
-.stepactionWrapper {
-  width: 100vw;
-  position: relative;
-  background-color: red;
-}
 .ant-steps-item-process .ant-steps-item-icon {
   border: 1px solid black;
 }
@@ -141,27 +123,15 @@ textarea.ant-input {
   border: 0px dotted grey;
   font-size: larger;
 }
-.ant-input-group-addon > .IconBlue {
+.ant-input-group-addon > .icon-blue {
   color: rgb(0, 161, 247);
   background: transparent;
   font-size: larger;
 }
-#specificationDoc {
-  color: #1890ff;
-  font-weight: 600;
-}
-#siteDrawingDoc {
-  color: #1890ff;
-  font-weight: 600;
-}
-#scheduleDoc {
-  color: #1890ff;
-  font-weight: 600;
-}
 .lable {
   color: red;
 }
-.CloseIcon {
+.close-icon {
   font-size: 12px;
   color: black;
   margin: 0px;
@@ -182,7 +152,7 @@ textarea.ant-input {
   background-color: white;
   border-radius: 25px;
 }
-.cogDetails {
+.cog-details {
   position: absolute;
   z-index: 99;
   right: -5px;
@@ -190,7 +160,7 @@ textarea.ant-input {
   background-color: white;
   border-radius: 25px;
 }
-.CheckIconDetails {
+.check-icon-details {
   color: green;
   background-color: white;
   padding: 10px;
@@ -206,43 +176,42 @@ textarea.ant-input {
   color: rgb(0, 161, 247);
   font-weight: 600;
 }
-.CardFinish {
+.card-finish {
   width: 98vw;
   background: transparent;
 }
-.subHeading {
+.sub-heading {
   padding-top: 1%;
   color: grey;
   font-size: 25px;
   font-weight: 400;
 }
-.HeadingHospitalName {
+.heading-hospital-name {
   display: block;
   font-size: 25px;
   font-weight: 500;
   padding-top: 3%;
   padding-bottom: 2%;
 }
-.ParaFinishScreen1 {
+.para-finish-screen {
   color: grey;
   text-align: start;
   padding-bottom: 5%;
 }
-.ParaFinishScreen2 {
+.para-finish-screenp {
   color: grey;
   text-align: start;
   padding-top: 8%;
   padding-bottom: 0px;
 }
-p.projectnamehint {
+p.project-name-hint {
   color: grey;
   margin-top: 10px;
-
   text-align: start;
   font-size: 11px;
   font-weight: 400;
 }
-.hintcheckicon {
+.hint-check-icon {
   color: green;
   margin: 3px;
   background-color: white;
@@ -254,17 +223,26 @@ p.projectnamehint {
 .ant-form-item {
   margin-bottom: 3%;
 }
-.btnsubmittals {
+.btn-submittals {
   margin-top: 1%;
-  margin-bottom: 4%;
-}
-.Number {
-  font-size: larger;
-}
-.btnsubmittals {
   margin-bottom: 10%;
 }
-.scheduleHexagoan {
+.number {
+  font-size: larger;
+}
+.schedule-hexagoan {
   top: -30px;
   left: -10px;
+}
+.hexagon-schedule {
+  height: 190px;
+  position: absolute;
+  top: -40px;
+}
+.hexagon-drawing-set {
+  margin-left: 1%;
+}
+.hexagon-schedule-row {
+  height: 150px;
+  position: relative;
 }
