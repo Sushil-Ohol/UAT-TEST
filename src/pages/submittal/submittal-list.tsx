@@ -1,16 +1,8 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-console */
-/* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import { Row, Col, Input, Space, Select, Button, Card } from "antd";
 
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
 import { AgGridReact } from "ag-grid-react";
-
-import { GridOptions, ICellRendererParams } from "ag-grid-community";
 
 import "ag-grid-community/styles/ag-grid.css";
 
@@ -18,119 +10,125 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 
 import "./submittal-list.css";
 
-import { BellOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons";
+import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
 
-import jsonData from "./data.json";
+import {
+  statusValues,
+  ContractorValues,
+  AssignValues,
+  ContractorOptions
+} from "../constant";
+
+import submittalLog from "../../assets/data/submittal-log.json";
 
 import CreateSubmittal from "./create-submittal";
 
 interface SubmittalGrid {
-    id:number;
-    submittal: string;
-    notification: number;
-    comments: number;
-    revision: number;
-    status: string;
-    dueBy: string;
-    contractor: string;
-    dependsOn: string;
-    assigned: string;
+  id: number;
+  submittal: string;
+  notification: number;
+  comments: number;
+  revision: number;
+  status: string;
+  dueBy: string;
+  contractor: string;
+  dependsOn: string;
+  assigned: string;
 }
 
-const statusValues = ["Approved", "In Review"];
-const ContractorValues = ["ABC Contractor", "Test Contractor"];
-const AssignValues = ["Luke", "jone doe","XYZ"];
+function Buttons() {
+  return <MoreOutlined />;
+}
 
-export type AppProps = {
-  // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
-  onClick?: () => void;
-  // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
-  gridOptions?: GridOptions;
-};
-// eslint-disable-next-line react/function-component-definition
-const Buttons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
+function CommentButtons() {
+  return <i className="far fa-comments mx-auto btn-lg" aria-hidden="true" />;
+}
+
+function NotificationBellButtons() {
   return (
-    // eslint-disable-next-line react/button-has-type
-    <button
-      style={{
-        border: "none",
-        padding: 0,
-        background: "none"
-      }}
-      onClick={() => {
-        // eslint-disable-next-line react/destructuring-assignment
-        params.onClick?.();
-      }}
-    >
-      <MoreOutlined />
-    </button>
+    <i
+      className="far fa-bell align-items-center d-flex col-md-6 btn-lg"
+      aria-hidden="true"
+    />
   );
-};
+}
 
-// eslint-disable-next-line react/function-component-definition
-const CommentButtons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
+function RevisionButtons() {
   return (
-    <i className="far fa-comments mx-auto btn-lg" aria-hidden="true" />
+    <i
+      className="far fa-file align-items-center d-flex col-md-6 btn-lg"
+      aria-hidden="true"
+    />
   );
-};
-
-
-// eslint-disable-next-line react/function-component-definition
-const NotificationBellButtons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
-  return (
-    <i className="far fa-bell align-items-center d-flex col-md-6 btn-lg" aria-hidden="true" />
-  );
-};
-
-
-// eslint-disable-next-line react/function-component-definition
-const RevisionButtons: React.FC<ICellRendererParams & AppProps> = (params: any) => {
-  return (
-    <i className="far fa-file align-items-center d-flex col-md-6 btn-lg" aria-hidden="true" />
-  );
-};
+}
 
 function SubmittalList() {
-  const { Option } = Select;
   const gridRef = useRef<AgGridReact<SubmittalGrid>>(null);
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalGrid[]>();
-  const [columnDefs, setColumnDefs] = useState([
-    { field: "id", headerName: "ID",
-    checkboxSelection: true,
-    headerCheckboxSelection: true,
-    cellRendererParams: {checkbox: true},
+  const [columnDefs] = useState([
+    {
+      field: "id",
+      headerName: "ID",
+      checkboxSelection: true,
+      headerCheckboxSelection: true,
+      cellRendererParams: { checkbox: true }
     },
     { field: "submittal", headerName: "SUBMITTAL" },
-    { field: "notification", headerName: "", headerComponentFramework: NotificationBellButtons},
-    { field: "comments", headerName: "", headerComponentFramework: CommentButtons},
-    { field: "revision", headerName: "", headerComponentFramework: RevisionButtons},
     {
-      field: "status", headerName: "STATUS",
-      cellStyle: (params: { value: string; }) => {
+      field: "notification",
+      headerName: "",
+      headerComponentFramework: NotificationBellButtons
+    },
+    {
+      field: "comments",
+      headerName: "",
+      headerComponentFramework: CommentButtons
+    },
+    {
+      field: "revision",
+      headerName: "",
+      headerComponentFramework: RevisionButtons
+    },
+    {
+      field: "status",
+      headerName: "STATUS",
+      cellStyle: (params: { value: string }) => {
         if (params.value === "Approved") {
           return { color: "green" };
-        } if (params.value === "In Review") {
+        }
+        if (params.value === "In Review") {
           return { color: "orange" };
-        } if (params.value === "Cancelled") {
+        }
+        if (params.value === "Cancelled") {
           return { color: "red" };
         }
-        return { color: "black" };;
+        return { color: "black" };
       },
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
-        values: statusValues,
-      },
+        values: statusValues
+      }
     },
     { field: "dueBy", headerName: "DUE BY" },
-    { field: "contractor", headerName: "CONTRACTOR", cellEditor: "agSelectCellEditor", cellEditorParams: {
-      values:ContractorValues,
-    }},
+    {
+      field: "contractor",
+      headerName: "CONTRACTOR",
+      cellEditor: "agSelectCellEditor",
+      cellEditorParams: {
+        values: ContractorValues
+      }
+    },
     { field: "dependsOn", headerName: "DEPENDS ON" },
-    { field: "assigned", headerName: "ASSIGNED", cellEditor: "agSelectCellEditor", cellEditorParams: {
-      values:AssignValues,
-    }},
-    { cellRendererFramework: Buttons, editable: false}
+    {
+      field: "assigned",
+      headerName: "ASSIGNED",
+      cellEditor: "agSelectCellEditor",
+      cellEditorParams: {
+        values: AssignValues
+      }
+    },
+    { cellRendererFramework: Buttons, editable: false }
   ]);
 
   const autoGroupColumnDef = useMemo(() => {
@@ -140,14 +138,11 @@ function SubmittalList() {
       minWidth: 250,
       cellRenderer: "agGroupCellRenderer",
       cellRendererParams: {
-      checkbox: true
+        checkbox: true
       },
-     cellEditorPopup: true,
+      cellEditorPopup: true
     };
   }, []);
-
-
-  
 
   const defaultColDef: {} = useMemo(() => {
     return {
@@ -159,10 +154,9 @@ function SubmittalList() {
     };
   }, []);
 
-
   const onGridReady = useCallback(() => {
-      const data:any = jsonData;
-      setRowData([...data]);
+    const data: any = submittalLog;
+    setRowData([...data]);
   }, []);
 
   const onFirstDataRendered = useCallback(() => {
@@ -190,9 +184,7 @@ function SubmittalList() {
               prefix={<SearchOutlined />}
             />
             <Input.Group compact>
-        
               &nbsp;&nbsp;
-              {/* <Input.Group compact> */}
               <Input style={{ width: "10%" }} defaultValue="Status" disabled />
               <Select
                 style={{ width: 85 }}
@@ -201,15 +193,20 @@ function SubmittalList() {
                 }}
                 defaultValue="All"
               >
-                <Option value="All">All</Option>
-                <Option value="Approved">Approved</Option>
-                <Option value="In Review">In Review</Option>
+                {statusValues.map((item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
               </Select>
               {/* </Input.Group> */}
               &nbsp;&nbsp;
               {/* <Input.Group compact> */}
-              <Input style={{ width: "10%" }} defaultValue="Contractor" disabled />
-
+              <Input
+                style={{ width: "10%" }}
+                defaultValue="Contractor"
+                disabled
+              />
               <Select
                 style={{ width: 85 }}
                 onChange={(value: any) => {
@@ -217,34 +214,32 @@ function SubmittalList() {
                 }}
                 defaultValue="All"
               >
-                <Option value="All">All</Option>
-                <Option value="ABC Construction">ABC Construction</Option>
-                <Option value="Test Construction">Test Construction</Option>
+                {ContractorOptions.map((item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
               </Select>
               {/* </Input.Group> */}
               &nbsp;&nbsp;
               {/* <Input.Group compact> */}
               <Input style={{ width: "10%" }} defaultValue="Due" disabled />
-
               <Select
                 style={{ width: 100 }}
                 onChange={(value: any) => {
                   gridRef.current!.api.setQuickFilter(value);
                 }}
                 defaultValue="Past due"
-              >
-              <Option value="Past due">Past due</Option>
-              </Select>
+              />
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <section >
-              <CreateSubmittal/>
+              <section>
+                <CreateSubmittal />
               </section>
             </Input.Group>
-
           </Space>
         </Col>
       </Row>
-             <Row>
+      <Row>
         <Col span={24}>
           <div style={gridStyle} className="ag-theme-alpine">
             <AgGridReact<SubmittalGrid>
@@ -258,15 +253,18 @@ function SubmittalList() {
               suppressRowClickSelection
               suppressAggFuncInHeader
               readOnlyEdit
-              masterDetail 
-              onGridReady={onGridReady} 
-              onFirstDataRendered={onFirstDataRendered} 
+              masterDetail
+              onGridReady={onGridReady}
+              onFirstDataRendered={onFirstDataRendered}
             />
           </div>
 
-         {/* bottom part */}
-         <section className="blue-grid">
-            <Card bordered={false} style={{ width: "auto", border: "0.2px solid #e5e5e5" }}>
+          {/* bottom part */}
+          <section className="blue-grid">
+            <Card
+              bordered={false}
+              style={{ width: "auto", border: "0.2px solid #e5e5e5" }}
+            >
               <Row gutter={12}>
                 <Col span={2}>
                   <div>
@@ -275,33 +273,26 @@ function SubmittalList() {
                 </Col>
                 <Col span={3}>
                   <div className="block">
-                    <Button block>
-                      Create a Package...
-                    </Button>
+                    <Button block>Create a Package...</Button>
                   </div>
                 </Col>
                 <Col span={3}>
                   <div className="block">
-                    <Button block>
-                      Merge...
-                    </Button>
+                    <Button block>Merge...</Button>
                   </div>
                 </Col>
                 <Col span={3}>
                   <div className="block">
-                    <Button block>
-                      Archieve
-                    </Button>
+                    <Button block>Archieve</Button>
                   </div>
                 </Col>
               </Row>
             </Card>
           </section>
-          </Col>
+        </Col>
       </Row>
     </>
   );
 }
 
-  export default SubmittalList;
-  
+export default SubmittalList;

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
+import "./navbar.css";
 
 function Menus() {
   const items: MenuProps["items"] = [
@@ -60,7 +61,7 @@ function Menus() {
       selectedKeys={[current]}
       items={items}
       mode="horizontal"
-      style={{ float: "right", width: "100%" }}
+      className="menus"
     />
   );
 }

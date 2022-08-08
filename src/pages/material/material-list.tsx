@@ -5,7 +5,13 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./material-list.css";
 import { SearchOutlined } from "@ant-design/icons";
-import jsonData from "./data.json";
+import materialsData from "../../assets/data/materials.json";
+import {
+  ProcureByValues,
+  ProcureBySecondValues,
+  AssigneeOptions,
+  StatusOptions
+} from "../constant";
 
 interface MaterialGrid {
   id: number;
@@ -18,11 +24,9 @@ interface MaterialGrid {
   diliverBy: string;
   dependsOn: string;
   submittal: string;
-  // more: string;
 }
 
 function Materials() {
-  const { Option } = Select;
   const gridRef = useRef<AgGridReact<MaterialGrid>>(null);
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<MaterialGrid[]>();
@@ -108,7 +112,7 @@ function Materials() {
   }, []);
 
   const onGridReady = useCallback(() => {
-    const data: any = jsonData;
+    const data: any = materialsData;
     setRowData([...data]);
   }, []);
 
@@ -139,36 +143,19 @@ function Materials() {
               prefix={<SearchOutlined />}
             />
             <Input.Group compact>
-              <Input style={{ width: "10%" }} defaultValue="Floor" disabled />
-              <Select
-                style={{ width: 100 }}
-                onChange={(value: any) => {
-                  gridRef.current!.api.setQuickFilter(value);
-                }}
-                defaultValue="Floor 1"
-              >
-                <Option value="0">Floor 1</Option>
-                <Option value="1">Floor 2</Option>
-                <Option value="2">Floor 3</Option>
-                <Option value="3">Floor 4</Option>
-                <Option value="4">Floor 5</Option>
-                <Option value="5">Floor 6</Option>
-              </Select>
-              &nbsp;&nbsp;
               <Input style={{ width: "10%" }} defaultValue="Status" disabled />
               <Select
-                style={{ width: 85 }}
+                style={{ width: 85, background: "#DCDCDC" }}
                 onChange={(value: any) => {
                   gridRef.current!.api.setQuickFilter(value);
                 }}
                 defaultValue="All"
               >
-                <Option value="0">All</Option>
-                <Option value="1">Assigned</Option>
-                <Option value="2">In Review</Option>
-                <Option value="3">Communicated</Option>
-                <Option value="4">Resolved</Option>
-                <Option value="5">Closed</Option>
+                {StatusOptions.map((item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
               </Select>
               &nbsp;&nbsp;
               <Input
@@ -183,8 +170,11 @@ function Materials() {
                 }}
                 defaultValue="All"
               >
-                <Option value="0">ABC</Option>
-                <Option value="1">Other</Option>
+                {AssigneeOptions.map((item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
               </Select>
               &nbsp;&nbsp;
               <Input
@@ -199,8 +189,11 @@ function Materials() {
                 }}
                 defaultValue="All"
               >
-                <Option value="0">Before</Option>
-                <Option value="1">After</Option>
+                {ProcureByValues.map((item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
               </Select>
               <Select
                 style={{ width: 85, background: "#DCDCDC" }}
@@ -209,8 +202,11 @@ function Materials() {
                 }}
                 defaultValue="All"
               >
-                <Option value="0">This Week</Option>
-                <Option value="1">This Month</Option>
+                {ProcureBySecondValues.map((item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
               </Select>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <section>

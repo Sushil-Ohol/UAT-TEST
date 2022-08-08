@@ -5,7 +5,7 @@ import "./navbar.css";
 
 function Nav() {
   return (
-    <Row className="Navbar">
+    <Row>
       <Col span={2} offset={0}>
         <span className="brandName">
           Constructiv<strong>IQ</strong>
@@ -22,11 +22,6 @@ function Nav() {
       <Col span={12} offset={2}>
         <Menus />
       </Col>
-      <Col
-        span={1}
-        offset={1}
-        style={{ textAlign: "end", paddingRight: "10px" }}
-      />
     </Row>
   );
 }
