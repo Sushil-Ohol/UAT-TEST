@@ -7,7 +7,7 @@ function Menus() {
   const items: MenuProps["items"] = [
     {
       label: (
-        <a href="Project" rel="noopener noreferrer">
+        <a href="projects" rel="noopener noreferrer">
           Project
         </a>
       ),
