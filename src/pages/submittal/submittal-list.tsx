@@ -1,4 +1,4 @@
-import { Row, Col, Input, Space, Select, Button, Card } from "antd";
+import { Row, Col, Input, Space, Select, Button, Card, DatePicker } from "antd";
 
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
@@ -64,6 +64,10 @@ function RevisionButtons() {
   );
 }
 
+function NewDatePicker() {
+  return <DatePicker />;
+}
+
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalGrid>>(null);
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
@@ -112,7 +116,12 @@ function SubmittalList() {
         values: statusValues
       }
     },
-    { field: "dueBy", headerName: "DUE BY" },
+    {
+      field: "dueBy",
+      headerName: "DUE BY",
+      cellEditor: NewDatePicker,
+      cellEditorPopup: true
+    },
     {
       field: "contractor",
       headerName: "CONTRACTOR",
