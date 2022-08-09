@@ -23,6 +23,8 @@ import submittalLog from "../../assets/data/submittal-log.json";
 
 import CreateSubmittal from "./create-submittal";
 
+import AddColumn from "./add-column";
+
 interface SubmittalGrid {
   id: number;
   submittal: string;
@@ -231,9 +233,13 @@ function SubmittalList() {
                 }}
                 defaultValue="Past due"
               />
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;
               <section>
                 <CreateSubmittal />
+              </section>
+              &nbsp;&nbsp;
+              <section>
+                <AddColumn />
               </section>
             </Input.Group>
           </Space>

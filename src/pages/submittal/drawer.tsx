@@ -30,7 +30,7 @@ function DrawerData() {
   return (
     <>
       <Button
-        style={{ marginLeft: "320px", display: "flex" }}
+        style={{ marginLeft: "200px", display: "flex" }}
         onClick={showDrawer}
       >
         + New Submittal
