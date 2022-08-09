@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* Project Details Page */
 function ProjectDetails() {
   return (
     <div className="container">

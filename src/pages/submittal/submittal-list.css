@@ -1,5 +1,7 @@
 .FilterRow {
     margin: 10px 0px;
   }
-
+.ant-input .ant-input-disabled{
+  width: 10%;
+}
   

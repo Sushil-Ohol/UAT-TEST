@@ -58,7 +58,7 @@ function DrawerData() {
           </Col>
           <Col span={24} style={{ marginTop: "15px" }}>
             <section className="mt-2">
-              <span className="HedingColor ">DISCRIPTION</span>
+              <span className="HedingColor ">DESCRIPTION</span>
 
               <TextArea
                 style={{
