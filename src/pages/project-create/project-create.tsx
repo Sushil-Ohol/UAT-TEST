@@ -16,11 +16,23 @@ import {
   CheckSquareOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
-import { URL } from "constants/file-constant";
+import { URL } from "constants/index";
 
 function ProjectCreate() {
   const [SkipBtn, setSkipBtn] = useState(false);
   const [current, setCurrent] = useState(0);
+  const hexagoanstyleScreen1 = {
+    textSize: "12px",
+    className: "icon-style1",
+    HexagoanSize: "90",
+    errorStyleClass: "icon-style-wrong-screen-first"
+  };
+  const hexagoanstyleScreen2 = {
+    textSize: "8px",
+    className: "icon-style2",
+    HexagoanSize: "60",
+    errorStyleClass: "icon-style-wrong-screen-second"
+  };
   const ProjectInputRef: any = useRef(null);
   const [CogIconProjectInput, setCogIconProjectInput] = useState(false);
   const [CogIconDetailsTextArea, setCogIconDetailsTextArea] = useState(false);
@@ -138,7 +150,7 @@ function ProjectCreate() {
     }
   }, [current, SkipBtn]);
 
-  const next = async () => {
+  const next = () => {
     if (defaultValue.ProjectName.length > 0 && CogIconProjectInput) {
       setCurrent(current + 1);
     }
@@ -261,6 +273,7 @@ function ProjectCreate() {
                               (SpecificationDoc.path.length > 0 ||
                                 siteDrawing.path.length > 0 ||
                                 schedule.path.length > 0) &&
+                              !CogIconProjectInput &&
                               !ProjectInputEdited && (
                                 <Row>
                                   <Col>
@@ -268,10 +281,8 @@ function ProjectCreate() {
                                       We guessed this name from your{" "}
                                       Specification Document. So it has the
                                       <RadarChartOutlined />
-                                      symbol,
-                                      <br />
-                                      please correct if it is wrong. You can
-                                      press
+                                      symbol, please correct if it is wrong. You
+                                      can press
                                       <CheckSquareOutlined className="hint-check-icon" />
                                       tick to confirm
                                     </p>
@@ -292,7 +303,6 @@ function ProjectCreate() {
                                 }
                               >
                                 <TextArea
-                                  rows={2}
                                   value={defaultValue.details}
                                   onChange={(e) => {
                                     setdefaultValue({
@@ -302,7 +312,7 @@ function ProjectCreate() {
                                     setTextAreaEdited(true);
                                     setCogIconDetailsTextArea(true);
                                   }}
-                                  placeholder="enter your project details"
+                                  placeholder="Enter your project details"
                                 />
                                 {!TextAreaEdited &&
                                   !CogIconDetailsTextArea &&
@@ -325,12 +335,13 @@ function ProjectCreate() {
                           </Input.Group>
                         </Form.Item>
                         <Row justify="center">
-                          <Col span={20}>
+                          <Col span={15}>
                             <Row justify="center">
                               {SpecificationDoc.title !==
                                 "Specification Document" && (
                                 <Col>
                                   <Dropzone
+                                    hexagoanstyle={hexagoanstyleScreen2}
                                     setdefaultValue={setdefaultValue}
                                     setCount={setCount}
                                     icon="FileDoneOutlined"
@@ -344,6 +355,7 @@ function ProjectCreate() {
                               {siteDrawing.title !== "Drawing Set" && (
                                 <Col offset={1}>
                                   <Dropzone
+                                    hexagoanstyle={hexagoanstyleScreen2}
                                     setdefaultValue={setdefaultValue}
                                     setCount={setCount}
                                     icon="SettingOutlined"
@@ -366,6 +378,7 @@ function ProjectCreate() {
                                   offset={1}
                                 >
                                   <Dropzone
+                                    hexagoanstyle={hexagoanstyleScreen2}
                                     setdefaultValue={setdefaultValue}
                                     setCount={setCount}
                                     icon="CalendarOutlined"
@@ -511,6 +524,7 @@ function ProjectCreate() {
             <Row justify="center">
               <Col>
                 <Dropzone
+                  hexagoanstyle={hexagoanstyleScreen1}
                   setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="FileDoneOutlined"
@@ -522,6 +536,7 @@ function ProjectCreate() {
               </Col>
               <Col className="hexagon-drawing-set">
                 <Dropzone
+                  hexagoanstyle={hexagoanstyleScreen1}
                   setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="SettingOutlined"
@@ -535,6 +550,7 @@ function ProjectCreate() {
             <Row justify="center" className="hexagon-schedule-row">
               <Col className="hexagon-schedule">
                 <Dropzone
+                  hexagoanstyle={hexagoanstyleScreen1}
                   setdefaultValue={setdefaultValue}
                   setCount={setCount}
                   icon="CalendarOutlined"
@@ -544,7 +560,8 @@ function ProjectCreate() {
                   setState={setschedule}
                 />
               </Col>
-            </Row>
+            </Row>{" "}
+            <br />
             <Row justify="center">
               <Col>
                 <p className="footer-text">

@@ -123,7 +123,6 @@ export default class Hexagon extends Component {
 
     const width = Math.sqrt(3) * sideLength;
     const height = 2 * sideLength + elevation;
-
     const fontSizeOffset = textStyle.fontSize
       ? 0.3 * parseInt(textStyle.fontSize, 10)
       : 0;
@@ -187,7 +186,7 @@ export default class Hexagon extends Component {
             style={{
               width: "90%",
               position: "absolute",
-              top: "95px",
+              top: `${+sideLength + 15}px`,
               left: "20px"
             }}
             percent={ProgressBar}

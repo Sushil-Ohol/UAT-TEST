@@ -10,17 +10,18 @@ import axios from "axios";
 import Hexagon from "components/hexagon/hexagon";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
-import { FILESIZE, URL } from "../../constants/file-constant";
+import { FILESIZE, URL } from "constants/index";
 import "./file-upload.css";
 
-function DropzoneFile({
+function Fileupload({
   title,
   extension,
   icon,
   setSkipBtn,
   setState,
   setCount,
-  setdefaultValue
+  setdefaultValue,
+  hexagoanstyle
 }: {
   title: string;
   extension: string[];
@@ -29,6 +30,7 @@ function DropzoneFile({
   setState: React.Dispatch<React.SetStateAction<any>>;
   setCount: React.Dispatch<React.SetStateAction<number>>;
   setdefaultValue: React.Dispatch<React.SetStateAction<any>>;
+  hexagoanstyle: any;
 }) {
   const [FileError, setFileError] = useState("");
   const [progress, setProgress] = useState(0);
@@ -36,17 +38,17 @@ function DropzoneFile({
   function anticon() {
     switch (icon) {
       case "FileDoneOutlined":
-        return <FileDoneOutlined className="icon-style" />;
+        return <FileDoneOutlined className={hexagoanstyle.className} />;
       case "SettingOutlined":
-        return <SettingOutlined className="icon-style" />;
+        return <SettingOutlined className={hexagoanstyle.className} />;
       case "CalendarOutlined":
-        return <CalendarOutlined className="icon-style" />;
+        return <CalendarOutlined className={hexagoanstyle.className} />;
       default:
         return "";
     }
   }
   function iconfunction() {
-    return <WarningOutlined className="icon-style-wrong" />;
+    return <WarningOutlined className={hexagoanstyle.errorStyleClass} />;
   }
   const ProjectDefaultValue = async () => {
     const result = await axios.get(`${URL}/projectsug`);
@@ -86,8 +88,7 @@ function DropzoneFile({
         }
       } else {
         setFileError(() => {
-          if (title !== "Schedule") return "Only PDF file allowed";
-          return "Only xls,xlsx and csv file";
+          return `only ${extension} file allow`;
         });
         setInterval(() => {
           setFileError("");
@@ -106,13 +107,13 @@ function DropzoneFile({
               ProgressBar={progress}
               icon={FileError ? iconfunction : anticon}
               text={isDragActive ? "Drag file here" : FileError || title}
-              sideLength={80}
+              sideLength={hexagoanstyle.HexagoanSize}
               borderRadius={0}
               fill="rgba(128, 128, 128, 0.001)"
               shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
               textStyle={{
                 fontFamily: "sans-serif",
-                fontSize: "12px",
+                fontSize: hexagoanstyle.textSize,
                 fill: FileError ? "red" : "grey"
               }}
             />
@@ -122,4 +123,4 @@ function DropzoneFile({
     </Dropzone>
   );
 }
-export default DropzoneFile;
+export default Fileupload;
