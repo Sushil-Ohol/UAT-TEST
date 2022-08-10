@@ -47,9 +47,7 @@ function Filters() {
                 </Select.Option>
               ))}
             </Select>
-            {/* </Input.Group> */}
             &nbsp;&nbsp;
-            {/* <Input.Group compact> */}
             <Input
               style={{ width: "10%" }}
               defaultValue="Contractor"
@@ -68,9 +66,7 @@ function Filters() {
                 </Select.Option>
               ))}
             </Select>
-            {/* </Input.Group> */}
             &nbsp;&nbsp;
-            {/* <Input.Group compact> */}
             <Input style={{ width: "10%" }} defaultValue="Due" disabled />
             <Select
               style={{ width: 100 }}

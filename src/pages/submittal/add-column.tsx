@@ -1,7 +1,5 @@
 import { Drawer, Space, Button, Row, Col, Input, Select } from "antd";
-
 import { useState } from "react";
-
 import "./add-column.css";
 
 function AddColumn() {
