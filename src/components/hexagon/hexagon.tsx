@@ -1,5 +1,5 @@
-/* eslint-disable react/static-property-placement */
 /* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/static-property-placement */
 import React, { Component } from "react";
 import { Progress } from "antd";
 import PropTypes from "prop-types";
@@ -36,7 +36,6 @@ export default class Hexagon extends Component {
     strokeWidth: number;
     elevation: number;
     shadow: string;
-
     icon: string;
     text: string;
     textStyle: {};
@@ -55,7 +54,6 @@ export default class Hexagon extends Component {
     strokeWidth: PropTypes.Requireable<number>;
     elevation: PropTypes.Requireable<number>;
     shadow: PropTypes.Requireable<string>;
-
     icon: PropTypes.Requireable<any>;
     text: PropTypes.Requireable<string>;
     textStyle: PropTypes.Requireable<object>;
@@ -120,7 +118,6 @@ export default class Hexagon extends Component {
       icon
     }: any = this.props;
     const { thHexagonStyle }: any = this.state;
-
     const width = Math.sqrt(3) * sideLength;
     const height = 2 * sideLength + elevation;
     const fontSizeOffset = textStyle.fontSize
@@ -148,7 +145,7 @@ export default class Hexagon extends Component {
           viewBox={`0 0 ${width} ${height}`}
           width={width}
           height={height}
-          stroke={ProgressBar > 0 ? "green" : "grey"}
+          stroke={ProgressBar > 0 ? "green" : "black"}
           strokeDasharray="2,2"
         >
           <svg y={elevation}>
@@ -206,7 +203,6 @@ Hexagon.defaultProps = {
   strokeWidth: 0,
   elevation: 12,
   shadow: "#e2e2e2",
-
   icon: "",
   text: "",
   textStyle: {},
@@ -229,8 +225,7 @@ Hexagon.propTypes = {
   strokeWidth: PropTypes.number,
   elevation: PropTypes.number,
   shadow: PropTypes.string,
-
-  icon: PropTypes.any,
+  icon: PropTypes.string,
   text: PropTypes.string,
   textStyle: PropTypes.object,
   styles: PropTypes.shape({

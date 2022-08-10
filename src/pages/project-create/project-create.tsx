@@ -303,6 +303,7 @@ function ProjectCreate() {
                                 }
                               >
                                 <TextArea
+                                  autoSize={{ minRows: 2, maxRows: 2 }}
                                   value={defaultValue.details}
                                   onChange={(e) => {
                                     setdefaultValue({

@@ -56,70 +56,79 @@ function Fileupload({
   };
 
   const onDrop = (acceptedFiles: File[]) => {
-    acceptedFiles.forEach(async (file: any) => {
-      const splitedData = file.name.split(".");
-      const fileextension = splitedData[1];
-      if (extension.includes(fileextension)) {
-        if (file.size < FILESIZE) {
-          const formData = new FormData();
-          formData.append("image", file);
-          formData.append("title", title);
+    if (acceptedFiles.length <= 1) {
+      acceptedFiles.forEach(async (file: any) => {
+        const splitedData = file.name.split(".");
+        const fileextension = splitedData[1];
+        if (extension.includes(fileextension)) {
+          if (file.size < FILESIZE) {
+            const formData = new FormData();
+            formData.append("image", file);
+            formData.append("title", title);
 
-          await axios.post(`${URL}/fileUpload`, formData, {
-            onUploadProgress: (progressEvent) => {
-              const progressCount = Math.ceil(
-                (progressEvent.loaded / progressEvent.total) * 100
-              );
-              setProgress(progressCount);
-            }
-          });
-          setTimeout(() => {
-            setSkipBtn(true);
-            ProjectDefaultValue();
-            setState({ ...file, title });
-            setCount((prev: number) => prev + 1);
-            setFileError("");
-          }, 2000);
+            await axios.post(`${URL}/fileUpload`, formData, {
+              onUploadProgress: (progressEvent) => {
+                const progressCount = Math.ceil(
+                  (progressEvent.loaded / progressEvent.total) * 100
+                );
+                setProgress(progressCount);
+              }
+            });
+            setTimeout(() => {
+              setSkipBtn(true);
+              ProjectDefaultValue();
+              setState({ ...file, title });
+              setCount((prev: number) => prev + 1);
+              setFileError("");
+            }, 2000);
+          } else {
+            setFileError("Upload file less than 100MB");
+            setInterval(() => {
+              setFileError("");
+            }, 4000);
+          }
         } else {
-          setFileError("Upload file less than 100MB");
+          setFileError(() => {
+            return `only ${extension} file allow`;
+          });
           setInterval(() => {
             setFileError("");
           }, 4000);
         }
-      } else {
-        setFileError(() => {
-          return `only ${extension} file allow`;
-        });
-        setInterval(() => {
-          setFileError("");
-        }, 4000);
-      }
-    });
+      });
+    } else {
+      setFileError("only single file");
+      setInterval(() => {
+        setFileError("");
+      }, 4000);
+    }
   };
 
   return (
     <Dropzone onDrop={onDrop} multiple>
-      {({ getRootProps, getInputProps, isDragActive }) => (
-        <section>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <Hexagon
-              ProgressBar={progress}
-              icon={FileError ? iconfunction : anticon}
-              text={isDragActive ? "Drag file here" : FileError || title}
-              sideLength={hexagoanstyle.HexagoanSize}
-              borderRadius={0}
-              fill="rgba(128, 128, 128, 0.001)"
-              shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
-              textStyle={{
-                fontFamily: "sans-serif",
-                fontSize: hexagoanstyle.textSize,
-                fill: FileError ? "red" : "grey"
-              }}
-            />
-          </div>
-        </section>
-      )}
+      {({ getRootProps, getInputProps, isDragActive }) => {
+        return (
+          <section>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <Hexagon
+                ProgressBar={progress}
+                icon={FileError ? iconfunction : anticon}
+                text={isDragActive ? "Drag file here" : FileError || title}
+                sideLength={hexagoanstyle.HexagoanSize}
+                borderRadius={0}
+                fill="rgba(128, 128, 128, 0.001)"
+                shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
+                textStyle={{
+                  fontFamily: "sans-serif",
+                  fontSize: hexagoanstyle.textSize,
+                  fill: FileError ? "red" : "grey"
+                }}
+              />
+            </div>
+          </section>
+        );
+      }}
     </Dropzone>
   );
 }

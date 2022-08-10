@@ -22,11 +22,11 @@
 }
 .steps-action {
   height: 40px;
-  width: 50vw;
+  width: 70vw;
   margin-bottom: 5px;
   position: fixed;
   bottom: 0;
-  left: 350px;
+  left: 220px;
   background-color: white;
   padding: 0px 30px;
   display: flex;
@@ -39,19 +39,19 @@ card {
 .stepper-prev-btn {
   margin-top: 10%;
   position: absolute;
-  top: -60px;
+  top: -85px;
   left: 10px;
 }
 .stepper-next-btn {
   margin-top: 10%;
   position: absolute;
-  top: -60px;
+  top: -85px;
   right: 10px;
 }
 .stepper-done-btn {
   margin-top: 10%;
   position: absolute;
-  top: -60px;
+  top: -85px;
   right: 10px;
 }
 .ant-steps {
@@ -180,7 +180,7 @@ textarea.ant-input {
   width: 98vw;
   background: transparent;
   margin: 0px;
-  padding: 0px;
+  padding-left: 30px;
 }
 .sub-heading {
   padding-top: 0%;
