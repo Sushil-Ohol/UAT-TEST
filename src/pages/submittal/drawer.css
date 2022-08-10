@@ -1,0 +1,58 @@
+.btnNewSubmittal {
+    margin-left: "100px";
+    display: "flex"
+}
+
+.discriptionColumn {
+    margin-top: 15px !important
+}
+
+.discriptionArea {
+    color: "black";
+    width: "100%";
+    background: "##DCDCDC"
+}
+
+.duebyCol {
+    margin-top: 15px !important
+}
+
+.drawerDatePicker {
+    color: "black";
+    width: "60%";
+    background: "##DCDCDC"
+}
+.contractorCol{
+    margin-top: 15px !important
+}
+.constructionSelect{
+  width: 100% !important
+}
+.assignedCol{
+    margin-top: 15px !important
+
+}
+.assignedSelect{
+    width: 200px !important
+}
+.packageCol{
+    margin-top: 15px !important
+}
+.packageSelect{
+    width: 200px !important
+}
+.dependsOnCol{
+    margin-top: 15px !important
+}
+.dependsOnSelect{
+    width: 100% !important
+} 
+.drawertwoButtons{
+    margin-top: 15px !important
+}
+.attachementsCol{
+    margin-top: 15px !important
+}
+.suggestedCol{
+    margin-top: 15px !important
+}

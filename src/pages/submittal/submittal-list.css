@@ -1,0 +1,41 @@
+.FilterRow {
+  margin: 10px 0px;
+}
+
+.ant-input .ant-input-disabled {
+  width: 10%;
+}
+
+.statusInput {
+  display: flex;
+  width: 10% !important
+}
+.statusInputSelect{
+  width: 85 !important;
+}
+.contractorInput {
+  display: flex;
+  width: 10% !important
+}
+
+.DueInput {
+  display: flex;
+  width: 10% !important
+}
+
+.dueSelect {
+  display: flex;
+  width: 10% !important
+}
+
+.contractorSelect {
+  width: 85 !important;
+}
+.contractorSelectOption{
+  width: 100% !important;
+}
+
+.CardDetails {
+  width: "auto";
+  border: "0.2px solid #e5e5e5"
+}

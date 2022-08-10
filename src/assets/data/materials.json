@@ -1,0 +1,32 @@
+[{
+        "id": "1001",
+        "qty": "30",
+        "units": "m",
+        "material": "Reinforcement steel",
+        "status": "Approved",
+        "comments": 4,
+        "revision": 3,
+        "assigned": "Luke",
+        "contractor": "ABC Construction",
+        "procureBy": "20-08-2022",
+        "deliverBy": "27-08-2022",
+        "dependsOn": "1079",
+        "submittal": "68402"
+
+    },
+    {
+        "id": "1002",
+        "qty": "30",
+        "units": "m",
+        "material": "Reinforcement steel",
+        "status": "Delivered",
+        "comments": 4,
+        "revision": 3,
+        "assigned": "Luke",
+        "contractor": "ABC Construction",
+        "procureBy": "20-08-2022",
+        "deliverBy": "27-08-2022",
+        "dependsOn": "13029 2098",
+        "submittal": "89402"
+
+    }]

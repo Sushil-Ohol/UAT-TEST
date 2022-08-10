@@ -3,7 +3,10 @@ import {
   HomePage,
   ProjectsListpage,
   ProjectCreatePage,
-  ProjectDetailsPage
+  ProjectDetailsPage,
+  SubmittalListpage,
+  SubmittalDetailspage,
+  MaterialListpage
 } from "pages";
 import { Navbar } from "components";
 
@@ -17,6 +20,9 @@ function App() {
           <Route path="/projects" component={ProjectsListpage} />
           <Route path="/project/new" component={ProjectCreatePage} />
           <Route path="/project/details" component={ProjectDetailsPage} />
+          <Route path="/submittals" component={SubmittalListpage} />
+          <Route path="/submittals/details" component={SubmittalDetailspage} />
+          <Route path="/materials" component={MaterialListpage} />
         </Switch>
       </div>
     </Router>

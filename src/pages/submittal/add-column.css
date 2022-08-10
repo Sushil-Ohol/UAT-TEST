@@ -1,0 +1,40 @@
+.addCoumn {
+    display: "flex"
+}
+
+.discriptionColumn {
+    margin-top: 15px;
+}
+
+.discriptionArea {
+    color: "black";
+    width: "100%";
+    background: "##DCDCDC"
+}
+
+.dueByColumn {
+    margin-top: 15px;
+}
+
+.typeColumn {
+    margin-top: 15px;
+}
+.columnNameColumn{
+    margin-top: 15px;
+}
+.submit{
+    width: 100%;
+    color: lightseagreen;
+}
+.cancle{
+    width: 100%;
+}
+.submitaddColumnBtn{
+    margin-top: 15px;
+}
+.cancleaddColumnBtn{
+    margin-top: 15px;
+}
+.typeCloumn{
+    margin-top: 15px !important;
+}

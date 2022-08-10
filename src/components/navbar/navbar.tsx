@@ -1,16 +1,17 @@
 /* Navigation Component */
-import { Col, PageHeader, Row } from "antd";
+import { Col, Row, PageHeader } from "antd";
+import Menus from "./menus";
 import "./navbar.css";
 
 function Nav() {
   return (
-    <Row className="Navbar">
+    <Row>
       <Col span={2} offset={0}>
         <span className="brandName">
           Constructiv<strong>IQ</strong>
         </span>
       </Col>
-      <Col span={17} offset={1}>
+      <Col span={4} offset={1}>
         <PageHeader
           className="site-page-header"
           onBack={() => null}
@@ -18,12 +19,11 @@ function Nav() {
           subTitle="Creating new project"
         />
       </Col>
-      <Col
-        span={3}
-        offset={1}
-        style={{ textAlign: "end", paddingRight: "10px" }}
-      />
+      <Col span={12} offset={2}>
+        <Menus />
+      </Col>
     </Row>
   );
 }
+
 export default Nav;
