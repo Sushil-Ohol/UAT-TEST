@@ -196,9 +196,9 @@ function SubmittalList() {
             />
             <Input.Group compact>
               &nbsp;&nbsp;
-              <Input style={{ width: "10%" }} defaultValue="Status" disabled />
+              <Input className="statusInput" defaultValue="Status" disabled />
               <Select
-                style={{ width: 85 }}
+                className="statusInputSelect"
                 onChange={(value: any) => {
                   gridRef.current!.api.setQuickFilter(value);
                 }}
@@ -210,20 +210,18 @@ function SubmittalList() {
                   </Select.Option>
                 ))}
               </Select>
-              {/* </Input.Group> */}
               &nbsp;&nbsp;
-              {/* <Input.Group compact> */}
               <Input
-                style={{ width: "10%" }}
+                className="contractorInput"
                 defaultValue="Contractor"
                 disabled
               />
               <Select
-                style={{ width: 85 }}
+                className="contractorSelect"
                 onChange={(value: any) => {
                   gridRef.current!.api.setQuickFilter(value);
                 }}
-                defaultValue="All"
+                defaultValue="Select Contractor"
               >
                 {ContractorOptions.map((item) => (
                   <Select.Option key={item} value={item}>
@@ -231,12 +229,10 @@ function SubmittalList() {
                   </Select.Option>
                 ))}
               </Select>
-              {/* </Input.Group> */}
               &nbsp;&nbsp;
-              {/* <Input.Group compact> */}
-              <Input style={{ width: "10%" }} defaultValue="Due" disabled />
+              <Input className="DueInput" defaultValue="Due" disabled />
               <Select
-                style={{ width: 100 }}
+                className="dueSelect"
                 onChange={(value: any) => {
                   gridRef.current!.api.setQuickFilter(value);
                 }}
@@ -276,10 +272,7 @@ function SubmittalList() {
 
           {/* bottom part */}
           <section className="blue-grid">
-            <Card
-              bordered={false}
-              style={{ width: "auto", border: "0.2px solid #e5e5e5" }}
-            >
+            <Card bordered={false} className="CardDetails">
               <Row gutter={12}>
                 <Col span={2}>
                   <div>
@@ -287,17 +280,17 @@ function SubmittalList() {
                   </div>
                 </Col>
                 <Col span={3}>
-                  <div className="block">
+                  <div>
                     <Button block>Create a Package...</Button>
                   </div>
                 </Col>
                 <Col span={3}>
-                  <div className="block">
+                  <div>
                     <Button block>Merge...</Button>
                   </div>
                 </Col>
                 <Col span={3}>
-                  <div className="block">
+                  <div>
                     <Button block>Archieve</Button>
                   </div>
                 </Col>

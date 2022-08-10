@@ -19,6 +19,8 @@ import {
 
 import { useState } from "react";
 
+import "./drawer.css";
+
 function DrawerData() {
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
@@ -29,10 +31,7 @@ function DrawerData() {
   };
   return (
     <>
-      <Button
-        style={{ marginLeft: "200px", display: "flex" }}
-        onClick={showDrawer}
-      >
+      <Button onClick={showDrawer} className="btnNewSubmittal">
         + New Submittal
       </Button>
       <Drawer
@@ -51,21 +50,17 @@ function DrawerData() {
         <Row gutter={30}>
           <Col span={24}>
             <section className="mt-2">
-              <div className="">
+              <div>
                 <Input placeholder="" allowClear />
               </div>
             </section>
           </Col>
-          <Col span={24} style={{ marginTop: "15px" }}>
+          <Col span={24} className="discriptionColumn">
             <section className="mt-2">
               <span className="HedingColor ">DESCRIPTION</span>
 
               <TextArea
-                style={{
-                  color: "black",
-                  width: "100%",
-                  background: "##DCDCDC"
-                }}
+                className="discriptionArea"
                 rows={3}
                 placeholder="Fill the Discription"
                 value=""
@@ -73,22 +68,23 @@ function DrawerData() {
               />
             </section>
           </Col>
-          <Col span={24} style={{ marginTop: "15px" }}>
+          <Col span={24} className="duebyCol">
             <section className="mt-2">
               <span className="HedingColor ">DUE BY</span>
               <br />
 
-              <DatePicker
-                style={{ color: "black", width: "60%", background: "##DCDCDC" }}
-              />
+              <DatePicker className="drawerDatePicker" />
             </section>
           </Col>
 
-          <Col span={24} style={{ marginTop: "15px" }}>
+          <Col span={24} className="contractorCol">
             <section className="mt-2">
               <span className="HedingColor">CONTRACTOR</span>
 
-              <Select style={{ width: "100%" }} defaultValue="Construction">
+              <Select
+                className="constructionSelect"
+                defaultValue="Construction"
+              >
                 {ContractorOptions.map((item) => (
                   <Select.Option key={item} value={item}>
                     {item}
@@ -98,12 +94,12 @@ function DrawerData() {
             </section>
           </Col>
 
-          <Col span={24} style={{ marginTop: "15px" }}>
+          <Col span={24} className="assignedCol">
             <section className="mt-2">
               <span className="HedingColor ">ASSIGNED</span>
               <br />
 
-              <Select style={{ width: 200 }} defaultValue="All">
+              <Select className="assignedSelect" defaultValue="All">
                 {AssigneeOptions.map((item) => (
                   <Select.Option key={item} value={item}>
                     {item}
@@ -113,12 +109,12 @@ function DrawerData() {
             </section>
           </Col>
 
-          <Col span={24} style={{ marginTop: "15px" }}>
+          <Col span={24} className="packageCol">
             <section className="mt-2">
               <span className="HedingColor">PACAKGE</span>
               <br />
 
-              <Select style={{ width: 200 }} defaultValue="Select packages">
+              <Select className="packageSelect" defaultValue="Select packages">
                 {PackageOptions.map((item) => (
                   <Select.Option key={item} value={item}>
                     {item}
@@ -128,18 +124,21 @@ function DrawerData() {
             </section>
           </Col>
 
-          <Col span={12} style={{ marginTop: "15px" }}>
+          <Col span={12} className="dependsOnCol">
             <div className="block">
               <section className="mt-2">
                 <span className="HedingColor">DEPENDS ON</span>
-                <Select style={{ width: "100%" }} defaultValue="Type to Search">
+                <Select
+                  className="dependsOnSelect"
+                  defaultValue="Type to Search"
+                >
                   <option value="5">Other</option>
                 </Select>
               </section>
             </div>
           </Col>
 
-          <Col span={12} style={{ marginTop: "15px" }}>
+          <Col span={12} className="drawertwoButtons">
             <section className="mt-2">
               <div className="block">
                 <Button>+ 120 Electrical Wiring</Button>
@@ -149,7 +148,7 @@ function DrawerData() {
             </section>
           </Col>
 
-          <Col span={12} style={{ marginTop: "15px" }}>
+          <Col span={12} className="attachementsCol">
             <div className="block">
               <section className="mt-2">
                 <span className="HedingColor">ATTACHMENTS</span>
@@ -164,7 +163,7 @@ function DrawerData() {
               </section>
             </div>
           </Col>
-          <Col span={12} style={{ marginTop: "15px" }}>
+          <Col span={12} className="suggestedCol">
             <section className="mt-2">
               <span className="HedingColor">Suggested</span>
               <div className="block">

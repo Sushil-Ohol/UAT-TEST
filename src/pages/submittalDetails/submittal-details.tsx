@@ -1,4 +1,11 @@
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  DownOutlined,
+  EditFilled,
+  ExclamationCircleOutlined,
+  ReloadOutlined
+} from "@ant-design/icons";
 import {
   Col,
   Input,
@@ -10,189 +17,270 @@ import {
   DatePicker,
   Upload,
   Button,
-  Checkbox
+  Checkbox,
+  Layout,
+  Dropdown,
+  Typography,
+  Menu
 } from "antd";
+
+import { useState } from "react";
+import { useHistory } from "react-router";
 import "./submittal-details.css";
-import {
-  StatusOptions,
-  ContractorOptions,
-  AssigneeOptions,
-  PackageOptions
-} from "../constant";
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
+
 function SubmitalDetails() {
+  const history = useHistory();
+
+  const [customIconStr, setCustomIconStr] = useState("472 Piping Design");
+  const { Paragraph } = Typography;
+  const menu = (
+    <Menu
+      //   onClick={handleMenuClick}
+      items={[
+        {
+          label: "Clicking me will not close the menu.",
+          key: "1"
+        },
+        {
+          label: "Clicking me will not close the menu also.",
+          key: "2"
+        },
+        {
+          label: "Clicking me will close the menu.",
+          key: "3"
+        }
+      ]}
+    />
+  );
   return (
-    <div className="">
-      <div className="">
-        <Tabs
-          defaultActiveKey="1"
-          style={{ fontWeight: "600", color: "black" }}
-        >
+    <div>
+      <section>
+        <Layout>
+          <Card className="SubDetailsCard">
+            <Row gutter={30}>
+              <Col span={4}>
+                <Button
+                  icon={<ArrowLeftOutlined />}
+                  className="SubDetailsCardBtn"
+                  onClick={() => history.push("./submittals")}
+                >
+                  All submittals
+                </Button>
+              </Col>
+
+              <Col span={14}>
+                <div>
+                  <Paragraph
+                    className="SubDetailsParagraph"
+                    editable={{
+                      icon: <EditFilled color="black" />,
+                      tooltip: "",
+                      onChange: setCustomIconStr
+                    }}
+                  >
+                    {customIconStr}
+                  </Paragraph>
+                </div>
+              </Col>
+              <Col span={3}>
+                <Input.Group compact>
+                  <Dropdown overlay={menu}>
+                    <Button>
+                      <Space>
+                        ABC Contractor
+                        <DownOutlined />
+                      </Space>
+                    </Button>
+                  </Dropdown>
+                </Input.Group>
+              </Col>
+              <Col span={3}>
+                <div>
+                  <Button className="SubDetailsSplitBtn">
+                    Split Submittal
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </Card>
+        </Layout>
+      </section>
+      <div>
+        <Tabs defaultActiveKey="1" className="TabsClass">
           <TabPane tab="Submittal Details" key="1">
             <Row className="FilterRow">
-              <Col
-                span={22}
-                style={{ marginLeft: "25px", justifyContent: "space-around" }}
-              >
+              <Col span={22}>
                 <Space>
                   <section>
-                    <span className="HedingColor">STATUS</span>
-
-                    <Select style={{ width: 200 }} defaultValue="All">
-                      {StatusOptions.map((item) => (
-                        <Select.Option key={item} value={item}>
-                          {item}
-                        </Select.Option>
-                      ))}
+                    <span className="HedingColor subDetailsLabel ">STATUS</span>
+                    <Select className="subDetailsStatus" defaultValue="All">
+                      <option value="0">All</option>
+                      <option value="1">Assigned</option>
+                      <option value="2">In Review</option>
+                      <option value="3">Communicated</option>
+                      <option value="4">Resolved</option>
+                      <option value="5">Closed</option>
                     </Select>
                   </section>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <section>
                     <span className="HedingColor">DUE BY</span>
-                    <DatePicker format="YYYY-MM-DD HH:mm:ss" />
+                    <span className="validationColor">20 days Ago</span>
+
+                    <DatePicker
+                      className="subDetailsDatePicker"
+                      format="YYYY-MM-DD"
+                    />
                   </section>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <section>
                     <span className="HedingColor">CONTRACTOR</span>
-                    <Select style={{ width: 200 }} defaultValue="Construction">
-                      {ContractorOptions.map((item) => (
-                        <Select.Option key={item} value={item}>
-                          {item}
-                        </Select.Option>
-                      ))}
+                    <span className="reload">
+                      <ReloadOutlined />
+                    </span>
+
+                    <Select
+                      className="subDetailsContractor"
+                      defaultValue="Construction"
+                    >
+                      <option value="0">ABC Construction</option>
+                      <option value="1">Birla Construction</option>
+                      <option value="2">Acc Construction</option>
+                      <option value="3">Ambuja Construction</option>
+                      <option value="4">Tata Construction</option>
+                      <option value="5">Other Construction</option>
                     </Select>
                   </section>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <section>
                     <span className="HedingColor">ASSIGNED</span>
-                    <Select style={{ width: 200 }} defaultValue="All">
-                      {AssigneeOptions.map((item) => (
-                        <Select.Option key={item} value={item}>
-                          {item}
-                        </Select.Option>
-                      ))}
+                    <Select defaultValue="All" className="subDetailsAssigned">
+                      <option value="0">Luck Church</option>
+                      <option value="1">Jone Doe</option>
                     </Select>
                   </section>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <section>
                     <span className="HedingColor">PACAKGE</span>
-                    <Select
-                      style={{ width: 200 }}
-                      defaultValue="Select packages"
-                    >
-                      {PackageOptions.map((item) => (
-                        <Select.Option key={item} value={item}>
-                          {item}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                    <span>
+                      <ReloadOutlined className="subDetailspackage" />
+                    </span>
+
+                    <Input
+                      suffix={
+                        <ArrowRightOutlined className="subDetailsArrowOutlined" />
+                      }
+                    />
                   </section>
                 </Space>
               </Col>
             </Row>
-            <div className="">
-              <span style={{ marginLeft: "20px" }} className="HedingColor">
-                DISCRIPTION
-              </span>
-              <Row gutter={24} style={{ marginLeft: "10px" }}>
-                <Col span={18}>
-                  <section>
-                    <div className="">
-                      <TextArea
-                        style={{
-                          color: "black",
-                          width: "200",
-                          maxWidth: "62%",
-                          background: "##DCDCDC"
-                        }}
-                        rows={3}
-                        placeholder="Fill the Discription"
-                        value=""
-                        maxLength={400}
-                      />
-                    </div>
-                  </section>
-                </Col>
-                <Col span={6}>
-                  <Row gutter={24}>
-                    <Col span={16}>
-                      <div className="">
-                        <span className="HedingColor">ATTACHMENTS</span>
-                      </div>
-                    </Col>
-                    <Col span={8} style={{ margin: " -5px" }}>
-                      <div className="block">
-                        <Upload>
-                          <Button
-                            style={{
-                              border: "none",
-                              padding: 0,
-                              background: "none"
-                            }}
-                          >
-                            <i className="fa fa-plus" aria-hidden="true" />
-                          </Button>
-                        </Upload>
-                      </div>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </div>
-            <div>
-              <Row gutter={24} style={{ marginTop: "20px" }}>
-                <Col span={18}>
-                  <Col span={6}>
-                    <Row gutter={24} style={{ marginLeft: "1px" }}>
-                      <Col span={16}>
-                        <div className="">
-                          <span className="HedingColor">DEPENDS ON</span>
+            <section>
+              <Row gutter={12} className="SubDetailsSecondRow">
+                <Col span={15}>
+                  <div className="block">
+                    <Col span={24}>
+                      <section>
+                        <span className="HedingColor subDetialsDiscription">
+                          DISCRIPTION
+                        </span>
+
+                        <div>
+                          <TextArea
+                            className="subDetialsDisArea"
+                            rows={3}
+                            placeholder="Fill the Discription"
+                            value=""
+                            maxLength={400}
+                          />
                         </div>
-                      </Col>
-                      <Col span={8} style={{ margin: " -5px" }}>
-                        <div className="block">
+                      </section>
+                    </Col>
+                  </div>
+                </Col>
+                <Col span={9}>
+                  <div className="block">
+                    <Col span={20}>
+                      <section>
+                        <div className="subDetailsAttachments">
+                          <span className="HedingColor">ATTACHMENTS </span>
                           <Upload>
-                            <Button
-                              style={{
-                                border: "none",
-                                padding: 0,
-                                background: "none"
-                              }}
-                            >
-                              <i className="fa fa-plus" aria-hidden="true" />
+                            <Button className="subDetailsAttachements">
+                              <i
+                                className="fa fa-plus subDetailsAttachIcon"
+                                aria-hidden="true"
+                              />
                             </Button>
                           </Upload>
                         </div>
-                      </Col>
-                    </Row>
-                  </Col>
+                      </section>
+                    </Col>
+                  </div>
                 </Col>
               </Row>
-              <Card style={{ width: "100%", marginTop: "40px" }}>
+            </section>
+
+            <section>
+              <Row
+                gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+                className="subDetialsThirdRow"
+              >
+                <Col span={14}>
+                  <div className="block">
+                    <Col span={24}>
+                      <section>
+                        <div className="parent">
+                          <div className="child inline-block-child">
+                            <span className="HedingColor subDetailsDepndsLabel">
+                              DEPENDS ON
+                            </span>
+                          </div>
+                          <div className="child inline-block-child">
+                            <div className="DependsStatus">Blocked</div>
+                          </div>
+                          <Upload>
+                            <Button className="subDetailsBlockedBtn">
+                              <i
+                                className="fa fa-plus subDetailsBlockedIcon"
+                                aria-hidden="true"
+                              />
+                            </Button>
+                          </Upload>
+                        </div>
+                      </section>
+                    </Col>
+                  </div>
+                </Col>
+              </Row>
+            </section>
+
+            <div>
+              {/* for 3rd row implementaion */}
+
+              <Row
+                gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+                className="rowActionItems"
+              />
+
+              <Card className="actionItemCard">
                 <section>
-                  <ExclamationCircleOutlined style={{ marginTop: "12px" }} />
+                  <ExclamationCircleOutlined className="SDExcCircleOutlined" />
                   &nbsp;
-                  <span
-                    style={{
-                      color: "black",
-                      fontWeight: "bold",
-                      marginTop: "12px",
-                      fontSize: "15px"
-                    }}
-                  >
-                    Action items
-                  </span>
+                  <span className="subDetailsAction">Action items</span>
                 </section>
                 <section>
-                  <Checkbox style={{ fontWeight: "600", fontSize: "13px" }}>
+                  <Checkbox className="actionItemsCheckBox">
                     You Recevied 2 new discussion
                   </Checkbox>
                   <br />
-                  <Checkbox style={{ fontWeight: "600", fontSize: "13px" }}>
+                  <Checkbox className="actionItemsCheckBox">
                     This Submittal Recived 3 New Submissions
                   </Checkbox>
                   <br />
-                  <Checkbox style={{ fontWeight: "600", fontSize: "13px" }}>
+                  <Checkbox className="actionItemsCheckBox">
                     This Submittal overdue by 20 days
                   </Checkbox>
                   <br />
@@ -217,4 +305,5 @@ function SubmitalDetails() {
     </div>
   );
 }
+
 export default SubmitalDetails;
