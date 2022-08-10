@@ -6,8 +6,7 @@ import {
   Col,
   Input,
   DatePicker,
-  Select,
-  Upload
+  Select
 } from "antd";
 
 import TextArea from "antd/lib/input/TextArea";
@@ -20,6 +19,8 @@ import {
 import { useState } from "react";
 
 import "./drawer.css";
+
+import UploadFile from "./upload";
 
 function DrawerData() {
   const [visible, setVisible] = useState(false);
@@ -72,7 +73,6 @@ function DrawerData() {
             <section className="mt-2">
               <span className="HedingColor ">DUE BY</span>
               <br />
-
               <DatePicker className="drawerDatePicker" />
             </section>
           </Col>
@@ -98,7 +98,6 @@ function DrawerData() {
             <section className="mt-2">
               <span className="HedingColor ">ASSIGNED</span>
               <br />
-
               <Select className="assignedSelect" defaultValue="All">
                 {AssigneeOptions.map((item) => (
                   <Select.Option key={item} value={item}>
@@ -113,7 +112,6 @@ function DrawerData() {
             <section className="mt-2">
               <span className="HedingColor">PACAKGE</span>
               <br />
-
               <Select className="packageSelect" defaultValue="Select packages">
                 {PackageOptions.map((item) => (
                   <Select.Option key={item} value={item}>
@@ -152,14 +150,7 @@ function DrawerData() {
             <div className="block">
               <section className="mt-2">
                 <span className="HedingColor">ATTACHMENTS</span>
-                <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture"
-                  maxCount={3}
-                  multiple
-                >
-                  <Button>+ Upload </Button>
-                </Upload>
+                <UploadFile />
               </section>
             </div>
           </Col>
@@ -167,14 +158,7 @@ function DrawerData() {
             <section className="mt-2">
               <span className="HedingColor">Suggested</span>
               <div className="block">
-                <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture"
-                  maxCount={3}
-                  multiple
-                >
-                  <Button>+ Upload </Button>
-                </Upload>
+                <UploadFile />
               </div>
             </section>
           </Col>

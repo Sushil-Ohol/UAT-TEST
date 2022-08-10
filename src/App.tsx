@@ -21,7 +21,7 @@ function App() {
           <Route path="/project/new" component={ProjectCreatePage} />
           <Route path="/project/details" component={ProjectDetailsPage} />
           <Route path="/submittals" component={SubmittalListpage} />
-          <Route path="/submittalsdetails" component={SubmittalDetailspage} />
+          <Route path="/submittals/details" component={SubmittalDetailspage} />
           <Route path="/materials" component={MaterialListpage} />
         </Switch>
       </div>

@@ -1,28 +1,18 @@
 import { Row, Col, Input, Space, Select, Button, Card, DatePicker } from "antd";
-
 import React, { useCallback, useMemo, useRef, useState } from "react";
-
 import { AgGridReact } from "ag-grid-react";
-
 import "ag-grid-community/styles/ag-grid.css";
-
 import "ag-grid-community/styles/ag-theme-alpine.css";
-
 import "./submittal-list.css";
-
 import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
-
 import {
   statusValues,
   ContractorValues,
   AssignValues,
   ContractorOptions
 } from "../constant";
-
 import submittalLog from "../../assets/data/submittal-log.json";
-
 import CreateSubmittal from "./create-submittal";
-
 import AddColumn from "./add-column";
 
 interface SubmittalGrid {

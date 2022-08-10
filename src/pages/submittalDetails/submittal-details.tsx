@@ -15,7 +15,6 @@ import {
   Tabs,
   Card,
   DatePicker,
-  Upload,
   Button,
   Checkbox,
   Layout,
@@ -27,6 +26,7 @@ import {
 import { useState } from "react";
 import { useHistory } from "react-router";
 import "./submittal-details.css";
+import UploadFile from "./upload";
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -207,14 +207,7 @@ function SubmitalDetails() {
                       <section>
                         <div className="subDetailsAttachments">
                           <span className="HedingColor">ATTACHMENTS </span>
-                          <Upload>
-                            <Button className="subDetailsAttachements">
-                              <i
-                                className="fa fa-plus subDetailsAttachIcon"
-                                aria-hidden="true"
-                              />
-                            </Button>
-                          </Upload>
+                          <UploadFile />
                         </div>
                       </section>
                     </Col>
@@ -241,14 +234,7 @@ function SubmitalDetails() {
                           <div className="child inline-block-child">
                             <div className="DependsStatus">Blocked</div>
                           </div>
-                          <Upload>
-                            <Button className="subDetailsBlockedBtn">
-                              <i
-                                className="fa fa-plus subDetailsBlockedIcon"
-                                aria-hidden="true"
-                              />
-                            </Button>
-                          </Upload>
+                          <UploadFile />
                         </div>
                       </section>
                     </Col>
