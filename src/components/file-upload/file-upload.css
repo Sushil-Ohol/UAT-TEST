@@ -1,21 +1,55 @@
 .dropzone {
-    text-align: center;
-    padding: 30px;
-    border: 3px dashed #eeeeee;
-    background-color: #fafafa;
-    color: #bdbdbd;
-    cursor: pointer;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .selected-file-wrapper {
-    text-align: center;
-  }
-  
-  .selected-file {
-    color: #000; 
-    font-weight: bold;
-  }
+  text-align: center;
+  padding: 30px;
+  border: 3px dashed #eeeeee;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected-file-wrapper {
+  text-align: center;
+}
+
+.selected-file {
+  color: #000;
+  font-weight: bold;
+}
+.icon-style1 {
+  color: grey;
+  display: inline-block;
+  position: absolute;
+  top: 75px;
+  left: 65px;
+  font-size: 30px;
+}
+.icon-style2 {
+  color: grey;
+  display: inline-block;
+  position: absolute;
+  top: 45px;
+  left: 40px;
+  font-weight: bolder;
+  font-size: 25px;
+}
+.icon-style-wrong-screen-first {
+  color: red;
+  display: inline-block;
+  position: absolute;
+  top: 70px;
+  left: 65px;
+  font-size: 30px;
+}
+.icon-style-wrong-screen-second {
+  color: red;
+  display: inline-block;
+  position: absolute;
+  top: 40px;
+  left: 38px;
+
+  font-size: 30px;
+}

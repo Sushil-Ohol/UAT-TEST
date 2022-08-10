@@ -1,82 +1,135 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState } from "react";
+/* File upload component */
+import {
+  FileDoneOutlined,
+  SettingOutlined,
+  CalendarOutlined,
+  WarningOutlined
+} from "@ant-design/icons";
+import axios from "axios";
+import Hexagon from "components/hexagon/hexagon";
+import React, { useState } from "react";
 import Dropzone from "react-dropzone";
+import { FILESIZE, URL } from "constants/index";
 import "./file-upload.css";
 
-type FileUploadProps = {
+function Fileupload({
+  title,
+  extension,
+  icon,
+  setSkipBtn,
+  setState,
+  setCount,
+  setdefaultValue,
+  hexagoanstyle
+}: {
   title: string;
-  extensions: Array<string>;
-};
-
-function FileUpload(props: FileUploadProps) {
-  const [selectedFiles, setSelectedFiles] = useState<any>();
-  const [currentFile, setCurrentFile] = useState(undefined);
+  extension: string[];
+  icon: string;
+  setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
+  setState: React.Dispatch<React.SetStateAction<any>>;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+  setdefaultValue: React.Dispatch<React.SetStateAction<any>>;
+  hexagoanstyle: any;
+}) {
+  const [FileError, setFileError] = useState("");
   const [progress, setProgress] = useState(0);
-  const [message, setMessage] = useState("");
-  const { title, extensions } = props;
 
-  // Once the file is selected from 'File Selection UI'
-  const upload = () => {
-    if (selectedFiles) {
-      const selectedFile = selectedFiles[0];
-      setProgress(0);
-      setCurrentFile(selectedFile);
+  function anticon() {
+    switch (icon) {
+      case "FileDoneOutlined":
+        return <FileDoneOutlined className={hexagoanstyle.className} />;
+      case "SettingOutlined":
+        return <SettingOutlined className={hexagoanstyle.className} />;
+      case "CalendarOutlined":
+        return <CalendarOutlined className={hexagoanstyle.className} />;
+      default:
+        return "";
     }
+  }
+  function iconfunction() {
+    return <WarningOutlined className={hexagoanstyle.errorStyleClass} />;
+  }
+  const ProjectDefaultValue = async () => {
+    const result = await axios.get(`${URL}/projectsug`);
+    setdefaultValue(result.data);
   };
 
-  // Once the file is dragged-dropped into the control
-  const onDrop = (files: any) => {
-    setMessage("");
-    setSelectedFiles(undefined);
-    if (files.length > 0) {
-      if (extensions.includes(files[0].name.split(".")[1])) {
-        setSelectedFiles(files);
-      } else {
-        setMessage("Invalid file tpye!");
-      }
+  const onDrop = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length <= 1) {
+      acceptedFiles.forEach(async (file: any) => {
+        const splitedData = file.name.split(".");
+        const fileextension = splitedData[1];
+        if (extension.includes(fileextension)) {
+          if (file.size < FILESIZE) {
+            const formData = new FormData();
+            formData.append("image", file);
+            formData.append("title", title);
+
+            await axios.post(`${URL}/fileUpload`, formData, {
+              onUploadProgress: (progressEvent) => {
+                const progressCount = Math.ceil(
+                  (progressEvent.loaded / progressEvent.total) * 100
+                );
+                setProgress(progressCount);
+              }
+            });
+            setTimeout(() => {
+              setSkipBtn(true);
+              ProjectDefaultValue();
+              setState({ ...file, title });
+              setCount((prev: number) => prev + 1);
+              setFileError("");
+            }, 2000);
+          } else {
+            setFileError("Upload file less than 100MB");
+            setInterval(() => {
+              setFileError("");
+            }, 4000);
+          }
+        } else {
+          setFileError(() => {
+            return `only ${extension} file allow`;
+          });
+          setInterval(() => {
+            setFileError("");
+          }, 4000);
+        }
+      });
+    } else {
+      setFileError("only single file");
+      setInterval(() => {
+        setFileError("");
+      }, 4000);
     }
   };
 
   return (
-    <div>
-      {currentFile && (
-        <div className="progress">
-          <div
-            className="progress-bar progress-bar-info progress-bar-striped"
-            role="progressbar"
-            aria-valuenow={progress}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            style={{ width: `${progress}%` }}
-          >
-            {progress}%
-          </div>
-        </div>
-      )}
-
-      <Dropzone onDrop={onDrop} multiple={false}>
-        {({ getRootProps, getInputProps }) => (
+    <Dropzone onDrop={onDrop} multiple>
+      {({ getRootProps, getInputProps, isDragActive }) => {
+        return (
           <section>
-            <div {...getRootProps({ className: "dropzone" })}>
-              <input {...getInputProps()} onChange={upload} />
-              {selectedFiles && selectedFiles[0].name ? (
-                <div className="selected-file">
-                  {selectedFiles && selectedFiles[0].name}
-                </div>
-              ) : (
-                <label>{title}</label>
-              )}
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <Hexagon
+                ProgressBar={progress}
+                icon={FileError ? iconfunction : anticon}
+                text={isDragActive ? "Drag file here" : FileError || title}
+                sideLength={hexagoanstyle.HexagoanSize}
+                borderRadius={0}
+                fill="rgba(128, 128, 128, 0.001)"
+                shadow={isDragActive ? "rgba(0, 208, 255, 0.1)" : "#e2e2e2"}
+                textStyle={{
+                  fontFamily: "sans-serif",
+                  fontSize: hexagoanstyle.textSize,
+                  fill: FileError ? "red" : "grey"
+                }}
+              />
             </div>
           </section>
-        )}
-      </Dropzone>
-
-      <div className="alert" role="alert">
-        {message}
-      </div>
-    </div>
+        );
+      }}
+    </Dropzone>
   );
 }
-
-export default FileUpload;
+export default Fileupload;
