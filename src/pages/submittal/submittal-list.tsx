@@ -1,19 +1,15 @@
-import { Row, Col, Input, Space, Select, Button, Card, DatePicker } from "antd";
+import { Row, Col, Space, Button, Card, DatePicker } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./submittal-list.css";
-import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
-import {
-  statusValues,
-  ContractorValues,
-  AssignValues,
-  ContractorOptions
-} from "../constant";
+import { MoreOutlined } from "@ant-design/icons";
+import { statusValues, ContractorValues, AssignValues } from "../constant";
 import submittalLog from "../../assets/data/submittal-log.json";
-import CreateSubmittal from "./create-submittal";
+// import CreateSubmittal from "./create-submittal";
 import AddColumn from "./add-column";
+import Filters from "./filters";
 
 interface SubmittalGrid {
   id: number;
@@ -60,6 +56,7 @@ function NewDatePicker() {
 
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalGrid>>(null);
+  console.log(gridRef, "gridrefcall");
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalGrid[]>();
   const [columnDefs] = useState([
@@ -166,27 +163,27 @@ function SubmittalList() {
     }, 0);
   }, []);
 
-  const onFilterTextBoxChanged = useCallback(() => {
-    gridRef.current!.api.setQuickFilter(
-      (document.getElementById("filter-text-box") as HTMLInputElement).value
-    );
-  }, []);
+  // const onFilterTextBoxChanged = useCallback(() => {
+  //   gridRef.current!.api.setQuickFilter(
+  //     (document.getElementById("filter-text-box") as HTMLInputElement).value
+  //   );
+  // }, []);
 
   return (
     <>
       <Row className="FilterRow">
         <Col span={24}>
           <Space>
-            <Input
+            {/* <input
               type="text"
               id="filter-text-box"
               placeholder="Search"
               onInput={onFilterTextBoxChanged}
-              prefix={<SearchOutlined />}
-            />
-            <Input.Group compact>
-              &nbsp;&nbsp;
-              <Input className="statusInput" defaultValue="Status" disabled />
+              // prefix={<SearchOutlined />}
+            /> */}
+            {/* <Input.Group compact> */}
+            {/* &nbsp;&nbsp; */}
+            {/* <Input className="statusInput" defaultValue="Status" disabled />
               <Select
                 className="statusInputSelect"
                 onChange={(value: any) => {
@@ -227,16 +224,17 @@ function SubmittalList() {
                   gridRef.current!.api.setQuickFilter(value);
                 }}
                 defaultValue="Past due"
-              />
-              &nbsp;&nbsp;
+              /> */}
+            <Filters gridRef={gridRef} />
+            {/* &nbsp;&nbsp;
               <section>
                 <CreateSubmittal />
-              </section>
-              &nbsp;&nbsp;
-              <section>
-                <AddColumn />
-              </section>
-            </Input.Group>
+              </section> */}
+            {/* &nbsp;&nbsp; */}
+            <section>
+              <AddColumn />
+            </section>
+            {/* </Input.Group> */}
           </Space>
         </Col>
       </Row>
