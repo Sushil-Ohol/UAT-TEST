@@ -1,26 +1,17 @@
-import { SearchOutlined } from "@ant-design/icons";
-import { AgGridReact } from "ag-grid-react";
+import { useCallback } from "react";
 import { Row, Col, Space, Input, Select } from "antd";
-import { useRef } from "react";
+import { SearchOutlined } from "@ant-design/icons";
 import CreateSubmittal from "./create-submittal";
 import { StatusOptions, ContractorOptions } from "../constant";
 
-interface SubmittalGrid {
-  id: number;
-  submittal: string;
-  notification: number;
-  comments: number;
-  revision: number;
-  status: string;
-  dueBy: string;
-  contractor: string;
-  dependsOn: string;
-  assigned: string;
-}
+function Filters(props: any) {
+  const { gridRef } = props;
 
-/* Project Details Page */
-function Filters() {
-  const gridRef = useRef<AgGridReact<SubmittalGrid>>(null);
+  const onFilterTextBoxChanged = useCallback(() => {
+    gridRef.current!.api.setQuickFilter(
+      (document.getElementById("filter-text-box") as HTMLInputElement).value
+    );
+  }, [gridRef]);
   return (
     <Row className="FilterRow">
       <Col span={24}>
@@ -30,6 +21,7 @@ function Filters() {
             id="filter-text-box"
             placeholder="Search"
             prefix={<SearchOutlined />}
+            onInput={onFilterTextBoxChanged}
           />
           <Input.Group compact>
             &nbsp;&nbsp;
