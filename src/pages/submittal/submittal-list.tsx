@@ -55,7 +55,6 @@ function NewDatePicker() {
 
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalGrid>>(null);
-  console.log(gridRef, "gridrefcall");
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalGrid[]>();
   const [columnDefs] = useState([
