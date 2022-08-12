@@ -3,7 +3,7 @@ import { Row, Col, Space, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import CreateSubmittal from "./create-submittal";
 import { StatusOptions, ContractorOptions } from "../constant";
-/* Project Details Page */
+
 function Filters(props: any) {
   const { gridRef } = props;
 

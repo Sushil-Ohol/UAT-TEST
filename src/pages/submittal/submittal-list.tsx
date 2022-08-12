@@ -7,7 +7,6 @@ import "./submittal-list.css";
 import { MoreOutlined } from "@ant-design/icons";
 import { statusValues, ContractorValues, AssignValues } from "../constant";
 import submittalLog from "../../assets/data/submittal-log.json";
-// import CreateSubmittal from "./create-submittal";
 import AddColumn from "./add-column";
 import Filters from "./filters";
 
@@ -163,78 +162,15 @@ function SubmittalList() {
     }, 0);
   }, []);
 
-  // const onFilterTextBoxChanged = useCallback(() => {
-  //   gridRef.current!.api.setQuickFilter(
-  //     (document.getElementById("filter-text-box") as HTMLInputElement).value
-  //   );
-  // }, []);
-
   return (
     <>
       <Row className="FilterRow">
         <Col span={24}>
           <Space>
-            {/* <input
-              type="text"
-              id="filter-text-box"
-              placeholder="Search"
-              onInput={onFilterTextBoxChanged}
-              // prefix={<SearchOutlined />}
-            /> */}
-            {/* <Input.Group compact> */}
-            {/* &nbsp;&nbsp; */}
-            {/* <Input className="statusInput" defaultValue="Status" disabled />
-              <Select
-                className="statusInputSelect"
-                onChange={(value: any) => {
-                  gridRef.current!.api.setQuickFilter(value);
-                }}
-                defaultValue="All"
-              >
-                {statusValues.map((item) => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                ))}
-              </Select>
-              &nbsp;&nbsp;
-              <Input
-                className="contractorInput"
-                defaultValue="Contractor"
-                disabled
-              />
-              <Select
-                className="contractorSelect"
-                onChange={(value: any) => {
-                  gridRef.current!.api.setQuickFilter(value);
-                }}
-                defaultValue="Select Contractor"
-              >
-                {ContractorOptions.map((item) => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                ))}
-              </Select>
-              &nbsp;&nbsp;
-              <Input className="DueInput" defaultValue="Due" disabled />
-              <Select
-                className="dueSelect"
-                onChange={(value: any) => {
-                  gridRef.current!.api.setQuickFilter(value);
-                }}
-                defaultValue="Past due"
-              /> */}
             <Filters gridRef={gridRef} />
-            {/* &nbsp;&nbsp;
-              <section>
-                <CreateSubmittal />
-              </section> */}
-            {/* &nbsp;&nbsp; */}
             <section>
               <AddColumn />
             </section>
-            {/* </Input.Group> */}
           </Space>
         </Col>
       </Row>
