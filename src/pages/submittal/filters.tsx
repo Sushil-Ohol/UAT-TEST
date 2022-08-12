@@ -11,7 +11,7 @@ function Filters(props: any) {
     gridRef.current!.api.setQuickFilter(
       (document.getElementById("filter-text-box") as HTMLInputElement).value
     );
-  }, []);
+  }, [gridRef]);
   return (
     <Row className="FilterRow">
       <Col span={24}>
