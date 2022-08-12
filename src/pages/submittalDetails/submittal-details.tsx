@@ -38,7 +38,6 @@ function SubmitalDetails() {
   const { Paragraph } = Typography;
   const menu = (
     <Menu
-      //   onClick={handleMenuClick}
       items={[
         {
           label: "Clicking me will not close the menu.",

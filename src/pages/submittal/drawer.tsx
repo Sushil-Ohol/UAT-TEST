@@ -8,18 +8,14 @@ import {
   DatePicker,
   Select
 } from "antd";
-
 import TextArea from "antd/lib/input/TextArea";
 import {
   AssigneeOptions,
   ContractorOptions,
   PackageOptions
 } from "pages/constant";
-
 import { useState } from "react";
-
 import "./drawer.css";
-
 import UploadFile from "./upload";
 
 function DrawerData() {
