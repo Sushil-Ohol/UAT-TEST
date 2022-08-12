@@ -33,6 +33,12 @@
   align-items: center;
   justify-content: space-evenly;
 }
+.ant-steps-item-process
+  > .ant-steps-item-container
+  > .ant-steps-item-icon
+  .ant-steps-icon {
+  display: none;
+}
 card {
   background: transparent;
 }

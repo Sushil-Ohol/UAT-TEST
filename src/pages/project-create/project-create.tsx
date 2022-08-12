@@ -488,19 +488,6 @@ function ProjectCreate() {
                       View project
                     </Button>
                   )}
-                  {current < steps.length - 1 && (
-                    <Button
-                      className="stepper-next-btn"
-                      type="primary"
-                      onClick={() => next()}
-                    >
-                      Next <ArrowRightOutlined />
-                    </Button>
-                  )}
-                  <Steps current={current}>
-                    <Step title="Details" />
-                    <Step title="Finish" />
-                  </Steps>
 
                   {SkipBtn && current !== 1 && (
                     <Button
@@ -511,6 +498,19 @@ function ProjectCreate() {
                       icon={<ArrowLeftOutlined />}
                     >
                       Prev
+                    </Button>
+                  )}
+                  <Steps current={current}>
+                    <Step title="Details" />
+                    <Step title="Finish" />
+                  </Steps>
+                  {current < steps.length - 1 && (
+                    <Button
+                      className="stepper-next-btn"
+                      type="primary"
+                      onClick={() => next()}
+                    >
+                      Next <ArrowRightOutlined />
                     </Button>
                   )}
                 </div>

@@ -5,7 +5,7 @@ import "./navbar.css";
 
 function Nav() {
   return (
-    <Row>
+    <Row className="navbar">
       <Col span={2} offset={0}>
         <span className="brandName">
           Constructiv<strong>IQ</strong>
@@ -19,7 +19,7 @@ function Nav() {
           subTitle="Creating new project"
         />
       </Col>
-      <Col span={12} offset={2}>
+      <Col span={11} offset={6}>
         <Menus />
       </Col>
     </Row>
