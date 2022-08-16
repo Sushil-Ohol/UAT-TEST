@@ -3,9 +3,9 @@ import HomePage from "./home";
 import ProjectDetailsPage from "./project-details";
 import ProjectCreatePage from "./project-create";
 import ProjectsListpage from "./projects-list";
-import SubmittalListpage from "./submittal";
-import SubmittalDetailspage from "./submittalDetails";
-import MaterialListpage from "./material";
+import SubmittalListpage from "./submittals-list";
+import SubmittalDetailspage from "./submittal-details";
+import MaterialListpage from "./material-list";
 
 export {
   HomePage,

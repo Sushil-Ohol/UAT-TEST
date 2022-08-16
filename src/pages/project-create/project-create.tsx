@@ -16,7 +16,6 @@ import {
   CheckSquareOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
-import { URL } from "constants/index";
 
 function ProjectCreate() {
   const [SkipBtn, setSkipBtn] = useState(false);
