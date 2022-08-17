@@ -6,7 +6,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./submittal-list.css";
 import { Buttons } from "components/widgets";
-import { useAppDispatch } from "store/store";
+import { useAppDispatch } from "store";
 import { getSubmittalList } from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create/submittal-create";
 import { SubmittalLog } from "models/submittal-log";
