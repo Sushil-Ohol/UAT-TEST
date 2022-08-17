@@ -125,13 +125,14 @@ function SubmittalList() {
     if (isFulfilled(actionResult)) {
       const { payload } = actionResult;
       if (payload.success) {
-        setRowData([...payload.response]);
+        setRowData(payload.response);
       }
     }
   };
 
   React.useEffect(() => {
-    loadList("sd");
+    // todo - here we will fetch the actual project id from route params and we will load details
+    loadList("projectId");
   }, []);
 
   const onNewClick = () => {
