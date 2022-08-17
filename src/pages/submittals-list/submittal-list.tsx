@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { DatePicker, Drawer } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
@@ -10,35 +9,22 @@ import { Buttons } from "components/widgets";
 import { useAppDispatch } from "store/store";
 import { getSubmittalList } from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create/submittal-create";
+import { SubmittalLog } from "models/submittal-log";
 import { isFulfilled } from "@reduxjs/toolkit";
 import { DropDownData } from "../../constants";
-import submittalLog from "../../assets/data/submittal-log.json";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
-
-interface SubmittalGrid {
-  id: number;
-  submittal: string;
-  notification: number;
-  comments: number;
-  revision: number;
-  status: string;
-  dueBy: string;
-  contractor: string;
-  dependsOn: string;
-  assigned: string;
-}
 
 function NewDatePicker() {
   return <DatePicker />;
 }
 
 function SubmittalList() {
-  const gridRef = useRef<AgGridReact<SubmittalGrid>>(null);
+  const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
   const [showNewDrawer, setShowNewDrawer] = useState(false);
   const [selectedRows, setSelectedRows] = useState(0);
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
-  const [rowData, setRowData] = useState<SubmittalGrid[]>();
+  const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
 
   const [columnDefs] = useState([
@@ -139,7 +125,7 @@ function SubmittalList() {
     if (isFulfilled(actionResult)) {
       const { payload } = actionResult;
       if (payload.success) {
-        console.log(payload.response);
+        setRowData([...payload.response]);
       }
     }
   };
@@ -147,11 +133,6 @@ function SubmittalList() {
   React.useEffect(() => {
     loadList("sd");
   }, []);
-
-  const onGridReady = () => {
-    const data: any = submittalLog;
-    setRowData([...data]);
-  };
 
   const onNewClick = () => {
     setShowNewDrawer(true);
@@ -187,7 +168,7 @@ function SubmittalList() {
         onApplyClick={onApplyClick}
       />
       <div style={gridStyle} className="ag-theme-alpine">
-        <AgGridReact<SubmittalGrid>
+        <AgGridReact<SubmittalLog>
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
@@ -199,7 +180,6 @@ function SubmittalList() {
           suppressAggFuncInHeader
           readOnlyEdit
           masterDetail
-          onGridReady={onGridReady}
           onRowSelected={onRowSelected}
           onFirstDataRendered={onFirstDataRendered}
         />

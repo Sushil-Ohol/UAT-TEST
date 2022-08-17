@@ -63,7 +63,6 @@ const request = async <T>(
   config: AxiosAuthRefreshRequestConfig
 ): Promise<SuccessResult<T> | ErrorResult> => {
   try {
-    console.log(config.url);
     const response = await axiosInstance.request<T>({
       ...config,
       transformResponse: (res) => {
@@ -71,7 +70,6 @@ const request = async <T>(
         return resp.remote === "success" ? resp.data : resp;
       }
     });
-    console.log(response);
     return {
       remote: "success",
       data: response.data

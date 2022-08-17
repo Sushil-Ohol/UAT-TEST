@@ -1,22 +1,24 @@
 /* eslint-disable no-param-reassign */
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SubmittalListResponse, SubmittalLog } from "models/submittal-log";
 import * as api from "services/submittals-services";
 
 type SubmittalState = {
   projectId: string;
+  list: SubmittalLog[];
   loading: boolean;
 };
 
 export const initialState: SubmittalState = {
   projectId: "",
+  list: [],
   loading: false
 };
 
 export const getSubmittalList = createAsyncThunk(
   "submittal/list",
   async (projectId: string, { rejectWithValue }: any) => {
-    console.log(projectId);
     const response = await api.GetSubmittals(projectId);
     if (response.remote === "success") {
       const { data } = response;
@@ -42,8 +44,8 @@ const submittalSlice = createSlice({
       })
       .addCase(
         getSubmittalList.fulfilled,
-        (state, { payload }: PayloadAction<any>) => {
-          console.log(payload);
+        (state, { payload }: PayloadAction<SubmittalListResponse>) => {
+          state.list = payload.response;
         }
       );
   }
