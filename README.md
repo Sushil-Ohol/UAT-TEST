@@ -94,9 +94,9 @@ In that file you'll find two sections:
 | antd design        | Package used to for React UI component.(https://www.npmjs.com/package/antd)                                            |
 | ag grid            | AG Grid is a fully-featured and highly customizable JavaScript data grid.(https://www.npmjs.com/package/ag-grid-react) |
 | ag grid community  | AG Grid Community is free and open-sourced under the MIT license.(https://www.npmjs.com/package/ag-grid-community)     |
-| prop-types         | Runtime type checking of props(https://www.npmjs.com/package/prop-types)                                               |
 | ant-design-icons   | Added antd icons(https://ant.design/components/icon/)                                                                  |
-
+| react-redux   | Added antd icons(https://react-redux.js.org)                                                                  |
+| @reduxjs/toolkit   | Added antd icons(https://redux-toolkit.js.org)                                                                  |
 ## `devDependencies`
 
 | Package | Description                                                         |
