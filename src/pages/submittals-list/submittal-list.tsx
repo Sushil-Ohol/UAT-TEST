@@ -141,7 +141,6 @@ function SubmittalList() {
   };
 
   const onRowSelected = (row: any) => {
-    console.log(row);
     if (row.node.selected) {
       setSelectedRows((count) => count + 1);
     } else {
