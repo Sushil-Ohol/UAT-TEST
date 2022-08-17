@@ -10,7 +10,7 @@ import axios from "axios";
 import Hexagon from "components/hexagon/hexagon";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
-import { FILESIZE, URL } from "constants/index";
+import { FILESIZE } from "constants/index";
 import "./file-upload.css";
 
 function Fileupload({

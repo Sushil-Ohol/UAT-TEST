@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 /* Home Page Component */
 function HomePage() {
   return (
