@@ -11,7 +11,7 @@ function MaterialListFilterBar(props: any) {
     gridRef.current!.api.setQuickFilter(
       (document.getElementById("filter-text-box") as HTMLInputElement).value
     );
-  }, []);
+  }, [gridRef]);
 
   return (
     <div className="FilterRow" style={{ display: "flex", margin: "1px 0px" }}>

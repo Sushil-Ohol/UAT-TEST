@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { DatePicker, Drawer } from "antd";
-import { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./submittal-list.css";
 import { Buttons } from "components/widgets";
+import { useAppDispatch } from "store/store";
+import { getSubmittalList } from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create/submittal-create";
+import { isFulfilled } from "@reduxjs/toolkit";
 import { DropDownData } from "../../constants";
 import submittalLog from "../../assets/data/submittal-log.json";
 import SubmittalListFilterComponent from "./filter-bar";
@@ -34,6 +39,8 @@ function SubmittalList() {
   const [selectedRows, setSelectedRows] = useState(0);
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalGrid[]>();
+  const dispatch = useAppDispatch();
+
   const [columnDefs] = useState([
     {
       field: "id",
@@ -127,6 +134,20 @@ function SubmittalList() {
     };
   }, []);
 
+  const loadList = async (projectId: string) => {
+    const actionResult = await dispatch(getSubmittalList(projectId));
+    if (isFulfilled(actionResult)) {
+      const { payload } = actionResult;
+      if (payload.success) {
+        console.log(payload.response);
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    loadList("sd");
+  }, []);
+
   const onGridReady = () => {
     const data: any = submittalLog;
     setRowData([...data]);
@@ -141,7 +162,6 @@ function SubmittalList() {
   };
 
   const onRowSelected = (row: any) => {
-    console.log(row);
     if (row.node.selected) {
       setSelectedRows((count) => count + 1);
     } else {
