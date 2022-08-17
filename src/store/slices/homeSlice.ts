@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type HomeState = {
@@ -18,7 +14,6 @@ const initialState: HomeState = {
 const homeSlice = createSlice({
   name: "submittalSlice",
   initialState,
-  extraReducers(builder) {},
   reducers: {
     reset: () => initialState,
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
