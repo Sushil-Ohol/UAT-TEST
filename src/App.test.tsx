@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderWithProviders } from "utils/test-utils";
 import App from "./App";
 
 test("home page text", () => {
@@ -15,7 +16,8 @@ test("home page text", () => {
       dispatchEvent: jest.fn()
     }))
   });
-  render(<App />);
+  renderWithProviders(<App />);
+
   const linkElement = screen.getByText(/Homepage/i);
   expect(linkElement).toBeInTheDocument();
 });

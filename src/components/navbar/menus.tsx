@@ -4,11 +4,12 @@ import { UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import "./navbar.css";
 
-function Menus() {
+function Menus(props: any) {
+  const { projectId } = props;
   const items: MenuProps["items"] = [
     {
       label: (
-        <a href="projects" rel="noopener noreferrer">
+        <a href={`/project/details/${projectId}`} rel="noopener noreferrer">
           Project
         </a>
       ),
@@ -16,7 +17,10 @@ function Menus() {
     },
     {
       label: (
-        <a href="schedule" rel="noopener noreferrer">
+        <a
+          href={`/project/details/${projectId}/schedule`}
+          rel="noopener noreferrer"
+        >
           Schedule
         </a>
       ),
@@ -24,7 +28,10 @@ function Menus() {
     },
     {
       label: (
-        <a href="specification" rel="noopener noreferrer">
+        <a
+          href={`/project/details/${projectId}/specification`}
+          rel="noopener noreferrer"
+        >
           Specification
         </a>
       ),
@@ -32,7 +39,10 @@ function Menus() {
     },
     {
       label: (
-        <a href="materials" rel="noopener noreferrer">
+        <a
+          href={`/project/details/${projectId}/materials`}
+          rel="noopener noreferrer"
+        >
           Material
         </a>
       ),
@@ -40,7 +50,10 @@ function Menus() {
     },
     {
       label: (
-        <a href="submittals" rel="noopener noreferrer">
+        <a
+          href={`/project/details/${projectId}/submittals`}
+          rel="noopener noreferrer"
+        >
           Submittal
         </a>
       ),

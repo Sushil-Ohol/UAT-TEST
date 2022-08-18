@@ -17,12 +17,23 @@ function App() {
         <Navbar />
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <Route path="/projects" component={ProjectsListpage} />
-          <Route path="/project/new" component={ProjectCreatePage} />
-          <Route path="/project/details" component={ProjectDetailsPage} />
-          <Route path="/submittals" component={SubmittalListpage} />
+          <Route path="/projects" exact component={ProjectsListpage} />
+          <Route path="/project/new" exact component={ProjectCreatePage} />
+          <Route
+            path="/project/details/:projectId/submittals"
+            exact
+            component={SubmittalListpage}
+          />
           <Route path="/submittals/details" component={SubmittalDetailspage} />
-          <Route path="/materials" component={MaterialListpage} />
+          <Route
+            path="/project/details/:projectId/materials"
+            exact
+            component={MaterialListpage}
+          />
+          <Route
+            path="/project/details/:projectId"
+            component={ProjectDetailsPage}
+          />
         </Switch>
       </div>
     </Router>

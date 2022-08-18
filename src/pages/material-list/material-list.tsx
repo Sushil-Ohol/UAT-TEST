@@ -1,12 +1,16 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./material-list.css";
 import { Drawer } from "antd";
 import MaterialCreateComponent from "pages/material-create";
-import materialsData from "../../assets/data/materials.json";
+
+import { setProjectId } from "store/slices/homeSlice";
+import { useAppDispatch } from "store";
+import { useParams } from "react-router-dom";
 import MaterialListFilterBar from "./filter-bar";
+import materialsData from "../../assets/data/materials.json";
 
 interface MaterialGrid {
   id: number;
@@ -26,6 +30,8 @@ function Materials() {
   const [showNewDrawer, setShowNewDrawer] = useState(false);
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<MaterialGrid[]>();
+  const dispatch = useAppDispatch();
+  const { projectId } = useParams() as any;
   const [columnDefs] = useState([
     {
       field: "id",
@@ -83,6 +89,10 @@ function Materials() {
     { field: "submittal", headerName: "SUBMITTAL" },
     { field: "", headerName: "" }
   ]);
+
+  React.useEffect(() => {
+    dispatch(setProjectId(projectId));
+  }, [dispatch, projectId]);
 
   const autoGroupColumnDef = useMemo(() => {
     return {

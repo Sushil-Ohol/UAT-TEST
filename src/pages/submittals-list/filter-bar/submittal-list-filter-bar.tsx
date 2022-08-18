@@ -17,6 +17,7 @@ function SubmittalListFilterComponent(props: any) {
       <Space>
         <Input
           type="text"
+          style={{ width: 250 }}
           id="filter-text-box"
           placeholder="Search"
           prefix={<SearchOutlined />}
@@ -25,7 +26,7 @@ function SubmittalListFilterComponent(props: any) {
         <Input.Group compact>
           <Input style={{ width: "10%" }} defaultValue="Status" disabled />
           <Select
-            style={{ width: 85 }}
+            style={{ width: 150 }}
             onChange={(value: any) => {
               gridRef.current!.api.setQuickFilter(value);
             }}
@@ -40,7 +41,7 @@ function SubmittalListFilterComponent(props: any) {
           &nbsp;&nbsp;
           <Input style={{ width: "10%" }} defaultValue="Contractor" disabled />
           <Select
-            style={{ width: 85 }}
+            style={{ width: 150 }}
             onChange={(value: any) => {
               gridRef.current!.api.setQuickFilter(value);
             }}
@@ -54,7 +55,7 @@ function SubmittalListFilterComponent(props: any) {
           </Select>
           <Input style={{ width: "10%" }} defaultValue="Due" disabled />
           <Select
-            style={{ width: 100 }}
+            style={{ width: 150 }}
             onChange={(value: any) => {
               gridRef.current!.api.setQuickFilter(value);
             }}
@@ -62,7 +63,8 @@ function SubmittalListFilterComponent(props: any) {
           />
         </Input.Group>
       </Space>
-      <div style={{ display: "flex", margin: "1px 0px" }}>
+
+      <div style={{ marginLeft: "auto" }}>
         <Button onClick={onApplyClick}>Apply</Button>
         <Button onClick={onNewClick}>+ New Submittal</Button>
       </div>

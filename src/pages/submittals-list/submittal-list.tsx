@@ -11,6 +11,8 @@ import { getSubmittalList } from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create/submittal-create";
 import { SubmittalLog } from "models/submittal-log";
 import { isFulfilled } from "@reduxjs/toolkit";
+import { useParams } from "react-router-dom";
+import { setProjectId } from "store/slices/homeSlice";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
@@ -26,6 +28,7 @@ function SubmittalList() {
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
+  const { projectId } = useParams() as any;
 
   const [columnDefs] = useState([
     {
@@ -120,7 +123,7 @@ function SubmittalList() {
     };
   }, []);
 
-  const loadList = async (projectId: string) => {
+  const loadList = async () => {
     const actionResult = await dispatch(getSubmittalList(projectId));
     if (isFulfilled(actionResult)) {
       const { payload } = actionResult;
@@ -132,8 +135,12 @@ function SubmittalList() {
 
   React.useEffect(() => {
     // todo - here we will fetch the actual project id from route params and we will load details
-    loadList("projectId");
+    loadList();
   }, []);
+
+  React.useEffect(() => {
+    dispatch(setProjectId(projectId));
+  }, [dispatch, projectId]);
 
   const onNewClick = () => {
     setShowNewDrawer(true);

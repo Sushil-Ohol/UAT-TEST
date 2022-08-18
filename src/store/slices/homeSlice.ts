@@ -27,4 +27,4 @@ const homeSlice = createSlice({
 
 export default homeSlice.reducer;
 
-export const { reset: resetAuthState, setLoading } = homeSlice.actions;
+export const { reset, setProjectId, setLoading } = homeSlice.actions;

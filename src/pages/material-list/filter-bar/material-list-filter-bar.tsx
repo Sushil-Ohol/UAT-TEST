@@ -26,7 +26,7 @@ function MaterialListFilterBar(props: any) {
         <Input.Group compact>
           <Input style={{ width: "10%" }} defaultValue="Status" disabled />
           <Select
-            style={{ width: 85, background: "#DCDCDC" }}
+            style={{ width: 120, background: "#DCDCDC" }}
             onChange={(value: any) => {
               gridRef.current!.api.setQuickFilter(value);
             }}
@@ -41,7 +41,7 @@ function MaterialListFilterBar(props: any) {
           &nbsp;&nbsp;
           <Input style={{ width: "10%" }} defaultValue="Assigned" disabled />
           <Select
-            style={{ width: 85, background: "#DCDCDC" }}
+            style={{ width: 120, background: "#DCDCDC" }}
             onChange={(value: any) => {
               gridRef.current!.api.setQuickFilter(value);
             }}
@@ -60,7 +60,7 @@ function MaterialListFilterBar(props: any) {
             disabled
           />
           <Select
-            style={{ width: 85, background: "#DCDCDC" }}
+            style={{ width: 120, background: "#DCDCDC" }}
             onChange={(value: any) => {
               gridRef.current!.api.setQuickFilter(value);
             }}
@@ -72,8 +72,9 @@ function MaterialListFilterBar(props: any) {
               </Select.Option>
             ))}
           </Select>
+          <Input style={{ width: "5%" }} defaultValue="Due" disabled />
           <Select
-            style={{ width: 85, background: "#DCDCDC" }}
+            style={{ width: 120, background: "#DCDCDC" }}
             onChange={(value: any) => {
               gridRef.current!.api.setQuickFilter(value);
             }}
@@ -86,9 +87,9 @@ function MaterialListFilterBar(props: any) {
             ))}
           </Select>
         </Input.Group>
-      </Space>
-      <div style={{ display: "flex", margin: "1px 0px" }}>
         <Button onClick={onApplyClick}>Apply</Button>
+      </Space>
+      <div style={{ marginLeft: "auto" }}>
         <Button onClick={onNewClick}>+ New Material</Button>
       </div>
     </div>
