@@ -225,10 +225,10 @@ export default class Hexagon extends Component {
             style={{
               height: "20px",
               textAlign: "center",
-              width: sideLength === "100" ? "60%" : "80%",
+              width: sideLength === 100 ? "60%" : "80%",
               position: "absolute",
-              bottom: sideLength === "100" ? `${+sideLength - 50}px` : "30px",
-              left: sideLength === "100" ? "35px" : "11px"
+              bottom: sideLength === 100 ? `${+sideLength - 60}px` : "30px",
+              left: sideLength === 100 ? "35px" : "11px"
             }}
             percent={progressBar}
           />
@@ -278,9 +278,9 @@ Hexagon.propTypes = {
   shadow: PropTypes.string,
   filename: PropTypes.string,
   img: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.func,
   error: PropTypes.string,
-  wrongIcon: PropTypes.string,
+  wrongIcon: PropTypes.func,
   text: PropTypes.string,
   textStyle: PropTypes.object,
   styles: PropTypes.shape({

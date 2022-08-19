@@ -60,7 +60,6 @@ card {
   position: absolute;
   left: 10px;
   font-size: smaller;
-  font-family: "Inter-SemiBold, Inter";
 }
 .stepper-next-btn {
   height: 80%;
@@ -69,7 +68,6 @@ card {
   position: absolute;
   right: 10px;
   font-size: smaller;
-  font-family: "Inter-SemiBold, Inter";
 }
 .stepper-done-btn {
   height: 80%;
@@ -78,7 +76,6 @@ card {
   position: absolute;
   right: 10px;
   font-size: smaller;
-  font-family: "Inter-SemiBold, Inter";
 }
 .ant-steps {
   width: 40%;
@@ -131,9 +128,7 @@ textarea.ant-input:hover {
   > .ant-steps-item-title::after {
   background-color: black;
 }
-.ant-steps-item-title {
-  font-family: "Inter-SemiBold, Inter";
-}
+
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
   background-color: black;
 }
