@@ -35,8 +35,7 @@ function SubmittalList() {
       field: "id",
       headerName: "ID",
       checkboxSelection: true,
-      headerCheckboxSelection: true,
-      cellRendererParams: { checkbox: true }
+      headerCheckboxSelection: true
     },
     { field: "submittal", headerName: "SUBMITTAL" },
     {
@@ -150,12 +149,8 @@ function SubmittalList() {
     setShowNewDrawer(true);
   };
 
-  const onRowSelected = (row: any) => {
-    if (row.node.selected) {
-      setSelectedRows((count) => count + 1);
-    } else {
-      setSelectedRows((count) => count - 1);
-    }
+  const onSelectionChanged = (grid: any) => {
+    setSelectedRows(grid.api.getSelectedRows().length);
   };
 
   const onDrawerClose = () => {
@@ -188,7 +183,8 @@ function SubmittalList() {
           suppressAggFuncInHeader
           readOnlyEdit
           masterDetail
-          onRowSelected={onRowSelected}
+          animateRows={false}
+          onSelectionChanged={onSelectionChanged}
           onFirstDataRendered={onFirstDataRendered}
         />
       </div>
