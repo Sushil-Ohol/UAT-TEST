@@ -3,14 +3,8 @@
 import React, { Component } from "react";
 import { Progress } from "antd";
 import PropTypes from "prop-types";
+import { colorCode } from "constants/index";
 import { generateHexSVG } from "./generateHex";
-
-const elevationStyleHover = (elevation: number) => {
-  return {
-    cursor: "pointer",
-    transform: `translateY(${elevation / 2}px)`
-  };
-};
 
 const elevationStyleActive = (elevation: any) => {
   return {
@@ -23,30 +17,35 @@ const elevationStyleActive = (elevation: any) => {
 export default class Hexagon extends Component {
   thHexagonStyleNormal: any;
 
-  thHexagonStyleHover: any;
-
   thHexagonStyleActive: any;
 
   static defaultProps: {
-    ProgressBar: number;
+    color: string;
+    progressBar: number;
     sideLength: number;
     borderRadius: number;
     fill: string;
     stroke: string;
+    error: string;
     strokeWidth: number;
     elevation: number;
     shadow: string;
+    filename: string;
+    img: string;
     icon: string;
+    wrongIcon: string;
     text: string;
     textStyle: {};
     styles: { normal: {}; hover: {}; active: {} };
     href: null;
     target: null;
+    isactive: boolean;
     onClick: () => void;
   };
 
   static propTypes: {
-    ProgressBar: PropTypes.Requireable<number>;
+    color: PropTypes.Requireable<string>;
+    progressBar: PropTypes.Requireable<number>;
     sideLength: PropTypes.Requireable<number>;
     borderRadius: PropTypes.Requireable<number>;
     fill: PropTypes.Requireable<string>;
@@ -54,7 +53,11 @@ export default class Hexagon extends Component {
     strokeWidth: PropTypes.Requireable<number>;
     elevation: PropTypes.Requireable<number>;
     shadow: PropTypes.Requireable<string>;
+    filename: PropTypes.Requireable<string>;
+    img: PropTypes.Requireable<string>;
     icon: PropTypes.Requireable<any>;
+    error: PropTypes.Requireable<any>;
+    wrongIcon: PropTypes.Requireable<any>;
     text: PropTypes.Requireable<string>;
     textStyle: PropTypes.Requireable<object>;
     styles: PropTypes.Requireable<
@@ -66,6 +69,7 @@ export default class Hexagon extends Component {
     >;
     href: PropTypes.Requireable<string>;
     target: PropTypes.Requireable<string>;
+    isactive: PropTypes.Requireable<boolean>;
     onClick: PropTypes.Requireable<(...args: any[]) => any>;
   };
 
@@ -75,7 +79,7 @@ export default class Hexagon extends Component {
       elevation,
       stroke,
       strokeWidth,
-      styles: { normal, hover, active }
+      styles: { normal, active }
     }: any = this.props;
 
     const thHexagonStyleBase = {
@@ -86,11 +90,7 @@ export default class Hexagon extends Component {
     };
 
     this.thHexagonStyleNormal = { ...thHexagonStyleBase, ...normal };
-    this.thHexagonStyleHover = {
-      ...thHexagonStyleBase,
-      ...(elevation ? elevationStyleHover(elevation) : {}),
-      ...hover
-    };
+
     this.thHexagonStyleActive = {
       ...thHexagonStyleBase,
       ...(elevation ? elevationStyleActive(elevation) : {}),
@@ -104,18 +104,24 @@ export default class Hexagon extends Component {
 
   render() {
     const {
-      ProgressBar,
+      color,
+      progressBar,
       sideLength,
       borderRadius,
       elevation,
       shadow,
+      filename,
       text,
       textStyle,
       href,
       target,
       onClick,
       fill,
-      icon
+      icon,
+      wrongIcon,
+      error,
+      img,
+      isactive
     }: any = this.props;
     const { thHexagonStyle }: any = this.state;
     const width = Math.sqrt(3) * sideLength;
@@ -123,17 +129,43 @@ export default class Hexagon extends Component {
     const fontSizeOffset = textStyle.fontSize
       ? 0.3 * parseInt(textStyle.fontSize, 10)
       : 0;
+    const textArray = text.split(" ");
+
     const hexagon = (
       <>
         <path fill={fill} d={generateHexSVG(sideLength, borderRadius)} />
-
+        <image href={img} x={0.15 * width} y={0.12 * height} />
         <text fill="#bbb" strokeWidth="0" style={textStyle}>
           <tspan
             x={width / 2}
-            y={(1.3 * height) / 2 + fontSizeOffset}
+            y={(1.2 * height) / 2}
             textAnchor="middle"
+            style={{ fontSize: textStyle.fontSize }}
+            className={isactive ? "text-first-active" : "text-first"}
           >
-            {ProgressBar <= 0 && text}
+            {textArray[0]}
+          </tspan>
+          <tspan
+            x={width / 2}
+            y={(1.3 * height) / 2 + fontSizeOffset + 2}
+            textAnchor="middle"
+            style={{ fontSize: textStyle.fontSize }}
+            className={isactive ? "text-first-active" : "text-first"}
+          >
+            {textArray[1]}
+          </tspan>
+
+          <tspan
+            x={width / 2}
+            y={(1.5 * height) / 2 + fontSizeOffset + 2}
+            textAnchor="middle"
+            style={{
+              fill: colorCode.error,
+              fontSize: sideLength === "100" ? "10px" : "8px"
+            }}
+          >
+            <div>{filename}</div>
+            {error && error}
           </tspan>
         </text>
       </>
@@ -145,25 +177,34 @@ export default class Hexagon extends Component {
           viewBox={`0 0 ${width} ${height}`}
           width={width}
           height={height}
-          stroke={ProgressBar > 0 ? "green" : "black"}
-          strokeDasharray="2,2"
+          stroke={
+            progressBar > 0
+              ? (progressBar === 100 && !isactive && colorCode.success) ||
+                (isactive && colorCode.process) ||
+                colorCode.process
+              : (error && colorCode.error) || colorCode.process
+          }
+          strokeWidth="2"
+          strokeDasharray={isactive ? "0,0" : "4,3"}
+          className="styled-element"
+          onMouseOver={(e: any) => {
+            e.target.style.color = color;
+          }}
+          onMouseOut={(e: any) => {
+            e.target.style.stroke = "";
+          }}
+          id="styledelement"
         >
           <svg y={elevation}>
             <path fill={shadow} d={generateHexSVG(sideLength, borderRadius)} />
           </svg>
           <g
             style={thHexagonStyle}
-            onMouseOver={() =>
-              this.setState({ thHexagonStyle: this.thHexagonStyleHover })
-            }
             onMouseLeave={() =>
               this.setState({ thHexagonStyle: this.thHexagonStyleNormal })
             }
             onMouseDown={() =>
               this.setState({ thHexagonStyle: this.thHexagonStyleActive })
-            }
-            onMouseUp={() =>
-              this.setState({ thHexagonStyle: this.thHexagonStyleHover })
             }
             onClick={onClick}
           >
@@ -177,16 +218,19 @@ export default class Hexagon extends Component {
           </g>
         </svg>
         {icon()}
-        {ProgressBar > 0 && (
+        {error && wrongIcon()}
+        {progressBar > 0 && !error && (
           <Progress
             className="progressBar"
             style={{
-              width: "90%",
+              height: "20px",
+              textAlign: "center",
+              width: sideLength === "100" ? "60%" : "80%",
               position: "absolute",
-              top: `${+sideLength + 15}px`,
-              left: "20px"
+              bottom: sideLength === "100" ? `${+sideLength - 50}px` : "30px",
+              left: sideLength === "100" ? "35px" : "11px"
             }}
-            percent={ProgressBar}
+            percent={progressBar}
           />
         )}
       </>
@@ -195,15 +239,20 @@ export default class Hexagon extends Component {
 }
 
 Hexagon.defaultProps = {
-  ProgressBar: 0,
+  color: "",
+  progressBar: 0,
   sideLength: 100,
   borderRadius: 12,
   fill: "white",
   stroke: "#bbb",
   strokeWidth: 0,
   elevation: 12,
-  shadow: "#e2e2e2",
+  shadow: "#f6f5f2",
+  filename: "filename",
+  img: "",
   icon: "",
+  error: "",
+  wrongIcon: "",
   text: "",
   textStyle: {},
   styles: {
@@ -213,11 +262,13 @@ Hexagon.defaultProps = {
   },
   href: null,
   target: null,
+  isactive: false,
   onClick: () => {}
 };
 
 Hexagon.propTypes = {
-  ProgressBar: PropTypes.number,
+  color: PropTypes.string,
+  progressBar: PropTypes.number,
   sideLength: PropTypes.number,
   borderRadius: PropTypes.number,
   fill: PropTypes.string,
@@ -225,7 +276,11 @@ Hexagon.propTypes = {
   strokeWidth: PropTypes.number,
   elevation: PropTypes.number,
   shadow: PropTypes.string,
+  filename: PropTypes.string,
+  img: PropTypes.string,
   icon: PropTypes.string,
+  error: PropTypes.string,
+  wrongIcon: PropTypes.string,
   text: PropTypes.string,
   textStyle: PropTypes.object,
   styles: PropTypes.shape({
@@ -235,5 +290,6 @@ Hexagon.propTypes = {
   }),
   href: PropTypes.string,
   target: PropTypes.string,
+  isactive: PropTypes.bool,
   onClick: PropTypes.func
 };

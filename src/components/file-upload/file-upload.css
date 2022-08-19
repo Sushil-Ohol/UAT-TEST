@@ -10,46 +10,86 @@
   justify-content: center;
   align-items: center;
 }
-
 .selected-file-wrapper {
   text-align: center;
 }
-
 .selected-file {
-  color: #000;
+  color: black;
   font-weight: bold;
 }
 .icon-style1 {
   color: grey;
+  fill: transparent;
   display: inline-block;
   position: absolute;
-  top: 75px;
+  top: 60px;
   left: 65px;
-  font-size: 30px;
 }
+
 .icon-style2 {
   color: grey;
   display: inline-block;
   position: absolute;
-  top: 45px;
-  left: 40px;
+  top: 42px;
+  left: 38px;
   font-weight: bolder;
-  font-size: 25px;
+  font-size: 15px;
 }
 .icon-style-wrong-screen-first {
-  color: red;
-  display: inline-block;
+  color: #ff3535;
+  display: inline;
   position: absolute;
-  top: 70px;
-  left: 65px;
-  font-size: 30px;
+  bottom: 30px;
+  left: 80px;
+  font-size: 14px;
 }
 .icon-style-wrong-screen-second {
   color: red;
   display: inline-block;
   position: absolute;
-  top: 40px;
-  left: 38px;
+  bottom: 15px;
+  left: 48px;
+  font-size: 12px;
+}
+.green-text {
+  color: #007d3e;
+}
+.error-text {
+  color: #ff3e3e;
+}
+.ant-progress-status-success div .ant-progress-bg {
+  background-color: #008000;
+  height: 3px;
+}
 
-  font-size: 30px;
+.styled-element:active {
+  stroke-dasharray: 0, 0;
+}
+.text-first,
+.text-second {
+  font-size: 15px;
+}
+.text-first-active,
+.text-second-active {
+  font-size: 15px;
+  fill: #dedede;
+}
+.ant-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ant-progress-text {
+  margin-left: 12px;
+}
+
+.styled-element:hover {
+  stroke: rgb(94, 175, 216);
+}
+.styled-element:hover .text-first,
+.text-second {
+  fill: rgb(94, 175, 216);
+}
+.styled-element:hover #Path_33 {
+  fill: rgb(94, 175, 216);
 }

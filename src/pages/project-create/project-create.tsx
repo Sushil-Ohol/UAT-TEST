@@ -3,6 +3,7 @@
 import { Button, Card, Col, Row, Typography, Steps, Form, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import axios from "axios";
+import { APIs } from "constants/index";
 import Dropzone from "components/file-upload/file-upload";
 import { useEffect, useState, useRef } from "react";
 import {
@@ -11,32 +12,31 @@ import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
   CloseOutlined,
-  RadarChartOutlined,
-  SelectOutlined,
   CheckSquareOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
+import { ViewDocumentIcon, CogIcon } from "components/svg-icons";
 
 function ProjectCreate() {
-  const [SkipBtn, setSkipBtn] = useState(false);
+  const [skipBtn, setSkipBtn] = useState(false);
   const [current, setCurrent] = useState(0);
-  const hexagoanstyleScreen1 = {
-    textSize: "12px",
+  const hexagoanStyleScreen1 = {
+    textSize: "15px",
     className: "icon-style1",
-    HexagoanSize: "90",
+    hexagoanSize: "100",
     errorStyleClass: "icon-style-wrong-screen-first"
   };
-  const hexagoanstyleScreen2 = {
+  const hexagoanStyleScreen2 = {
     textSize: "8px",
     className: "icon-style2",
-    HexagoanSize: "60",
+    hexagoanSize: "60",
     errorStyleClass: "icon-style-wrong-screen-second"
   };
-  const ProjectInputRef: any = useRef(null);
-  const [CogIconProjectInput, setCogIconProjectInput] = useState(false);
-  const [CogIconDetailsTextArea, setCogIconDetailsTextArea] = useState(false);
-  const [ProjectInputEdited, setProjectInputEdited] = useState(false);
-  const [TextAreaEdited, setTextAreaEdited] = useState(false);
+  const projectInputRef: any = useRef(null);
+  const [cogIconProjectInput, setCogIconProjectInput] = useState(false);
+  const [cogIconDetailsTextArea, setCogIconDetailsTextArea] = useState(false);
+  const [projectInputEdited, setProjectInputEdited] = useState(false);
+  const [textAreaEdited, setTextAreaEdited] = useState(false);
   const [projectValue, setProjectValue] = useState({
     floors: 0,
     materials: 0,
@@ -44,15 +44,15 @@ function ProjectCreate() {
   });
   const { Text } = Typography;
   const { Step } = Steps;
-  const [SpecificationDoc, setSpecificationDoc] = useState({
+  const [specificationDoc, setSpecificationDoc] = useState({
     title: "",
     path: ""
   });
-  const [siteDrawing, setsiteDrawing] = useState({
+  const [siteDrawing, setSiteDrawing] = useState({
     title: "",
     path: ""
   });
-  const [schedule, setschedule] = useState({
+  const [schedule, setSchedule] = useState({
     title: "",
     path: ""
   });
@@ -67,18 +67,18 @@ function ProjectCreate() {
     }
   ];
 
-  const [defaultValue, setdefaultValue] = useState({
+  const [defaultValue, setDefaultValue] = useState({
     details: "",
-    ProjectName: ""
+    projectName: ""
   });
 
   const [count, setCount] = useState(0);
-  const FileInputs = [
+  const fileInputs = [
     {
-      lable: SpecificationDoc.title,
+      lable: specificationDoc.title,
       name: "specificationDoc",
-      defaultValue: SpecificationDoc.path,
-      initialValue: SpecificationDoc.path,
+      defaultValue: specificationDoc.path,
+      initialValue: specificationDoc.path,
       addonAfter: (
         <CloseOutlined
           className="close-icon"
@@ -98,7 +98,7 @@ function ProjectCreate() {
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setsiteDrawing({ path: "", title: "" });
+            setSiteDrawing({ path: "", title: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -113,7 +113,7 @@ function ProjectCreate() {
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setschedule({ path: "", title: "" });
+            setSchedule({ path: "", title: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -132,28 +132,28 @@ function ProjectCreate() {
   }, [count]);
   useEffect(() => {
     const Getvalue = async () => {
-      const result = await axios.get(`${URL}/value`);
+      const result = await axios.get(`${APIs.V1_URL}/value`);
       setProjectValue({ ...result.data });
     };
     if (current > 0) {
       Getvalue();
     }
-    if (!SkipBtn) {
+    if (!skipBtn) {
       setSpecificationDoc({ path: "", title: "" });
-      setsiteDrawing({ path: "", title: "" });
-      setschedule({ path: "", title: "" });
-      setdefaultValue({
+      setSiteDrawing({ path: "", title: "" });
+      setSchedule({ path: "", title: "" });
+      setDefaultValue({
         details: "",
-        ProjectName: ""
+        projectName: ""
       });
     }
-  }, [current, SkipBtn]);
+  }, [current, skipBtn]);
 
   const next = () => {
-    if (defaultValue.ProjectName.length > 0 && CogIconProjectInput) {
+    if (defaultValue.projectName.length > 0 && cogIconProjectInput) {
       setCurrent(current + 1);
     }
-    ProjectInputRef.current.focus();
+    projectInputRef.current.focus();
   };
 
   function prev() {
@@ -166,7 +166,7 @@ function ProjectCreate() {
     setCurrent(current - 1);
   }
 
-  const HandleSkipEvent = () => {
+  const handleSkipEvent = () => {
     setSkipBtn(true);
     setCogIconProjectInput(false);
     setCogIconDetailsTextArea(false);
@@ -174,8 +174,8 @@ function ProjectCreate() {
     setTextAreaEdited(false);
   };
 
-  function HandleProjectName(e: any) {
-    setdefaultValue({ ...defaultValue, ProjectName: e.target.value });
+  function handleProjectName(e: any) {
+    setDefaultValue({ ...defaultValue, projectName: e.target.value });
     setProjectInputEdited(true);
     setCogIconProjectInput(true);
   }
@@ -183,16 +183,18 @@ function ProjectCreate() {
   return (
     <Row justify="center">
       <Col span={24}>
-        {SkipBtn ? (
+        {skipBtn ? (
           <>
             {steps[current]?.content === "Details" && (
               <div className="steps-content">
                 <Row justify="center">
                   <Col span={8}>
                     <Card className="details-form">
-                      <h2>Creating new project / Details</h2>
+                      <h2 className="heading-details-form">
+                        Creating new project / Details
+                      </h2>
                       <Form layout="vertical" autoComplete="off">
-                        {FileInputs?.map((item: any) => {
+                        {fileInputs?.map((item: any) => {
                           return (
                             item.lable.length > 0 && (
                               <Form.Item
@@ -203,19 +205,15 @@ function ProjectCreate() {
                               >
                                 <Input.Group>
                                   <Row>
+                                    <ViewDocumentIcon
+                                      className="view-document"
+                                      width="21"
+                                      height="21"
+                                    />
                                     <Col span={22}>
                                       <Input
                                         defaultValue={item.defaultValue}
                                         readOnly
-                                        addonAfter={
-                                          <a
-                                            href="https://www.google.com"
-                                            target="_blank"
-                                            rel="noreferrer"
-                                          >
-                                            <SelectOutlined className="icon-blue" />
-                                          </a>
-                                        }
                                         prefix={<FileDoneOutlined />}
                                         placeholder="input placeholder"
                                       />
@@ -232,54 +230,63 @@ function ProjectCreate() {
                             <Row>
                               <Col
                                 span={
-                                  ProjectInputEdited ||
-                                  defaultValue.ProjectName.length <= 0
+                                  projectInputEdited ||
+                                  defaultValue.projectName.length <= 0
                                     ? 24
-                                    : 22
+                                    : 24
                                 }
                               >
-                                {!ProjectInputEdited &&
-                                  !CogIconProjectInput &&
-                                  defaultValue.ProjectName.length > 0 && (
-                                    <RadarChartOutlined className="cog-details" />
-                                  )}
-                                <Input
-                                  ref={ProjectInputRef}
-                                  type="text"
-                                  value={defaultValue.ProjectName}
-                                  placeholder="Enter the project name"
-                                  onChange={(e) => HandleProjectName(e)}
-                                />
-                              </Col>
-                              <Col span={2}>
-                                {!ProjectInputEdited &&
-                                  defaultValue.ProjectName.length > 0 && (
-                                    <CheckOutlined
-                                      className="check-icon-details"
-                                      onClick={() => {
-                                        setdefaultValue({
-                                          ...defaultValue,
-                                          ProjectName: defaultValue.ProjectName
-                                        });
-                                        setProjectInputEdited(false);
-                                        setCogIconProjectInput(true);
-                                      }}
+                                {!projectInputEdited &&
+                                  !cogIconProjectInput &&
+                                  defaultValue.projectName.length > 0 && (
+                                    <CogIcon
+                                      className="cog-details"
+                                      width="20"
+                                      height="20"
                                     />
                                   )}
+                                <Input
+                                  ref={projectInputRef}
+                                  type="text"
+                                  value={defaultValue.projectName}
+                                  placeholder="Enter the project name"
+                                  addonAfter={
+                                    !projectInputEdited &&
+                                    defaultValue.projectName.length > 0 && (
+                                      <CheckOutlined
+                                        className="check-icon-details"
+                                        onClick={() => {
+                                          setDefaultValue({
+                                            ...defaultValue,
+                                            projectName:
+                                              defaultValue.projectName
+                                          });
+                                          setProjectInputEdited(false);
+                                          setCogIconProjectInput(true);
+                                        }}
+                                      />
+                                    )
+                                  }
+                                  onChange={(e) => handleProjectName(e)}
+                                />
                               </Col>
                             </Row>
-                            {defaultValue.ProjectName.length > 0 &&
-                              (SpecificationDoc.path.length > 0 ||
+                            {defaultValue.projectName.length > 0 &&
+                              (specificationDoc.path.length > 0 ||
                                 siteDrawing.path.length > 0 ||
                                 schedule.path.length > 0) &&
-                              !CogIconProjectInput &&
-                              !ProjectInputEdited && (
+                              !cogIconProjectInput &&
+                              !projectInputEdited && (
                                 <Row>
                                   <Col>
                                     <p className="project-name-hint">
-                                      We guessed this name from your{" "}
-                                      Specification Document. So it has the
-                                      <RadarChartOutlined />
+                                      We guessed this name from your
+                                      Specification Document. So it has the{" "}
+                                      <CogIcon
+                                        className=""
+                                        width="10"
+                                        height="10"
+                                      />{" "}
                                       symbol, please correct if it is wrong. You
                                       can press
                                       <CheckSquareOutlined className="hint-check-icon" />
@@ -292,10 +299,10 @@ function ProjectCreate() {
                         </Form.Item>
                         <Form.Item label="Details" name="details">
                           <Input.Group>
-                            <Row>
+                            <Row className="textarea">
                               <Col
                                 span={
-                                  TextAreaEdited ||
+                                  textAreaEdited ||
                                   defaultValue.details.length <= 0
                                     ? 24
                                     : 22
@@ -305,7 +312,7 @@ function ProjectCreate() {
                                   autoSize={{ minRows: 2, maxRows: 2 }}
                                   value={defaultValue.details}
                                   onChange={(e) => {
-                                    setdefaultValue({
+                                    setDefaultValue({
                                       ...defaultValue,
                                       details: e.target.value
                                     });
@@ -314,14 +321,9 @@ function ProjectCreate() {
                                   }}
                                   placeholder="Enter your project details"
                                 />
-                                {!TextAreaEdited &&
-                                  !CogIconDetailsTextArea &&
-                                  defaultValue.details.length > 0 && (
-                                    <RadarChartOutlined className="cog-details" />
-                                  )}
                               </Col>
                               <Col span={2}>
-                                {!TextAreaEdited &&
+                                {!textAreaEdited &&
                                   defaultValue.details.length > 0 && (
                                     <CheckOutlined
                                       onClick={() =>
@@ -331,22 +333,33 @@ function ProjectCreate() {
                                     />
                                   )}
                               </Col>
+                              {!textAreaEdited &&
+                                !cogIconDetailsTextArea &&
+                                defaultValue.details.length > 0 && (
+                                  <CogIcon
+                                    className="cog-details"
+                                    width="20"
+                                    height="20"
+                                  />
+                                )}
                             </Row>
                           </Input.Group>
                         </Form.Item>
                         <Row justify="center">
                           <Col span={15}>
                             <Row justify="center">
-                              {SpecificationDoc.title !==
+                              {specificationDoc.title !==
                                 "Specification Document" && (
                                 <Col>
                                   <Dropzone
-                                    hexagoanstyle={hexagoanstyleScreen2}
-                                    setdefaultValue={setdefaultValue}
+                                    width="27"
+                                    height="27"
+                                    hexagoanStyle={hexagoanStyleScreen2}
+                                    setDefaultValue={setDefaultValue}
                                     setCount={setCount}
                                     icon="FileDoneOutlined"
                                     title="Specification Document"
-                                    extension={["pdf"]}
+                                    extension={["PDF"]}
                                     setSkipBtn={setSkipBtn}
                                     setState={setSpecificationDoc}
                                   />
@@ -355,14 +368,16 @@ function ProjectCreate() {
                               {siteDrawing.title !== "Drawing Set" && (
                                 <Col offset={1}>
                                   <Dropzone
-                                    hexagoanstyle={hexagoanstyleScreen2}
-                                    setdefaultValue={setdefaultValue}
+                                    width="27"
+                                    height="27"
+                                    hexagoanStyle={hexagoanStyleScreen2}
+                                    setDefaultValue={setDefaultValue}
                                     setCount={setCount}
                                     icon="SettingOutlined"
                                     title="Drawing Set"
-                                    extension={["pdf"]}
+                                    extension={["PDF"]}
                                     setSkipBtn={setSkipBtn}
-                                    setState={setsiteDrawing}
+                                    setState={setSiteDrawing}
                                   />
                                 </Col>
                               )}
@@ -370,7 +385,7 @@ function ProjectCreate() {
                               {schedule.title !== "Schedule" && (
                                 <Col
                                   className={
-                                    SpecificationDoc.path.length <= 0 &&
+                                    specificationDoc.path.length <= 0 &&
                                     siteDrawing.path.length <= 0
                                       ? "schedule-hexagoan"
                                       : ""
@@ -378,14 +393,16 @@ function ProjectCreate() {
                                   offset={1}
                                 >
                                   <Dropzone
-                                    hexagoanstyle={hexagoanstyleScreen2}
-                                    setdefaultValue={setdefaultValue}
+                                    width="27"
+                                    height="27"
+                                    hexagoanStyle={hexagoanStyleScreen2}
+                                    setDefaultValue={setDefaultValue}
                                     setCount={setCount}
                                     icon="CalendarOutlined"
                                     title="Schedule"
-                                    extension={["xls", "xlsx", "csv"]}
+                                    extension={["XLS", "XLSX", "CSV"]}
                                     setSkipBtn={setSkipBtn}
-                                    setState={setschedule}
+                                    setState={setSchedule}
                                   />
                                 </Col>
                               )}
@@ -418,8 +435,8 @@ function ProjectCreate() {
                           <h4 className="sub-heading">You are all set!</h4>
                         </Col>
                         <Col span={12} offset={6}>
-                          <strong className="heading-hospital-name">
-                            {defaultValue.ProjectName}
+                          <strong className="heading-name">
+                            {defaultValue.projectName}
                           </strong>
                         </Col>
                         <Col span={12} offset={6}>
@@ -488,7 +505,7 @@ function ProjectCreate() {
                     </Button>
                   )}
 
-                  {SkipBtn && current !== 1 && (
+                  {skipBtn && current !== 1 && (
                     <Button
                       disabled={current === 1}
                       danger
@@ -519,45 +536,53 @@ function ProjectCreate() {
         ) : (
           <Card className="card-skip">
             <Row justify="center">
-              <h2>Upload any of the document to get started!</h2>
+              <h2 className="heading-main">
+                Upload any of the document to get started!
+              </h2>
             </Row>
             <Row justify="center">
               <Col>
                 <Dropzone
-                  hexagoanstyle={hexagoanstyleScreen1}
-                  setdefaultValue={setdefaultValue}
+                  width="42"
+                  height="42"
+                  hexagoanStyle={hexagoanStyleScreen1}
+                  setDefaultValue={setDefaultValue}
                   setCount={setCount}
                   icon="FileDoneOutlined"
                   title="Specification Document"
-                  extension={["pdf"]}
+                  extension={["PDF"]}
                   setSkipBtn={setSkipBtn}
                   setState={setSpecificationDoc}
                 />
               </Col>
               <Col className="hexagon-drawing-set">
                 <Dropzone
-                  hexagoanstyle={hexagoanstyleScreen1}
-                  setdefaultValue={setdefaultValue}
+                  width="42"
+                  height="42"
+                  hexagoanStyle={hexagoanStyleScreen1}
+                  setDefaultValue={setDefaultValue}
                   setCount={setCount}
                   icon="SettingOutlined"
                   title="Drawing Set"
-                  extension={["pdf"]}
+                  extension={["PDF"]}
                   setSkipBtn={setSkipBtn}
-                  setState={setsiteDrawing}
+                  setState={setSiteDrawing}
                 />
               </Col>
             </Row>
             <Row justify="center" className="hexagon-schedule-row">
               <Col className="hexagon-schedule">
                 <Dropzone
-                  hexagoanstyle={hexagoanstyleScreen1}
-                  setdefaultValue={setdefaultValue}
+                  width="42"
+                  height="42"
+                  hexagoanStyle={hexagoanStyleScreen1}
+                  setDefaultValue={setDefaultValue}
                   setCount={setCount}
                   icon="CalendarOutlined"
                   title="Schedule"
-                  extension={["xls", "xlsx", "csv"]}
+                  extension={["XLS", "XLSX", "CSV"]}
                   setSkipBtn={setSkipBtn}
-                  setState={setschedule}
+                  setState={setSchedule}
                 />
               </Col>
             </Row>{" "}
@@ -571,9 +596,11 @@ function ProjectCreate() {
                   <Button
                     type="text"
                     className="skip-btn"
-                    onClick={HandleSkipEvent}
+                    onClick={handleSkipEvent}
                   >
-                    <Text strong>Skip this step</Text>
+                    <Text className="skip-btn-text" strong>
+                      Skip this step
+                    </Text>
                   </Button>
                 </p>
               </Col>
