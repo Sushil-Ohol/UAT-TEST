@@ -113,7 +113,6 @@ function Fileupload({
             formData.append("image", file);
             formData.append("title", title);
             await PostProjectFile(formData, setProgress);
-            // await dispatch(PostFileUpload(formData, setProgress));
             setSelectedFile(file.path);
             setTimeout(() => {
               setSkipBtn(true);
