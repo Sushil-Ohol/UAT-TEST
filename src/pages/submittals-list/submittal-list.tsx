@@ -16,10 +16,38 @@ import { setProjectId } from "store/slices/homeSlice";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
+import ApprovedIcon from "../../components/svg-icons/approved-icon";
+import InreviewIcon from "../../components/svg-icons/in-review";
+import RejectedIcon from "../../components/svg-icons/rejected-icon";
+import ApprovedCommentsIcon from "../../components/svg-icons/approved-comments";
+import Notification1SvgIcon from "../../components/svg-icons/notification1";
+import Notification2SvgIcon from "../../components/svg-icons/notification2";
+import ChatIcon from "../../components/svg-icons/chat.tsx";
+import DocAttachIcon from "../../components/svg-icons/doc-attach";
+import NotificationIcon from "../../components/svg-icons/notifications-icon";
 
 function NewDatePicker() {
   return <DatePicker />;
 }
+const statusCellRenderer = (params: any) => {
+  if (params.value === "Approved") {
+    return <ApprovedIcon />;
+  }
+  if (params.value === "In Review") {
+    return <InreviewIcon />;
+  }
+  if (params.value === "Approved with Comments") {
+    return <ApprovedCommentsIcon />;
+  }
+  return <RejectedIcon />;
+};
+
+const notificationCellRenderer = (params: any) => {
+  if (params.value === "1") {
+    return <Notification1SvgIcon />;
+  }
+  return <Notification2SvgIcon />;
+};
 
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
@@ -41,33 +69,23 @@ function SubmittalList() {
     {
       field: "notification",
       headerName: "",
-      headerComponentFramework: Buttons.NotificationBellButton
+      cellRendererFramework: notificationCellRenderer,
+      headerComponentFramework: NotificationIcon
     },
     {
       field: "comments",
       headerName: "",
-      headerComponentFramework: Buttons.CommentButton
+      headerComponentFramework: ChatIcon
     },
     {
       field: "revision",
       headerName: "",
-      headerComponentFramework: Buttons.RevisionButton
+      headerComponentFramework: DocAttachIcon
     },
     {
       field: "status",
       headerName: "STATUS",
-      cellStyle: (params: { value: string }) => {
-        if (params.value === "Approved") {
-          return { color: "green" };
-        }
-        if (params.value === "In Review") {
-          return { color: "orange" };
-        }
-        if (params.value === "Cancelled") {
-          return { color: "red" };
-        }
-        return { color: "black" };
-      },
+      cellRendererFramework: statusCellRenderer,
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
         values: DropDownData.StatusOptions
