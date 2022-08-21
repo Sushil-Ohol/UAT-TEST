@@ -6,36 +6,107 @@
   width: 10%;
 }
 
-.statusInput {
-  display: flex;
-  width: 10% !important
-}
-.statusInputSelect{
-  width: 85 !important;
-}
-.contractorInput {
-  display: flex;
-  width: 10% !important
-}
-
-.DueInput {
-  display: flex;
-  width: 10% !important
-}
-
-.dueSelect {
-  display: flex;
-  width: 10% !important
-}
-
-.contractorSelect {
-  width: 85 !important;
-}
-.contractorSelectOption{
-  width: 100% !important;
-}
-
 .CardDetails {
   width: "auto";
   border: "0.2px solid #e5e5e5"
 }
+
+.statusInput {
+  display: flex;
+  width: 10% !important;
+  background: gray; 
+  opacity: 0.2; 
+  font-weight: 800;
+}
+
+.SearchInput {
+  width: 150 !important;
+  height: 30px !important;
+  font-weight: 900;
+  background: gray; 
+  opacity: 0.2; 
+}
+.StatusInput {
+  background: gray;
+  opacity: 0.2;
+  font-weight: 600;
+  width: 45% !important;
+  height: 30px !important;
+}
+
+.StatusInputSelect {
+  width: 70px !important;
+  height: 30px !important;
+  background: gray;
+  opacity: 0.2;
+  font-weight: 600;
+}
+
+.ContractorInput {
+  width: 50% !important;
+  font-weight: 600;
+  height: 30px !important;
+  background: gray;
+  opacity: 0.2;
+}
+
+.ContractorInputInputSelect {
+  font-weight: 600;
+  width: 80px !important;
+  height: 30px !important;
+  display: flex;
+  background: gray;
+  opacity: 0.2;
+}
+
+.DueInput {
+  font-weight: 600;
+  width: 30% !important;
+  height: 10% !important;
+  background: gray;
+  opacity: 0.2;
+}
+
+.DueInputSelect {
+  font-weight: 600;
+  width: 120px !important;
+  height: 30px !important;
+  display: flex;
+  background: gray;
+  opacity: 0.2;
+}
+
+.DependsOnInput {
+  font-weight: 600;
+  width: 55% !important;
+  height: 30px !important;
+}
+
+
+.DependsOnInputSelect {
+  font-weight: 600;
+  height: 30px !important;
+  width: 70px !important;
+  background: gray;
+  opacity: 0.2;
+  display: flex;
+
+}
+
+.AssignedInputSelect {
+  font-weight: 600;
+  width: 80px !important;
+  height: 30px !important;
+  display: flex;
+  background: gray;
+  opacity: 0.2;
+}
+
+.AssignedInput {
+  font-weight: 600;
+  width: 50% !important;
+  height: 30px !important;
+  background: gray;
+  opacity: 0.2;
+}
+
