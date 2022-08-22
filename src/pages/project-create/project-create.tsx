@@ -214,6 +214,7 @@ function ProjectCreate() {
                                         placeholder="input placeholder"
                                       />
                                     </Col>
+
                                     <Col span={2}>{item.addonAfter}</Col>
                                   </Row>
                                 </Input.Group>
@@ -343,7 +344,7 @@ function ProjectCreate() {
                         </Form.Item>
                         <Row justify="center">
                           <Col span={15}>
-                            <Row justify="center">
+                            <Row justify="center" className="hexagon-align">
                               {specificationDoc.title !==
                                 "Specification Document" && (
                                 <Col>
@@ -520,6 +521,7 @@ function ProjectCreate() {
                     <Button
                       className="stepper-next-btn"
                       type="primary"
+                      disabled={!cogIconProjectInput}
                       onClick={() => next()}
                     >
                       Next <ArrowRightOutlined />

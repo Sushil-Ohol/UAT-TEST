@@ -191,7 +191,7 @@ function Fileupload({
                       colorCode.lightGrey
                 }
                 textStyle={{
-                  fontFamily: "sans-serif",
+                  fontFamily: "inter",
                   fontSize: hexagoanStyle.textSize,
                   fill:
                     (isFileDialogActive && colorCode.dialogActive) ||
