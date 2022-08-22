@@ -5,7 +5,7 @@ import { DropDownData } from "../../../constants";
 import "../submittal-list.css";
 
 function SubmittalListFilterComponent(props: any) {
-  const { gridRef, onNewClick } = props;
+  const { gridRef, onNewClick, onSubmittalEditClick } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
     gridRef.current!.api.setQuickFilter(
@@ -143,9 +143,8 @@ function SubmittalListFilterComponent(props: any) {
           <div>
             <div className="inner">
               <Button
-                onClick={onNewClick}
+                onClick={onSubmittalEditClick}
                 size="middle"
-                disabled
                 className="EditBtn"
               >
                 Edit
