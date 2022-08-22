@@ -14,7 +14,7 @@ const ContractorOptions = [
   "B Construction",
   "C Construction"
 ];
-const AssignOptions = ["Luke", "James"];
+const DependsOnOptions = ["1079", "2098"];
 const PastDueOptions = ["Past due date", "Due today", "Next 3 days", "Custom"];
 const ProcureByOptions = ["Before", "After"];
 const ProcureBySecondValues = ["This Week", "This Month"];
@@ -29,9 +29,9 @@ const PackageOptions = ["920:Electrical", "Piping"];
 
 export const DropDownData = {
   ContractorOptions,
-  AssignOptions,
   StatusOptions,
   AssigneeOptions,
+  DependsOnOptions,
   PastDueOptions,
   PackageOptions,
   ProcureByOptions,
