@@ -1,17 +1,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
 import { WarningFilled } from "@ant-design/icons";
-import axios from "axios";
+// import axios from "axios";
+
 import Hexagon from "components/hexagon/hexagon";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
-import { FILESIZE, APIs } from "constants/index";
+import { useAppDispatch, useAppSelector } from "store";
+import { FILESIZE } from "constants/index";
 import "./file-upload.css";
 import {
   DrawingsetIcon,
   ScheduleIcon,
   SpecificationdocIcon
 } from "components/svg-icons";
+import { getProjectSuggest } from "store/slices/project-suggest";
+import { PostProjectFile } from "services/file-upload";
+// import { PostFileUpload } from "store/slices/file-upload";
 
 function Fileupload({
   width,
@@ -22,8 +27,8 @@ function Fileupload({
   setSkipBtn,
   setState,
   setCount,
-  setDefaultValue,
-  hexagoanStyle
+  hexagoanStyle,
+  setDefaultValue
 }: {
   width: string;
   height: string;
@@ -32,11 +37,13 @@ function Fileupload({
   icon: string;
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
   setState: React.Dispatch<React.SetStateAction<any>>;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
   setDefaultValue: React.Dispatch<React.SetStateAction<any>>;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
   hexagoanStyle: any;
 }) {
-  const { V1_URL: URL } = APIs;
+  // const { V1_URL: URL } = APIs;
+  const dispatch = useAppDispatch();
+  const { projectSug } = useAppSelector((state) => state.projectSuggest);
   const [fileError, setFileError] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
   const [progress, setProgress] = useState(0);
@@ -88,8 +95,11 @@ function Fileupload({
     return <WarningFilled className={hexagoanStyle.errorStyleClass} />;
   }
   const ProjectDefaultValue = async () => {
-    const result = await axios.get(`${URL}/projectsug`);
-    setDefaultValue(result.data);
+    await dispatch(getProjectSuggest());
+    setDefaultValue({
+      projectName: projectSug.projectName || "demo text",
+      details: projectSug.details || "project1"
+    });
   };
 
   const onDrop = (acceptedFiles: File[]) => {
@@ -102,15 +112,7 @@ function Fileupload({
             const formData = new FormData();
             formData.append("image", file);
             formData.append("title", title);
-
-            await axios.post(`${URL}/fileUpload`, formData, {
-              onUploadProgress: (progressEvent) => {
-                const progressCount = Math.ceil(
-                  (progressEvent.loaded / progressEvent.total) * 100
-                );
-                setProgress(progressCount);
-              }
-            });
+            await PostProjectFile(formData, setProgress);
             setSelectedFile(file.path);
             setTimeout(() => {
               setSkipBtn(true);
@@ -189,7 +191,7 @@ function Fileupload({
                       colorCode.lightGrey
                 }
                 textStyle={{
-                  fontFamily: "sans-serif",
+                  fontFamily: "inter",
                   fontSize: hexagoanStyle.textSize,
                   fill:
                     (isFileDialogActive && colorCode.dialogActive) ||

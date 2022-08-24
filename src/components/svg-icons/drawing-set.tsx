@@ -54,6 +54,7 @@ export default function DrawingsetIcon({
             strokeLinecap="round"
             strokeMiterlimit="10"
             strokeWidth="2"
+            className="fill-hover"
           />
           <path
             id="Path_31"
@@ -73,6 +74,7 @@ export default function DrawingsetIcon({
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
+            className="fill-hover"
           />
           <path
             id="Path_32"
@@ -92,6 +94,7 @@ export default function DrawingsetIcon({
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
+            className="fill-hover"
           />
         </g>
       </g>

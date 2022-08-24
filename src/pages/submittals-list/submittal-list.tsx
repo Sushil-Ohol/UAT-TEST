@@ -111,7 +111,7 @@ function SubmittalList() {
       headerName: "ASSIGNED",
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
-        values: DropDownData.AssignOptions
+        values: DropDownData.AssigneeOptions
       }
     },
     { cellRendererFramework: Buttons.MoreOutlinedButton, editable: false }
@@ -210,7 +210,6 @@ function SubmittalList() {
       <Drawer
         title="Create a new submittal"
         placement="right"
-        width="1040px"
         onClose={onDrawerClose}
         visible={showNewDrawer}
       >
