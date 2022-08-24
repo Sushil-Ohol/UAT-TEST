@@ -5,15 +5,19 @@
   background: transparent;
 }
 .skip-btn-text {
-  color: grey;
+  color: #1c1b1b;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .skip-btn:hover {
   background-color: rgba(128, 128, 128, 0.403);
 }
 .heading-main {
-  color: #707070;
+  color: #1c1b1b;
   font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 .ant-card-body {
   padding: 0px;
@@ -60,7 +64,6 @@ card {
   position: absolute;
   left: 10px;
   font-size: smaller;
-  font-family: "Inter-SemiBold, Inter";
 }
 .stepper-next-btn {
   height: 80%;
@@ -69,7 +72,6 @@ card {
   position: absolute;
   right: 10px;
   font-size: smaller;
-  font-family: "Inter-SemiBold, Inter";
 }
 .stepper-done-btn {
   height: 80%;
@@ -78,7 +80,6 @@ card {
   position: absolute;
   right: 10px;
   font-size: smaller;
-  font-family: "Inter-SemiBold, Inter";
 }
 .ant-steps {
   width: 40%;
@@ -131,9 +132,7 @@ textarea.ant-input:hover {
   > .ant-steps-item-title::after {
   background-color: black;
 }
-.ant-steps-item-title {
-  font-family: "Inter-SemiBold, Inter";
-}
+
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
   background-color: black;
 }
@@ -256,6 +255,7 @@ textarea.ant-input:hover {
   text-align: left;
   color: #7b7b7a;
   padding-bottom: 5%;
+  font-family: "Inter";
 }
 .para-finish-screenp {
   font-size: 13px;
@@ -264,6 +264,7 @@ textarea.ant-input:hover {
   text-align: start;
   padding-top: 8%;
   padding-bottom: 0px;
+  font-family: "Inter";
 }
 p.project-name-hint {
   color: black;
@@ -300,8 +301,8 @@ p.project-name-hint {
   font-weight: 600;
 }
 .schedule-hexagoan {
-  top: -30px;
-  left: -10px;
+  top: -26px;
+  left: -8px;
 }
 .hexagon-schedule-row {
   height: 150px;
@@ -325,5 +326,13 @@ textarea.ant-input {
 .heading-details-form {
   font-weight: 600;
   font-size: 24px;
-  color: #707070;
+  color: #000;
+}
+
+.hexagon-align {
+  margin-top: 14px;
+}
+
+.ant-steps-item-title {
+  font-size: 14px;
 }

@@ -49,6 +49,7 @@ export default function ScheduleIcon({
             }
             strokeLinejoin="round"
             strokeWidth="2"
+            className="fill-hover"
           />
           <path
             id="Path_19"

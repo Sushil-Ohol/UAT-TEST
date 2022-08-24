@@ -22,7 +22,7 @@
   fill: transparent;
   display: inline-block;
   position: absolute;
-  top: 60px;
+  top: 52px;
   left: 65px;
 }
 
@@ -30,7 +30,7 @@
   color: grey;
   display: inline-block;
   position: absolute;
-  top: 42px;
+  top: 30px;
   left: 38px;
   font-weight: bolder;
   font-size: 15px;
@@ -85,11 +85,16 @@
 
 .styled-element:hover {
   stroke: rgb(94, 175, 216);
+  stroke-width: "3px" !important;
 }
 .styled-element:hover .text-first,
 .text-second {
   fill: rgb(94, 175, 216);
 }
-.styled-element:hover #Path_33 {
+.styled-element:hover + .icon-style1 .fill-hover {
+  fill: rgb(94, 175, 216);
+}
+
+.styled-element:hover + .icon-style2 .fill-hover {
   fill: rgb(94, 175, 216);
 }
