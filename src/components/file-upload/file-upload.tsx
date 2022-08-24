@@ -1,12 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
 import { WarningFilled } from "@ant-design/icons";
-// import axios from "axios";
-
 import Hexagon from "components/hexagon/hexagon";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
-import { useAppDispatch, useAppSelector } from "store";
+import { useAppDispatch } from "store";
 import { FILESIZE } from "constants/index";
 import "./file-upload.css";
 import {
@@ -16,7 +15,6 @@ import {
 } from "components/svg-icons";
 import { getProjectSuggest } from "store/slices/project-suggest";
 import { PostProjectFile } from "services/file-upload";
-// import { PostFileUpload } from "store/slices/file-upload";
 
 function Fileupload({
   width,
@@ -27,8 +25,7 @@ function Fileupload({
   setSkipBtn,
   setState,
   setCount,
-  hexagoanStyle,
-  setDefaultValue
+  hexagoanStyle
 }: {
   width: string;
   height: string;
@@ -37,13 +34,10 @@ function Fileupload({
   icon: string;
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
   setState: React.Dispatch<React.SetStateAction<any>>;
-  setDefaultValue: React.Dispatch<React.SetStateAction<any>>;
   setCount: React.Dispatch<React.SetStateAction<number>>;
   hexagoanStyle: any;
 }) {
-  // const { V1_URL: URL } = APIs;
   const dispatch = useAppDispatch();
-  const { projectSug } = useAppSelector((state) => state.projectSuggest);
   const [fileError, setFileError] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
   const [progress, setProgress] = useState(0);
@@ -94,12 +88,8 @@ function Fileupload({
   function iconfunction() {
     return <WarningFilled className={hexagoanStyle.errorStyleClass} />;
   }
-  const ProjectDefaultValue = async () => {
-    await dispatch(getProjectSuggest());
-    setDefaultValue({
-      projectName: projectSug.projectName || "demo text",
-      details: projectSug.details || "project1"
-    });
+  const ProjectDefaultValue = () => {
+    dispatch(getProjectSuggest());
   };
 
   const onDrop = (acceptedFiles: File[]) => {
@@ -112,16 +102,15 @@ function Fileupload({
             const formData = new FormData();
             formData.append("image", file);
             formData.append("title", title);
-            await PostProjectFile(formData, setProgress);
+            PostProjectFile(formData, setProgress);
             setSelectedFile(file.path);
             setTimeout(() => {
-              setSkipBtn(true);
               setHoverColor("green");
               ProjectDefaultValue();
               setState({ ...file, title });
               setCount((prev: number) => prev + 1);
               setFileError("");
-            }, 4000);
+            }, 1000);
           } else {
             setHoverColor("red");
             setFileError("Upload file less than 100MB");
@@ -162,14 +151,23 @@ function Fileupload({
     blue: "#5eafd8",
     lightGrey: "#f0efed"
   };
-
+  useEffect(() => {
+    if (progress > 99) {
+      setSkipBtn(true);
+    }
+  }, [progress]);
   return (
     <Dropzone onDrop={onDrop} multiple>
       {({ getRootProps, getInputProps, isDragActive, isFileDialogActive }) => {
         return (
           <section>
             <div {...getRootProps()}>
-              <input {...getInputProps()} />
+              <input
+                {...getInputProps()}
+                accept={extension
+                  .map((item) => `.${item.toLowerCase()}`)
+                  .toString()}
+              />
               <Hexagon
                 color={hoverColor}
                 img=""

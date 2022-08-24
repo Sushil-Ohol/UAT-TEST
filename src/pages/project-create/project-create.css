@@ -29,6 +29,7 @@
 }
 .steps-content {
   min-height: 200px;
+
   margin-top: 4px;
   text-align: center;
   background: transparent;
@@ -38,6 +39,7 @@
 .steps-action {
   height: 1.8rem;
   width: 70vw;
+  max-width: 70vw;
   margin-bottom: 5px;
   position: fixed;
   bottom: 0;
@@ -301,8 +303,8 @@ p.project-name-hint {
   font-weight: 600;
 }
 .schedule-hexagoan {
-  top: -26px;
-  left: -8px;
+  top: -24px;
+  left: -6px;
 }
 .hexagon-schedule-row {
   height: 150px;

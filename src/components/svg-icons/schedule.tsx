@@ -41,7 +41,7 @@ export default function ScheduleIcon({
             data-name="Path 18"
             d="M34.989,6.563h-27A4.044,4.044,0,0,0,3.937,10.6V34.823a4.044,4.044,0,0,0,4.05,4.037h27a4.044,4.044,0,0,0,4.05-4.037V10.6A4.044,4.044,0,0,0,34.989,6.563Z"
             transform="translate(0 0.179)"
-            stroke="none"
+            stroke={colorCode.lightGrey}
             fill={
               selectedFile
                 ? colorCode.success

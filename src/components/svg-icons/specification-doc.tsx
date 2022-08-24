@@ -41,7 +41,7 @@ export default function SpecificationdocIcon({
             data-name="Path 33"
             d="M30.868,3.937H11.933A4.064,4.064,0,0,0,7.875,8.009V35.149a4.064,4.064,0,0,0,4.058,4.071H30.868a4.064,4.064,0,0,0,4.058-4.071V8.009A4.064,4.064,0,0,0,30.868,3.937Z"
             transform="translate(0 0)"
-            stroke="none"
+            stroke={colorCode.lightGrey}
             fill={
               selectedFile
                 ? colorCode.success

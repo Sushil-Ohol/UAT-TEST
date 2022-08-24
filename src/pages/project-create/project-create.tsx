@@ -20,6 +20,7 @@ import { getProjectValue } from "store/slices/project-value";
 function ProjectCreate() {
   const [skipBtn, setSkipBtn] = useState(false);
   const dispatch = useAppDispatch();
+  const { projectSug } = useAppSelector((state) => state.projectSuggest);
   const { projectValue } = useAppSelector((state) => state.projectValue);
   const [current, setCurrent] = useState(0);
   const hexagoanStyleScreen1 = {
@@ -144,7 +145,14 @@ function ProjectCreate() {
       });
     }
   }, [current, skipBtn, dispatch]);
-
+  useEffect(
+    () =>
+      setDefaultValue({
+        details: projectSug.details,
+        projectName: projectSug.projectName.toString()
+      }),
+    [projectSug]
+  );
   const next = () => {
     if (defaultValue.projectName.length > 0 && cogIconProjectInput) {
       setCurrent(current + 1);
@@ -343,7 +351,7 @@ function ProjectCreate() {
                           </Input.Group>
                         </Form.Item>
                         <Row justify="center">
-                          <Col span={15}>
+                          <Col xs={15} xxl={22}>
                             <Row justify="center" className="hexagon-align">
                               {specificationDoc.title !==
                                 "Specification Document" && (
@@ -352,7 +360,6 @@ function ProjectCreate() {
                                     width="27"
                                     height="27"
                                     hexagoanStyle={hexagoanStyleScreen2}
-                                    setDefaultValue={setDefaultValue}
                                     setCount={setCount}
                                     icon="FileDoneOutlined"
                                     title="Specification Document"
@@ -368,7 +375,6 @@ function ProjectCreate() {
                                     width="27"
                                     height="27"
                                     hexagoanStyle={hexagoanStyleScreen2}
-                                    setDefaultValue={setDefaultValue}
                                     setCount={setCount}
                                     icon="SettingOutlined"
                                     title="Drawing Set"
@@ -393,7 +399,6 @@ function ProjectCreate() {
                                     width="27"
                                     height="27"
                                     hexagoanStyle={hexagoanStyleScreen2}
-                                    setDefaultValue={setDefaultValue}
                                     setCount={setCount}
                                     icon="CalendarOutlined"
                                     title="Schedule"
@@ -521,7 +526,7 @@ function ProjectCreate() {
                     <Button
                       className="stepper-next-btn"
                       type="primary"
-                      disabled={!cogIconProjectInput}
+                      disabled={!cogIconProjectInput || !cogIconDetailsTextArea}
                       onClick={() => next()}
                     >
                       Next <ArrowRightOutlined />
@@ -544,7 +549,6 @@ function ProjectCreate() {
                   width="42"
                   height="42"
                   hexagoanStyle={hexagoanStyleScreen1}
-                  setDefaultValue={setDefaultValue}
                   setCount={setCount}
                   icon="FileDoneOutlined"
                   title="Specification Document"
@@ -558,7 +562,6 @@ function ProjectCreate() {
                   width="42"
                   height="42"
                   hexagoanStyle={hexagoanStyleScreen1}
-                  setDefaultValue={setDefaultValue}
                   setCount={setCount}
                   icon="SettingOutlined"
                   title="Drawing Set"
@@ -574,7 +577,6 @@ function ProjectCreate() {
                   width="42"
                   height="42"
                   hexagoanStyle={hexagoanStyleScreen1}
-                  setDefaultValue={setDefaultValue}
                   setCount={setCount}
                   icon="CalendarOutlined"
                   title="Schedule"

@@ -138,7 +138,7 @@ export default class Hexagon extends Component {
         <text fill="#bbb" strokeWidth="0" style={textStyle}>
           <tspan
             x={width / 2}
-            y={(1.1 * height) / 2}
+            y={(1.1 * height) / 2 + 3}
             textAnchor="middle"
             style={{ fontSize: textStyle.fontSize }}
             className={isactive ? "text-first-active" : "text-first"}
@@ -147,7 +147,7 @@ export default class Hexagon extends Component {
           </tspan>
           <tspan
             x={width / 2}
-            y={(1.2 * height) / 2 + fontSizeOffset + 2}
+            y={(1.2 * height) / 2 + fontSizeOffset + 5}
             textAnchor="middle"
             style={{ fontSize: textStyle.fontSize }}
             className={isactive ? "text-first-active" : "text-first"}
@@ -157,7 +157,7 @@ export default class Hexagon extends Component {
 
           <tspan
             x={width / 2}
-            y={(1.5 * height) / 2 + fontSizeOffset + 2}
+            y={(1.4 * height) / 2 + fontSizeOffset + 2}
             textAnchor="middle"
             style={{
               fill: colorCode.error,
