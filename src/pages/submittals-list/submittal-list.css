@@ -6,36 +6,132 @@
   width: 10%;
 }
 
-.statusInput {
-  display: flex;
-  width: 10% !important
-}
-.statusInputSelect{
-  width: 85 !important;
-}
-.contractorInput {
-  display: flex;
-  width: 10% !important
-}
-
-.DueInput {
-  display: flex;
-  width: 10% !important
-}
-
-.dueSelect {
-  display: flex;
-  width: 10% !important
-}
-
-.contractorSelect {
-  width: 85 !important;
-}
-.contractorSelectOption{
-  width: 100% !important;
-}
-
 .CardDetails {
   width: "auto";
   border: "0.2px solid #e5e5e5"
+}
+
+/* .statusInput {
+  display: flex;
+  width: 10% !important;
+  background: gray !important; 
+  font-weight: 800;
+} */
+
+.SearchInput {
+  width: 150 !important;
+  height: 30px !important;
+  font-weight: 900;
+  color: black !important;
+  background: lightgray !important; 
+  opacity: 0.5 !important; 
+}
+.StatusInput {
+  color: black !important;
+  opacity: 0.5 !important;
+  background: lightgray !important;
+  font-weight: 400 !important;
+  width: 40% !important;
+  height: 30px !important;
+}
+
+.StatusInputSelect {
+  width: 100px !important;
+  height: 30px !important;
+  background: lightgray !important;
+  opacity: 1 !important;
+  color: black !important;
+  font-weight: 700 !important;
+}
+
+.ContractorInput {
+  width: 55% !important;
+  height: 30px !important;
+  color: black !important;
+  opacity: 0.5 !important;
+  background: lightgray !important;
+  font-weight: 400 !important;
+}
+
+.ContractorInputInputSelect {
+  font-weight: 600;
+  width: 70px !important;
+  height: 30px !important;
+  display: flex;
+  opacity: 1 !important;
+  color: black !important;
+  font-weight: 700 !important;
+}
+
+.DueInput {
+  width: 40% !important;
+  height: 40% !important;
+  color: black !important;
+  opacity: 0.5 !important;
+  background: lightgray !important;
+  font-weight: 400 !important;
+}
+
+.DueInputSelect {
+  width: 100px !important;
+  height: 30px !important;
+  display: flex;
+  opacity: 1 !important;
+  color: black !important;
+  font-weight: 700 !important;
+}
+
+.DependsOnInput {
+  width: 58% !important;
+  height: 30px !important;
+  color: black !important;
+  opacity: 0.5 !important;
+  background: lightgray !important;
+  font-weight: 400 !important;
+}
+
+
+.DependsOnInputSelect {
+  height: 30px !important;
+  width: 60px !important;
+  opacity: 1 !important;
+  color: black !important;
+  font-weight: 700 !important;
+  display: flex;
+
+}
+
+.AssignedInputSelect {
+  width: 80px !important;
+  height: 30px !important;
+  display: flex;
+  color: black !important;
+  font-weight: 700 !important;
+  background: lightgray !important;
+}
+
+.AssignedInput {
+  width: 50% !important;
+  height: 30px !important;
+  color: black !important;
+  opacity: 0.5 !important;
+  background: lightgray !important;
+  font-weight: 400 !important;
+}
+
+#outer
+{
+    width:28%;
+    text-align: end;
+}
+.inner
+{
+    display: inline-block !important;
+}
+.EditBtn{
+  margin-left: 5px !important;
+}
+
+.NweSubmittalBtn{
+  margin-left: 10px !important;
 }

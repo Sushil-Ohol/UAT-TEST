@@ -1,10 +1,11 @@
 import { useCallback } from "react";
-import { Space, Input, Select, Button } from "antd";
+import { Input, Select, Button, Col, Row, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { DropDownData } from "../../../constants";
+import "../submittal-list.css";
 
 function SubmittalListFilterComponent(props: any) {
-  const { gridRef, onApplyClick, onNewClick } = props;
+  const { gridRef, onNewClick } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
     gridRef.current!.api.setQuickFilter(
@@ -13,60 +14,154 @@ function SubmittalListFilterComponent(props: any) {
   }, [gridRef]);
 
   return (
-    <div className="FilterRow" style={{ display: "flex", margin: "1px 0px" }}>
+    <div className="FilterRow" style={{ display: "flex" }}>
       <Space>
-        <Input
-          type="text"
-          style={{ width: 250 }}
-          id="filter-text-box"
-          placeholder="Search"
-          prefix={<SearchOutlined />}
-          onInput={onFilterTextBoxChanged}
-        />
-        <Input.Group compact>
-          <Input style={{ width: "10%" }} defaultValue="Status" disabled />
-          <Select
-            style={{ width: 150 }}
-            onChange={(value: any) => {
-              gridRef.current!.api.setQuickFilter(value);
-            }}
-            defaultValue="All"
-          >
-            {DropDownData.StatusOptions.map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
-              </Select.Option>
-            ))}
-          </Select>
-          &nbsp;&nbsp;
-          <Input style={{ width: "10%" }} defaultValue="Contractor" disabled />
-          <Select
-            style={{ width: 150 }}
-            onChange={(value: any) => {
-              gridRef.current!.api.setQuickFilter(value);
-            }}
-            defaultValue="All"
-          >
-            {DropDownData.ContractorOptions.map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
-              </Select.Option>
-            ))}
-          </Select>
-          <Input style={{ width: "10%" }} defaultValue="Due" disabled />
-          <Select
-            style={{ width: 150 }}
-            onChange={(value: any) => {
-              gridRef.current!.api.setQuickFilter(value);
-            }}
-            defaultValue="Past due"
-          />
-        </Input.Group>
+        <section>
+          <Row gutter={10}>
+            <Col span={3}>
+              <div className="SearchInput">
+                <Input.Group compact>
+                  <Input
+                    type="text"
+                    id="filter-text-box"
+                    placeholder="Search"
+                    prefix={<SearchOutlined />}
+                    onInput={onFilterTextBoxChanged}
+                  />
+                </Input.Group>
+              </div>
+            </Col>
+            &nbsp;
+            <Col span={4}>
+              <Input.Group compact>
+                <Input className="StatusInput" defaultValue="Status" disabled />
+                <Select
+                  className="StatusInputSelect"
+                  onChange={(value: any) => {
+                    gridRef.current!.api.setQuickFilter(value);
+                  }}
+                  defaultValue="All"
+                >
+                  {DropDownData.StatusOptions.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Input.Group>
+            </Col>
+            <Col span={4}>
+              <Input.Group compact>
+                <Input
+                  className="ContractorInput"
+                  defaultValue="Contractor"
+                  disabled
+                />
+                <Select
+                  className="ContractorInputInputSelect"
+                  onChange={(value: any) => {
+                    gridRef.current!.api.setQuickFilter(value);
+                  }}
+                  defaultValue="All"
+                >
+                  {DropDownData.ContractorOptions.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Input.Group>
+            </Col>
+            <Col span={4}>
+              <Input.Group compact>
+                <Input className="DueInput" defaultValue="Due" disabled />
+                <Select
+                  className="DueInputSelect"
+                  onChange={(value: any) => {
+                    gridRef.current!.api.setQuickFilter(value);
+                  }}
+                  defaultValue="All"
+                >
+                  {DropDownData.PastDueOptions.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Input.Group>
+            </Col>
+            <Col span={4}>
+              <Input.Group compact>
+                <Input
+                  className="DependsOnInput"
+                  defaultValue="Depends On"
+                  disabled
+                />
+                <Select
+                  className="DependsOnInputSelect"
+                  onChange={(value: any) => {
+                    gridRef.current!.api.setQuickFilter(value);
+                  }}
+                  defaultValue="All"
+                >
+                  {DropDownData.DependsOnOptions.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Input.Group>
+            </Col>
+            <Col span={4}>
+              <Input.Group compact>
+                <Input
+                  defaultValue="Assigned"
+                  className="AssignedInput"
+                  disabled
+                />
+                <Select
+                  className="AssignedInputSelect"
+                  onChange={(value: any) => {
+                    gridRef.current!.api.setQuickFilter(value);
+                  }}
+                  defaultValue="All"
+                >
+                  {DropDownData.AssigneeOptions.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Input.Group>
+            </Col>
+          </Row>
+        </section>
       </Space>
 
-      <div style={{ marginLeft: "auto" }}>
-        <Button onClick={onApplyClick}>Apply</Button>
-        <Button onClick={onNewClick}>+ New Submittal</Button>
+      <div id="outer" className="EditSubmittalbtn">
+        <span>
+          <div>
+            <div className="inner">
+              <Button
+                onClick={onNewClick}
+                size="middle"
+                disabled
+                className="EditBtn"
+              >
+                Edit
+              </Button>
+            </div>
+            <div className="inner">
+              <Button
+                onClick={onNewClick}
+                size="middle"
+                className="NweSubmittalBtn"
+              >
+                + New Submittal
+              </Button>
+            </div>
+          </div>
+        </span>
       </div>
     </div>
   );
