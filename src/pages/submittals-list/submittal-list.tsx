@@ -65,9 +65,10 @@ function SubmittalList() {
       field: "id",
       headerName: "ID",
       checkboxSelection: true,
-      headerCheckboxSelection: true
+      headerCheckboxSelection: true,
+      minWidth: 102
     },
-    { field: "submittal", headerName: "SUBMITTAL" },
+    { field: "submittal", headerName: "SUBMITTAL", minWidth: 124 },
     {
       field: "notification",
       headerName: "",
@@ -82,11 +83,13 @@ function SubmittalList() {
     {
       field: "revision",
       headerName: "",
+      minWidth: 100,
       headerComponentFramework: DocAttachIcon
     },
     {
       field: "status",
       headerName: "STATUS",
+      minWidth: 100,
       cellRendererFramework: statusCellRenderer,
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
@@ -96,22 +99,30 @@ function SubmittalList() {
     {
       field: "dueBy",
       headerName: "DUE BY",
+      minWidth: 140,
       cellEditor: NewDatePicker,
       cellEditorPopup: true
     },
     {
       field: "contractor",
       headerName: "CONTRACTOR",
+      minWidth: 180,
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
         values: DropDownData.ContractorOptions
       }
     },
-    { field: "dependsOn", headerName: "DEPENDS ON" },
+    {
+      field: "dependsOn",
+      headerName: "DEPENDS ON",
+      minWidth: 140,
+      type: "rightAligned"
+    },
     {
       field: "assigned",
       headerName: "ASSIGNED",
       cellEditor: "agSelectCellEditor",
+      minWidth: 150,
       cellEditorParams: {
         values: DropDownData.AssigneeOptions
       }
@@ -123,7 +134,6 @@ function SubmittalList() {
     return {
       headerName: "",
       field: "",
-      minWidth: 250,
       cellRenderer: "agGroupCellRenderer",
       cellRendererParams: {
         checkbox: true
@@ -138,7 +148,7 @@ function SubmittalList() {
       sortable: true,
       editable: true,
       filter: true,
-      width: 100
+      width: 120
     };
   }, []);
 
