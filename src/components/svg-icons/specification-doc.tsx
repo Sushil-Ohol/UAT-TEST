@@ -49,6 +49,7 @@ export default function SpecificationdocIcon({
             }
             strokeLinejoin="round"
             strokeWidth="2"
+            className="fill-hover"
           />
           <path
             id="Path_34"
