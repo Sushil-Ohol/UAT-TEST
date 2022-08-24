@@ -1,11 +1,16 @@
+import { Button, Col, Row } from "antd";
+import "./home.css";
 /* Home Page Component */
 function HomePage() {
   return (
-    <div className="container">
-      <div className="my-3">
-        <h1>Homepage</h1>
-      </div>
-    </div>
+    <Row className="container-home-page">
+      <Col>
+        <h1>Welcome To ConstructivIQ</h1>
+      </Col>
+      <a href="/projects" rel="noopener noreferrer">
+        <Button>See All Projects</Button>
+      </a>
+    </Row>
   );
 }
 
