@@ -6,11 +6,11 @@ import PropTypes from "prop-types";
 import { colorCode } from "constants/index";
 import { generateHexSVG } from "./generateHex";
 
-const elevationStyleActive = (elevation: any) => {
+const elevationStyleActive = () => {
   return {
     cursor: "pointer",
     transition: "all 0.1s ease",
-    transform: `translateY(${elevation}px)`
+    transform: "translateY(0px)"
   };
 };
 
@@ -93,7 +93,7 @@ export default class Hexagon extends Component {
 
     this.thHexagonStyleActive = {
       ...thHexagonStyleBase,
-      ...(elevation ? elevationStyleActive(elevation) : {}),
+      ...(elevation ? elevationStyleActive() : {}),
       ...active
     };
 
@@ -138,7 +138,7 @@ export default class Hexagon extends Component {
         <text fill="#bbb" strokeWidth="0" style={textStyle}>
           <tspan
             x={width / 2}
-            y={(1.2 * height) / 2}
+            y={(1.1 * height) / 2}
             textAnchor="middle"
             style={{ fontSize: textStyle.fontSize }}
             className={isactive ? "text-first-active" : "text-first"}
@@ -147,7 +147,7 @@ export default class Hexagon extends Component {
           </tspan>
           <tspan
             x={width / 2}
-            y={(1.3 * height) / 2 + fontSizeOffset + 2}
+            y={(1.2 * height) / 2 + fontSizeOffset + 2}
             textAnchor="middle"
             style={{ fontSize: textStyle.fontSize }}
             className={isactive ? "text-first-active" : "text-first"}
@@ -184,14 +184,14 @@ export default class Hexagon extends Component {
                 colorCode.process
               : (error && colorCode.error) || colorCode.process
           }
-          strokeWidth="2"
-          strokeDasharray={isactive ? "0,0" : "4,3"}
+          strokeWidth="3"
+          strokeDasharray={isactive ? "0,0" : "4,4"}
           className="styled-element"
           onMouseOver={(e: any) => {
             e.target.style.color = color;
           }}
           onMouseOut={(e: any) => {
-            e.target.style.stroke = "";
+            e.target.style.color = "";
           }}
           id="styledelement"
         >
@@ -200,6 +200,7 @@ export default class Hexagon extends Component {
           </svg>
           <g
             style={thHexagonStyle}
+            strokeWidth="4"
             onMouseLeave={() =>
               this.setState({ thHexagonStyle: this.thHexagonStyleNormal })
             }
@@ -225,10 +226,10 @@ export default class Hexagon extends Component {
             style={{
               height: "20px",
               textAlign: "center",
-              width: sideLength === "100" ? "60%" : "80%",
+              width: sideLength === 100 ? "60%" : "80%",
               position: "absolute",
-              bottom: sideLength === "100" ? `${+sideLength - 50}px` : "30px",
-              left: sideLength === "100" ? "35px" : "11px"
+              bottom: sideLength === 100 ? `${+sideLength - 60}px` : "30px",
+              left: sideLength === 100 ? "35px" : "11px"
             }}
             percent={progressBar}
           />
@@ -246,7 +247,7 @@ Hexagon.defaultProps = {
   fill: "white",
   stroke: "#bbb",
   strokeWidth: 0,
-  elevation: 12,
+  elevation: 0,
   shadow: "#f6f5f2",
   filename: "filename",
   img: "",
@@ -278,9 +279,9 @@ Hexagon.propTypes = {
   shadow: PropTypes.string,
   filename: PropTypes.string,
   img: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.func,
   error: PropTypes.string,
-  wrongIcon: PropTypes.string,
+  wrongIcon: PropTypes.func,
   text: PropTypes.string,
   textStyle: PropTypes.object,
   styles: PropTypes.shape({

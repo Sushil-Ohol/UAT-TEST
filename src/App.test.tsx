@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { renderWithProviders } from "utils/test-utils";
 import App from "./App";
 
-test("home page text", () => {
+test("Welcome To ConstructivIQ", () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: jest.fn().mockImplementation((query) => ({
@@ -18,6 +18,6 @@ test("home page text", () => {
   });
   renderWithProviders(<App />);
 
-  const linkElement = screen.getByText(/Homepage/i);
+  const linkElement = screen.getByText("Welcome To ConstructivIQ");
   expect(linkElement).toBeInTheDocument();
 });

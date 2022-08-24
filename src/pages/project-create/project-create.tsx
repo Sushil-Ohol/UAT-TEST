@@ -2,8 +2,6 @@
 
 import { Button, Card, Col, Row, Typography, Steps, Form, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import axios from "axios";
-import { APIs } from "constants/index";
 import Dropzone from "components/file-upload/file-upload";
 import { useEffect, useState, useRef } from "react";
 import {
@@ -16,20 +14,24 @@ import {
 } from "@ant-design/icons";
 import "./project-create.css";
 import { ViewDocumentIcon, CogIcon } from "components/svg-icons";
+import { useAppDispatch, useAppSelector } from "store";
+import { getProjectValue } from "store/slices/project-value";
 
 function ProjectCreate() {
   const [skipBtn, setSkipBtn] = useState(false);
+  const dispatch = useAppDispatch();
+  const { projectValue } = useAppSelector((state) => state.projectValue);
   const [current, setCurrent] = useState(0);
   const hexagoanStyleScreen1 = {
     textSize: "15px",
     className: "icon-style1",
-    hexagoanSize: "100",
+    hexagoanSize: 100,
     errorStyleClass: "icon-style-wrong-screen-first"
   };
   const hexagoanStyleScreen2 = {
     textSize: "8px",
     className: "icon-style2",
-    hexagoanSize: "60",
+    hexagoanSize: 60,
     errorStyleClass: "icon-style-wrong-screen-second"
   };
   const projectInputRef: any = useRef(null);
@@ -37,11 +39,6 @@ function ProjectCreate() {
   const [cogIconDetailsTextArea, setCogIconDetailsTextArea] = useState(false);
   const [projectInputEdited, setProjectInputEdited] = useState(false);
   const [textAreaEdited, setTextAreaEdited] = useState(false);
-  const [projectValue, setProjectValue] = useState({
-    floors: 0,
-    materials: 0,
-    submittals: 0
-  });
   const { Text } = Typography;
   const { Step } = Steps;
   const [specificationDoc, setSpecificationDoc] = useState({
@@ -132,8 +129,7 @@ function ProjectCreate() {
   }, [count]);
   useEffect(() => {
     const Getvalue = async () => {
-      const result = await axios.get(`${APIs.V1_URL}/value`);
-      setProjectValue({ ...result.data });
+      await dispatch(getProjectValue());
     };
     if (current > 0) {
       Getvalue();
@@ -147,7 +143,7 @@ function ProjectCreate() {
         projectName: ""
       });
     }
-  }, [current, skipBtn]);
+  }, [current, skipBtn, dispatch]);
 
   const next = () => {
     if (defaultValue.projectName.length > 0 && cogIconProjectInput) {
@@ -218,6 +214,7 @@ function ProjectCreate() {
                                         placeholder="input placeholder"
                                       />
                                     </Col>
+
                                     <Col span={2}>{item.addonAfter}</Col>
                                   </Row>
                                 </Input.Group>
@@ -347,7 +344,7 @@ function ProjectCreate() {
                         </Form.Item>
                         <Row justify="center">
                           <Col span={15}>
-                            <Row justify="center">
+                            <Row justify="center" className="hexagon-align">
                               {specificationDoc.title !==
                                 "Specification Document" && (
                                 <Col>
@@ -524,6 +521,7 @@ function ProjectCreate() {
                     <Button
                       className="stepper-next-btn"
                       type="primary"
+                      disabled={!cogIconProjectInput}
                       onClick={() => next()}
                     >
                       Next <ArrowRightOutlined />
