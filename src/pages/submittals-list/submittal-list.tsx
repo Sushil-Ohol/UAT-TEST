@@ -2,6 +2,7 @@
 import { DatePicker, Drawer } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
+import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./submittal-list.css";
@@ -150,6 +151,27 @@ function SubmittalList() {
     };
   }, []);
 
+  const sideBar = useMemo(() => {
+    return {
+      toolPanels: [
+        {
+          id: "columns",
+          labelDefault: "Columns",
+          labelKey: "columns",
+          iconKey: "columns",
+          toolPanel: "agColumnsToolPanel",
+          toolPanelParams: {
+            suppressRowGroups: true,
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true
+          }
+        }
+      ],
+      defaultToolPanel: ""
+    };
+  }, []);
+
   const loadList = async () => {
     const actionResult = await dispatch(getSubmittalList(projectId));
     if (isFulfilled(actionResult)) {
@@ -212,6 +234,7 @@ function SubmittalList() {
           readOnlyEdit
           masterDetail
           animateRows={false}
+          sideBar={sideBar}
           onSelectionChanged={onSelectionChanged}
           onFirstDataRendered={onFirstDataRendered}
         />

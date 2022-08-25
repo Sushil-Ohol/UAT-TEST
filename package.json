@@ -5,9 +5,10 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.1",
-    "@testing-library/react": "^11.1.0",
     "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
     "ag-grid-community": "^28.0.2",
+    "ag-grid-enterprise": "^28.0.2",
     "ag-grid-react": "^28.0.0",
     "antd": "^4.21.7",
     "axios": "^0.27.2",
