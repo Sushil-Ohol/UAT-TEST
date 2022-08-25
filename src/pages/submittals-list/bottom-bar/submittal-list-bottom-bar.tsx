@@ -23,7 +23,7 @@ function SubmittalListBottomBar(props: any) {
           </Col>
           <Col span={3}>
             <div>
-              <Button block>Archieve</Button>
+              <Button block>Archive</Button>
             </div>
           </Col>
         </Row>
