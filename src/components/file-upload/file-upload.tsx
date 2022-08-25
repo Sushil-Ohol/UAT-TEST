@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
 import { WarningFilled } from "@ant-design/icons";
@@ -155,7 +154,7 @@ function Fileupload({
     if (progress > 99) {
       setSkipBtn(true);
     }
-  }, [progress]);
+  }, [progress, setSkipBtn]);
   return (
     <Dropzone onDrop={onDrop} multiple>
       {({ getRootProps, getInputProps, isDragActive, isFileDialogActive }) => {
