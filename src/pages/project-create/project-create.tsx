@@ -13,7 +13,7 @@ import {
   CheckSquareOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
-import { ViewDocumentIcon, CogIcon } from "components/svg-icons";
+import { ViewDocumentIcon, CogIcon, ArrowIcon } from "components/svg-icons";
 import { useAppDispatch, useAppSelector } from "store";
 import { getProjectValue } from "store/slices/project-value";
 
@@ -486,6 +486,7 @@ function ProjectCreate() {
                             specification document. You can confirm,change,
                             split or merge them in the next step <br />
                           </p>
+                          <ArrowIcon className="arrow-icon" />
                         </Col>
                         <Col span={12} offset={6}>
                           <Button type="link" className="btn-submittals">

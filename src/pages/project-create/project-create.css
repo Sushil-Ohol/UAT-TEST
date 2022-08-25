@@ -264,7 +264,7 @@ textarea.ant-input:hover {
   font-weight: 500;
   color: #7b7b7a;
   text-align: start;
-  padding-top: 8%;
+  padding-top: 10%;
   padding-bottom: 0px;
   font-family: "Inter";
 }
@@ -337,4 +337,9 @@ textarea.ant-input {
 
 .ant-steps-item-title {
   font-size: 14px;
+}
+.arrow-icon {
+  position: absolute;
+  top: 5%;
+  right: 10%;
 }
