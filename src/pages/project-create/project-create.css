@@ -1,23 +1,36 @@
 .card-skip {
   padding: 0px;
-  padding-top: 40px;
+  padding-top: 89px;
   margin: 0px;
   background: transparent;
 }
 .skip-btn-text {
+  margin-top: 21px;
   color: #1c1b1b;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
+  border-bottom: 1px dotted black;
+}
+.skip-btn-text:hover {
+  color: #1890ff;
+  font-weight: bold;
+  font-size: 14px;
+  border-bottom: 1px solid #1890ff;
+  cursor: pointer;
 }
 
 .skip-btn:hover {
   background-color: rgba(128, 128, 128, 0.403);
 }
 .heading-main {
-  color: #1c1b1b;
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 20px;
+  color: #000000;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 86px;
+  font: Inter;
+  opacity: 1;
+  letter-spacing: 0px;
+  font: normal normal medium 24px/29px Inter;
 }
 .ant-card-body {
   padding: 0px;
@@ -307,11 +320,12 @@ p.project-name-hint {
   left: -6px;
 }
 .hexagon-schedule-row {
-  height: 150px;
+  /* height: 150px; */
   position: relative;
 }
 .hexagon-schedule {
-  position: absolute;
+  /* position: absolute; */
+  height: 260px;
   top: -40px;
   display: flex;
   flex-direction: column;
@@ -342,4 +356,17 @@ textarea.ant-input {
   position: absolute;
   top: 5%;
   right: 10%;
+}
+.ant-tooltip-inner {
+  background-color: transparent;
+  color: red;
+  font-size: 10px;
+  min-width: max-content;
+}
+.ant-progress-status-success div .ant-progress-bg {
+  background-color: #65d154;
+}
+.ant-progress-success-bg,
+.ant-progress-bg {
+  background-color: #ffa41b;
 }

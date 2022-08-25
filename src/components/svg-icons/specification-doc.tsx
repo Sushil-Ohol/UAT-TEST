@@ -2,12 +2,14 @@
 import { colorCode } from "../../constants";
 
 export default function SpecificationdocIcon({
+  progress,
   width,
   height,
   selectedFile,
   fileError,
   className
 }: {
+  progress: number;
   width: string;
   height: string;
   selectedFile: string;
@@ -44,7 +46,8 @@ export default function SpecificationdocIcon({
             stroke={colorCode.lightGrey}
             fill={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.lightGrey
             }
             strokeLinejoin="round"

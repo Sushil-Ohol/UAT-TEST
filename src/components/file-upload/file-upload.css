@@ -22,8 +22,8 @@
   fill: transparent;
   display: inline-block;
   position: absolute;
-  top: 56px;
-  left: 65px;
+  top: 93px;
+  left: 110px;
 }
 
 .icon-style2 {
@@ -40,8 +40,16 @@
   display: inline;
   position: absolute;
   bottom: 30px;
-  left: 80px;
-  font-size: 14px;
+  left: 122px;
+  font-size: 25px;
+}
+.icon-style-wrong-screen-first1 {
+  color: #ff3535;
+  display: inline;
+  position: absolute;
+  bottom: -25px;
+  left: 122px;
+  font-size: 25px;
 }
 .icon-style-wrong-screen-second {
   color: red;
@@ -68,6 +76,8 @@
 .text-first,
 .text-second {
   font-size: 15px;
+  color: #00000080;
+  opacity: 1;
 }
 .text-first-active,
 .text-second-active {
@@ -84,17 +94,17 @@
 }
 
 .styled-element:hover {
-  stroke: rgb(94, 175, 216);
+  stroke: #007aff;
   stroke-width: "3px" !important;
 }
 .styled-element:hover .text-first,
 .text-second {
-  fill: rgb(94, 175, 216);
+  fill: #007aff;
 }
 .styled-element:hover + .icon-style1 .fill-hover {
-  fill: rgb(94, 175, 216);
+  fill: #007aff;
 }
 
 .styled-element:hover + .icon-style2 .fill-hover {
-  fill: rgb(94, 175, 216);
+  fill: #007aff;
 }

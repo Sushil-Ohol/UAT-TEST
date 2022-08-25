@@ -135,10 +135,10 @@ export default class Hexagon extends Component {
       <>
         <path fill={fill} d={generateHexSVG(sideLength, borderRadius)} />
         <image href={img} x={0.15 * width} y={0.12 * height} />
-        <text fill="#bbb" strokeWidth="0" style={textStyle}>
+        <text fill="#00000080" strokeWidth="0" style={textStyle}>
           <tspan
             x={width / 2}
-            y={(1.1 * height) / 2 + 3}
+            y={(1.1 * height) / 2 + 1}
             textAnchor="middle"
             style={{ fontSize: textStyle.fontSize }}
             className={isactive ? "text-first-active" : "text-first"}
@@ -147,24 +147,47 @@ export default class Hexagon extends Component {
           </tspan>
           <tspan
             x={width / 2}
-            y={(1.2 * height) / 2 + fontSizeOffset + 5}
+            y={(1.2 * height) / 2 + 6}
             textAnchor="middle"
-            style={{ fontSize: textStyle.fontSize }}
             className={isactive ? "text-first-active" : "text-first"}
+            style={{ fontSize: textStyle.fontSize }}
           >
             {textArray[1]}
           </tspan>
 
           <tspan
             x={width / 2}
-            y={(1.4 * height) / 2 + fontSizeOffset + 2}
+            y={(1.4 * height) / 2 + fontSizeOffset + 4}
             textAnchor="middle"
             style={{
               fill: colorCode.error,
-              fontSize: sideLength === "100" ? "10px" : "8px"
+              fontSize: sideLength === 100 ? "9px" : "7px"
             }}
           >
-            <div>{filename}</div>
+            {error && "Unsupported format."}
+          </tspan>
+          {filename && (
+            <tspan
+              x={width / 2}
+              y={(1.4 * height) / 2 + fontSizeOffset + 6}
+              textAnchor="middle"
+              style={{
+                fill: colorCode.fileName,
+                fontSize: sideLength === 100 ? "9px" : "7px"
+              }}
+            >
+              {progressBar >= 100 && filename}
+            </tspan>
+          )}
+          <tspan
+            x={width / 2}
+            y={(1.5 * height) / 2 + fontSizeOffset + 6}
+            textAnchor="middle"
+            style={{
+              fill: colorCode.error,
+              fontSize: sideLength === 100 ? "9px" : "7px"
+            }}
+          >
             {error && error}
           </tspan>
         </text>
@@ -175,17 +198,19 @@ export default class Hexagon extends Component {
       <>
         <svg
           viewBox={`0 0 ${width} ${height}`}
-          width={width}
-          height={height}
+          width="90%"
+          height="70%"
           stroke={
             progressBar > 0
-              ? (progressBar === 100 && !isactive && colorCode.success) ||
+              ? (progressBar < 100 && !isactive
+                  ? "orange"
+                  : colorCode.success) ||
                 (isactive && colorCode.process) ||
                 colorCode.process
               : (error && colorCode.error) || colorCode.process
           }
-          strokeWidth="3"
-          strokeDasharray={isactive ? "0,0" : "4,4"}
+          strokeWidth="1"
+          strokeDasharray={isactive ? "0,0" : "2,2"}
           className="styled-element"
           onMouseOver={(e: any) => {
             e.target.style.color = color;
@@ -200,7 +225,7 @@ export default class Hexagon extends Component {
           </svg>
           <g
             style={thHexagonStyle}
-            strokeWidth="4"
+            strokeWidth="2"
             onMouseLeave={() =>
               this.setState({ thHexagonStyle: this.thHexagonStyleNormal })
             }
@@ -228,8 +253,8 @@ export default class Hexagon extends Component {
               textAlign: "center",
               width: sideLength === 100 ? "60%" : "80%",
               position: "absolute",
-              bottom: sideLength === 100 ? `${+sideLength - 60}px` : "30px",
-              left: sideLength === 100 ? "35px" : "11px"
+              bottom: sideLength === 100 ? `${+sideLength - 40}px` : "30px",
+              left: sideLength === 100 ? "46px" : "11px"
             }}
             percent={progressBar}
           />

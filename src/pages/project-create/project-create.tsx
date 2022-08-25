@@ -1,6 +1,16 @@
 /* Project Create Page Component */
 
-import { Button, Card, Col, Row, Typography, Steps, Form, Input } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Typography,
+  Steps,
+  Form,
+  Input,
+  Tooltip
+} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Dropzone from "components/file-upload/file-upload";
 import { useEffect, useState, useRef } from "react";
@@ -24,7 +34,7 @@ function ProjectCreate() {
   const { projectValue } = useAppSelector((state) => state.projectValue);
   const [current, setCurrent] = useState(0);
   const hexagoanStyleScreen1 = {
-    textSize: "15px",
+    textSize: "12px",
     className: "icon-style1",
     hexagoanSize: 100,
     errorStyleClass: "icon-style-wrong-screen-first"
@@ -523,16 +533,29 @@ function ProjectCreate() {
                     <Step title="Details" />
                     <Step title="Finish" />
                   </Steps>
-                  {current < steps.length - 1 && (
-                    <Button
-                      className="stepper-next-btn"
-                      type="primary"
-                      disabled={!cogIconProjectInput || !cogIconDetailsTextArea}
-                      onClick={() => next()}
-                    >
-                      Next <ArrowRightOutlined />
-                    </Button>
-                  )}
+                  {current < steps.length - 1 &&
+                    (!cogIconProjectInput || !cogIconDetailsTextArea ? (
+                      <Tooltip
+                        placement="topLeft"
+                        title="Please confirm the project name and details before you can procced."
+                      >
+                        <Button
+                          className="stepper-next-btn"
+                          type="primary"
+                          onClick={() => next()}
+                        >
+                          Next <ArrowRightOutlined />
+                        </Button>
+                      </Tooltip>
+                    ) : (
+                      <Button
+                        className="stepper-next-btn"
+                        type="primary"
+                        onClick={() => next()}
+                      >
+                        Next <ArrowRightOutlined />
+                      </Button>
+                    ))}
                 </div>
               </Col>
             </Row>
@@ -547,8 +570,8 @@ function ProjectCreate() {
             <Row justify="center">
               <Col>
                 <Dropzone
-                  width="42"
-                  height="42"
+                  width="52"
+                  height="52"
                   hexagoanStyle={hexagoanStyleScreen1}
                   setCount={setCount}
                   icon="FileDoneOutlined"
@@ -560,8 +583,8 @@ function ProjectCreate() {
               </Col>
               <Col className="hexagon-drawing-set">
                 <Dropzone
-                  width="42"
-                  height="42"
+                  width="52"
+                  height="52"
                   hexagoanStyle={hexagoanStyleScreen1}
                   setCount={setCount}
                   icon="SettingOutlined"
@@ -575,8 +598,8 @@ function ProjectCreate() {
             <Row justify="center" className="hexagon-schedule-row">
               <Col className="hexagon-schedule">
                 <Dropzone
-                  width="42"
-                  height="42"
+                  width="52"
+                  height="52"
                   hexagoanStyle={hexagoanStyleScreen1}
                   setCount={setCount}
                   icon="CalendarOutlined"
@@ -586,23 +609,17 @@ function ProjectCreate() {
                   setState={setSchedule}
                 />
               </Col>
-            </Row>{" "}
-            <br />
-            <Row justify="center">
+            </Row>
+            <Row justify="center" style={{ marginTop: "35px" }}>
               <Col>
                 <p className="footer-text">
                   You can add any of these any later, but ConstructivIQ <br />{" "}
                   can help you more if you add them now.
                   <br />
-                  <Button
-                    type="text"
-                    className="skip-btn"
-                    onClick={handleSkipEvent}
-                  >
-                    <Text className="skip-btn-text" strong>
-                      Skip this step
-                    </Text>
-                  </Button>
+                  <br />
+                  <Text onClick={handleSkipEvent} className="skip-btn-text">
+                    Skip this step
+                  </Text>
                 </p>
               </Col>
             </Row>

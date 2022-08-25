@@ -47,6 +47,7 @@ function Fileupload({
       case "FileDoneOutlined":
         return (
           <SpecificationdocIcon
+            progress={progress}
             width={width}
             height={height}
             fileError={fileError}
@@ -85,7 +86,15 @@ function Fileupload({
     }
   }
   function iconfunction() {
-    return <WarningFilled className={hexagoanStyle.errorStyleClass} />;
+    return (
+      <WarningFilled
+        className={
+          title === "Schedule"
+            ? "icon-style-wrong-screen-first1"
+            : hexagoanStyle.errorStyleClass
+        }
+      />
+    );
   }
   const ProjectDefaultValue = () => {
     dispatch(getProjectSuggest());
@@ -128,7 +137,7 @@ function Fileupload({
           setProgress(0);
           setTimeout(() => {
             setHoverColor("");
-            setFileError("");
+            // setFileError("");
           }, 4000);
         }
       });
@@ -146,13 +155,13 @@ function Fileupload({
     dragActive: "rgba(0, 208, 255, 0.1)",
     dialogActive: "#c2c1bf",
     orange: "#f0efed",
-    black: "black",
-    blue: "#5eafd8",
-    lightGrey: "#f0efed"
+    black: "#00000080",
+    blue: "#007AFF",
+    lightGrey: "#00000005"
   };
   useEffect(() => {
     if (progress > 99) {
-      setSkipBtn(true);
+      setSkipBtn(false);
     }
   }, [progress, setSkipBtn]);
   return (
