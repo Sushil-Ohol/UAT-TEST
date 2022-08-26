@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
+import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./material-list.css";
@@ -117,6 +118,27 @@ function Materials() {
     };
   }, []);
 
+  const sideBar = useMemo(() => {
+    return {
+      toolPanels: [
+        {
+          id: "columns",
+          labelDefault: "Columns",
+          labelKey: "columns",
+          iconKey: "columns",
+          toolPanel: "agColumnsToolPanel",
+          toolPanelParams: {
+            suppressRowGroups: true,
+            suppressValues: true,
+            suppressPivots: true,
+            suppressPivotMode: true
+          }
+        }
+      ],
+      defaultToolPanel: ""
+    };
+  }, []);
+
   const onGridReady = useCallback(() => {
     const data: any = materialsData;
     setRowData([...data]);
@@ -164,6 +186,7 @@ function Materials() {
           suppressAggFuncInHeader
           readOnlyEdit
           pagination
+          sideBar={sideBar}
           paginationAutoPageSize
           masterDetail
           onGridReady={onGridReady}
