@@ -1,6 +1,6 @@
 .card-skip {
   padding: 0px;
-  padding-top: 89px;
+  padding-top: 79px;
   margin: 0px;
   background: transparent;
 }
@@ -26,7 +26,7 @@
   color: #000000;
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 86px;
+  margin-bottom: 76px;
   font: Inter;
   opacity: 1;
   letter-spacing: 0px;
@@ -54,7 +54,7 @@
   margin-bottom: 5px;
   position: fixed;
   bottom: 0;
-  left: 530px;
+  left: 460px;
   background-color: white;
   padding: 0px 30px;
   display: flex;
@@ -72,7 +72,7 @@ card {
 }
 .stepper-prev-btn {
   height: 80%;
-  width: 100px;
+  width: 120px;
   font-size: 16px;
   padding: 0px 10px;
   margin-top: 0%;
@@ -81,7 +81,7 @@ card {
 }
 .stepper-next-btn {
   height: 80%;
-  width: 100px;
+  width: 120px;
   font-size: 16px;
   padding: 0px 10px;
   margin-top: 0%;
@@ -93,12 +93,12 @@ card {
 .ant-btn-primary[disabled]:focus,
 .ant-btn-primary[disabled]:active {
   height: 100%;
-  width: 100px;
+  width: 120px;
   font-size: 16px;
   padding: 0px 10px;
   margin-top: 0%;
   position: absolute;
-  right: 10px;
+  right: 6px;
   background-color: #0000007f;
   color: #ffffff;
   font: normal normal normal 16px/20px "Inter";
@@ -140,7 +140,6 @@ card {
   border: 0px;
 }
 .text-check {
-  /* border: 1px dashed rgba(128, 128, 128, 0.276); */
   background-color: white;
 }
 textarea.ant-input:hover {
@@ -152,11 +151,27 @@ textarea.ant-input:hover {
   border: 1px dashed #0000004d;
   font-weight: 400;
   padding: 6px 11px;
+  text-transform: capitalize;
 }
 .ant-input:hover {
+  border: 1px dashed #0000004d;
   color: black;
   border: 0px;
   padding: 6px 11px;
+}
+.ant-input:focus {
+  border: 1px dashed #0000004d;
+  color: black;
+
+  padding: 6px 11px;
+  box-shadow: unset;
+}
+.ant-input:active {
+  border: 1px dashed #0000004d;
+  color: black;
+
+  padding: 6px 11px;
+  box-shadow: unset;
 }
 .ant-steps-item-finish
   > .ant-steps-item-container
@@ -229,7 +244,7 @@ textarea.ant-input:hover {
 .cog-details {
   position: absolute;
   z-index: 99;
-  right: -14px;
+  right: -10px;
   top: -8px;
   background-color: transparent;
   border-radius: 25px;
@@ -289,41 +304,54 @@ textarea.ant-input:hover {
 }
 .sub-heading {
   padding-top: 120px;
+  text-align: center;
+  font: normal normal normal 24px/29px "Inter";
+  letter-spacing: 0px;
   color: #0000007f;
+  opacity: 1;
   font-size: 24px;
   font-weight: 500;
 }
 .heading-name {
   display: block;
-  font-weight: 500;
+  font: normal normal normal 24px/29px "Inter";
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  font-weight: 600;
   font-size: 24px;
-  color: #000;
+
   padding-top: 50px;
   text-transform: capitalize;
   padding-bottom: 24px;
 }
 .para-finish-screen {
+  font-size: 18px;
   font-weight: 500;
-  font-size: 16px;
-  text-align: left;
-  color: #0000007f;
-  padding-bottom: 5%;
+  color: #00000080;
+  text-align: start;
+  padding-top: 40px;
+  padding-bottom: 0px;
   font-family: "Inter";
+  opacity: 1;
+  padding-bottom: 5%;
 }
 .para-finish-screenp {
   font-size: 14px;
   font-weight: 500;
-  color: #7b7b7a;
+  color: #00000080;
   text-align: start;
   padding-top: 90px;
   padding-bottom: 0px;
   font-family: "Inter";
 }
 p.project-name-hint {
-  color: black;
-  margin-top: 5px;
+  letter-spacing: 0px;
+  color: #0000007f;
+  opacity: 1;
+  margin-top: 15px;
   text-align: start;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   margin-bottom: 0px;
 }
@@ -348,21 +376,26 @@ p.project-name-hint {
 .btn-submittals {
   margin-top: 1%;
   margin-bottom: 10%;
+  font-size: 18px;
+  font: "Inter";
 }
 .number {
   font-size: 24px;
   font-weight: 600;
+}
+.strong-text {
+  display: block;
+  font-weight: 600;
+  font-size: 17px;
 }
 .schedule-hexagoan {
   top: -24px;
   left: -6px;
 }
 .hexagon-schedule-row {
-  /* height: 150px; */
   position: relative;
 }
 .hexagon-schedule {
-  /* position: absolute; */
   height: 260px;
   top: -40px;
   display: flex;
@@ -375,12 +408,13 @@ p.project-name-hint {
 textarea.ant-input {
   height: 65px;
   overflow: hidden;
+  text-transform: capitalize;
 }
 .ant-input-group .ant-input:hover {
   border: 1px dashed #0000004d;
 }
 .heading-details-form {
-  margin-top: 70px;
+  margin-top: 50px;
   margin-bottom: 20px;
   font-weight: 600;
   font-size: 24px;
@@ -391,7 +425,8 @@ textarea.ant-input {
 }
 
 .hexagon-align {
-  margin-top: 28px;
+  margin-top: 20px;
+  margin-left: 0px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -399,12 +434,14 @@ textarea.ant-input {
 }
 
 .ant-steps-item-title {
-  font-size: 14px;
+  font-size: 16px;
 }
 .arrow-icon {
   position: absolute;
   top: 5%;
-  right: 20%;
+  right: 10%;
+  width: 80px;
+  height: 70px;
 }
 .ant-tooltip {
   background-color: transparent;
@@ -428,14 +465,13 @@ textarea.ant-input {
   margin-bottom: 21px;
 }
 .selected-file {
-  width: 91%;
+  width: 480px;
   height: 43px;
   display: flex;
   background-color: white;
   margin-bottom: 6px;
   display: flex;
   align-items: center;
-  /* justify-content: space-evenly; */
 }
 .wrapper-green-check {
   background-color: white;
@@ -464,7 +500,7 @@ textarea.ant-input {
   color: grey;
 }
 .footer-text-second {
-  margin-top: 40px;
+  margin-top: 20px;
   font-size: 15px;
   margin-bottom: 12px;
   text-align: center;
@@ -473,11 +509,47 @@ textarea.ant-input {
 .ant-tooltip-arrow {
   display: none;
 }
-.error-text-project-name {
-  display: "inline-block";
-  position: "absolute";
-  top: "-18px";
-  left: "100px";
+
+div .error-text-project-name {
   font-size: "12px";
-  color: "#FF3535";
+  color: #ff3535;
+}
+.error-bg-color {
+  background-color: #ff35351a;
+}
+.success-bg-color {
+  background-color: #65d1541a;
+}
+.success-bg-color-icon {
+  color: #65d154;
+  border-left: 0px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #5cca4b35;
+}
+.success-bg-color-icon-details {
+  color: #65d154;
+  border: 1px dashed #0000004d;
+  background-color: #65d1542b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 43px;
+  border-left: 0px;
+  font-size: 16px;
+}
+.upload-number {
+  padding-right: 110px;
+}
+.floor-number {
+  padding-right: 58px;
+  padding-left: 58px;
+}
+.submittal-number {
+  padding-left: 90px;
 }

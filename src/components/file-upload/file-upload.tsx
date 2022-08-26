@@ -25,8 +25,11 @@ function Fileupload({
   setSkipBtn,
   setState,
   setCount,
-  hexagoanStyle
+  hexagoanStyle,
+  count,
+  setCountCall
 }: {
+  count: number;
   width: string;
   height: string;
   title: string;
@@ -35,6 +38,7 @@ function Fileupload({
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
   setState: React.Dispatch<React.SetStateAction<any>>;
   setCount: React.Dispatch<React.SetStateAction<number>>;
+  setCountCall: React.Dispatch<React.SetStateAction<any>>;
   hexagoanStyle: any;
 }) {
   const dispatch = useAppDispatch();
@@ -42,7 +46,6 @@ function Fileupload({
   const [selectedFile, setSelectedFile] = useState("");
   const [progress, setProgress] = useState(0);
   const [hoverColor, setHoverColor] = useState("");
-  // const [data, setData] = useState(false);
 
   function antIcon() {
     switch (icon) {
@@ -120,7 +123,14 @@ function Fileupload({
             setSelectedFile(file.path);
             setTimeout(() => {
               setHoverColor("green");
-              ProjectDefaultValue();
+              if (count === 0) {
+                ProjectDefaultValue();
+                setCountCall({
+                  projectName: true,
+                  details: true
+                });
+              }
+
               setState({ ...file, title });
               setCount((prev: number) => prev + 1);
               setFileError("");
