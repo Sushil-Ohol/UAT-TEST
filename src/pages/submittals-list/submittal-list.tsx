@@ -5,6 +5,13 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import {
+  CellEditRequestEvent,
+  ColDef,
+  GetRowIdFunc,
+  GetRowIdParams
+} from "ag-grid-community";
+// import { LicenseManager } from "ag-grid-enterprise";
 import "./submittal-list.css";
 import { Buttons } from "components/widgets";
 import { useAppDispatch } from "store";
@@ -27,6 +34,8 @@ import Notification2SvgIcon from "../../components/svg-icons/notification2";
 import ChatIcon from "../../components/svg-icons/chat.tsx";
 import DocAttachIcon from "../../components/svg-icons/doc-attach";
 import NotificationIcon from "../../components/svg-icons/notifications-icon";
+
+// LicenseManager.setLicenseKey("<enterprisekey>");
 
 function NewDatePicker() {
   return <DatePicker />;
@@ -51,6 +60,8 @@ const notificationCellRenderer = (params: any) => {
   return <Notification2SvgIcon />;
 };
 
+let immutableRowData: any[];
+
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
   const [showNewDrawer, setShowNewDrawer] = useState(false);
@@ -61,7 +72,7 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
 
-  const [columnDefs] = useState([
+  const [columnDefs] = useState<ColDef[]>([
     {
       field: "id",
       headerName: "ID",
@@ -179,7 +190,8 @@ function SubmittalList() {
     if (isFulfilled(actionResult)) {
       const { payload } = actionResult;
       if (payload.success) {
-        setRowData(payload.response);
+        immutableRowData = payload.response;
+        setRowData(immutableRowData);
       }
     }
   };
@@ -223,6 +235,24 @@ function SubmittalList() {
     }, 0);
   }, []);
 
+  const getRowId = useMemo<GetRowIdFunc>(() => {
+    return (params: GetRowIdParams) => params.data.id;
+  }, []);
+
+  const onCellEditRequest = useCallback(
+    (event: CellEditRequestEvent) => {
+      const { data } = event;
+      const { field } = event.colDef;
+      const newItem = { ...data };
+      newItem[field!] = event.newValue;
+      immutableRowData = immutableRowData.map((oldItem) =>
+        oldItem.id === newItem.id ? newItem : oldItem
+      );
+      gridRef.current!.api.setRowData(immutableRowData);
+    },
+    [immutableRowData]
+  );
+
   return (
     <div>
       <SubmittalListFilterComponent
@@ -248,6 +278,8 @@ function SubmittalList() {
           sideBar={sideBar}
           onSelectionChanged={onSelectionChanged}
           onFirstDataRendered={onFirstDataRendered}
+          getRowId={getRowId}
+          onCellEditRequest={onCellEditRequest}
         />
       </div>
       <SubmittalListBottomBar selected={selectedRows} />
