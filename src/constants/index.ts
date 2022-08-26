@@ -2,11 +2,13 @@ export const FILESIZE = 100857000;
 const V1_URL = "http://localhost:5000/api/v1";
 export const colorCode = {
   white: "white",
-  error: "#ff3e3e",
-  success: "#007d3e",
+  error: "#FF3535",
+  success: "#65D154",
   grey: "#dedede",
-  process: "#d0cec9",
-  lightGrey: "#dedede"
+  process: "#00000033",
+  lightGrey: "#dedede",
+  fileName: "#CCCCCC",
+  orange: "#FFA41B"
 };
 const ContractorOptions = [
   "ABC Construction",

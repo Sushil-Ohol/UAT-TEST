@@ -2,12 +2,14 @@
 import { colorCode } from "../../constants";
 
 export default function SpecificationdocIcon({
+  progress,
   width,
   height,
   selectedFile,
   fileError,
   className
 }: {
+  progress: number;
   width: string;
   height: string;
   selectedFile: string;
@@ -41,10 +43,11 @@ export default function SpecificationdocIcon({
             data-name="Path 33"
             d="M30.868,3.937H11.933A4.064,4.064,0,0,0,7.875,8.009V35.149a4.064,4.064,0,0,0,4.058,4.071H30.868a4.064,4.064,0,0,0,4.058-4.071V8.009A4.064,4.064,0,0,0,30.868,3.937Z"
             transform="translate(0 0)"
-            stroke="none"
+            stroke={colorCode.lightGrey}
             fill={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.lightGrey
             }
             strokeLinejoin="round"

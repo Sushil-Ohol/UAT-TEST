@@ -22,33 +22,66 @@
   fill: transparent;
   display: inline-block;
   position: absolute;
-  top: 52px;
-  left: 65px;
+  top: 93px;
+  left: 110px;
+}
+.icon-style-1 {
+  color: grey;
+  fill: transparent;
+  display: inline-block;
+  position: absolute;
+  top: 93px;
+  left: 110px;
 }
 
 .icon-style2 {
   color: grey;
   display: inline-block;
   position: absolute;
-  top: 30px;
-  left: 38px;
+  top: 52px;
+  left: 72px;
   font-weight: bolder;
-  font-size: 15px;
+  font-size: 12px;
 }
+/* .icon-style-2 {
+  color: grey;
+  display: inline-block;
+  position: absolute;
+  top: 58px;
+  left: 128px;
+  font-weight: bolder;
+  font-size: 12px;
+} */
 .icon-style-wrong-screen-first {
   color: #ff3535;
   display: inline;
   position: absolute;
   bottom: 30px;
-  left: 80px;
-  font-size: 14px;
+  left: 122px;
+  font-size: 25px;
+}
+.icon-style-wrong-screen-first1 {
+  color: #ff3535;
+  display: inline;
+  position: absolute;
+  bottom: -25px;
+  left: 122px;
+  font-size: 25px;
+}
+.icon-style-wrong-screen-second2 {
+  color: red;
+  display: inline-block;
+  position: absolute;
+  bottom: 22px;
+  left: 84px;
+  font-size: 12px;
 }
 .icon-style-wrong-screen-second {
   color: red;
   display: inline-block;
   position: absolute;
-  bottom: 15px;
-  left: 48px;
+  bottom: 22px;
+  left: 84px;
   font-size: 12px;
 }
 .green-text {
@@ -68,6 +101,8 @@
 .text-first,
 .text-second {
   font-size: 15px;
+  color: #00000080;
+  opacity: 1;
 }
 .text-first-active,
 .text-second-active {
@@ -84,17 +119,17 @@
 }
 
 .styled-element:hover {
-  stroke: rgb(94, 175, 216);
+  stroke: #007aff;
   stroke-width: "3px" !important;
 }
 .styled-element:hover .text-first,
 .text-second {
-  fill: rgb(94, 175, 216);
+  fill: #007aff;
 }
 .styled-element:hover + .icon-style1 .fill-hover {
-  fill: rgb(94, 175, 216);
+  fill: #007aff;
 }
 
 .styled-element:hover + .icon-style2 .fill-hover {
-  fill: rgb(94, 175, 216);
+  fill: #007aff;
 }
