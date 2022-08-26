@@ -21,6 +21,7 @@ import { SubmittalLog } from "models/submittal-log";
 import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
+import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
@@ -64,6 +65,7 @@ let immutableRowData: any[];
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
   const [showNewDrawer, setShowNewDrawer] = useState(false);
+  const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [selectedRows, setSelectedRows] = useState(0);
   const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalLog[]>();
@@ -219,6 +221,14 @@ function SubmittalList() {
     setShowNewDrawer(false);
   };
 
+  const onSubmittalEditClick = () => {
+    setShowSubmittalEdit(true);
+  };
+
+  const onSubmittalEditClose = () => {
+    setShowSubmittalEdit(false);
+  };
+
   const onFirstDataRendered = useCallback(() => {
     setTimeout(() => {
       gridRef.current!.api.getDisplayedRowAtIndex(1)!.setExpanded(true);
@@ -248,6 +258,7 @@ function SubmittalList() {
       <SubmittalListFilterComponent
         gridRef={gridRef}
         onNewClick={onNewClick}
+        onSubmittalEditClick={onSubmittalEditClick}
         onApplyClick={onApplyClick}
       />
       <div style={gridStyle} className="ag-theme-alpine">
@@ -279,6 +290,14 @@ function SubmittalList() {
         visible={showNewDrawer}
       >
         {showNewDrawer && <SubmittalCreateComponent />}
+      </Drawer>
+      <Drawer
+        title="Multi Edit|Packages: 3"
+        placement="right"
+        onClose={onSubmittalEditClose}
+        visible={showSubmittalEdit}
+      >
+        {showSubmittalEdit && <SubmittalEdit />}
       </Drawer>
     </div>
   );
