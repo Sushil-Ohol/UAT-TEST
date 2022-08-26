@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { Progress } from "antd";
 import PropTypes from "prop-types";
 import { colorCode } from "constants/index";
+import { CheckCircleFilled } from "@ant-design/icons";
 import { generateHexSVG } from "./generateHex";
 
 const elevationStyleActive = () => {
@@ -157,7 +158,11 @@ export default class Hexagon extends Component {
 
           <tspan
             x={width / 2}
-            y={(1.4 * height) / 2 + fontSizeOffset + 4}
+            y={
+              text === "Schedule" && sideLength !== 100
+                ? (1.3 * height) / 2 + fontSizeOffset + 4
+                : (1.4 * height) / 2 + fontSizeOffset + 4
+            }
             textAnchor="middle"
             style={{
               fill: colorCode.error,
@@ -181,7 +186,11 @@ export default class Hexagon extends Component {
           )}
           <tspan
             x={width / 2}
-            y={(1.5 * height) / 2 + fontSizeOffset + 6}
+            y={
+              text === "Schedule" && sideLength !== 100
+                ? (1.4 * height) / 2 + fontSizeOffset + 6
+                : (1.5 * height) / 2 + fontSizeOffset + 6
+            }
             textAnchor="middle"
             style={{
               fill: colorCode.error,
@@ -245,18 +254,37 @@ export default class Hexagon extends Component {
         </svg>
         {icon()}
         {error && wrongIcon()}
-        {progressBar > 0 && !error && (
+        {progressBar > 0 && !error && !(progressBar === 100) && (
           <Progress
             className="progressBar"
             style={{
               height: "20px",
               textAlign: "center",
+              width: sideLength === 100 ? "60%" : "60%",
+              position: "absolute",
+              bottom: sideLength === 100 ? `${+sideLength - 40}px` : "40px",
+              left: sideLength === 100 ? "46px" : "36px"
+            }}
+            status="normal"
+            percent={progressBar}
+          />
+        )}
+        {progressBar === 100 && (
+          <CheckCircleFilled
+            style={{
+              height: "20px",
+              textAlign: "center",
+              fontSize: "18px",
+              color: colorCode.success,
               width: sideLength === 100 ? "60%" : "80%",
               position: "absolute",
-              bottom: sideLength === 100 ? `${+sideLength - 40}px` : "30px",
-              left: sideLength === 100 ? "46px" : "11px"
+              bottom:
+                sideLength === 100
+                  ? (text === "Schedule" && `${+sideLength - 120}px`) ||
+                    `${+sideLength - 60}px`
+                  : "20px",
+              left: sideLength === 100 ? "46px" : "15px"
             }}
-            percent={progressBar}
           />
         )}
       </>

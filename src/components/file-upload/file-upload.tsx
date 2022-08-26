@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
 import { WarningFilled } from "@ant-design/icons";
@@ -41,6 +42,7 @@ function Fileupload({
   const [selectedFile, setSelectedFile] = useState("");
   const [progress, setProgress] = useState(0);
   const [hoverColor, setHoverColor] = useState("");
+  // const [data, setData] = useState(false);
 
   function antIcon() {
     switch (icon) {
@@ -60,6 +62,7 @@ function Fileupload({
       case "SettingOutlined":
         return (
           <DrawingsetIcon
+            progress={progress}
             width={width}
             height={height}
             fileError={fileError}
@@ -72,6 +75,7 @@ function Fileupload({
       case "CalendarOutlined":
         return (
           <ScheduleIcon
+            progress={progress}
             width={width}
             height={height}
             fileError={fileError}
@@ -90,7 +94,9 @@ function Fileupload({
       <WarningFilled
         className={
           title === "Schedule"
-            ? "icon-style-wrong-screen-first1"
+            ? (hexagoanStyle.hexagoanSize !== 100 &&
+                "icon-style-wrong-screen-second2") ||
+              "icon-style-wrong-screen-first1"
             : hexagoanStyle.errorStyleClass
         }
       />
@@ -137,7 +143,7 @@ function Fileupload({
           setProgress(0);
           setTimeout(() => {
             setHoverColor("");
-            // setFileError("");
+            setFileError("");
           }, 4000);
         }
       });
@@ -161,7 +167,7 @@ function Fileupload({
   };
   useEffect(() => {
     if (progress > 99) {
-      setSkipBtn(false);
+      setSkipBtn(true);
     }
   }, [progress, setSkipBtn]);
   return (

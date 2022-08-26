@@ -25,16 +25,33 @@
   top: 93px;
   left: 110px;
 }
+.icon-style-1 {
+  color: grey;
+  fill: transparent;
+  display: inline-block;
+  position: absolute;
+  top: 93px;
+  left: 110px;
+}
 
 .icon-style2 {
   color: grey;
   display: inline-block;
   position: absolute;
-  top: 33px;
-  left: 38px;
+  top: 52px;
+  left: 72px;
   font-weight: bolder;
-  font-size: 15px;
+  font-size: 12px;
 }
+/* .icon-style-2 {
+  color: grey;
+  display: inline-block;
+  position: absolute;
+  top: 58px;
+  left: 128px;
+  font-weight: bolder;
+  font-size: 12px;
+} */
 .icon-style-wrong-screen-first {
   color: #ff3535;
   display: inline;
@@ -51,12 +68,20 @@
   left: 122px;
   font-size: 25px;
 }
+.icon-style-wrong-screen-second2 {
+  color: red;
+  display: inline-block;
+  position: absolute;
+  bottom: 22px;
+  left: 84px;
+  font-size: 12px;
+}
 .icon-style-wrong-screen-second {
   color: red;
   display: inline-block;
   position: absolute;
-  bottom: 15px;
-  left: 48px;
+  bottom: 22px;
+  left: 84px;
   font-size: 12px;
 }
 .green-text {

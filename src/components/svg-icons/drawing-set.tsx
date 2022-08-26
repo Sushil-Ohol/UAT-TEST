@@ -2,12 +2,14 @@
 import { colorCode } from "constants/index";
 
 export default function DrawingsetIcon({
+  progress,
   selectedFile,
   width,
   height,
   fileError,
   className
 }: {
+  progress: number;
   width: string;
   height: string;
   selectedFile: string;
@@ -43,12 +45,14 @@ export default function DrawingsetIcon({
             transform="translate(-0.176 0)"
             fill={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.grey
             }
             stroke={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.grey
             }
             strokeLinecap="round"
@@ -63,12 +67,14 @@ export default function DrawingsetIcon({
             transform="translate(-0.928 -0.464)"
             fill={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.grey
             }
             stroke={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.grey
             }
             strokeLinecap="round"
@@ -83,12 +89,14 @@ export default function DrawingsetIcon({
             transform="translate(0)"
             fill={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.grey
             }
             stroke={
               selectedFile
-                ? colorCode.success
+                ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
+                  colorCode.success
                 : (fileError && colorCode.error) || colorCode.grey
             }
             strokeLinecap="round"
