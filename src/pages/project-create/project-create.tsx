@@ -14,6 +14,7 @@ import {
 import TextArea from "antd/lib/input/TextArea";
 import Dropzone from "components/file-upload/file-upload";
 import { useEffect, useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import {
   CheckOutlined,
   FileDoneOutlined,
@@ -26,8 +27,10 @@ import "./project-create.css";
 import { CogIcon, ArrowIcon } from "components/svg-icons";
 import { useAppDispatch, useAppSelector } from "store";
 import { getProjectValue } from "store/slices/project-value";
+import { addProject } from "store/slices/projectSlice";
 
 function ProjectCreate() {
+  const history = useHistory();
   const [skipBtn, setSkipBtn] = useState(false);
   const dispatch = useAppDispatch();
   const { projectSug } = useAppSelector((state) => state.projectSuggest);
@@ -173,7 +176,16 @@ function ProjectCreate() {
     }
     projectInputRef.current.focus();
   };
-
+  const finishClick = () => {
+    dispatch(
+      addProject({
+        id: "P0007",
+        name: defaultValue.projectName,
+        description: defaultValue.details
+      })
+    );
+    history.push("/projects");
+  };
   function prev() {
     if (current === 0) {
       setCogIconProjectInput(false);
@@ -549,13 +561,7 @@ function ProjectCreate() {
                         </Col>
                         <Col xs={24} offset={0}>
                           <p className="para-finish-screen">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ducimus corporis ex accusantium! Qui aut,
-                            voluptatibus debitis magnam rerum excepturi,
-                            molestiae aspernatur odit maxime blanditiis ipsam
-                            itaque perspiciatis. Doloribus, saepe. Ea eligendi
-                            sed autem consequuntur neque sint maiores
-                            consectetur cumque natus!
+                            {defaultValue.details}
                           </p>
                           <Row>
                             <Col span={8} offset={0} className="upload-number">
@@ -614,7 +620,11 @@ function ProjectCreate() {
               <Col>
                 <div className="steps-action">
                   {current === steps.length - 1 && (
-                    <Button className="stepper-done-btn" type="primary">
+                    <Button
+                      className="stepper-done-btn"
+                      type="primary"
+                      onClick={finishClick}
+                    >
                       View project
                     </Button>
                   )}

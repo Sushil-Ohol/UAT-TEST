@@ -1,25 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* Project List Page Component */
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { Project } from "models/project";
 import { useAppDispatch } from "store";
 import { getProjectList } from "store/slices/projectSlice";
-import { isFulfilled } from "@reduxjs/toolkit";
 import { ICellRendererParams } from "ag-grid-community";
+import { Button } from "antd";
+import { useSelector } from "react-redux";
+import { RootState } from "store/slices";
 
 function LinkComponent(props: ICellRendererParams) {
   const { value } = props;
-  return <a href={`/project/details/${value}`}>{value}</a>;
+  return <a href={`/project/details/${value}/submittals`}>{value}</a>;
 }
 
 function ProjectList() {
   const gridRef = useRef<AgGridReact<Project>>(null);
-  const [rowData, setRowData] = useState<Project[]>();
   const dispatch = useAppDispatch();
+
+  const allProjects = useSelector((state: RootState) => state.projects.list);
 
   const columnDefs: any = [
     {
@@ -30,32 +33,51 @@ function ProjectList() {
     {
       field: "name",
       headerName: "Name"
+    },
+    {
+      field: "description",
+      headerName: "Description"
+    },
+    {
+      field: "documents",
+      headerName: "Documents"
+    },
+    {
+      field: "floors",
+      headerName: "Total Floors"
+    },
+    {
+      field: "materials",
+      headerName: "Total Materials"
+    },
+    {
+      field: "submittals",
+      headerName: "Total Submittals"
     }
   ];
 
   const loadList = async () => {
-    const actionResult = await dispatch(getProjectList(0));
-    if (isFulfilled(actionResult)) {
-      const { payload } = actionResult;
-      if (payload.success) {
-        setRowData(payload.response);
-      }
-    }
+    await dispatch(getProjectList(0));
   };
 
   React.useEffect(() => {
-    loadList();
+    if (allProjects && allProjects.length === 0) {
+      loadList();
+    }
   }, []);
 
   return (
     <div style={{ height: "60vh" }}>
+      <a href="/project/new" rel="noopener noreferrer">
+        <Button>Create New Project</Button>
+      </a>
       <div
         style={{ height: "100%", width: "100%" }}
         className="ag-theme-alpine"
       >
         <AgGridReact<Project>
           ref={gridRef}
-          rowData={rowData}
+          rowData={allProjects}
           columnDefs={columnDefs}
           frameworkComponents={{
             LinkComponent
