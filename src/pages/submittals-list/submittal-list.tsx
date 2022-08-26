@@ -25,16 +25,17 @@ import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
-import ApprovedIcon from "../../components/svg-icons/approved-icon";
-import InreviewIcon from "../../components/svg-icons/in-review";
-import RejectedIcon from "../../components/svg-icons/rejected-icon";
-import ApprovedCommentsIcon from "../../components/svg-icons/approved-comments";
-import Notification1SvgIcon from "../../components/svg-icons/notification1";
-import Notification2SvgIcon from "../../components/svg-icons/notification2";
-import ChatIcon from "../../components/svg-icons/chat.tsx";
-import DocAttachIcon from "../../components/svg-icons/doc-attach";
-import NotificationIcon from "../../components/svg-icons/notifications-icon";
-
+import {
+  ApprovedCommentsIcon,
+  ApprovedIcon,
+  InreviewIcon,
+  RejectedIcon,
+  Notification1Icon,
+  Notification2Icon,
+  ChatIcon,
+  DocAttachIcon,
+  NotificationIcon
+} from "../../components/svg-icons/index";
 // LicenseManager.setLicenseKey("<enterprisekey>");
 
 function NewDatePicker() {
@@ -55,9 +56,9 @@ const statusCellRenderer = (params: any) => {
 
 const notificationCellRenderer = (params: any) => {
   if (params.value === "1") {
-    return <Notification1SvgIcon />;
+    return <Notification1Icon />;
   }
-  return <Notification2SvgIcon />;
+  return <Notification2Icon />;
 };
 
 let immutableRowData: any[];

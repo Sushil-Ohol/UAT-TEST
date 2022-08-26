@@ -17,5 +17,4 @@ export const arrowIcon = ({ className }: { className: String }) => {
     </svg>
   );
 };
-
 export default arrowIcon;
