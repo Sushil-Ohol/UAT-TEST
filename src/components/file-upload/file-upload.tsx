@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
 import { WarningFilled } from "@ant-design/icons";
@@ -119,22 +118,23 @@ function Fileupload({
             const formData = new FormData();
             formData.append("image", file);
             formData.append("title", title);
-            PostProjectFile(formData, setProgress);
-            setSelectedFile(file.path);
-            setTimeout(() => {
-              setHoverColor("green");
-              if (count === 0) {
-                ProjectDefaultValue();
-                setCountCall({
-                  projectName: true,
-                  details: true
-                });
-              }
-
-              setState({ ...file, title });
-              setCount((prev: number) => prev + 1);
-              setFileError("");
-            }, 1000);
+            const result = await PostProjectFile(formData, setProgress);
+            if ((await result.data).data.success) {
+              setSelectedFile(file.path);
+              setTimeout(() => {
+                setHoverColor("green");
+                if (count === 0) {
+                  ProjectDefaultValue();
+                  setCountCall({
+                    projectName: true,
+                    details: true
+                  });
+                }
+                setState({ ...file, title, url: URL.createObjectURL(file) });
+                setCount((prev: number) => prev + 1);
+                setFileError("");
+              }, 1000);
+            }
           } else {
             setHoverColor("red");
             setFileError("Upload file less than 100MB");
@@ -176,10 +176,11 @@ function Fileupload({
     lightGrey: "#00000005"
   };
   useEffect(() => {
-    if (progress > 99) {
+    if (progress === 100) {
       setSkipBtn(true);
     }
   }, [progress, setSkipBtn]);
+
   return (
     <Dropzone onDrop={onDrop} multiple>
       {({ getRootProps, getInputProps, isDragActive, isFileDialogActive }) => {

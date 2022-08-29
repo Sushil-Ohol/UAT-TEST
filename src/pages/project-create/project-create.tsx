@@ -1,16 +1,6 @@
 /* Project Create Page Component */
 
-import {
-  Button,
-  Card,
-  Col,
-  Row,
-  Typography,
-  Steps,
-  Form,
-  Input,
-  Tooltip
-} from "antd";
+import { Button, Card, Col, Row, Typography, Steps, Form, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Dropzone from "components/file-upload/file-upload";
 import { useEffect, useState, useRef } from "react";
@@ -27,6 +17,11 @@ import "./project-create.css";
 import { CogIcon, ArrowIcon } from "components/svg-icons";
 import { useAppDispatch, useAppSelector } from "store";
 import { getProjectValue } from "store/slices/project-value";
+import {
+  steps,
+  hexagoanStyleScreen1,
+  hexagoanStyleScreen2
+} from "constants/index";
 import { addProject } from "store/slices/projectSlice";
 
 function ProjectCreate() {
@@ -36,18 +31,7 @@ function ProjectCreate() {
   const { projectSug } = useAppSelector((state) => state.projectSuggest);
   const { projectValue } = useAppSelector((state) => state.projectValue);
   const [current, setCurrent] = useState(0);
-  const hexagoanStyleScreen1 = {
-    textSize: "12px",
-    className: "icon-style1",
-    hexagoanSize: 100,
-    errorStyleClass: "icon-style-wrong-screen-first"
-  };
-  const hexagoanStyleScreen2 = {
-    textSize: "8px",
-    className: "icon-style2",
-    hexagoanSize: 60,
-    errorStyleClass: "icon-style-wrong-screen-second"
-  };
+
   const projectInputRef: any = useRef(null);
   const [countCall, setCountCall] = useState({
     projectName: false,
@@ -61,26 +45,19 @@ function ProjectCreate() {
   const { Step } = Steps;
   const [specificationDoc, setSpecificationDoc] = useState({
     title: "",
-    path: ""
+    path: "",
+    url: ""
   });
   const [siteDrawing, setSiteDrawing] = useState({
     title: "",
-    path: ""
+    path: "",
+    url: ""
   });
   const [schedule, setSchedule] = useState({
     title: "",
-    path: ""
+    path: "",
+    url: ""
   });
-  const steps = [
-    {
-      title: "Details",
-      content: "Details"
-    },
-    {
-      title: "Finish",
-      content: "Finish"
-    }
-  ];
 
   const [defaultValue, setDefaultValue] = useState({
     details: "",
@@ -94,11 +71,12 @@ function ProjectCreate() {
       name: "specificationDoc",
       defaultValue: specificationDoc.path,
       initialValue: specificationDoc.path,
+      url: specificationDoc.url,
       addonAfter: (
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setSpecificationDoc({ path: "", title: "" });
+            setSpecificationDoc({ path: "", title: "", url: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -109,11 +87,12 @@ function ProjectCreate() {
       name: "siteDrawingDoc",
       initialValue: siteDrawing.path,
       defaultValue: siteDrawing.path,
+      url: siteDrawing.url,
       addonAfter: (
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setSiteDrawing({ path: "", title: "" });
+            setSiteDrawing({ path: "", title: "", url: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -124,11 +103,12 @@ function ProjectCreate() {
       name: "scheduleDoc",
       initialValue: schedule.path,
       defaultValue: schedule.path,
+      url: schedule.url,
       addonAfter: (
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setSchedule({ path: "", title: "" });
+            setSchedule({ path: "", title: "", url: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -153,13 +133,18 @@ function ProjectCreate() {
       Getvalue();
     }
     if (!skipBtn) {
-      setSpecificationDoc({ path: "", title: "" });
-      setSiteDrawing({ path: "", title: "" });
-      setSchedule({ path: "", title: "" });
+      setSpecificationDoc({ path: "", title: "", url: "" });
+      setSiteDrawing({ path: "", title: "", url: "" });
+      setSchedule({ path: "", title: "", url: "" });
       setDefaultValue({
         details: "",
         projectName: ""
       });
+      setCogIconProjectInput(false);
+      setCogIconDetailsTextArea(false);
+      setProjectInputEdited(false);
+      setTextAreaEdited(false);
+      setCount(0);
     }
   }, [current, skipBtn, dispatch]);
   useEffect(
@@ -198,6 +183,8 @@ function ProjectCreate() {
       details: "",
       projectName: ""
     });
+    setCountCall({ projectName: false, details: false });
+    setCount((preValue: any) => preValue - 1);
   }
 
   const handleSkipEvent = () => {
@@ -252,17 +239,13 @@ function ProjectCreate() {
                                     <Col span={1}>
                                       <FileDoneOutlined className="document" />
                                     </Col>
-                                    <Col
-                                      span={22}
-                                      style={{
-                                        textAlign: "start",
-                                        paddingLeft: "2%"
-                                      }}
-                                    >
+                                    <Col span={22} className="text-col-align">
                                       <Text>
                                         <a
-                                          href="/aa"
+                                          href={item.url}
                                           className="selected-file-link"
+                                          target="_blank"
+                                          rel="noreferrer"
                                         >
                                           {" "}
                                           {item.defaultValue}
@@ -281,21 +264,12 @@ function ProjectCreate() {
                           name="projectname"
                           className="form-item"
                         >
-                          {defaultValue.projectName.length === 0 && count > 0 && (
-                            <small
-                              className="error-text-project-name"
-                              style={{
-                                display: "inline-block",
-                                position: "absolute",
-                                top: "-19px",
-                                left: "100px",
-                                fontSize: "12px",
-                                color: "#FF3535"
-                              }}
-                            >
-                              (Please enter the project name)
-                            </small>
-                          )}
+                          {defaultValue.projectName.length === 0 &&
+                            count > 0 && (
+                              <small className="error-text-project-name">
+                                (Please enter the project name)
+                              </small>
+                            )}
                           <Input.Group>
                             <Row>
                               <Col
@@ -384,17 +358,7 @@ function ProjectCreate() {
                         </Form.Item>
                         <Form.Item label="Details" name="details">
                           {defaultValue.details.length === 0 && count > 0 && (
-                            <small
-                              className="error-text-project-name"
-                              style={{
-                                display: "inline-block",
-                                position: "absolute",
-                                top: "-19px",
-                                left: "60px",
-                                fontSize: "12px",
-                                color: "#FF3535"
-                              }}
-                            >
+                            <small className="error-text-project-name-details">
                               (Please enter the details)
                             </small>
                           )}
@@ -488,7 +452,7 @@ function ProjectCreate() {
                                 </Col>
                               )}
                               {siteDrawing.title !== "Drawing Set" && (
-                                <Col span={8} style={{ textAlign: "center" }}>
+                                <Col span={8}>
                                   <Dropzone
                                     setCountCall={setCountCall}
                                     count={count}
@@ -526,9 +490,7 @@ function ProjectCreate() {
                           </Col>
                         </Row>
 
-                        {(specificationDoc.title !== "Specification Document" ||
-                          siteDrawing.title !== "Drawing Set" ||
-                          schedule.title !== "Schedule") && (
+                        {count < 3 && (
                           <Row justify="start">
                             <Col span={18}>
                               <p className="footer-text-second">
@@ -565,7 +527,7 @@ function ProjectCreate() {
                           </p>
                           <Row>
                             <Col span={8} offset={0} className="upload-number">
-                              <strong className="number">12</strong>
+                              <strong className="number">{count}</strong>
                               <br />
                               <Text className="strong-text">
                                 Uploaded <br /> Document
@@ -651,26 +613,25 @@ function ProjectCreate() {
                       defaultValue.details.length > 0 &&
                       defaultValue.projectName.length > 0
                     ) ? (
-                      <Tooltip
-                        placement="topRight"
-                        title="Please confirm the project name and details before you can procced."
+                      <Button
+                        className="stepper-next-btn"
+                        type="primary"
+                        disabled={
+                          !cogIconProjectInput ||
+                          !cogIconDetailsTextArea ||
+                          !(
+                            defaultValue.details.length > 0 &&
+                            defaultValue.projectName.length > 0
+                          )
+                        }
+                        onClick={() => next()}
                       >
-                        <Button
-                          className="stepper-next-btn"
-                          type="primary"
-                          disabled={
-                            !cogIconProjectInput ||
-                            !cogIconDetailsTextArea ||
-                            !(
-                              defaultValue.details.length > 0 &&
-                              defaultValue.projectName.length > 0
-                            )
-                          }
-                          onClick={() => next()}
-                        >
-                          Next <ArrowRightOutlined />
-                        </Button>
-                      </Tooltip>
+                        <div id="topRight">
+                          Please confirm the project name and details before you
+                          can procced.
+                        </div>
+                        Next <ArrowRightOutlined />
+                      </Button>
                     ) : (
                       <Button
                         className="stepper-next-btn"
@@ -740,7 +701,7 @@ function ProjectCreate() {
                 />
               </Col>
             </Row>
-            <Row justify="center" style={{ marginTop: "35px" }}>
+            <Row justify="center" className="footer-text-first-row">
               <Col>
                 <p className="footer-text">
                   You can add any of these any later, but ConstructivIQ <br />{" "}

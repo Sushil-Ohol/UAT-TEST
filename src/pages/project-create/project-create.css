@@ -511,7 +511,19 @@ textarea.ant-input {
 }
 
 div .error-text-project-name {
-  font-size: "12px";
+  display: inline-block;
+  position: absolute;
+  top: -19px;
+  left: 100px;
+  font-size: 12px;
+  color: #ff3535;
+}
+div .error-text-project-name-details {
+  display: inline-block;
+  position: absolute;
+  top: -19px;
+  left: 55px;
+  font-size: 12px;
   color: #ff3535;
 }
 .error-bg-color {
@@ -552,4 +564,25 @@ div .error-text-project-name {
 }
 .submittal-number {
   padding-left: 90px;
+}
+#topRight {
+  font: normal normal normal 14px/17px "Inter";
+  letter-spacing: 0px;
+  color: #ff3535;
+  opacity: 1;
+  position: absolute;
+  top: -30px;
+  right: 0px;
+  display: none;
+}
+
+.ant-btn-primary[disabled]:hover #topRight {
+  display: inline;
+}
+.footer-text-first-row {
+  margin-top: 35px;
+}
+.text-col-align {
+  text-align: start;
+  padding-left: 3%;
 }
