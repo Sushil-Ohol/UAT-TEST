@@ -84,18 +84,20 @@ function SubmittalList() {
     { field: "submittal", headerName: "SUBMITTAL", minWidth: 124 },
     {
       field: "notification",
-      headerName: "",
+      headerName: "NOTIFICATION",
+      minWidth: 100,
       cellRendererFramework: notificationCellRenderer,
       headerComponentFramework: NotificationIcon
     },
     {
       field: "comments",
-      headerName: "",
+      headerName: "COMMENTS",
+      minWidth: 100,
       headerComponentFramework: ChatIcon
     },
     {
       field: "revision",
-      headerName: "",
+      headerName: "REVISION",
       minWidth: 100,
       headerComponentFramework: DocAttachIcon
     },
@@ -140,7 +142,11 @@ function SubmittalList() {
         values: DropDownData.AssigneeOptions
       }
     },
-    { cellRendererFramework: Buttons.MoreOutlinedButton, editable: false }
+    {
+      cellRendererFramework: Buttons.MoreOutlinedButton,
+      editable: false,
+      suppressColumnsToolPanel: true
+    }
   ]);
 
   const autoGroupColumnDef = useMemo(() => {
@@ -270,7 +276,7 @@ function SubmittalList() {
           suppressRowClickSelection
           suppressAggFuncInHeader
           readOnlyEdit
-          masterDetail
+          // masterDetail
           animateRows={false}
           sideBar={sideBar}
           onSelectionChanged={onSelectionChanged}
