@@ -257,19 +257,26 @@ function SubmittalList() {
   );
 
   const onEditLogs = (data: any) => {
-    const selectedlogs = gridRef.current!.api.getSelectedRows();
-    const newData = [...immutableRowData];
-    selectedlogs.forEach((row: any) => {
-      const { id } = row;
-      const index = newData.findIndex((x) => x.id === id);
-      const newitem = {
-        ...newData[index],
-        status: data.status,
-        contractor: data.contractor
-      };
-      newData[index] = newitem;
-      gridRef.current!.api.setRowData(newData);
-    });
+    if (
+      data.status &&
+      data.contractor &&
+      data.status !== "" &&
+      data.contractor !== ""
+    ) {
+      const selectedlogs = gridRef.current!.api.getSelectedRows();
+      const newData = [...immutableRowData];
+      selectedlogs.forEach((row: any) => {
+        const { id } = row;
+        const index = newData.findIndex((x) => x.id === id);
+        const newitem = {
+          ...newData[index],
+          status: data.status,
+          contractor: data.contractor
+        };
+        newData[index] = newitem;
+        gridRef.current!.api.setRowData(newData);
+      });
+    }
     setShowSubmittalEdit(false);
   };
 
