@@ -210,10 +210,6 @@ function SubmittalList() {
     setShowNewDrawer(true);
   };
 
-  const onApplyClick = () => {
-    setShowNewDrawer(true);
-  };
-
   const onSelectionChanged = (grid: any) => {
     setSelectedRows(grid.api.getSelectedRows().length);
   };
@@ -260,7 +256,7 @@ function SubmittalList() {
         gridRef={gridRef}
         onNewClick={onNewClick}
         onSubmittalEditClick={onSubmittalEditClick}
-        onApplyClick={onApplyClick}
+        editEnabled={selectedRows > 0}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
