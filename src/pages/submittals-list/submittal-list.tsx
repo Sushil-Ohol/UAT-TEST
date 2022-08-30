@@ -256,6 +256,19 @@ function SubmittalList() {
     [immutableRowData]
   );
 
+  const onEditLogs = (data: any) => {
+    const selectedlogs = gridRef.current!.api.getSelectedRows();
+    const newData = [...immutableRowData];
+    selectedlogs.forEach((row: any) => {
+      const { id } = row;
+      const index = newData.findIndex((x) => x.id === id);
+      const newitem = { ...newData[index], status: data.status };
+      newData[index] = newitem;
+      gridRef.current!.api.setRowData(newData);
+    });
+    setShowSubmittalEdit(false);
+  };
+
   return (
     <div>
       <SubmittalListFilterComponent
@@ -300,7 +313,12 @@ function SubmittalList() {
         onClose={onSubmittalEditClose}
         visible={showSubmittalEdit}
       >
-        {showSubmittalEdit && <SubmittalEdit />}
+        {showSubmittalEdit && (
+          <SubmittalEdit
+            onCancelClick={onSubmittalEditClose}
+            onApplyClick={onEditLogs}
+          />
+        )}
       </Drawer>
     </div>
   );

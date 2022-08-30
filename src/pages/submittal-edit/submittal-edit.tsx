@@ -3,10 +3,24 @@ import TextArea from "antd/lib/input/TextArea";
 import { DropDownData } from "../../constants";
 import "./submittal-edit.css";
 
-function SubmittalEdit() {
+export type EditSubmittalLogs = {
+  onApplyClick: any;
+  onCancelClick: any;
+};
+
+function SubmittalEdit(props: EditSubmittalLogs) {
+  const { onApplyClick, onCancelClick } = props;
+
+  const onApplyButtonClick = () => {
+    const data = {
+      description: "",
+      status: "Approved"
+    };
+    onApplyClick(data);
+  };
+
   return (
     <Form>
-      {" "}
       <Row gutter={2}>
         <span className="HedingColor">DESCRIPTION</span>
         <Col span={24} className="discriptionColumn">
@@ -71,12 +85,16 @@ function SubmittalEdit() {
           <section className="mt-2">
             <div id="outerBox">
               <div className="innerBox">
-                <Button className="SubEditCancelBtn" disabled>
+                <Button className="SubEditCancelBtn" onClick={onCancelClick}>
                   Cancel
                 </Button>
               </div>
               <div className="innerBox">
-                <Button type="primary" className="SubEditApplyBtn">
+                <Button
+                  type="primary"
+                  className="SubEditApplyBtn"
+                  onClick={onApplyButtonClick}
+                >
                   Apply
                 </Button>
               </div>
