@@ -31,6 +31,7 @@ import {
   DocAttachIcon,
   NotificationIcon
 } from "components/svg-icons";
+import moment from "moment";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
@@ -268,13 +269,16 @@ function SubmittalList() {
         const newitem = {
           ...newData[index],
           status: data.status,
-          contractor: data.contractor
+          contractor: data.contractor,
+          assigned: data.assigned,
+          dueBy: moment(data.dueBy).format("DD-MM-YYYY")
         };
         newData[index] = newitem;
         gridRef.current!.api.setRowData(newData);
       });
       immutableRowData = newData;
     }
+    gridRef.current!.api.deselectAll();
     setShowSubmittalEdit(false);
   };
 
@@ -283,8 +287,7 @@ function SubmittalList() {
       <SubmittalListFilterComponent
         gridRef={gridRef}
         onNewClick={onNewClick}
-        onSubmittalEditClick={onSubmittalEditClick}
-        editEnabled={selectedRows > 0}
+        // editEnabled={selectedRows > 0}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
@@ -306,7 +309,10 @@ function SubmittalList() {
           onCellEditRequest={onCellEditRequest}
         />
       </div>
-      <SubmittalListBottomBar selected={selectedRows} />
+      <SubmittalListBottomBar
+        onSubmittalEditClick={onSubmittalEditClick}
+        selected={selectedRows}
+      />
       <Drawer
         title="Create a new submittal"
         placement="right"
@@ -316,7 +322,7 @@ function SubmittalList() {
         {showNewDrawer && <SubmittalCreateComponent />}
       </Drawer>
       <Drawer
-        title="Bulk Edit"
+        title={`Multi Edit | Submittals: ${selectedRows}`}
         placement="right"
         onClose={onSubmittalEditClose}
         visible={showSubmittalEdit}

@@ -10,12 +10,10 @@ import "../submittal-list.css";
 export type FilterProps = {
   gridRef: any;
   onNewClick: any;
-  onSubmittalEditClick: any;
-  editEnabled: boolean;
 };
 
 function SubmittalListFilterComponent(props: FilterProps) {
-  const { gridRef, onNewClick, onSubmittalEditClick, editEnabled } = props;
+  const { gridRef, onNewClick } = props;
   const [modalOpen, setModalOpen] = useState<Boolean>(false);
   const [customDateRange, setCustomDateRange] = useState<any>();
 
@@ -228,16 +226,6 @@ function SubmittalListFilterComponent(props: FilterProps) {
       <div id="outer" className="EditSubmittalbtn">
         <span>
           <div>
-            <div className="inner">
-              <Button
-                onClick={onSubmittalEditClick}
-                size="middle"
-                disabled={!editEnabled}
-                className="EditBtn"
-              >
-                Edit
-              </Button>
-            </div>
             <div className="inner">
               <Button
                 onClick={onNewClick}
