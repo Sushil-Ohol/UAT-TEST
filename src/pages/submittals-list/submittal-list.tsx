@@ -35,6 +35,34 @@ import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 
+function asDate(dateAsString: string) {
+  const splitFields = dateAsString.split("-");
+  return new Date(
+    Number.parseInt(splitFields[2], 10),
+    Number.parseInt(splitFields[1], 10) - 1,
+    Number.parseInt(splitFields[0], 10)
+  );
+}
+
+const dateFilterParams = {
+  comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
+    const cellDate = asDate(cellValue);
+
+    if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+      return 0;
+    }
+
+    if (cellDate < filterLocalDateAtMidnight) {
+      return -1;
+    }
+
+    if (cellDate > filterLocalDateAtMidnight) {
+      return 1;
+    }
+    return 1;
+  }
+};
+
 function NewDatePicker() {
   return <DatePicker />;
 }
@@ -113,7 +141,9 @@ function SubmittalList() {
       headerName: "DUE BY",
       minWidth: 140,
       cellEditor: NewDatePicker,
-      cellEditorPopup: true
+      cellEditorPopup: true,
+      filter: "agDateColumnFilter",
+      filterParams: dateFilterParams
     },
     {
       field: "contractor",
@@ -284,7 +314,6 @@ function SubmittalList() {
         gridRef={gridRef}
         onNewClick={onNewClick}
         onSubmittalEditClick={onSubmittalEditClick}
-        editEnabled={selectedRows > 0}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
