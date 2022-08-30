@@ -585,7 +585,11 @@ function ProjectCreate() {
                           <ArrowIcon className="arrow-icon" />
                         </Col>
                         <Col span={12} offset={6}>
-                          <Button type="link" className="btn-submittals">
+                          <Button
+                            type="link"
+                            href="/project/details/:projectId/submittals"
+                            className="btn-submittals"
+                          >
                             View submittals <ArrowRightOutlined />
                           </Button>
                         </Col>
