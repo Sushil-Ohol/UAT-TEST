@@ -14,7 +14,7 @@ import {
   CheckSquareOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
-import { CogIcon, ArrowIcon } from "components/svg-icons/index";
+import { CogIcon, ArrowIcon } from "components/svg-icons";
 import { useAppDispatch, useAppSelector } from "store";
 import { getProjectValue } from "store/slices/project-value";
 import {

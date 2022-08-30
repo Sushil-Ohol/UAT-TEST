@@ -22,9 +22,6 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
-import { DropDownData } from "../../constants";
-import SubmittalListFilterComponent from "./filter-bar";
-import SubmittalListBottomBar from "./bottom-bar";
 import {
   ApprovedCommentsIcon,
   ApprovedIcon,
@@ -35,7 +32,10 @@ import {
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
-} from "../../components/svg-icons/index";
+} from "components/svg-icons";
+import { DropDownData } from "../../constants";
+import SubmittalListFilterComponent from "./filter-bar";
+import SubmittalListBottomBar from "./bottom-bar";
 // LicenseManager.setLicenseKey("<enterprisekey>");
 
 function NewDatePicker() {
