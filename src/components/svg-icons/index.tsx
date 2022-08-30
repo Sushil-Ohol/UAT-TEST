@@ -13,6 +13,7 @@ import Notification2Icon from "./notification-2-icon";
 import NotificationIcon from "./notifications-icon";
 import RejectedIcon from "./rejected-icon";
 import ArrowIcon from "./arrow-icon";
+import PlusIcon from "./plus-icon";
 
 export {
   SpecificationdocIcon,
@@ -29,5 +30,6 @@ export {
   Notification2Icon,
   NotificationIcon,
   RejectedIcon,
-  ArrowIcon
+  ArrowIcon,
+  PlusIcon
 };
