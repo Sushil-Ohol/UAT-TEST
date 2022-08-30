@@ -319,6 +319,7 @@ function SubmittalList() {
       <SubmittalListFilterComponent
         gridRef={gridRef}
         onNewClick={onNewClick}
+        editEnabled={selectedRows > 0}
         onSubmittalEditClick={onSubmittalEditClick}
       />
       <div style={gridStyle} className="ag-theme-alpine">
