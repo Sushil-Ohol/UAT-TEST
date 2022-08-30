@@ -6,24 +6,30 @@ function SubmittalListBottomBar(props: any) {
     <section className="blue-grid">
       <Card bordered={false} className="CardDetails">
         <Row gutter={12}>
-          <Col span={2}>
+          <Col span={2} style={{ margin: 10 }}>
             <div>
               <span>{selected} Selected</span>
             </div>
           </Col>
           <Col span={3}>
             <div>
-              <Button block>Create a Package...</Button>
+              <Button block disabled={selected === 0}>
+                Create a Package
+              </Button>
             </div>
           </Col>
           <Col span={3}>
             <div>
-              <Button block>Merge...</Button>
+              <Button block disabled={selected === 0}>
+                Merge...
+              </Button>
             </div>
           </Col>
           <Col span={3}>
             <div>
-              <Button block>Archive</Button>
+              <Button block disabled={selected === 0}>
+                Archive
+              </Button>
             </div>
           </Col>
         </Row>

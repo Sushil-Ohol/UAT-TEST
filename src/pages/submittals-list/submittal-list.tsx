@@ -216,10 +216,6 @@ function SubmittalList() {
     setShowNewDrawer(true);
   };
 
-  const onApplyClick = () => {
-    setShowNewDrawer(true);
-  };
-
   const onSelectionChanged = (grid: any) => {
     setSelectedRows(grid.api.getSelectedRows().length);
   };
@@ -260,13 +256,37 @@ function SubmittalList() {
     [immutableRowData]
   );
 
+  const onEditLogs = (data: any) => {
+    if (
+      data.status &&
+      data.contractor &&
+      data.status !== "" &&
+      data.contractor !== ""
+    ) {
+      const selectedlogs = gridRef.current!.api.getSelectedRows();
+      const newData = [...immutableRowData];
+      selectedlogs.forEach((row: any) => {
+        const { id } = row;
+        const index = newData.findIndex((x) => x.id === id);
+        const newitem = {
+          ...newData[index],
+          status: data.status,
+          contractor: data.contractor
+        };
+        newData[index] = newitem;
+        gridRef.current!.api.setRowData(newData);
+      });
+    }
+    setShowSubmittalEdit(false);
+  };
+
   return (
     <div>
       <SubmittalListFilterComponent
         gridRef={gridRef}
         onNewClick={onNewClick}
         onSubmittalEditClick={onSubmittalEditClick}
-        onApplyClick={onApplyClick}
+        editEnabled={selectedRows > 0}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
@@ -299,12 +319,17 @@ function SubmittalList() {
         {showNewDrawer && <SubmittalCreateComponent />}
       </Drawer>
       <Drawer
-        title="Multi Edit|Packages: 3"
+        title="Bulk Edit"
         placement="right"
         onClose={onSubmittalEditClose}
         visible={showSubmittalEdit}
       >
-        {showSubmittalEdit && <SubmittalEdit />}
+        {showSubmittalEdit && (
+          <SubmittalEdit
+            onCancelClick={onSubmittalEditClose}
+            onApplyClick={onEditLogs}
+          />
+        )}
       </Drawer>
     </div>
   );
