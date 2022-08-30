@@ -97,6 +97,7 @@ In that file you'll find two sections:
 | ant-design-icons   | Added antd icons(https://ant.design/components/icon/)                                                                  |
 | react-redux   | Added antd icons(https://react-redux.js.org)                                                                  |
 | @reduxjs/toolkit   | Added antd icons(https://redux-toolkit.js.org)                                                                  |
+| moment   | For Date Manipulation(https://github.com/moment/moment)                                                                  |
 ## `devDependencies`
 
 | Package | Description                                                         |

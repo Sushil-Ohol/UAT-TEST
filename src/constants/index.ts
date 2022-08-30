@@ -33,22 +33,30 @@ export const hexagoanStyleScreen2 = {
   errorStyleClass: "icon-style-wrong-screen-second"
 };
 const ContractorOptions = [
+  "All",
   "ABC Construction",
   "A Construction",
   "B Construction",
   "C Construction"
 ];
-const DependsOnOptions = ["1079", "2098"];
-const PastDueOptions = ["Past due date", "Due today", "Next 3 days", "Custom"];
+const DependsOnOptions = ["All", "1079", "2098"];
+const PastDueOptions = [
+  "All",
+  "Past due date",
+  "Due today",
+  "Next 3 days",
+  "Custom"
+];
 const ProcureByOptions = ["Before", "After"];
 const ProcureBySecondValues = ["This Week", "This Month"];
 const StatusOptions = [
+  "All",
   "Approved",
   "In Review",
   "Rejected",
   "Approved with Comments"
 ];
-const AssigneeOptions = ["Luke", "James"];
+const AssigneeOptions = ["All", "Luke", "James"];
 const PackageOptions = ["920:Electrical", "Piping"];
 
 export const DropDownData = {
