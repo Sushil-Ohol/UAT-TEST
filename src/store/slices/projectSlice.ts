@@ -33,6 +33,18 @@ const projectSlice = createSlice({
     reset: () => initialState,
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
+    },
+    addProject: (
+      state,
+      {
+        payload
+      }: PayloadAction<{ id: string; name: string; description: string }>
+    ) => {
+      state.list = state.list.concat({
+        id: payload.id,
+        name: payload.name,
+        description: payload.description
+      });
     }
   },
   extraReducers: (builder) => {
@@ -51,4 +63,4 @@ const projectSlice = createSlice({
 
 export default projectSlice.reducer;
 
-export const { reset, setLoading } = projectSlice.actions;
+export const { reset, setLoading, addProject } = projectSlice.actions;

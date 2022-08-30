@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
 /* File upload component */
 import { WarningFilled } from "@ant-design/icons";
@@ -25,8 +24,11 @@ function Fileupload({
   setSkipBtn,
   setState,
   setCount,
-  hexagoanStyle
+  hexagoanStyle,
+  count,
+  setCountCall
 }: {
+  count: number;
   width: string;
   height: string;
   title: string;
@@ -35,6 +37,7 @@ function Fileupload({
   setSkipBtn: React.Dispatch<React.SetStateAction<boolean>>;
   setState: React.Dispatch<React.SetStateAction<any>>;
   setCount: React.Dispatch<React.SetStateAction<number>>;
+  setCountCall: React.Dispatch<React.SetStateAction<any>>;
   hexagoanStyle: any;
 }) {
   const dispatch = useAppDispatch();
@@ -42,7 +45,6 @@ function Fileupload({
   const [selectedFile, setSelectedFile] = useState("");
   const [progress, setProgress] = useState(0);
   const [hoverColor, setHoverColor] = useState("");
-  // const [data, setData] = useState(false);
 
   function antIcon() {
     switch (icon) {
@@ -116,15 +118,23 @@ function Fileupload({
             const formData = new FormData();
             formData.append("image", file);
             formData.append("title", title);
-            PostProjectFile(formData, setProgress);
-            setSelectedFile(file.path);
-            setTimeout(() => {
-              setHoverColor("green");
-              ProjectDefaultValue();
-              setState({ ...file, title });
-              setCount((prev: number) => prev + 1);
-              setFileError("");
-            }, 1000);
+            const result = await PostProjectFile(formData, setProgress);
+            if ((await result.data).data.success) {
+              setSelectedFile(file.path);
+              setTimeout(() => {
+                setHoverColor("green");
+                if (count === 0) {
+                  ProjectDefaultValue();
+                  setCountCall({
+                    projectName: true,
+                    details: true
+                  });
+                }
+                setState({ ...file, title, url: URL.createObjectURL(file) });
+                setCount((prev: number) => prev + 1);
+                setFileError("");
+              }, 1000);
+            }
           } else {
             setHoverColor("red");
             setFileError("Upload file less than 100MB");
@@ -166,10 +176,11 @@ function Fileupload({
     lightGrey: "#00000005"
   };
   useEffect(() => {
-    if (progress > 99) {
+    if (progress === 100) {
       setSkipBtn(true);
     }
   }, [progress, setSkipBtn]);
+
   return (
     <Dropzone onDrop={onDrop} multiple>
       {({ getRootProps, getInputProps, isDragActive, isFileDialogActive }) => {

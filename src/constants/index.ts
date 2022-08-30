@@ -10,6 +10,28 @@ export const colorCode = {
   fileName: "#CCCCCC",
   orange: "#FFA41B"
 };
+export const steps = [
+  {
+    title: "Details",
+    content: "Details"
+  },
+  {
+    title: "Finish",
+    content: "Finish"
+  }
+];
+export const hexagoanStyleScreen1 = {
+  textSize: "12px",
+  className: "icon-style1",
+  hexagoanSize: 100,
+  errorStyleClass: "icon-style-wrong-screen-first"
+};
+export const hexagoanStyleScreen2 = {
+  textSize: "8px",
+  className: "icon-style2",
+  hexagoanSize: 60,
+  errorStyleClass: "icon-style-wrong-screen-second"
+};
 const ContractorOptions = [
   "ABC Construction",
   "A Construction",
