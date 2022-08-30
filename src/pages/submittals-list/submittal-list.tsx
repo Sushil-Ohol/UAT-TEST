@@ -279,7 +279,7 @@ function SubmittalList() {
           suppressRowClickSelection
           suppressAggFuncInHeader
           readOnlyEdit
-          masterDetail
+          // masterDetail
           animateRows={false}
           sideBar={sideBar}
           onSelectionChanged={onSelectionChanged}
