@@ -171,6 +171,20 @@ function ProjectCreate() {
     );
     history.push("/projects");
   };
+  function checkProjectNameAndDetails() {
+    if (defaultValue.projectName.length <= 0) {
+      return (
+        <div id="topRight">
+          Please confirm the project name before you can procced.
+        </div>
+      );
+    }
+    return (
+      <div id="topRight">
+        Please confirm the details before you can procced.
+      </div>
+    );
+  }
   function prev() {
     if (current === 0) {
       setCogIconProjectInput(false);
@@ -437,6 +451,7 @@ function ProjectCreate() {
                                 "Specification Document" && (
                                 <Col span={8}>
                                   <Dropzone
+                                    defaultValue={defaultValue}
                                     setCountCall={setCountCall}
                                     count={count}
                                     width="32"
@@ -454,6 +469,7 @@ function ProjectCreate() {
                               {siteDrawing.title !== "Drawing Set" && (
                                 <Col span={8}>
                                   <Dropzone
+                                    defaultValue={defaultValue}
                                     setCountCall={setCountCall}
                                     count={count}
                                     width="32"
@@ -472,6 +488,7 @@ function ProjectCreate() {
                               {schedule.title !== "Schedule" && (
                                 <Col span={8}>
                                   <Dropzone
+                                    defaultValue={defaultValue}
                                     setCountCall={setCountCall}
                                     count={count}
                                     width="32"
@@ -494,7 +511,7 @@ function ProjectCreate() {
                           <Row justify="start">
                             <Col span={18}>
                               <p className="footer-text-second">
-                                you can add any of these any later, but
+                                You can add any of these any later, but
                                 ConstructivIQ <br /> can help you more if you
                                 add them now.
                               </p>
@@ -568,7 +585,11 @@ function ProjectCreate() {
                           <ArrowIcon className="arrow-icon" />
                         </Col>
                         <Col span={12} offset={6}>
-                          <Button type="link" className="btn-submittals">
+                          <Button
+                            type="link"
+                            href="/project/details/:projectId/submittals"
+                            className="btn-submittals"
+                          >
                             View submittals <ArrowRightOutlined />
                           </Button>
                         </Col>
@@ -626,10 +647,19 @@ function ProjectCreate() {
                         }
                         onClick={() => next()}
                       >
-                        <div id="topRight">
-                          Please confirm the project name and details before you
-                          can procced.
-                        </div>
+                        {!cogIconProjectInput &&
+                        !cogIconDetailsTextArea &&
+                        !(
+                          defaultValue.details.length <= 0 &&
+                          defaultValue.projectName.length <= 0
+                        ) ? (
+                          <div id="topRight">
+                            Please confirm the project name and details before
+                            you can procced.
+                          </div>
+                        ) : (
+                          checkProjectNameAndDetails()
+                        )}
                         Next <ArrowRightOutlined />
                       </Button>
                     ) : (
@@ -655,6 +685,7 @@ function ProjectCreate() {
             <Row justify="center">
               <Col>
                 <Dropzone
+                  defaultValue={defaultValue}
                   setCountCall={setCountCall}
                   count={count}
                   width="52"
@@ -670,6 +701,7 @@ function ProjectCreate() {
               </Col>
               <Col className="hexagon-drawing-set">
                 <Dropzone
+                  defaultValue={defaultValue}
                   setCountCall={setCountCall}
                   count={count}
                   width="52"
@@ -687,6 +719,7 @@ function ProjectCreate() {
             <Row justify="center" className="hexagon-schedule-row">
               <Col className="hexagon-schedule">
                 <Dropzone
+                  defaultValue={defaultValue}
                   setCountCall={setCountCall}
                   count={count}
                   width="52"

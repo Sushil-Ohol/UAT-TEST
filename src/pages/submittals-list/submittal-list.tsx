@@ -11,6 +11,7 @@ import {
   GetRowIdParams
 } from "ag-grid-community";
 import "./submittal-list.css";
+import moment from "moment";
 import { Buttons } from "components/widgets";
 import { useAppDispatch } from "store";
 import { getSubmittalList } from "store/slices/submittalsSlices";
@@ -30,11 +31,40 @@ import {
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
-} from "components/svg-icons";
-import moment from "moment";
+} from "../../components/svg-icons/index";
+import AddNewColumn from "./add-new-column/add-new-column";
+// LicenseManager.setLicenseKey("<enterprisekey>");
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
+
+function asDate(dateAsString: string) {
+  const splitFields = dateAsString.split("-");
+  return new Date(
+    Number.parseInt(splitFields[2], 10),
+    Number.parseInt(splitFields[1], 10) - 1,
+    Number.parseInt(splitFields[0], 10)
+  );
+}
+
+const dateFilterParams = {
+  comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
+    const cellDate = asDate(cellValue);
+
+    if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+      return 0;
+    }
+
+    if (cellDate < filterLocalDateAtMidnight) {
+      return -1;
+    }
+
+    if (cellDate > filterLocalDateAtMidnight) {
+      return 1;
+    }
+    return 1;
+  }
+};
 
 function NewDatePicker() {
   return <DatePicker />;
@@ -66,7 +96,7 @@ function SubmittalList() {
   const [showNewDrawer, setShowNewDrawer] = useState(false);
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [selectedRows, setSelectedRows] = useState(0);
-  const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
+  const gridStyle = useMemo(() => ({ height: "800px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
@@ -114,7 +144,9 @@ function SubmittalList() {
       headerName: "DUE BY",
       minWidth: 140,
       cellEditor: NewDatePicker,
-      cellEditorPopup: true
+      cellEditorPopup: true,
+      filter: "agDateColumnFilter",
+      filterParams: dateFilterParams
     },
     {
       field: "contractor",
@@ -129,7 +161,10 @@ function SubmittalList() {
       field: "dependsOn",
       headerName: "DEPENDS ON",
       minWidth: 140,
-      type: "rightAligned"
+      type: "rightAligned",
+      cellClass(params) {
+        return params.value === "" ? "defaultCellColor" : "hoverColor";
+      }
     },
     {
       field: "assigned",
@@ -143,6 +178,7 @@ function SubmittalList() {
     {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
+      headerComponentFramework: AddNewColumn,
       suppressColumnsToolPanel: true
     }
   ]);
@@ -259,7 +295,9 @@ function SubmittalList() {
       data.status &&
       data.contractor &&
       data.status !== "" &&
-      data.contractor !== ""
+      data.contractor !== "" &&
+      data.assigned &&
+      data.assigned !== ""
     ) {
       const selectedlogs = gridRef.current!.api.getSelectedRows();
       const newData = [...immutableRowData];
@@ -307,6 +345,8 @@ function SubmittalList() {
           onFirstDataRendered={onFirstDataRendered}
           getRowId={getRowId}
           onCellEditRequest={onCellEditRequest}
+          tooltipShowDelay={0}
+          tooltipHideDelay={2000}
         />
       </div>
       <SubmittalListBottomBar
