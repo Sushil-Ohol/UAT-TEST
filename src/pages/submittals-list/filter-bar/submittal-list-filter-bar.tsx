@@ -4,8 +4,15 @@ import { SearchOutlined } from "@ant-design/icons";
 import { DropDownData } from "../../../constants";
 import "../submittal-list.css";
 
-function SubmittalListFilterComponent(props: any) {
-  const { gridRef, onNewClick, onSubmittalEditClick } = props;
+export type FilterProps = {
+  gridRef: any;
+  onNewClick: any;
+  onSubmittalEditClick: any;
+  editEnabled: boolean;
+};
+
+function SubmittalListFilterComponent(props: FilterProps) {
+  const { gridRef, onNewClick, onSubmittalEditClick, editEnabled } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
     gridRef.current!.api.setQuickFilter(
@@ -145,6 +152,7 @@ function SubmittalListFilterComponent(props: any) {
               <Button
                 onClick={onSubmittalEditClick}
                 size="middle"
+                disabled={!editEnabled}
                 className="EditBtn"
               >
                 Edit

@@ -1,12 +1,29 @@
-import { Button, Row, Col, Input, Select, Form } from "antd";
+import { Button, Row, Col, Select, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { useState } from "react";
 import { DropDownData } from "../../constants";
 import "./submittal-edit.css";
 
-function SubmittalEdit() {
+export type EditSubmittalLogs = {
+  onApplyClick: any;
+  onCancelClick: any;
+};
+
+function SubmittalEdit(props: EditSubmittalLogs) {
+  const { onApplyClick, onCancelClick } = props;
+  const [contractor, setContractor] = useState("");
+  const [status, setStatus] = useState("");
+
+  const onApplyButtonClick = () => {
+    const data = {
+      contractor,
+      status
+    };
+    onApplyClick(data);
+  };
+
   return (
     <Form>
-      {" "}
       <Row gutter={2}>
         <span className="HedingColor">DESCRIPTION</span>
         <Col span={24} className="discriptionColumn">
@@ -24,7 +41,13 @@ function SubmittalEdit() {
           <section className="mt-2">
             <span className="HedingColor">STATUS</span>
             <br />
-            <Select className="statusSelect" defaultValue="Select Status">
+            <Select
+              className="statusSelect"
+              defaultValue="Select Status"
+              onChange={(value: any) => {
+                setStatus(value);
+              }}
+            >
               {DropDownData.StatusOptions.map((item) => (
                 <Select.Option key={item} value={item}>
                   {item}
@@ -36,8 +59,13 @@ function SubmittalEdit() {
         <Col span={24} className="contractorCol">
           <section className="mt-2">
             <span className="HedingColor">CONTRACTOR</span>
-
-            <Select className="constructionSelect" defaultValue="Construction">
+            <Select
+              className="constructionSelect"
+              defaultValue="Construction"
+              onChange={(value: any) => {
+                setContractor(value);
+              }}
+            >
               {DropDownData.ContractorOptions.map((item) => (
                 <Select.Option key={item} value={item}>
                   {item}
@@ -46,37 +74,20 @@ function SubmittalEdit() {
             </Select>
           </section>
         </Col>
-        &nbsp;&nbsp;
         <Col span={24}>
           <section className="mt-2">
-            <div>
-              <span className="HedingColor">EXTRA COLUMN 1</span>
-            </div>
-            <Form.Item>
-              <Input placeholder="" className="ExtraColumn" />
-            </Form.Item>
-          </section>
-        </Col>
-        &nbsp;&nbsp;
-        <Col span={24}>
-          <section className="mt-2">
-            <div>
-              <span className="HedingColor">EXTRA COLUMN 2</span>
-            </div>
-            <Input />
-          </section>
-        </Col>
-        &nbsp;&nbsp;
-        <Col span={24}>
-          <section className="mt-2">
-            <div id="outerBox">
+            <div id="outerBox" style={{ margin: 10 }}>
               <div className="innerBox">
-                <Button className="SubEditCancelBtn" disabled>
+                <Button className="SubEditCancelBtn" onClick={onCancelClick}>
                   Cancel
                 </Button>
               </div>
               <div className="innerBox">
-                <Button type="primary" className="SubEditApplyBtn">
+                <Button
+                  type="primary"
+                  className="SubEditApplyBtn"
+                  onClick={onApplyButtonClick}
+                >
                   Apply
                 </Button>
               </div>

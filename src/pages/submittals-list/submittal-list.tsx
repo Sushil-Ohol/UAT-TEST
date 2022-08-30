@@ -84,18 +84,20 @@ function SubmittalList() {
     { field: "submittal", headerName: "SUBMITTAL", minWidth: 124 },
     {
       field: "notification",
-      headerName: "",
+      headerName: "NOTIFICATION",
+      minWidth: 100,
       cellRendererFramework: notificationCellRenderer,
       headerComponentFramework: NotificationIcon
     },
     {
       field: "comments",
-      headerName: "",
+      headerName: "COMMENTS",
+      minWidth: 100,
       headerComponentFramework: ChatIcon
     },
     {
       field: "revision",
-      headerName: "",
+      headerName: "REVISION",
       minWidth: 100,
       headerComponentFramework: DocAttachIcon
     },
@@ -140,7 +142,11 @@ function SubmittalList() {
         values: DropDownData.AssigneeOptions
       }
     },
-    { cellRendererFramework: Buttons.MoreOutlinedButton, editable: false }
+    {
+      cellRendererFramework: Buttons.MoreOutlinedButton,
+      editable: false,
+      suppressColumnsToolPanel: true
+    }
   ]);
 
   const autoGroupColumnDef = useMemo(() => {
@@ -210,10 +216,6 @@ function SubmittalList() {
     setShowNewDrawer(true);
   };
 
-  const onApplyClick = () => {
-    setShowNewDrawer(true);
-  };
-
   const onSelectionChanged = (grid: any) => {
     setSelectedRows(grid.api.getSelectedRows().length);
   };
@@ -254,13 +256,37 @@ function SubmittalList() {
     [immutableRowData]
   );
 
+  const onEditLogs = (data: any) => {
+    if (
+      data.status &&
+      data.contractor &&
+      data.status !== "" &&
+      data.contractor !== ""
+    ) {
+      const selectedlogs = gridRef.current!.api.getSelectedRows();
+      const newData = [...immutableRowData];
+      selectedlogs.forEach((row: any) => {
+        const { id } = row;
+        const index = newData.findIndex((x) => x.id === id);
+        const newitem = {
+          ...newData[index],
+          status: data.status,
+          contractor: data.contractor
+        };
+        newData[index] = newitem;
+        gridRef.current!.api.setRowData(newData);
+      });
+    }
+    setShowSubmittalEdit(false);
+  };
+
   return (
     <div>
       <SubmittalListFilterComponent
         gridRef={gridRef}
         onNewClick={onNewClick}
         onSubmittalEditClick={onSubmittalEditClick}
-        onApplyClick={onApplyClick}
+        editEnabled={selectedRows > 0}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
@@ -274,7 +300,7 @@ function SubmittalList() {
           suppressRowClickSelection
           suppressAggFuncInHeader
           readOnlyEdit
-          masterDetail
+          // masterDetail
           animateRows={false}
           sideBar={sideBar}
           onSelectionChanged={onSelectionChanged}
@@ -293,12 +319,17 @@ function SubmittalList() {
         {showNewDrawer && <SubmittalCreateComponent />}
       </Drawer>
       <Drawer
-        title="Multi Edit|Packages: 3"
+        title="Bulk Edit"
         placement="right"
         onClose={onSubmittalEditClose}
         visible={showSubmittalEdit}
       >
-        {showSubmittalEdit && <SubmittalEdit />}
+        {showSubmittalEdit && (
+          <SubmittalEdit
+            onCancelClick={onSubmittalEditClose}
+            onApplyClick={onEditLogs}
+          />
+        )}
       </Drawer>
     </div>
   );
