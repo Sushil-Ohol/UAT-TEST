@@ -1,4 +1,4 @@
-export default function Notification2SvgIcon() {
+export default function Notification1Icon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,31 +6,27 @@ export default function Notification2SvgIcon() {
       height="20"
       viewBox="0 0 20 20"
     >
-      <g
-        id="Notifications_Icon"
-        data-name="Notifications Icon"
-        transform="translate(-419 -206)"
-      >
+      <g id="Notification1" transform="translate(-419 -403)">
         <circle
           id="Ellipse_5"
           data-name="Ellipse 5"
           cx="10"
           cy="10"
           r="10"
-          transform="translate(419 206)"
+          transform="translate(419 403)"
           fill="#ff6a6a"
         />
         <text
-          id="_2"
-          data-name="2"
-          transform="translate(426 220)"
+          id="_1"
+          data-name="1"
+          transform="translate(426 418)"
           fill="#fff"
-          fontSize="11"
+          fontSize="12"
           fontFamily="Inter-Medium, Inter"
           fontWeight="500"
         >
           <tspan x="0" y="0">
-            2
+            1
           </tspan>
         </text>
       </g>
