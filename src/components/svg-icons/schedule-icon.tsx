@@ -35,6 +35,7 @@ export default function ScheduleIcon({
         }
         strokeWidth="1.52"
         strokeLinejoin="round"
+        className="fill-hover"
       />
       <path
         d="M21.2812 18C22.3686 18 23.25 17.1186 23.25 16.0312C23.25 14.9439 22.3686 14.0625 21.2812 14.0625C20.1939 14.0625 19.3125 14.9439 19.3125 16.0312C19.3125 17.1186 20.1939 18 21.2812 18Z"
@@ -44,6 +45,7 @@ export default function ScheduleIcon({
               colorCode.success
             : (fileError && colorCode.error) || colorCode.grey
         }
+        className="fill-hover"
       />
       <path
         d="M27.8438 18C28.9311 18 29.8125 17.1186 29.8125 16.0312C29.8125 14.9439 28.9311 14.0625 27.8438 14.0625C26.7564 14.0625 25.875 14.9439 25.875 16.0312C25.875 17.1186 26.7564 18 27.8438 18Z"
