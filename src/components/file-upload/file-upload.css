@@ -38,20 +38,11 @@
   color: grey;
   display: inline-block;
   position: absolute;
-  top: 52px;
-  left: 72px;
+  top: 44px;
+  left: 62px;
   font-weight: bolder;
   font-size: 12px;
 }
-/* .icon-style-2 {
-  color: grey;
-  display: inline-block;
-  position: absolute;
-  top: 58px;
-  left: 128px;
-  font-weight: bolder;
-  font-size: 12px;
-} */
 .icon-style-wrong-screen-first {
   color: #ff3535;
   display: inline;
@@ -73,7 +64,7 @@
   display: inline-block;
   position: absolute;
   bottom: 22px;
-  left: 84px;
+  left: 74px;
   font-size: 12px;
 }
 .icon-style-wrong-screen-second {
@@ -81,7 +72,7 @@
   display: inline-block;
   position: absolute;
   bottom: 22px;
-  left: 84px;
+  left: 74px;
   font-size: 12px;
 }
 .green-text {
