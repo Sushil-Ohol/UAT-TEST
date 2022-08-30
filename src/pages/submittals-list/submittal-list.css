@@ -16,10 +16,10 @@
   height: 30px !important;
   font-weight: 900;
   color: black !important;
-  background: lightgray !important; 
-  opacity: 0.5 !important; 
+  background: lightgray !important;
+  opacity: 0.5 !important;
 }
-#filter-text-box{
+#filter-text-box {
   text-align: left;
   font: normal normal normal 16px/20px Inter;
   letter-spacing: 0px;
@@ -128,7 +128,6 @@
 .inner {
   display: inline-block;
   height: 30px;
-  
 }
 .EditBtn {
   margin-left: 10px;
@@ -151,26 +150,18 @@
   opacity: 1;
 }
 
-.ant-row {
-  display: flex;
-  flex-flow: row wrap;
-  min-width: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left:5px !important;
-}
-.NweSubmittalBtn{
+.NweSubmittalBtn {
   margin-left: 10px !important;
 }
-.hoverColor{
-  color:black !important ;
+.hoverColor {
+  color: black !important ;
 }
-.hoverColor:hover{
-  color:#0073cf !important
+.hoverColor:hover {
+  color: #0073cf !important;
 }
-.defaultCellColor{
+.defaultCellColor {
   color: black;
 }
-.select-custom-dropDown{
+.select-custom-dropDown {
   width: fit-content !important;
 }

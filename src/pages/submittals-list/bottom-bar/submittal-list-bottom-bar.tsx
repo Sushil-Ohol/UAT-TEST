@@ -4,7 +4,11 @@ function SubmittalListBottomBar(props: any) {
   const { selected } = props;
   return (
     <section className="blue-grid">
-      <Card bordered={false} className="CardDetails">
+      <Card
+        bordered={false}
+        className="CardDetails"
+        style={{ overflow: "hidden" }}
+      >
         <Row gutter={12}>
           <Col span={2} style={{ margin: 10 }}>
             <div>
