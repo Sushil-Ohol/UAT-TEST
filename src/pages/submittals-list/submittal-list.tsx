@@ -30,7 +30,9 @@ import {
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
-} from "components/svg-icons";
+} from "../../components/svg-icons/index";
+import AddNewColumn from "./add-new-column/add-new-column";
+// LicenseManager.setLicenseKey("<enterprisekey>");
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
@@ -158,7 +160,10 @@ function SubmittalList() {
       field: "dependsOn",
       headerName: "DEPENDS ON",
       minWidth: 140,
-      type: "rightAligned"
+      type: "rightAligned",
+      cellClass(params) {
+        return params.value === "" ? "defaultCellColor" : "hoverColor";
+      }
     },
     {
       field: "assigned",
@@ -172,6 +177,7 @@ function SubmittalList() {
     {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
+      headerComponentFramework: AddNewColumn,
       suppressColumnsToolPanel: true
     }
   ]);
@@ -333,6 +339,8 @@ function SubmittalList() {
           onFirstDataRendered={onFirstDataRendered}
           getRowId={getRowId}
           onCellEditRequest={onCellEditRequest}
+          tooltipShowDelay={0}
+          tooltipHideDelay={2000}
         />
       </div>
       <SubmittalListBottomBar selected={selectedRows} />
