@@ -1,0 +1,9 @@
+.custom-date-picker .ant-modal-footer {
+    padding-bottom: 20px;
+    text-align: center;
+    border-top: none;
+}
+
+.custom-date-picker .ant-picker-range{
+    width: 100%;
+}

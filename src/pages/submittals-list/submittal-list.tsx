@@ -2,7 +2,6 @@
 import { DatePicker, Drawer } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import {
@@ -11,7 +10,6 @@ import {
   GetRowIdFunc,
   GetRowIdParams
 } from "ag-grid-community";
-// import { LicenseManager } from "ag-grid-enterprise";
 import "./submittal-list.css";
 import { Buttons } from "components/widgets";
 import { useAppDispatch } from "store";
@@ -36,7 +34,6 @@ import {
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
-// LicenseManager.setLicenseKey("<enterprisekey>");
 
 function NewDatePicker() {
   return <DatePicker />;
@@ -276,6 +273,7 @@ function SubmittalList() {
         newData[index] = newitem;
         gridRef.current!.api.setRowData(newData);
       });
+      immutableRowData = newData;
     }
     setShowSubmittalEdit(false);
   };
@@ -300,7 +298,6 @@ function SubmittalList() {
           suppressRowClickSelection
           suppressAggFuncInHeader
           readOnlyEdit
-          // masterDetail
           animateRows={false}
           sideBar={sideBar}
           onSelectionChanged={onSelectionChanged}

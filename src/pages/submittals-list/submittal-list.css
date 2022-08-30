@@ -135,3 +135,7 @@
 .NweSubmittalBtn{
   margin-left: 10px !important;
 }
+
+.select-custom-dropDown{
+  width: fit-content !important;
+}
