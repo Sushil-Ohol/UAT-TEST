@@ -26,8 +26,10 @@ function Fileupload({
   setCount,
   hexagoanStyle,
   count,
-  setCountCall
+  setCountCall,
+  defaultValue
 }: {
+  defaultValue: any;
   count: number;
   width: string;
   height: string;
@@ -107,7 +109,9 @@ function Fileupload({
   const ProjectDefaultValue = () => {
     dispatch(getProjectSuggest());
   };
-
+  function onHoverHexagon() {
+    setFileError("");
+  }
   const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length <= 1) {
       acceptedFiles.forEach(async (file: any) => {
@@ -124,11 +128,19 @@ function Fileupload({
               setTimeout(() => {
                 setHoverColor("green");
                 if (count === 0) {
-                  ProjectDefaultValue();
-                  setCountCall({
-                    projectName: true,
-                    details: true
-                  });
+                  if (
+                    !(
+                      defaultValue.projectName.length > 0 &&
+                      defaultValue.details.length > 0
+                    )
+                  ) {
+                    ProjectDefaultValue();
+                    setCountCall({
+                      projectName: true,
+                      details: true
+                    });
+                  }
+                  // setCount((prev: number) => prev + 1);
                 }
                 setState({ ...file, title, url: URL.createObjectURL(file) });
                 setCount((prev: number) => prev + 1);
@@ -186,7 +198,11 @@ function Fileupload({
       {({ getRootProps, getInputProps, isDragActive, isFileDialogActive }) => {
         return (
           <section>
-            <div {...getRootProps()}>
+            <div
+              {...getRootProps()}
+              onMouseOver={onHoverHexagon}
+              onFocus={onHoverHexagon}
+            >
               <input
                 {...getInputProps()}
                 accept={extension
@@ -207,7 +223,7 @@ function Fileupload({
                 fill="rgba(128, 128, 128, 0.001)"
                 shadow={
                   isDragActive
-                    ? colorCode.dragActive
+                    ? colorCode.blue
                     : (isFileDialogActive && colorCode.blue) ||
                       ((fileError || selectedFile || progress > 0) &&
                         colorCode.white) ||
@@ -218,6 +234,7 @@ function Fileupload({
                   fontSize: hexagoanStyle.textSize,
                   fill:
                     (isFileDialogActive && colorCode.dialogActive) ||
+                    (isDragActive && colorCode.white) ||
                     colorCode.black
                 }}
                 isactive={isFileDialogActive}
