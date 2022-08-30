@@ -106,7 +106,7 @@ function Fileupload({
       />
     );
   }
-  const ProjectDefaultValue = () => {
+  const projectDefaultValue = () => {
     dispatch(getProjectSuggest());
   };
   function onHoverHexagon() {
@@ -134,7 +134,7 @@ function Fileupload({
                       defaultValue.details.length > 0
                     )
                   ) {
-                    ProjectDefaultValue();
+                    projectDefaultValue();
                     setCountCall({
                       projectName: true,
                       details: true
