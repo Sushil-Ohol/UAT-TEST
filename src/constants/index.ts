@@ -56,7 +56,7 @@ const StatusOptions = [
   "Rejected",
   "Approved with Comments"
 ];
-const AssigneeOptions = ["All", "Luke", "James"];
+const AssigneeOptions = ["Luke", "James"];
 const PackageOptions = ["920:Electrical", "Piping"];
 
 export const DropDownData = {

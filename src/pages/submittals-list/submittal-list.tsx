@@ -95,7 +95,7 @@ function SubmittalList() {
   const [showNewDrawer, setShowNewDrawer] = useState(false);
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [selectedRows, setSelectedRows] = useState(0);
-  const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
+  const gridStyle = useMemo(() => ({ height: "800px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
@@ -294,7 +294,9 @@ function SubmittalList() {
       data.status &&
       data.contractor &&
       data.status !== "" &&
-      data.contractor !== ""
+      data.contractor !== "" &&
+      data.assigned &&
+      data.assigned !== ""
     ) {
       const selectedlogs = gridRef.current!.api.getSelectedRows();
       const newData = [...immutableRowData];
@@ -304,7 +306,8 @@ function SubmittalList() {
         const newitem = {
           ...newData[index],
           status: data.status,
-          contractor: data.contractor
+          contractor: data.contractor,
+          assigned: data.assigned
         };
         newData[index] = newitem;
         gridRef.current!.api.setRowData(newData);
