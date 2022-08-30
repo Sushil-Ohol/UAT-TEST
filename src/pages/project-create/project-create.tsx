@@ -1,19 +1,10 @@
 /* Project Create Page Component */
 
-import {
-  Button,
-  Card,
-  Col,
-  Row,
-  Typography,
-  Steps,
-  Form,
-  Input,
-  Tooltip
-} from "antd";
+import { Button, Card, Col, Row, Typography, Steps, Form, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Dropzone from "components/file-upload/file-upload";
 import { useEffect, useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import {
   CheckOutlined,
   FileDoneOutlined,
@@ -26,26 +17,26 @@ import "./project-create.css";
 import { CogIcon, ArrowIcon } from "components/svg-icons/index";
 import { useAppDispatch, useAppSelector } from "store";
 import { getProjectValue } from "store/slices/project-value";
+import {
+  steps,
+  hexagoanStyleScreen1,
+  hexagoanStyleScreen2
+} from "constants/index";
+import { addProject } from "store/slices/projectSlice";
 
 function ProjectCreate() {
+  const history = useHistory();
   const [skipBtn, setSkipBtn] = useState(false);
   const dispatch = useAppDispatch();
   const { projectSug } = useAppSelector((state) => state.projectSuggest);
   const { projectValue } = useAppSelector((state) => state.projectValue);
   const [current, setCurrent] = useState(0);
-  const hexagoanStyleScreen1 = {
-    textSize: "12px",
-    className: "icon-style1",
-    hexagoanSize: 100,
-    errorStyleClass: "icon-style-wrong-screen-first"
-  };
-  const hexagoanStyleScreen2 = {
-    textSize: "8px",
-    className: "icon-style2",
-    hexagoanSize: 60,
-    errorStyleClass: "icon-style-wrong-screen-second"
-  };
+
   const projectInputRef: any = useRef(null);
+  const [countCall, setCountCall] = useState({
+    projectName: false,
+    details: false
+  });
   const [cogIconProjectInput, setCogIconProjectInput] = useState(false);
   const [cogIconDetailsTextArea, setCogIconDetailsTextArea] = useState(false);
   const [projectInputEdited, setProjectInputEdited] = useState(false);
@@ -54,26 +45,19 @@ function ProjectCreate() {
   const { Step } = Steps;
   const [specificationDoc, setSpecificationDoc] = useState({
     title: "",
-    path: ""
+    path: "",
+    url: ""
   });
   const [siteDrawing, setSiteDrawing] = useState({
     title: "",
-    path: ""
+    path: "",
+    url: ""
   });
   const [schedule, setSchedule] = useState({
     title: "",
-    path: ""
+    path: "",
+    url: ""
   });
-  const steps = [
-    {
-      title: "Details",
-      content: "Details"
-    },
-    {
-      title: "Finish",
-      content: "Finish"
-    }
-  ];
 
   const [defaultValue, setDefaultValue] = useState({
     details: "",
@@ -87,11 +71,12 @@ function ProjectCreate() {
       name: "specificationDoc",
       defaultValue: specificationDoc.path,
       initialValue: specificationDoc.path,
+      url: specificationDoc.url,
       addonAfter: (
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setSpecificationDoc({ path: "", title: "" });
+            setSpecificationDoc({ path: "", title: "", url: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -102,11 +87,12 @@ function ProjectCreate() {
       name: "siteDrawingDoc",
       initialValue: siteDrawing.path,
       defaultValue: siteDrawing.path,
+      url: siteDrawing.url,
       addonAfter: (
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setSiteDrawing({ path: "", title: "" });
+            setSiteDrawing({ path: "", title: "", url: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -117,11 +103,12 @@ function ProjectCreate() {
       name: "scheduleDoc",
       initialValue: schedule.path,
       defaultValue: schedule.path,
+      url: schedule.url,
       addonAfter: (
         <CloseOutlined
           className="close-icon"
           onClick={() => {
-            setSchedule({ path: "", title: "" });
+            setSchedule({ path: "", title: "", url: "" });
             setCount((val) => val - 1);
           }}
         />
@@ -132,11 +119,11 @@ function ProjectCreate() {
   useEffect(() => {
     if (count === 0) {
       setSkipBtn(false);
+      setDefaultValue({
+        details: "",
+        projectName: ""
+      });
     }
-    setCogIconProjectInput(false);
-    setCogIconDetailsTextArea(false);
-    setProjectInputEdited(false);
-    setTextAreaEdited(false);
   }, [count]);
   useEffect(() => {
     const Getvalue = async () => {
@@ -146,13 +133,18 @@ function ProjectCreate() {
       Getvalue();
     }
     if (!skipBtn) {
-      setSpecificationDoc({ path: "", title: "" });
-      setSiteDrawing({ path: "", title: "" });
-      setSchedule({ path: "", title: "" });
+      setSpecificationDoc({ path: "", title: "", url: "" });
+      setSiteDrawing({ path: "", title: "", url: "" });
+      setSchedule({ path: "", title: "", url: "" });
       setDefaultValue({
         details: "",
         projectName: ""
       });
+      setCogIconProjectInput(false);
+      setCogIconDetailsTextArea(false);
+      setProjectInputEdited(false);
+      setTextAreaEdited(false);
+      setCount(0);
     }
   }, [current, skipBtn, dispatch]);
   useEffect(
@@ -169,7 +161,16 @@ function ProjectCreate() {
     }
     projectInputRef.current.focus();
   };
-
+  const finishClick = () => {
+    dispatch(
+      addProject({
+        id: "P0007",
+        name: defaultValue.projectName,
+        description: defaultValue.details
+      })
+    );
+    history.push("/projects");
+  };
   function prev() {
     if (current === 0) {
       setCogIconProjectInput(false);
@@ -178,6 +179,12 @@ function ProjectCreate() {
       setTextAreaEdited(false);
     }
     setCurrent(current - 1);
+    setDefaultValue({
+      details: "",
+      projectName: ""
+    });
+    setCountCall({ projectName: false, details: false });
+    setCount((preValue: any) => preValue - 1);
   }
 
   const handleSkipEvent = () => {
@@ -186,27 +193,37 @@ function ProjectCreate() {
     setCogIconDetailsTextArea(false);
     setProjectInputEdited(false);
     setTextAreaEdited(false);
+    setDefaultValue({
+      details: "",
+      projectName: ""
+    });
+    setCountCall({ details: false, projectName: false });
   };
 
   function handleProjectName(e: any) {
     setDefaultValue({ ...defaultValue, projectName: e.target.value });
     setProjectInputEdited(true);
     setCogIconProjectInput(true);
+    setCountCall({ ...countCall, projectName: false });
   }
 
   return (
-    <Row justify="center">
+    <Row>
       <Col span={24}>
         {skipBtn ? (
           <>
             {steps[current]?.content === "Details" && (
               <div className="steps-content">
                 <Row justify="center">
-                  <Col span={8}>
+                  <Col span={8} offset={1}>
                     <Card className="details-form">
-                      <h2 className="heading-details-form">
-                        Creating new project / Details
-                      </h2>
+                      <Row>
+                        <Col span={18}>
+                          <h2 className="heading-details-form">
+                            Creating new project / Details
+                          </h2>
+                        </Col>
+                      </Row>
                       <Form layout="vertical" autoComplete="off">
                         {fileInputs?.map((item: any) => {
                           return (
@@ -222,17 +239,13 @@ function ProjectCreate() {
                                     <Col span={1}>
                                       <FileDoneOutlined className="document" />
                                     </Col>
-                                    <Col
-                                      span={22}
-                                      style={{
-                                        textAlign: "start",
-                                        paddingLeft: "2%"
-                                      }}
-                                    >
+                                    <Col span={22} className="text-col-align">
                                       <Text>
                                         <a
-                                          href="/aa"
+                                          href={item.url}
                                           className="selected-file-link"
+                                          target="_blank"
+                                          rel="noreferrer"
                                         >
                                           {" "}
                                           {item.defaultValue}
@@ -251,14 +264,20 @@ function ProjectCreate() {
                           name="projectname"
                           className="form-item"
                         >
+                          {defaultValue.projectName.length === 0 &&
+                            count > 0 && (
+                              <small className="error-text-project-name">
+                                (Please enter the project name)
+                              </small>
+                            )}
                           <Input.Group>
                             <Row>
                               <Col
                                 span={
                                   projectInputEdited ||
                                   defaultValue?.projectName.length <= 0
-                                    ? 22
-                                    : 22
+                                    ? 18
+                                    : 18
                                 }
                               >
                                 {!projectInputEdited &&
@@ -276,19 +295,35 @@ function ProjectCreate() {
                                   value={defaultValue.projectName}
                                   placeholder="Enter the project name"
                                   onChange={(e) => handleProjectName(e)}
+                                  className={
+                                    defaultValue.projectName.length === 0 &&
+                                    count > 0
+                                      ? "error-bg-color"
+                                      : (countCall.projectName &&
+                                          "success-bg-color") ||
+                                        ""
+                                  }
                                 />
                               </Col>
                               {!projectInputEdited &&
                                 defaultValue.projectName.length > 0 && (
                                   <Col span={2} className="wrapper-green-check">
                                     <CheckOutlined
-                                      className="check-icon-details1"
+                                      className={
+                                        defaultValue.projectName.length > 0
+                                          ? "success-bg-color-icon"
+                                          : "check-icon-details1"
+                                      }
                                       onClick={() => {
                                         setDefaultValue({
                                           ...defaultValue,
                                           projectName: defaultValue.projectName
                                         });
-                                        setProjectInputEdited(false);
+                                        setCountCall({
+                                          ...countCall,
+                                          projectName: false
+                                        });
+                                        setProjectInputEdited(true);
                                         setCogIconProjectInput(true);
                                       }}
                                     />
@@ -311,38 +346,30 @@ function ProjectCreate() {
                                         width="10"
                                         height="10"
                                       />{" "}
-                                      symbol, please correct if it is wrong. You
-                                      can <br /> press
+                                      symbol, <br /> please correct if it is
+                                      wrong. You can press
                                       <CheckSquareOutlined className="hint-check-icon" />
                                       tick to confirm
                                     </p>
                                   </Col>
                                 </Row>
                               )}
-                            <small
-                              className="error-text-project-name"
-                              style={{
-                                display: "inline-block",
-                                position: "absolute",
-                                top: "-18px",
-                                left: "100px",
-                                fontSize: "12px",
-                                color: "#FF3535"
-                              }}
-                            >
-                              (Please enter the project name)
-                            </small>
                           </Input.Group>
                         </Form.Item>
                         <Form.Item label="Details" name="details">
+                          {defaultValue.details.length === 0 && count > 0 && (
+                            <small className="error-text-project-name-details">
+                              (Please enter the details)
+                            </small>
+                          )}
                           <Input.Group>
                             <Row className="textarea">
                               <Col
                                 span={
                                   textAreaEdited ||
                                   defaultValue.details.length <= 0
-                                    ? 22
-                                    : 22
+                                    ? 18
+                                    : 18
                                 }
                               >
                                 <TextArea
@@ -355,8 +382,20 @@ function ProjectCreate() {
                                     });
                                     setTextAreaEdited(true);
                                     setCogIconDetailsTextArea(true);
+                                    setCountCall({
+                                      ...countCall,
+                                      details: false
+                                    });
                                   }}
                                   placeholder="Enter your project details"
+                                  className={
+                                    defaultValue.details.length === 0 &&
+                                    count > 0
+                                      ? "error-bg-color"
+                                      : (countCall.details &&
+                                          "success-bg-color") ||
+                                        ""
+                                  }
                                 />
                                 {!textAreaEdited &&
                                   !cogIconDetailsTextArea &&
@@ -372,23 +411,34 @@ function ProjectCreate() {
                                 {!textAreaEdited &&
                                   defaultValue.details.length > 0 && (
                                     <CheckOutlined
-                                      onClick={() =>
-                                        setCogIconDetailsTextArea(true)
+                                      onClick={() => {
+                                        setTextAreaEdited(true);
+                                        setCogIconDetailsTextArea(true);
+                                        setCountCall({
+                                          ...countCall,
+                                          details: false
+                                        });
+                                      }}
+                                      className={
+                                        defaultValue.details.length > 0
+                                          ? "success-bg-color-icon-details"
+                                          : "check-icon-details"
                                       }
-                                      className="check-icon-details "
                                     />
                                   )}
                               </Col>
                             </Row>
                           </Input.Group>
                         </Form.Item>
-                        <Row justify="center">
-                          <Col span={20}>
-                            <Row justify="center" className="hexagon-align">
+                        <Row justify="start">
+                          <Col span={18}>
+                            <Row justify="start" className="hexagon-align">
                               {specificationDoc.title !==
                                 "Specification Document" && (
                                 <Col span={8}>
                                   <Dropzone
+                                    setCountCall={setCountCall}
+                                    count={count}
                                     width="32"
                                     height="32"
                                     hexagoanStyle={hexagoanStyleScreen2}
@@ -402,8 +452,10 @@ function ProjectCreate() {
                                 </Col>
                               )}
                               {siteDrawing.title !== "Drawing Set" && (
-                                <Col span={8} style={{ textAlign: "center" }}>
+                                <Col span={8}>
                                   <Dropzone
+                                    setCountCall={setCountCall}
+                                    count={count}
                                     width="32"
                                     height="32"
                                     hexagoanStyle={hexagoanStyleScreen2}
@@ -420,6 +472,8 @@ function ProjectCreate() {
                               {schedule.title !== "Schedule" && (
                                 <Col span={8}>
                                   <Dropzone
+                                    setCountCall={setCountCall}
+                                    count={count}
                                     width="32"
                                     height="32"
                                     hexagoanStyle={hexagoanStyleScreen2}
@@ -436,11 +490,9 @@ function ProjectCreate() {
                           </Col>
                         </Row>
 
-                        {(specificationDoc.title !== "Specification Document" ||
-                          siteDrawing.title !== "Drawing Set" ||
-                          schedule.title !== "Schedule") && (
-                          <Row justify="center">
-                            <Col span={24}>
+                        {count < 3 && (
+                          <Row justify="start">
+                            <Col span={18}>
                               <p className="footer-text-second">
                                 you can add any of these any later, but
                                 ConstructivIQ <br /> can help you more if you
@@ -471,48 +523,47 @@ function ProjectCreate() {
                         </Col>
                         <Col xs={24} offset={0}>
                           <p className="para-finish-screen">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ducimus corporis ex accusantium! Qui aut,
-                            voluptatibus debitis magnam rerum excepturi,
-                            molestiae aspernatur odit maxime blanditiis ipsam
-                            itaque perspiciatis. Doloribus, saepe. Ea eligendi
-                            sed autem consequuntur neque sint maiores
-                            consectetur cumque natus!
+                            {defaultValue.details}
                           </p>
-                          <Row justify="center">
-                            <Col span={4} offset={0}>
-                              <strong className="number">12</strong>
+                          <Row>
+                            <Col span={8} offset={0} className="upload-number">
+                              <strong className="number">{count}</strong>
                               <br />
-                              <strong>Uploaded Document</strong>
+                              <Text className="strong-text">
+                                Uploaded <br /> Document
+                              </Text>
                             </Col>
-                            <Col span={4} offset={3}>
+                            <Col span={8} offset={0} className="floor-number">
                               <strong className="number">
                                 {projectValue.floors}
                               </strong>
                               <br />
-                              <strong>Floors Identified</strong>
+                              <Text className="strong-text">
+                                Floors <br /> Identified
+                              </Text>
                             </Col>
-                            {/* <Col span={3} offset={3}>
-                              <strong className="number">
-                                {projectValue.materials}
-                              </strong>
-                              <br />
-                              <strong>Materials Identified</strong>
-                            </Col> */}
-                            <Col span={4} offset={3}>
+                            <Col
+                              span={8}
+                              offset={0}
+                              className="submittal-number"
+                            >
                               <strong className="number">
                                 {projectValue.submittals}
                               </strong>
                               <br />
-                              <strong>Submittals auto created</strong>
+                              <Text className="strong-text">
+                                Submittals <br />
+                                auto created
+                              </Text>
                             </Col>
                           </Row>
                         </Col>
                         <Col xs={24} offset={0}>
                           <p className="para-finish-screenp">
-                            We have identified 3283 submittals from the
-                            specification document. You can confirm,change,
-                            split or merge them in the next step <br />
+                            We have identified {projectValue.submittals}{" "}
+                            submittals from the specification document. You can
+                            confirm,change, split or merge them in the next step{" "}
+                            <br />
                           </p>
                           <ArrowIcon className="arrow-icon" />
                         </Col>
@@ -531,7 +582,11 @@ function ProjectCreate() {
               <Col>
                 <div className="steps-action">
                   {current === steps.length - 1 && (
-                    <Button className="stepper-done-btn" type="primary">
+                    <Button
+                      className="stepper-done-btn"
+                      type="primary"
+                      onClick={finishClick}
+                    >
                       View project
                     </Button>
                   )}
@@ -558,26 +613,25 @@ function ProjectCreate() {
                       defaultValue.details.length > 0 &&
                       defaultValue.projectName.length > 0
                     ) ? (
-                      <Tooltip
-                        placement="topRight"
-                        title="Please confirm the project name and details before you can procced."
+                      <Button
+                        className="stepper-next-btn"
+                        type="primary"
+                        disabled={
+                          !cogIconProjectInput ||
+                          !cogIconDetailsTextArea ||
+                          !(
+                            defaultValue.details.length > 0 &&
+                            defaultValue.projectName.length > 0
+                          )
+                        }
+                        onClick={() => next()}
                       >
-                        <Button
-                          className="stepper-next-btn"
-                          type="primary"
-                          disabled={
-                            !cogIconProjectInput ||
-                            !cogIconDetailsTextArea ||
-                            !(
-                              defaultValue.details.length > 0 &&
-                              defaultValue.projectName.length > 0
-                            )
-                          }
-                          onClick={() => next()}
-                        >
-                          Next <ArrowRightOutlined />
-                        </Button>
-                      </Tooltip>
+                        <div id="topRight">
+                          Please confirm the project name and details before you
+                          can procced.
+                        </div>
+                        Next <ArrowRightOutlined />
+                      </Button>
                     ) : (
                       <Button
                         className="stepper-next-btn"
@@ -601,6 +655,8 @@ function ProjectCreate() {
             <Row justify="center">
               <Col>
                 <Dropzone
+                  setCountCall={setCountCall}
+                  count={count}
                   width="52"
                   height="52"
                   hexagoanStyle={hexagoanStyleScreen1}
@@ -614,6 +670,8 @@ function ProjectCreate() {
               </Col>
               <Col className="hexagon-drawing-set">
                 <Dropzone
+                  setCountCall={setCountCall}
+                  count={count}
                   width="52"
                   height="52"
                   hexagoanStyle={hexagoanStyleScreen1}
@@ -629,6 +687,8 @@ function ProjectCreate() {
             <Row justify="center" className="hexagon-schedule-row">
               <Col className="hexagon-schedule">
                 <Dropzone
+                  setCountCall={setCountCall}
+                  count={count}
                   width="52"
                   height="52"
                   hexagoanStyle={hexagoanStyleScreen1}
@@ -641,7 +701,7 @@ function ProjectCreate() {
                 />
               </Col>
             </Row>
-            <Row justify="center" style={{ marginTop: "35px" }}>
+            <Row justify="center" className="footer-text-first-row">
               <Col>
                 <p className="footer-text">
                   You can add any of these any later, but ConstructivIQ <br />{" "}
