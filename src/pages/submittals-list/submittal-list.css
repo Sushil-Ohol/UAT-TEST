@@ -1,4 +1,4 @@
-.FilterRow {
+.filterRow {
   margin: 10px 0px;
 }
 
@@ -8,23 +8,24 @@
 
 .CardDetails {
   width: "auto";
-  border: "0.2px solid #e5e5e5"
+  border: "0.2px solid #e5e5e5";
 }
 
-/* .statusInput {
-  display: flex;
-  width: 10% !important;
-  background: gray !important; 
-  font-weight: 800;
-} */
+#filter-text-box{
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #0000004d;
+  opacity: 1;
+  width: 163px;
+  height: 20px;
+  margin-left: 10px;
+}
 
-.SearchInput {
-  width: 150 !important;
-  height: 30px !important;
-  font-weight: 900;
-  color: black !important;
-  background: lightgray !important; 
-  opacity: 0.5 !important; 
+.searchInput {
+  bottom: 10px;
+  margin-left: 10px;
+
 }
 .StatusInput {
   color: black !important;
@@ -90,7 +91,6 @@
   font-weight: 400 !important;
 }
 
-
 .DependsOnInputSelect {
   height: 30px !important;
   width: 60px !important;
@@ -98,7 +98,6 @@
   color: black !important;
   font-weight: 700 !important;
   display: flex;
-
 }
 
 .AssignedInputSelect {
@@ -119,19 +118,44 @@
   font-weight: 400 !important;
 }
 
-#outer
-{
-    width:28%;
-    text-align: end;
+#outer {
+  width: 100%;
+  text-align: end;
 }
-.inner
-{
-    display: inline-block !important;
+.inner {
+  display: inline-block;
+  height: 30px;
+  
 }
-.EditBtn{
-  margin-left: 5px !important;
+.EditBtn {
+  margin-left: 10px;
+  height: 30px;
 }
 
+.newSubmittalBtn {
+  margin-left: 10px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.ag-header-cell-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  font: normal normal normal 14px/17px Inter;
+  letter-spacing: 0px;
+  color: #00000080;
+  opacity: 1;
+}
+
+.ant-row {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left:5px !important;
+}
 .NweSubmittalBtn{
   margin-left: 10px !important;
 }
