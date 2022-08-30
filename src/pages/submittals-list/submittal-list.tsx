@@ -262,7 +262,11 @@ function SubmittalList() {
     selectedlogs.forEach((row: any) => {
       const { id } = row;
       const index = newData.findIndex((x) => x.id === id);
-      const newitem = { ...newData[index], status: data.status };
+      const newitem = {
+        ...newData[index],
+        status: data.status,
+        contractor: data.contractor
+      };
       newData[index] = newitem;
       gridRef.current!.api.setRowData(newData);
     });
@@ -308,7 +312,7 @@ function SubmittalList() {
         {showNewDrawer && <SubmittalCreateComponent />}
       </Drawer>
       <Drawer
-        title="Multi Edit|Packages: 3"
+        title="Bulk Edit"
         placement="right"
         onClose={onSubmittalEditClose}
         visible={showSubmittalEdit}
