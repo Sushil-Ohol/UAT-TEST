@@ -34,6 +34,7 @@ function App() {
             path="/project/details/:projectId"
             component={ProjectDetailsPage}
           />
+          <Route path="/project/new" exact component={ProjectCreatePage} />
         </Switch>
       </div>
     </Router>

@@ -6,6 +6,10 @@
   width: 10%;
 }
 
+.grid-cell-centered {
+  text-align: center;
+}
+
 .CardDetails {
   width: "auto";
   border: "0.2px solid #e5e5e5";
@@ -155,12 +159,14 @@
 }
 .hoverColor {
   color: black !important ;
+  text-align: center;
 }
 .hoverColor:hover {
   color: #0073cf !important;
 }
 .defaultCellColor {
-  color: black;
+  text-align: center !important;
+  color: black !important;
 }
 .select-custom-dropDown {
   width: fit-content !important;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker, Drawer } from "antd";
+import { DatePicker, Drawer, message } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -21,6 +21,7 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
+// import moment from "moment";
 import {
   ApprovedCommentsIcon,
   ApprovedIcon,
@@ -109,30 +110,35 @@ function SubmittalList() {
       headerCheckboxSelection: true,
       minWidth: 102
     },
-    { field: "submittal", headerName: "SUBMITTAL", minWidth: 124 },
+    {
+      field: "submittal",
+      headerName: "SUBMITTAL",
+      minWidth: 250,
+      tooltipField: "submittal"
+    },
     {
       field: "notification",
       headerName: "NOTIFICATION",
-      minWidth: 100,
+      minWidth: 40,
       cellRendererFramework: notificationCellRenderer,
       headerComponentFramework: NotificationIcon
     },
     {
       field: "comments",
       headerName: "COMMENTS",
-      minWidth: 100,
+      minWidth: 40,
       headerComponentFramework: ChatIcon
     },
     {
       field: "revision",
       headerName: "REVISION",
-      minWidth: 100,
+      minWidth: 40,
       headerComponentFramework: DocAttachIcon
     },
     {
       field: "status",
       headerName: "STATUS",
-      minWidth: 100,
+      minWidth: 120,
       cellRendererFramework: statusCellRenderer,
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
@@ -160,8 +166,7 @@ function SubmittalList() {
     {
       field: "dependsOn",
       headerName: "DEPENDS ON",
-      minWidth: 140,
-      type: "rightAligned",
+      minWidth: 160,
       cellClass(params) {
         return params.value === "" ? "defaultCellColor" : "hoverColor";
       }
@@ -201,7 +206,8 @@ function SubmittalList() {
       sortable: true,
       editable: true,
       filter: true,
-      width: 120
+      width: 120,
+      alignItems: "center"
     };
   }, []);
 
@@ -241,6 +247,8 @@ function SubmittalList() {
     // todo - here we will fetch the actual project id from route params and we will load details
     loadList();
   }, []);
+
+  React.useEffect(() => {}, [immutableRowData]);
 
   React.useEffect(() => {
     dispatch(setProjectId(projectId));
@@ -315,6 +323,7 @@ function SubmittalList() {
         gridRef.current!.api.setRowData(newData);
       });
       immutableRowData = newData;
+      message.success("Updated submittals sucessfully");
     }
     gridRef.current!.api.deselectAll();
     setShowSubmittalEdit(false);

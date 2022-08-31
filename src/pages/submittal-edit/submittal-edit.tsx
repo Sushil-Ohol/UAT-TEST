@@ -1,5 +1,4 @@
 import { Button, Row, Col, Select, Form, DatePicker } from "antd";
-// import TextArea from "antd/lib/input/TextArea";
 import { useState } from "react";
 import { DropDownData } from "../../constants";
 import "./submittal-edit.css";
@@ -29,64 +28,56 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   return (
     <Form>
       <Row gutter={2}>
-        {/* <span className="HedingColor">DESCRIPTION</span>
-        <Col span={24} className="discriptionColumn">
-          <section className="mt-2">
-            <TextArea
-              className="discriptionArea"
-              rows={3}
-              placeholder="Fill the Discription"
-              value=""
-              maxLength={400}
-            />
-          </section>
-        </Col> */}
         <Col span={24} className="packageCol">
           <section className="mt-2">
-            <span className="HedingColor">STATUS</span>
+            <span className="HedingColor">Status</span>
             <br />
             <Select
               className="statusSelect"
-              defaultValue="Select Status"
               onChange={(value: any) => {
                 setStatus(value);
               }}
             >
-              {DropDownData.StatusOptions.map((item) => (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              ))}
+              {DropDownData.StatusOptions.filter((x) => x !== "All").map(
+                (item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                )
+              )}
             </Select>
           </section>
         </Col>
         <Col span={24} className="duebyCol">
           <section className="mt-2">
-            <span className="HedingColor">DUE BY</span>
+            <span className="HedingColor">Due Date</span>
+            <br />
             <DatePicker
-              className="dueBy"
-              format="DD-MM-YYYY"
-              onChange={(value: any) => {
-                setDueBy(value);
+              className="drawerDatePicker"
+              onChange={(value) => {
+                if (value) {
+                  setDueBy(value.format("MM/DD/YYYY"));
+                }
               }}
             />
           </section>
         </Col>
         <Col span={24} className="contractorCol">
           <section className="mt-2">
-            <span className="HedingColor">CONTRACTOR</span>
+            <span className="HedingColor">Contractor</span>
             <Select
               className="constructionSelect"
-              defaultValue="Select Contractor"
               onChange={(value: any) => {
                 setContractor(value);
               }}
             >
-              {DropDownData.ContractorOptions.map((item) => (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              ))}
+              {DropDownData.ContractorOptions.filter((x) => x !== "All").map(
+                (item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                )
+              )}
             </Select>
           </section>
         </Col>
@@ -94,17 +85,18 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           <section className="mt-2">
             <span className="HedingColor">ASSIGNED</span>
             <Select
-              className="assignedSelect"
-              defaultValue="Assigned To"
+              className="constructionSelect"
               onChange={(value: any) => {
                 setAssigned(value);
               }}
             >
-              {DropDownData.AssigneeOptions.map((item) => (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              ))}
+              {DropDownData.AssigneeOptions.filter((x) => x !== "All").map(
+                (item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                )
+              )}
             </Select>
           </section>
         </Col>

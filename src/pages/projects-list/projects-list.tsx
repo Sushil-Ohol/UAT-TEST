@@ -32,10 +32,12 @@ function ProjectList() {
     },
     {
       field: "name",
-      headerName: "Name"
+      headerName: "Name",
+      tooltipField: "name"
     },
     {
       field: "description",
+      tooltipField: "description",
       headerName: "Description"
     },
     {
