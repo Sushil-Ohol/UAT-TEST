@@ -299,43 +299,29 @@ function SubmittalList() {
   );
 
   const onEditLogs = (data: any) => {
-    if (
-      data.status &&
-      data.contractor &&
-      data.status !== "" &&
-      data.contractor !== "" &&
-      data.assigned &&
-      data.assigned !== ""
-    ) {
-      const selectedlogs = gridRef.current!.api.getSelectedRows();
-      const newData = [...immutableRowData];
-      selectedlogs.forEach((row: any) => {
-        const { id } = row;
-        const index = newData.findIndex((x) => x.id === id);
-        const newitem = {
-          ...newData[index],
-          status: data.status,
-          contractor: data.contractor,
-          assigned: data.assigned,
-          dueBy: moment(data.dueBy).format("DD-MM-YYYY")
-        };
-        newData[index] = newitem;
-        gridRef.current!.api.setRowData(newData);
-      });
-      immutableRowData = newData;
-      message.success("Updated submittals sucessfully");
-    }
+    const newData = [...immutableRowData];
+    gridRef.current!.api.getSelectedRows().forEach((row: any) => {
+      const { id } = row;
+      const index = newData.findIndex((x) => x.id === id);
+      const newitem = {
+        ...newData[index],
+        status: data.status,
+        contractor: data.contractor,
+        assigned: data.assigned,
+        dueBy: moment(data.dueBy).format("DD-MM-YYYY")
+      };
+      newData[index] = newitem;
+      gridRef.current!.api.setRowData(newData);
+    });
+    immutableRowData = newData;
+    message.success("Updated submittals sucessfully");
     gridRef.current!.api.deselectAll();
     setShowSubmittalEdit(false);
   };
 
   return (
     <div>
-      <SubmittalListFilterComponent
-        gridRef={gridRef}
-        onNewClick={onNewClick}
-        // editEnabled={selectedRows > 0}
-      />
+      <SubmittalListFilterComponent gridRef={gridRef} onNewClick={onNewClick} />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
           ref={gridRef}

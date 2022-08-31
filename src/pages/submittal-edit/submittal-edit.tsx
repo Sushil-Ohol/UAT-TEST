@@ -1,7 +1,9 @@
-import { Button, Row, Col, Select, Form, DatePicker } from "antd";
-import { useState } from "react";
+import { Button, Form, Select, DatePicker } from "antd";
+import { useForm } from "antd/lib/form/Form";
 import { DropDownData } from "../../constants";
 import "./submittal-edit.css";
+
+const { Option } = Select;
 
 export type EditSubmittalLogs = {
   onApplyClick: any;
@@ -10,97 +12,76 @@ export type EditSubmittalLogs = {
 
 function SubmittalEdit(props: EditSubmittalLogs) {
   const { onApplyClick, onCancelClick } = props;
-  const [contractor, setContractor] = useState("");
-  const [dueBy, setDueBy] = useState();
-  const [status, setStatus] = useState("");
-  const [assigned, setAssigned] = useState("");
+  const [form] = useForm();
 
   const onApplyButtonClick = () => {
-    const data = {
-      contractor,
-      status,
-      assigned,
-      dueBy
-    };
-    onApplyClick(data);
+    form.validateFields().then((values) => {
+      const data = {
+        contractor: values.contractor,
+        status: values.status,
+        assigned: values.assigned,
+        dueBy: values.dueBy.format("MM/DD/YYYY")
+      };
+      onApplyClick(data);
+    });
   };
 
   return (
-    <Form>
-      <Row gutter={2}>
-        <Col span={24} className="packageCol">
-          <section className="mt-2">
-            <span className="HedingColor">Status</span>
-            <br />
-            <Select
-              className="statusSelect"
-              onChange={(value: any) => {
-                setStatus(value);
-              }}
-            >
-              {DropDownData.StatusOptions.filter((x) => x !== "All").map(
-                (item) => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                )
-              )}
-            </Select>
-          </section>
-        </Col>
-        <Col span={24} className="duebyCol">
-          <section className="mt-2">
-            <span className="HedingColor">Due Date</span>
-            <br />
-            <DatePicker
-              className="drawerDatePicker"
-              onChange={(value) => {
-                if (value) {
-                  setDueBy(value.format("MM/DD/YYYY"));
-                }
-              }}
-            />
-          </section>
-        </Col>
-        <Col span={24} className="contractorCol">
-          <section className="mt-2">
-            <span className="HedingColor">Contractor</span>
-            <Select
-              className="constructionSelect"
-              onChange={(value: any) => {
-                setContractor(value);
-              }}
-            >
-              {DropDownData.ContractorOptions.filter((x) => x !== "All").map(
-                (item) => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                )
-              )}
-            </Select>
-          </section>
-        </Col>
-        <Col span={24} className="assignedCol">
-          <section className="mt-2">
-            <span className="HedingColor">ASSIGNED</span>
-            <Select
-              className="constructionSelect"
-              onChange={(value: any) => {
-                setAssigned(value);
-              }}
-            >
-              {DropDownData.AssigneeOptions.filter((x) => x !== "All").map(
-                (item) => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                )
-              )}
-            </Select>
-          </section>
-        </Col>
-      </Row>
+    <Form layout="vertical" preserve form={form}>
+      <Form.Item
+        name="status"
+        label="Status"
+        required
+        rules={[{ required: true, message: "Please select Status" }]}
+      >
+        <Select className="statusSelect">
+          {DropDownData.StatusOptions.filter((x) => x !== "All").map((item) => (
+            <Select.Option key={item} value={item}>
+              {item}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="dueBy"
+        label="Due Date"
+        required
+        rules={[{ required: true, message: "Please select Due Date" }]}
+      >
+        <DatePicker className="drawerDatePicker" />
+      </Form.Item>
+      <Form.Item
+        name="contractor"
+        label="Contractor"
+        required
+        rules={[{ required: true, message: "Please select Contractor" }]}
+      >
+        <Select className="constructionSelect">
+          {DropDownData.ContractorOptions.filter((x) => x !== "All").map(
+            (item) => (
+              <Option key={item} value={item}>
+                {item}
+              </Option>
+            )
+          )}
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="assigned"
+        label="Assignee"
+        required
+        rules={[{ required: true, message: "Please select Assignee" }]}
+      >
+        <Select className="constructionSelect">
+          {DropDownData.AssigneeOptions.filter((x) => x !== "All").map(
+            (item) => (
+              <Option key={item} value={item}>
+                {item}
+              </Option>
+            )
+          )}
+        </Select>
+      </Form.Item>
 
       <section className="mt-2">
         <div id="outerBox">
