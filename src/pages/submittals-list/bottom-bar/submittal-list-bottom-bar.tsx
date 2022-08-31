@@ -16,7 +16,7 @@ function SubmittalListBottomBar(props: any) {
               onClick={onSubmittalEditClick}
               size="middle"
               disabled={selected === 0}
-              className="BottomBarBtn"
+              className="bottomBarBtn"
             >
               Edit
             </Button>
@@ -25,17 +25,17 @@ function SubmittalListBottomBar(props: any) {
             <span>{selected} Selected</span>
           </div>
           <div>
-            <Button block disabled={selected === 0} className="BottomBarBtn">
+            <Button block disabled={selected === 0} className="bottomBarBtn">
               Create a Package
             </Button>
           </div>
           <div>
-            <Button block disabled={selected === 0} className="BottomBarBtn">
+            <Button block disabled={selected === 0} className="bottomBarBtn">
               Merge...
             </Button>
           </div>
           <div>
-            <Button block disabled={selected === 0} className="BottomBarBtn">
+            <Button block disabled={selected === 0} className="bottomBarBtn">
               Archive
             </Button>
           </div>
