@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker, Drawer } from "antd";
+import { DatePicker, Drawer, message } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -322,6 +322,7 @@ function SubmittalList() {
         gridRef.current!.api.setRowData(newData);
       });
       immutableRowData = newData;
+      message.success("Updated submittals sucessfully");
     }
     setShowSubmittalEdit(false);
   };
