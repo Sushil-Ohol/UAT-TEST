@@ -1,11 +1,35 @@
-import { DatePicker, Select, Form, Input } from "antd";
+import { DatePicker, Select, Form, Input, Button } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import TextArea from "antd/lib/input/TextArea";
+import moment from "moment";
 import { DropDownData } from "../../constants";
 import "./submittal-create.css";
 
-function SubmittalCreateComponent() {
+export type NewSubmittalLog = {
+  onApplyClick: any;
+  onCancelClick: any;
+};
+
+function SubmittalCreateComponent(props: NewSubmittalLog) {
+  const { onApplyClick, onCancelClick } = props;
   const [form] = useForm();
+
+  const onApplyButtonClick = () => {
+    form.validateFields().then((values) => {
+      const data = {
+        submittal: values.submittal,
+        description: values.description || "",
+        dueBy: values.dueDate
+          ? moment(values.dueDate).format("DD-MM-YYYY")
+          : "",
+        contractor: values.contractor || "",
+        assigned: values.assignee || "",
+        package: values.package || "",
+        dependsOn: values.dependsOn || ""
+      };
+      onApplyClick(data);
+    });
+  };
 
   return (
     <Form layout="vertical" preserve form={form}>
@@ -13,7 +37,7 @@ function SubmittalCreateComponent() {
         name="submittal"
         label="Submittal"
         required
-        rules={[{ required: true, message: "Please select Status" }]}
+        rules={[{ required: true, message: "Enter submittal title." }]}
       >
         <Input
           className="discriptionArea"
@@ -71,6 +95,25 @@ function SubmittalCreateComponent() {
           </Select.Option>
         </Select>
       </Form.Item>
+
+      <section className="mt-2">
+        <div id="outerBox">
+          <div className="innerBox">
+            <Button className="SubEditCancelBtn" onClick={onCancelClick}>
+              Cancel
+            </Button>
+          </div>
+          <div className="innerBox">
+            <Button
+              type="primary"
+              className="SubEditApplyBtn"
+              onClick={onApplyButtonClick}
+            >
+              Apply
+            </Button>
+          </div>
+        </div>
+      </section>
     </Form>
   );
 }
