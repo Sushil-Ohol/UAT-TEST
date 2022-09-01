@@ -27,8 +27,6 @@ import {
   ApprovedIcon,
   InreviewIcon,
   RejectedIcon,
-  Notification1Icon,
-  Notification2Icon,
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
@@ -80,14 +78,14 @@ const statusCellRenderer = (params: any) => {
   if (params.value === "Approved with Comments") {
     return <ApprovedCommentsIcon />;
   }
-  return <RejectedIcon />;
+  if (params.value === "Rejected") {
+    return <RejectedIcon />;
+  }
+  return "";
 };
 
-const notificationCellRenderer = (params: any) => {
-  if (params.value === "1") {
-    return <Notification1Icon />;
-  }
-  return <Notification2Icon />;
+const notificationCellRenderer = () => {
+  return "";
 };
 
 let immutableRowData: any[];
@@ -108,6 +106,7 @@ function SubmittalList() {
       headerName: "ID",
       checkboxSelection: true,
       headerCheckboxSelection: true,
+      headerCheckboxSelectionFilteredOnly: true,
       minWidth: 102
     },
     {
