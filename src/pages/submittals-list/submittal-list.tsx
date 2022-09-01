@@ -11,6 +11,7 @@ import {
   GetRowIdParams
 } from "ag-grid-community";
 import "./submittal-list.css";
+import moment from "moment";
 import { Buttons } from "components/widgets";
 import { useAppDispatch } from "store";
 import { getSubmittalList } from "store/slices/submittalsSlices";
@@ -298,43 +299,29 @@ function SubmittalList() {
   );
 
   const onEditLogs = (data: any) => {
-    if (
-      data.status &&
-      data.contractor &&
-      data.status !== "" &&
-      data.contractor !== "" &&
-      data.assigned &&
-      data.assigned !== ""
-    ) {
-      const selectedlogs = gridRef.current!.api.getSelectedRows();
-      const newData = [...immutableRowData];
-      selectedlogs.forEach((row: any) => {
-        const { id } = row;
-        const index = newData.findIndex((x) => x.id === id);
-        const newitem = {
-          ...newData[index],
-          status: data.status,
-          contractor: data.contractor,
-          assigned: data.assigned,
-          dueBy: data.dueBy
-        };
-        newData[index] = newitem;
-        gridRef.current!.api.setRowData(newData);
-      });
-      immutableRowData = newData;
-      message.success("Updated submittals sucessfully");
-    }
+    const newData = [...immutableRowData];
+    gridRef.current!.api.getSelectedRows().forEach((row: any) => {
+      const { id } = row;
+      const index = newData.findIndex((x) => x.id === id);
+      const newitem = {
+        ...newData[index],
+        status: data.status,
+        contractor: data.contractor,
+        assigned: data.assigned,
+        dueBy: moment(data.dueBy).format("DD-MM-YYYY")
+      };
+      newData[index] = newitem;
+      gridRef.current!.api.setRowData(newData);
+    });
+    immutableRowData = newData;
+    message.success("Updated submittals sucessfully");
+    gridRef.current!.api.deselectAll();
     setShowSubmittalEdit(false);
   };
 
   return (
     <div>
-      <SubmittalListFilterComponent
-        gridRef={gridRef}
-        onNewClick={onNewClick}
-        editEnabled={selectedRows > 0}
-        onSubmittalEditClick={onSubmittalEditClick}
-      />
+      <SubmittalListFilterComponent gridRef={gridRef} onNewClick={onNewClick} />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
           ref={gridRef}
@@ -357,7 +344,10 @@ function SubmittalList() {
           tooltipHideDelay={2000}
         />
       </div>
-      <SubmittalListBottomBar selected={selectedRows} />
+      <SubmittalListBottomBar
+        onSubmittalEditClick={onSubmittalEditClick}
+        selected={selectedRows}
+      />
       <Drawer
         title="Create a new submittal"
         placement="right"
@@ -367,7 +357,7 @@ function SubmittalList() {
         {showNewDrawer && <SubmittalCreateComponent />}
       </Drawer>
       <Drawer
-        title="Bulk Edit"
+        title={`Multi Edit | Submittals: ${selectedRows}`}
         placement="right"
         onClose={onSubmittalEditClose}
         visible={showSubmittalEdit}

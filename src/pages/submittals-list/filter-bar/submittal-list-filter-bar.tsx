@@ -6,12 +6,10 @@ import "../submittal-list.css";
 export type FilterProps = {
   gridRef: any;
   onNewClick: any;
-  onSubmittalEditClick: any;
-  editEnabled: boolean;
 };
 
 function SubmittalListFilterComponent(props: FilterProps) {
-  const { gridRef, onNewClick, onSubmittalEditClick, editEnabled } = props;
+  const { gridRef, onNewClick } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
     gridRef.current!.api.setQuickFilter(
@@ -38,16 +36,6 @@ function SubmittalListFilterComponent(props: FilterProps) {
       <div id="outer" className="EditSubmittalbtn">
         <span>
           <div>
-            <div className="inner">
-              <Button
-                onClick={onSubmittalEditClick}
-                size="middle"
-                disabled={!editEnabled}
-                className="editBtn"
-              >
-                Edit
-              </Button>
-            </div>
             <div className="inner">
               <Button
                 onClick={onNewClick}

@@ -1,42 +1,45 @@
-import { Button, Card, Col, Row } from "antd";
+import { Button, Card, Space } from "antd";
+import "./submittal-list-bottom-bar.css";
 
 function SubmittalListBottomBar(props: any) {
-  const { selected } = props;
+  const { selected, onSubmittalEditClick } = props;
   return (
-    <section className="blue-grid">
+    <section className="blue-grid" style={{ marginTop: "15px" }}>
       <Card
         bordered={false}
         className="CardDetails"
-        style={{ overflow: "hidden" }}
+        style={{ paddingLeft: "15px", padding: "10px" }}
       >
-        <Row gutter={12}>
-          <Col span={2} style={{ margin: 10 }}>
-            <div>
-              <span>{selected} Selected</span>
-            </div>
-          </Col>
-          <Col span={3}>
-            <div>
-              <Button block disabled={selected === 0}>
-                Create a Package
-              </Button>
-            </div>
-          </Col>
-          <Col span={3}>
-            <div>
-              <Button block disabled={selected === 0}>
-                Merge...
-              </Button>
-            </div>
-          </Col>
-          <Col span={3}>
-            <div>
-              <Button block disabled={selected === 0}>
-                Archive
-              </Button>
-            </div>
-          </Col>
-        </Row>
+        <Space size={15}>
+          <div>
+            <Button
+              onClick={onSubmittalEditClick}
+              size="middle"
+              disabled={selected === 0}
+              className="bottomBarBtn"
+            >
+              Edit
+            </Button>
+          </div>
+          <div>
+            <span>{selected} Selected</span>
+          </div>
+          <div>
+            <Button block disabled={selected === 0} className="bottomBarBtn">
+              Create a Package
+            </Button>
+          </div>
+          <div>
+            <Button block disabled={selected === 0} className="bottomBarBtn">
+              Merge...
+            </Button>
+          </div>
+          <div>
+            <Button block disabled={selected === 0} className="bottomBarBtn">
+              Archive
+            </Button>
+          </div>
+        </Space>
       </Card>
     </section>
   );
