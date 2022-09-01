@@ -3,6 +3,7 @@ import { Col, Row, PageHeader } from "antd";
 import { useAppDispatch, useAppSelector } from "store";
 import { useHistory } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
+import { AppLogoIcon } from "components/svg-icons";
 import Menus from "./menus";
 import "./navbar.css";
 
@@ -15,7 +16,7 @@ function Nav() {
     <Row className="navbar">
       <Col span={2} offset={0}>
         <span className="brandName">
-          Constructiv<strong>IQ</strong>
+          <AppLogoIcon />
         </span>
       </Col>
       {projectId !== "" && (
