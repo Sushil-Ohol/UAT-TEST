@@ -32,7 +32,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
   };
 
   return (
-    <Form layout="vertical" preserve form={form}>
+    <Form layout="vertical" preserve form={form} className="submittal-create">
       <Form.Item
         name="submittal"
         label="Submittal"
@@ -54,22 +54,50 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
         />
       </Form.Item>
 
+      <Form.Item name="status" label="Status">
+        <Select
+          className="select-box"
+          bordered={false}
+          placeholder="Select Status"
+        >
+          {DropDownData.StatusOptions.map(
+            (item) =>
+              item !== "All" && (
+                <Select.Option key={item} value={item}>
+                  {item}
+                </Select.Option>
+              )
+          )}
+        </Select>
+      </Form.Item>
+
       <Form.Item name="dueDate" label="Due Date">
         <DatePicker className="drawerDatePicker" />
       </Form.Item>
 
       <Form.Item name="contractor" label="Contractor">
-        <Select className="constructionSelect">
-          {DropDownData.ContractorOptions.map((item) => (
-            <Select.Option key={item} value={item}>
-              {item}
-            </Select.Option>
-          ))}
+        <Select
+          className="select-box"
+          bordered={false}
+          placeholder="Select Contractor"
+        >
+          {DropDownData.ContractorOptions.map(
+            (item) =>
+              item !== "All" && (
+                <Select.Option key={item} value={item}>
+                  {item}
+                </Select.Option>
+              )
+          )}
         </Select>
       </Form.Item>
 
       <Form.Item name="assignee" label="Assignee">
-        <Select className="assignedSelect">
+        <Select
+          className="select-box"
+          bordered={false}
+          placeholder="Select Assignee"
+        >
           {DropDownData.AssigneeOptions.map((item) => (
             <Select.Option key={item} value={item}>
               {item}
@@ -79,7 +107,11 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
       </Form.Item>
 
       <Form.Item name="package" label="Package">
-        <Select className="packageSelect">
+        <Select
+          className="select-box"
+          bordered={false}
+          placeholder="Select Package"
+        >
           {DropDownData.PackageOptions.map((item) => (
             <Select.Option key={item} value={item}>
               {item}
@@ -89,7 +121,11 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
       </Form.Item>
 
       <Form.Item name="dependsOn" label="Depends On">
-        <Select className="dependsOnSelect">
+        <Select
+          className="select-box"
+          bordered={false}
+          placeholder="Select depends on"
+        >
           <Select.Option key="5" value="5">
             Other
           </Select.Option>

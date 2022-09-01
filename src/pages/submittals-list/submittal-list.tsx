@@ -333,7 +333,7 @@ function SubmittalList() {
     newData.push(newItem);
     setRowData(newData);
     immutableRowData = newData;
-    message.success("submittals added sucessfully");
+    message.success("New submittals added successfully");
     setShowNewDrawer(false);
   };
 
