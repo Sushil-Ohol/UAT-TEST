@@ -318,6 +318,24 @@ function SubmittalList() {
     setShowSubmittalEdit(false);
   };
 
+  const onNewLog = (data: any) => {
+    const newData = [...immutableRowData];
+    const id = Math.max(...newData.map((item) => item.id));
+    const newItem = {
+      id: id + 1,
+      ...data,
+      notification: 0,
+      comments: 0,
+      revision: 0,
+      status: ""
+    };
+    newData.push(newItem);
+    setRowData(newData);
+    immutableRowData = newData;
+    message.success("New submittals added successfully");
+    setShowNewDrawer(false);
+  };
+
   return (
     <div>
       <SubmittalListFilterComponent gridRef={gridRef} onNewClick={onNewClick} />
@@ -353,7 +371,12 @@ function SubmittalList() {
         onClose={onDrawerClose}
         visible={showNewDrawer}
       >
-        {showNewDrawer && <SubmittalCreateComponent />}
+        {showNewDrawer && (
+          <SubmittalCreateComponent
+            onCancelClick={onDrawerClose}
+            onApplyClick={onNewLog}
+          />
+        )}
       </Drawer>
       <Drawer
         title={`Multi Edit | Submittals: ${selectedRows}`}
