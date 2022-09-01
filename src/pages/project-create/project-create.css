@@ -36,6 +36,7 @@
   padding: 0px;
 }
 .details-form {
+  padding: 0px auto;
   padding-top: 2px;
   border: 0px;
   background: transparent;
@@ -49,12 +50,12 @@
 }
 .steps-action {
   height: 60px;
-  width: 980px;
+  width: 80%;
   max-width: 980px;
   margin-bottom: 5px;
   position: fixed;
   bottom: 0;
-  left: 460px;
+  left: 25%;
   background-color: white;
   padding: 0px 30px;
   display: flex;
@@ -465,7 +466,7 @@ textarea.ant-input {
   margin-bottom: 21px;
 }
 .selected-file {
-  width: 480px;
+  width: 83%;
   height: 43px;
   display: flex;
   background-color: white;
@@ -585,4 +586,160 @@ div .error-text-project-name-details {
 .text-col-align {
   text-align: start;
   padding-left: 3%;
+}
+@media (min-width: 1481px) and (max-width: 1600px) {
+  .steps-action {
+    height: 60px;
+    width: 80%;
+    margin-bottom: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 17%;
+    background-color: white;
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+@media (min-width: 1281px) and (max-width: 1480px) {
+  .steps-action {
+    height: 60px;
+    width: 80%;
+    margin-bottom: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 15%;
+    background-color: white;
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .steps-action {
+    height: 60px;
+    width: 80%;
+    max-width: 980px;
+    margin-bottom: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 10%;
+    background-color: white;
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .steps-action {
+    height: 60px;
+    width: 84%;
+    max-width: 980px;
+    margin-bottom: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 8%;
+    background-color: white;
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .steps-action {
+    height: 60px;
+    width: 100%;
+    max-width: 980px;
+    margin-bottom: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0%;
+    background-color: white;
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+@media (min-width: 425px) and (max-width: 767px) {
+  .hexagon-schedule {
+    height: auto;
+    top: 0px;
+  }
+  .heading-main {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 76px;
+    font: Inter;
+    opacity: 1;
+    text-align: center;
+    letter-spacing: 0px;
+    font: normal normal medium 24px/29px "Inter";
+  }
+  .stepper-prev-btn {
+    height: 44px;
+    width: 80px;
+    font-size: 14px;
+    padding: 0px 10px;
+    margin-top: 0%;
+    position: absolute;
+    left: 10px;
+  }
+  .stepper-next-btn {
+    height: 44px;
+    width: 80px;
+    font-size: 14px;
+    padding: 0px 10px;
+    margin-top: 0%;
+    position: absolute;
+    right: 10px;
+  }
+  .ant-btn-primary[disabled],
+  .ant-btn-primary[disabled]:hover,
+  .ant-btn-primary[disabled]:focus,
+  .ant-btn-primary[disabled]:active {
+    height: 44px;
+    width: 80px;
+    font-size: 14px;
+    padding: 0px 10px;
+    margin-top: 0%;
+    position: absolute;
+    right: 6px;
+    background-color: #0000007f;
+    color: #ffffff;
+    font: normal normal normal 16px/20px "Inter";
+  }
+  .stepper-done-btn {
+    height: 44px;
+    width: 80px;
+    font-size: 14px;
+    padding: 0px 10px;
+    margin-top: 0%;
+    position: absolute;
+    right: 10px;
+  }
+  .ant-steps-vertical {
+    display: flex;
+    flex-direction: row;
+  }
+  .steps-action {
+    height: 50px;
+    width: 100%;
+    max-width: 980px;
+    margin-bottom: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0%;
+    background-color: white;
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
 }

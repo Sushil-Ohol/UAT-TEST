@@ -38,10 +38,10 @@
   color: grey;
   display: inline-block;
   position: absolute;
-  top: 44px;
-  left: 64px;
+  top: 25%;
+  left: 41%;
   font-weight: bolder;
-  font-size: 12px;
+  font-size: 10px;
 }
 .icon-style-wrong-screen-first {
   color: #ff3535;
@@ -63,16 +63,16 @@
   color: red;
   display: inline-block;
   position: absolute;
-  bottom: 22px;
-  left: 74px;
+  bottom: 18px;
+  left: 47%;
   font-size: 12px;
 }
 .icon-style-wrong-screen-second {
   color: red;
   display: inline-block;
   position: absolute;
-  bottom: 22px;
-  left: 74px;
+  bottom: 18px;
+  left: 47%;
   font-size: 12px;
 }
 .green-text {
@@ -123,4 +123,16 @@
 
 .styled-element:hover + .icon-style2 .fill-hover {
   fill: #007aff;
+}
+@media (min-width: 425px) and (max-width: 767px) {
+  .icon-style2 {
+    color: grey;
+    display: inline-block;
+    position: absolute;
+    top: 25%;
+    left: 41%;
+    font-weight: bolder;
+    width: 19%;
+    height: 19%;
+  }
 }
