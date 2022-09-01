@@ -14,8 +14,10 @@ import NotificationIcon from "./notifications-icon";
 import RejectedIcon from "./rejected-icon";
 import ArrowIcon from "./arrow-icon";
 import PlusIcon from "./plus-icon";
+import AppLogoIcon from "./app-logo-icon";
 
 export {
+  AppLogoIcon,
   SpecificationdocIcon,
   DrawingsetIcon,
   ScheduleIcon,
