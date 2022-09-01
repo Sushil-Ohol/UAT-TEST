@@ -7,7 +7,7 @@ export default function AppLogoIcon() {
       x="0px"
       y="0px"
       width="300.351px"
-      height="51px"
+      height="48px"
       viewBox="0 0 300.351 51"
       xmlSpace="preserve"
     >

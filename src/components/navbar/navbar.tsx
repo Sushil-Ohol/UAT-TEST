@@ -14,9 +14,11 @@ function Nav() {
 
   return (
     <Row className="navbar">
-      <Col span={5} offset={0}>
+      <Col span={3} offset={0}>
         <span className="brandName">
-          <AppLogoIcon />
+          <a href="/">
+            <AppLogoIcon />
+          </a>
         </span>
       </Col>
       {projectId !== "" && (
@@ -33,7 +35,7 @@ function Nav() {
         </Col>
       )}
       {projectId !== "" && (
-        <Col span={8} offset={6}>
+        <Col span={10} offset={6}>
           <Menus projectId={projectId} />
         </Col>
       )}
