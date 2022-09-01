@@ -14,7 +14,7 @@ function Nav() {
 
   return (
     <Row className="navbar">
-      <Col span={2} offset={0}>
+      <Col span={5} offset={0}>
         <span className="brandName">
           <AppLogoIcon />
         </span>
@@ -33,7 +33,7 @@ function Nav() {
         </Col>
       )}
       {projectId !== "" && (
-        <Col span={11} offset={6}>
+        <Col span={8} offset={6}>
           <Menus projectId={projectId} />
         </Col>
       )}
