@@ -330,7 +330,6 @@ function SubmittalList() {
       revision: 0,
       status: ""
     };
-    console.log("----newitem---", newItem);
     newData.push(newItem);
     setRowData(newData);
     immutableRowData = newData;
