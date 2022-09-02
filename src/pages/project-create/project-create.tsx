@@ -662,7 +662,7 @@ function ProjectCreate() {
                               href="/project/details/:projectId/submittals"
                               className="btn-submittals"
                             >
-                              View submittals <ArrowRightOutlined />
+                              View Submittals <ArrowRightOutlined />
                             </Button>
                           </Col>
                         </Row>
