@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { DateFilter } from "utils/dateutils";
+import { FilterItem } from "models/types";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -54,6 +55,7 @@ function SubmittalList() {
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
+  const [filters, setFilters] = useState<FilterItem[]>([]);
 
   const [columnDefs] = useState<ColDef[]>([
     {
@@ -212,6 +214,7 @@ function SubmittalList() {
   React.useEffect(() => {
     // todo - here we will fetch the actual project id from route params and we will load details
     loadList();
+    setFilters([{ field: "Status", value: "Approved" }]);
   }, []);
 
   React.useEffect(() => {}, [immutableRowData]);
@@ -305,7 +308,11 @@ function SubmittalList() {
 
   return (
     <div>
-      <SubmittalListFilterComponent gridRef={gridRef} onNewClick={onNewClick} />
+      <SubmittalListFilterComponent
+        gridRef={gridRef}
+        onNewClick={onNewClick}
+        items={filters}
+      />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
           ref={gridRef}
