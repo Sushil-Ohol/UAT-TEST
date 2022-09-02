@@ -140,11 +140,9 @@ function Fileupload({
                       details: true
                     });
                   }
-                  // setCount((prev: number) => prev + 1);
                 }
                 setState({ ...file, title, url: URL.createObjectURL(file) });
                 setCount((prev: number) => prev + 1);
-                setFileError("");
               }, 1000);
             }
           } else {
@@ -152,7 +150,6 @@ function Fileupload({
             setFileError("Upload file less than 100MB");
             setTimeout(() => {
               setHoverColor("");
-              setFileError("");
             }, 4000);
           }
         } else {
@@ -165,7 +162,6 @@ function Fileupload({
           setProgress(0);
           setTimeout(() => {
             setHoverColor("");
-            setFileError("");
           }, 4000);
         }
       });
@@ -174,7 +170,6 @@ function Fileupload({
       setFileError("only single file");
       setTimeout(() => {
         setHoverColor("");
-        setFileError("");
       }, 4000);
     }
   };
