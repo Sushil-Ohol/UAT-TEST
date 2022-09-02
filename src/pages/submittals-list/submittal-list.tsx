@@ -27,8 +27,6 @@ import {
   ApprovedIcon,
   InreviewIcon,
   RejectedIcon,
-  Notification1Icon,
-  Notification2Icon,
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
@@ -80,14 +78,14 @@ const statusCellRenderer = (params: any) => {
   if (params.value === "Approved with Comments") {
     return <ApprovedCommentsIcon />;
   }
-  return <RejectedIcon />;
+  if (params.value === "Rejected") {
+    return <RejectedIcon />;
+  }
+  return "";
 };
 
-const notificationCellRenderer = (params: any) => {
-  if (params.value === "1") {
-    return <Notification1Icon />;
-  }
-  return <Notification2Icon />;
+const notificationCellRenderer = () => {
+  return "";
 };
 
 let immutableRowData: any[];
@@ -108,6 +106,7 @@ function SubmittalList() {
       headerName: "ID",
       checkboxSelection: true,
       headerCheckboxSelection: true,
+      headerCheckboxSelectionFilteredOnly: true,
       minWidth: 102
     },
     {
@@ -319,6 +318,24 @@ function SubmittalList() {
     setShowSubmittalEdit(false);
   };
 
+  const onNewLog = (data: any) => {
+    const newData = [...immutableRowData];
+    const id = Math.max(...newData.map((item) => item.id));
+    const newItem = {
+      id: id + 1,
+      ...data,
+      notification: 0,
+      comments: 0,
+      revision: 0,
+      status: ""
+    };
+    newData.push(newItem);
+    setRowData(newData);
+    immutableRowData = newData;
+    message.success("New submittals added successfully");
+    setShowNewDrawer(false);
+  };
+
   return (
     <div>
       <SubmittalListFilterComponent gridRef={gridRef} onNewClick={onNewClick} />
@@ -354,7 +371,12 @@ function SubmittalList() {
         onClose={onDrawerClose}
         visible={showNewDrawer}
       >
-        {showNewDrawer && <SubmittalCreateComponent />}
+        {showNewDrawer && (
+          <SubmittalCreateComponent
+            onCancelClick={onDrawerClose}
+            onApplyClick={onNewLog}
+          />
+        )}
       </Drawer>
       <Drawer
         title={`Multi Edit | Submittals: ${selectedRows}`}
