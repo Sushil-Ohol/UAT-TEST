@@ -21,6 +21,7 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
+import { DateFilter } from "utils/dateutils";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -115,7 +116,7 @@ function SubmittalList() {
       cellEditor: NewDatePicker,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
-      filterParams: dateFilterParams
+      filterParams: DateFilter
     },
     {
       field: "contractor",
