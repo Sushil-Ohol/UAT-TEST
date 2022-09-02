@@ -21,7 +21,7 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
-// import moment from "moment";
+import { DateFilter } from "utils/dateutils";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -33,34 +33,7 @@ import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
-
-function asDate(dateAsString: string) {
-  const splitFields = dateAsString.split("-");
-  return new Date(
-    Number.parseInt(splitFields[2], 10),
-    Number.parseInt(splitFields[1], 10) - 1,
-    Number.parseInt(splitFields[0], 10)
-  );
-}
-
-const dateFilterParams = {
-  comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
-    const cellDate = asDate(cellValue);
-
-    if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
-      return 0;
-    }
-
-    if (cellDate < filterLocalDateAtMidnight) {
-      return -1;
-    }
-
-    if (cellDate > filterLocalDateAtMidnight) {
-      return 1;
-    }
-    return 1;
-  }
-};
+import DueDateFilters from "./due-date-filter";
 
 function NewDatePicker() {
   return <DatePicker />;
@@ -135,8 +108,7 @@ function SubmittalList() {
       minWidth: 140,
       cellEditor: NewDatePicker,
       cellEditorPopup: true,
-      filter: "agDateColumnFilter",
-      filterParams: dateFilterParams
+      filter: DueDateFilters
     },
     {
       headerName: "GOVERNING DATE",
@@ -144,7 +116,7 @@ function SubmittalList() {
       cellEditor: NewDatePicker,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
-      filterParams: dateFilterParams
+      filterParams: DateFilter
     },
     {
       field: "contractor",
