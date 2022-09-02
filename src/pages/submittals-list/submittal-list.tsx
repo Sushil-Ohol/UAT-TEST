@@ -214,7 +214,6 @@ function SubmittalList() {
   React.useEffect(() => {
     // todo - here we will fetch the actual project id from route params and we will load details
     loadList();
-    setFilters([{ field: "Status", value: "Approved" }]);
   }, []);
 
   React.useEffect(() => {}, [immutableRowData]);
@@ -306,6 +305,19 @@ function SubmittalList() {
     setShowNewDrawer(false);
   };
 
+  const onFiltersApplied = (event: any) => {
+    const filtersApplied = event.api.getFilterModel();
+    if (filtersApplied) {
+      const items: FilterItem[] = new Array<FilterItem>();
+      Object.keys(filtersApplied).forEach((key: any) => {
+        if (filtersApplied[key].values.length > 0) {
+          items.push({ field: key, value: filtersApplied[key].values.join() });
+        }
+      });
+      setFilters(items);
+    }
+  };
+
   return (
     <div>
       <SubmittalListFilterComponent
@@ -333,6 +345,7 @@ function SubmittalList() {
           onCellEditRequest={onCellEditRequest}
           tooltipShowDelay={0}
           tooltipHideDelay={2000}
+          onFilterChanged={onFiltersApplied}
         />
       </div>
       <SubmittalListBottomBar

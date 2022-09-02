@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Input, Button, Space, message } from "antd";
+import { Input, Button, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import "../submittal-list.css";
 import { FilterChips } from "components";
@@ -21,7 +21,9 @@ function SubmittalListFilterComponent(props: FilterProps) {
   }, [gridRef]);
 
   const onFilterChipDelete = (item: FilterItem) => {
-    message.info(`Deleted ${item.field} filter`);
+    const filterModel = gridRef.current!.api.getFilterModel();
+    delete filterModel[item.field];
+    gridRef.current!.api.setFilterModel(filterModel);
   };
 
   return (
@@ -38,10 +40,11 @@ function SubmittalListFilterComponent(props: FilterProps) {
             />
           </div>
         </section>
+        <div>
+          <FilterChips items={items} onChipDelete={onFilterChipDelete} />
+        </div>
       </Space>
-      <div>
-        <FilterChips items={items} onChipDelete={onFilterChipDelete} />
-      </div>
+
       <div id="outer" className="EditSubmittalbtn">
         <span>
           <div>
