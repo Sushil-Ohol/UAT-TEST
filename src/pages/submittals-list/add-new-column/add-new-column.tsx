@@ -3,7 +3,7 @@ import { Button, Form, Input, Modal, Select } from "antd";
 import { PlusIcon } from "components/svg-icons";
 import "./add-new-column.css";
 
-function AddNewColumn() {
+function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
   const [form] = Form.useForm<{ name: string; age: number }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Option } = Select;
@@ -14,6 +14,18 @@ function AddNewColumn() {
 
   const handleOk = () => {
     setIsModalVisible(false);
+    const formValue = form.getFieldsValue();
+    if (formValue) {
+      setNewColumnDataField([
+        ...newColumnDataField,
+        {
+          field: "submittal1",
+          headerName: "SUBMITTAL1",
+          minWidth: 250,
+          tooltipField: "submittal"
+        }
+      ]);
+    }
   };
 
   const handleCancel = () => {

@@ -1,12 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { DatePicker, Drawer, message } from "antd";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import {
   CellEditRequestEvent,
-  ColDef,
   GetRowIdFunc,
   GetRowIdParams
 } from "ag-grid-community";
@@ -99,8 +104,8 @@ function SubmittalList() {
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
-
-  const [columnDefs] = useState<ColDef[]>([
+  const [newColumnDataField, setNewColumnDataField] = useState<any[]>([]);
+  const [columnDefs, setColumnDefs] = useState<any[]>([
     {
       field: "id",
       headerName: "ID",
@@ -166,7 +171,7 @@ function SubmittalList() {
       field: "dependsOn",
       headerName: "DEPENDS ON",
       minWidth: 160,
-      cellClass(params) {
+      cellClass(params: any) {
         return params.value === "" ? "defaultCellColor" : "hoverColor";
       }
     },
@@ -183,10 +188,18 @@ function SubmittalList() {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
       headerComponentFramework: AddNewColumn,
+      headerComponentParams: {
+        setNewColumnDataField,
+        newColumnDataField
+      },
       suppressColumnsToolPanel: true
     }
   ]);
-
+  useEffect(() => {
+    if (newColumnDataField.length > 0) {
+      setColumnDefs([...columnDefs, newColumnDataField]);
+    }
+  }, [newColumnDataField]);
   const autoGroupColumnDef = useMemo(() => {
     return {
       headerName: "",
