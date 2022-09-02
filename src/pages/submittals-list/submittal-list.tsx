@@ -23,10 +23,6 @@ import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 // import moment from "moment";
 import {
-  ApprovedCommentsIcon,
-  ApprovedIcon,
-  InreviewIcon,
-  RejectedIcon,
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
@@ -69,21 +65,6 @@ const dateFilterParams = {
 function NewDatePicker() {
   return <DatePicker />;
 }
-const statusCellRenderer = (params: any) => {
-  if (params.value === "Approved") {
-    return <ApprovedIcon />;
-  }
-  if (params.value === "In Review") {
-    return <InreviewIcon />;
-  }
-  if (params.value === "Approved with Comments") {
-    return <ApprovedCommentsIcon />;
-  }
-  if (params.value === "Rejected") {
-    return <RejectedIcon />;
-  }
-  return "";
-};
 
 const notificationCellRenderer = () => {
   return "";
@@ -96,7 +77,7 @@ function SubmittalList() {
   const [showNewDrawer, setShowNewDrawer] = useState(false);
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [selectedRows, setSelectedRows] = useState(0);
-  const gridStyle = useMemo(() => ({ height: "800px", width: "100%" }), []);
+  const gridStyle = useMemo(() => ({ height: "780px", width: "100%" }), []);
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
@@ -108,7 +89,8 @@ function SubmittalList() {
       checkboxSelection: true,
       headerCheckboxSelection: true,
       headerCheckboxSelectionFilteredOnly: true,
-      minWidth: 102
+      minWidth: 102,
+      editable: false
     },
     {
       field: "submittal",
@@ -119,27 +101,29 @@ function SubmittalList() {
     {
       field: "notification",
       headerName: "NOTIFICATION",
-      minWidth: 40,
+      minWidth: 20,
       cellRendererFramework: notificationCellRenderer,
-      headerComponentFramework: NotificationIcon
+      headerComponentFramework: NotificationIcon,
+      editable: false
     },
     {
       field: "comments",
       headerName: "COMMENTS",
-      minWidth: 40,
-      headerComponentFramework: ChatIcon
+      minWidth: 20,
+      headerComponentFramework: ChatIcon,
+      editable: false
     },
     {
       field: "revision",
       headerName: "REVISION",
-      minWidth: 40,
-      headerComponentFramework: DocAttachIcon
+      minWidth: 20,
+      headerComponentFramework: DocAttachIcon,
+      editable: false
     },
     {
       field: "status",
       headerName: "STATUS",
       minWidth: 120,
-      cellRendererFramework: statusCellRenderer,
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
         values: DropDownData.StatusOptions
@@ -149,6 +133,14 @@ function SubmittalList() {
       field: "dueBy",
       headerName: "DUE BY",
       minWidth: 140,
+      cellEditor: NewDatePicker,
+      cellEditorPopup: true,
+      filter: "agDateColumnFilter",
+      filterParams: dateFilterParams
+    },
+    {
+      headerName: "GOVERNING DATE",
+      minWidth: 180,
       cellEditor: NewDatePicker,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",

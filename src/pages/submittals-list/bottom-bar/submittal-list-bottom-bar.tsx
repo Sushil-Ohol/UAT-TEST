@@ -12,6 +12,9 @@ function SubmittalListBottomBar(props: any) {
       >
         <Space size={15}>
           <div>
+            <span>{selected} Selected</span>
+          </div>
+          <div>
             <Button
               onClick={onSubmittalEditClick}
               size="middle"
@@ -20,9 +23,6 @@ function SubmittalListBottomBar(props: any) {
             >
               Edit
             </Button>
-          </div>
-          <div>
-            <span>{selected} Selected</span>
           </div>
           <div>
             <Button block disabled={selected === 0} className="bottomBarBtn">
