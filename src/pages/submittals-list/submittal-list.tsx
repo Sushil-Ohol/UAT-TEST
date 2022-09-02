@@ -36,6 +36,7 @@ import AddNewColumn from "./add-new-column/add-new-column";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
+import DependsOnToolTip from "./depends-on-tooltip";
 
 function asDate(dateAsString: string) {
   const splitFields = dateAsString.split("-");
@@ -166,6 +167,7 @@ function SubmittalList() {
       field: "dependsOn",
       headerName: "DEPENDS ON",
       minWidth: 160,
+      tooltipField: "dependsOn",
       cellClass(params) {
         return params.value === "" ? "defaultCellColor" : "hoverColor";
       }
@@ -206,7 +208,8 @@ function SubmittalList() {
       editable: true,
       filter: true,
       width: 120,
-      alignItems: "center"
+      alignItems: "center",
+      tooltipComponent: DependsOnToolTip
     };
   }, []);
 
