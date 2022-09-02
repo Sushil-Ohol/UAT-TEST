@@ -50,10 +50,9 @@
 }
 .steps-action {
   height: 60px;
-  width: 80%;
-  max-width: 980px;
+  width: 50%;
   margin-bottom: 5px;
-  position: fixed;
+  position: relative;
   bottom: 0;
   left: 25%;
   background-color: white;
@@ -590,9 +589,9 @@ div .error-text-project-name-details {
 @media (min-width: 1481px) and (max-width: 1600px) {
   .steps-action {
     height: 60px;
-    width: 80%;
+    width: 65%;
     margin-bottom: 5px;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 17%;
     background-color: white;
@@ -605,9 +604,9 @@ div .error-text-project-name-details {
 @media (min-width: 1281px) and (max-width: 1480px) {
   .steps-action {
     height: 60px;
-    width: 80%;
+    width: 70%;
     margin-bottom: 5px;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 15%;
     background-color: white;
@@ -623,7 +622,7 @@ div .error-text-project-name-details {
     width: 80%;
     max-width: 980px;
     margin-bottom: 5px;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 10%;
     background-color: white;
@@ -632,19 +631,18 @@ div .error-text-project-name-details {
     align-items: center;
     justify-content: space-evenly;
   }
-  .details-form {
+  /* .details-form {
     height: 80%;
     overflow-y: auto;
-  }
+  } */
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .steps-action {
     height: 60px;
     width: 84%;
-    max-width: 980px;
     margin-bottom: 5px;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 8%;
     background-color: white;
@@ -660,7 +658,7 @@ div .error-text-project-name-details {
     width: 100%;
     max-width: 980px;
     margin-bottom: 5px;
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     left: 0%;
     background-color: white;
@@ -737,7 +735,7 @@ div .error-text-project-name-details {
     width: 100%;
     max-width: 980px;
     margin-bottom: 5px;
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     left: 0%;
     background-color: white;
