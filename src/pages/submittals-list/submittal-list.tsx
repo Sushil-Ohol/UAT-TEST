@@ -33,7 +33,7 @@ import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
-import { DueDateFilters } from "./components";
+import DueDateFilters from "./due-date-filter";
 
 function NewDatePicker() {
   return <DatePicker />;
