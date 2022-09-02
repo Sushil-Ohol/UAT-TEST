@@ -37,10 +37,8 @@ function ProjectCreate() {
     projectName: false,
     details: false
   });
-  const [cogIconProjectInput, setCogIconProjectInput] = useState(false);
-  const [cogIconDetailsTextArea, setCogIconDetailsTextArea] = useState(false);
-  const [projectInputEdited, setProjectInputEdited] = useState(false);
-  const [textAreaEdited, setTextAreaEdited] = useState(false);
+  const [confirmProjectName, setConfirmProjectName] = useState(false);
+  const [confirmDetailsText, setConfirmDetailsText] = useState(false);
   const { Text } = Typography;
   const { Step } = Steps;
   const [specificationDoc, setSpecificationDoc] = useState({
@@ -129,7 +127,7 @@ function ProjectCreate() {
     const Getvalue = async () => {
       await dispatch(getProjectValue());
     };
-    if (current > 0) {
+    if (current > 0 && count > 0) {
       Getvalue();
     }
     if (!skipBtn) {
@@ -140,13 +138,11 @@ function ProjectCreate() {
         details: "",
         projectName: ""
       });
-      setCogIconProjectInput(false);
-      setCogIconDetailsTextArea(false);
-      setProjectInputEdited(false);
-      setTextAreaEdited(false);
+      setConfirmProjectName(false);
+      setConfirmDetailsText(false);
       setCount(0);
     }
-  }, [current, skipBtn, dispatch]);
+  }, [current, skipBtn, dispatch, count]);
   useEffect(
     () =>
       setDefaultValue({
@@ -156,7 +152,7 @@ function ProjectCreate() {
     [projectSug]
   );
   const next = () => {
-    if (defaultValue.projectName.length > 0 && cogIconProjectInput) {
+    if (defaultValue.projectName.length > 0 && confirmProjectName) {
       setCurrent(current + 1);
     }
     projectInputRef.current.focus();
@@ -174,10 +170,8 @@ function ProjectCreate() {
 
   function prev() {
     if (current === 0) {
-      setCogIconProjectInput(false);
-      setCogIconDetailsTextArea(false);
-      setProjectInputEdited(false);
-      setTextAreaEdited(false);
+      setConfirmProjectName(false);
+      setConfirmDetailsText(false);
     }
     setCurrent(current - 1);
     setDefaultValue({
@@ -188,82 +182,53 @@ function ProjectCreate() {
     setCount((preValue: any) => preValue - 1);
   }
   function toolTipHints() {
+    let str = "";
     if (
       defaultValue.projectName.length === 0 &&
       defaultValue.details.length > 0
     ) {
-      return (
-        <div id="topRight">
-          Please confirm the project name before you can procced.
-        </div>
-      );
+      str = " Please confirm the project name before you can proceed.";
     }
     if (
       defaultValue.details.length === 0 &&
-      !cogIconDetailsTextArea &&
+      !confirmDetailsText &&
       countCall.details
     ) {
-      return (
-        <div id="topRight">
-          Please confirm the details before you can procced.
-        </div>
-      );
+      str = " Please confirm the details before you can proceed.";
     }
     if (
       defaultValue.projectName.length === 0 &&
-      !cogIconProjectInput &&
+      !confirmProjectName &&
       countCall.projectName
     ) {
-      return (
-        <div id="topRight">
-          Please confirm the project name before you can procced.
-        </div>
-      );
+      str = " Please confirm the project name to proceed.";
     }
     if (
       defaultValue.details.length === 0 &&
       defaultValue.projectName.length > 0
     ) {
-      return (
-        <div id="topRight">
-          Please confirm the details before you can procced.
-        </div>
-      );
+      str = "Please confirm the details to proceed.";
     }
     if (
       defaultValue.details.length === 0 &&
       defaultValue.projectName.length === 0
     ) {
-      return (
-        <div id="topRight">
-          Please confirm the project name and details before you can procced.
-        </div>
-      );
+      str = "Please confirm the project name and details to proceed.";
     }
 
-    if (defaultValue.details.length > 0 && !textAreaEdited) {
-      return (
-        <div id="topRight">
-          Please confirm the details before you can procced.
-        </div>
-      );
+    if (defaultValue.details.length > 0 && !confirmDetailsText) {
+      str = " Please confirm the details to proceed.";
     }
 
-    if (defaultValue.projectName.length > 0 && !projectInputEdited) {
-      return (
-        <div id="topRight">
-          Please confirm the project name before you can procced.
-        </div>
-      );
+    if (defaultValue.projectName.length > 0 && !confirmProjectName) {
+      str = "Please confirm the project name to proceed.";
     }
-    return "";
+    return <div id="topRight">{str}</div>;
   }
   const handleSkipEvent = () => {
     setSkipBtn(true);
-    setCogIconProjectInput(false);
-    setCogIconDetailsTextArea(false);
-    setProjectInputEdited(false);
-    setTextAreaEdited(false);
+    setConfirmProjectName(false);
+    setConfirmDetailsText(false);
     setDefaultValue({
       details: "",
       projectName: ""
@@ -273,8 +238,7 @@ function ProjectCreate() {
 
   function handleProjectName(e: any) {
     setDefaultValue({ ...defaultValue, projectName: e.target.value });
-    setProjectInputEdited(true);
-    setCogIconProjectInput(true);
+    setConfirmProjectName(true);
     setCountCall({ ...countCall, projectName: false });
   }
 
@@ -357,8 +321,7 @@ function ProjectCreate() {
                                 <Input.Group>
                                   <Row>
                                     <Col span={20}>
-                                      {!projectInputEdited &&
-                                        !cogIconProjectInput &&
+                                      {!confirmProjectName &&
                                         defaultValue.projectName.length > 0 && (
                                           <CogIcon
                                             className="cog-details"
@@ -382,7 +345,7 @@ function ProjectCreate() {
                                         }
                                       />
                                     </Col>
-                                    {!projectInputEdited &&
+                                    {!confirmProjectName &&
                                       defaultValue.projectName.length > 0 && (
                                         <Col
                                           span={2}
@@ -405,8 +368,8 @@ function ProjectCreate() {
                                                 ...countCall,
                                                 projectName: false
                                               });
-                                              setProjectInputEdited(true);
-                                              setCogIconProjectInput(true);
+
+                                              setConfirmProjectName(true);
                                             }}
                                           />
                                         </Col>
@@ -416,8 +379,8 @@ function ProjectCreate() {
                                     (specificationDoc.path.length > 0 ||
                                       siteDrawing.path.length > 0 ||
                                       schedule.path.length > 0) &&
-                                    !cogIconProjectInput &&
-                                    !projectInputEdited && (
+                                    !confirmProjectName &&
+                                    !confirmProjectName && (
                                       <Row>
                                         <Col>
                                           <p className="project-name-hint">
@@ -457,8 +420,7 @@ function ProjectCreate() {
                                             ...defaultValue,
                                             details: e.target.value
                                           });
-                                          setTextAreaEdited(true);
-                                          setCogIconDetailsTextArea(true);
+                                          setConfirmDetailsText(true);
                                           setCountCall({
                                             ...countCall,
                                             details: false
@@ -474,8 +436,8 @@ function ProjectCreate() {
                                               ""
                                         }
                                       />
-                                      {!textAreaEdited &&
-                                        !cogIconDetailsTextArea &&
+                                      {!confirmDetailsText &&
+                                        !confirmDetailsText &&
                                         defaultValue.details.length > 0 && (
                                           <CogIcon
                                             className="cog-details"
@@ -485,12 +447,11 @@ function ProjectCreate() {
                                         )}
                                     </Col>
                                     <Col span={2}>
-                                      {!textAreaEdited &&
+                                      {!confirmDetailsText &&
                                         defaultValue.details.length > 0 && (
                                           <CheckOutlined
                                             onClick={() => {
-                                              setTextAreaEdited(true);
-                                              setCogIconDetailsTextArea(true);
+                                              setConfirmDetailsText(true);
                                               setCountCall({
                                                 ...countCall,
                                                 details: false
@@ -521,7 +482,7 @@ function ProjectCreate() {
                                           setCountCall={setCountCall}
                                           count={count}
                                           width="32"
-                                          height="32"
+                                          height="30"
                                           hexagoanStyle={hexagoanStyleScreen2}
                                           setCount={setCount}
                                           icon="FileDoneOutlined"
@@ -647,15 +608,17 @@ function ProjectCreate() {
                               </Col>
                             </Row>
                           </Col>
-                          <Col xs={24} offset={0}>
-                            <p className="para-finish-screenp">
-                              We have identified {projectValue.submittals}{" "}
-                              submittals from the specification document. You
-                              can confirm,change, split or merge them in the
-                              next step <br />
-                            </p>
-                            <ArrowIcon className="arrow-icon" />
-                          </Col>
+                          {count > 0 && (
+                            <Col xs={24} offset={0}>
+                              <p className="para-finish-screenp">
+                                We have identified {projectValue.submittals}{" "}
+                                submittals from the specification document. You
+                                can confirm,change, split or merge them in the
+                                next step <br />
+                              </p>
+                              <ArrowIcon className="arrow-icon" />
+                            </Col>
+                          )}
                           <Col span={12} offset={6}>
                             <Button
                               type="link"
@@ -778,8 +741,8 @@ function ProjectCreate() {
                 <Step title="Finish" />
               </Steps>
               {current < steps.length - 1 &&
-                (!cogIconProjectInput ||
-                !cogIconDetailsTextArea ||
+                (!confirmProjectName ||
+                !confirmDetailsText ||
                 !(
                   defaultValue.details.length > 0 &&
                   defaultValue.projectName.length > 0
@@ -788,8 +751,8 @@ function ProjectCreate() {
                     className="stepper-next-btn"
                     type="primary"
                     disabled={
-                      !cogIconProjectInput ||
-                      !cogIconDetailsTextArea ||
+                      !confirmProjectName ||
+                      !confirmDetailsText ||
                       !(
                         defaultValue.details.length > 0 &&
                         defaultValue.projectName.length > 0
@@ -797,15 +760,14 @@ function ProjectCreate() {
                     }
                     onClick={() => next()}
                   >
-                    {!cogIconProjectInput &&
-                    !cogIconDetailsTextArea &&
+                    {!confirmProjectName &&
+                    !confirmDetailsText &&
                     !(
                       defaultValue.details.length === 0 &&
                       defaultValue.projectName.length === 0
                     ) ? (
                       <div id="topRight">
-                        Please confirm the project name and details before you
-                        can procced.
+                        Please confirm the project name and details to proceed.
                       </div>
                     ) : (
                       toolTipHints()
