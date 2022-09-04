@@ -1,31 +1,44 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from "react";
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
 import { PlusIcon } from "components/svg-icons";
 import "./add-new-column.css";
 
 function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
-  const [form] = Form.useForm<{ name: string; age: number }>();
+  const [form] = Form.useForm<{ name: string; gender: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Option } = Select;
 
   const showModal = () => {
     setIsModalVisible(true);
   };
-
+  function NewDatePicker() {
+    return <DatePicker />;
+  }
   const handleOk = () => {
     setIsModalVisible(false);
     const formValue = form.getFieldsValue();
-    if (formValue) {
+    if (formValue.gender === "date") {
       setNewColumnDataField([
         ...newColumnDataField,
         {
-          field: "submittal1",
-          headerName: "SUBMITTAL1",
-          minWidth: 250,
-          tooltipField: "submittal"
+          field: formValue.name,
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140,
+          cellEditor: NewDatePicker
+        }
+      ]);
+    } else {
+      setNewColumnDataField([
+        ...newColumnDataField,
+        {
+          field: formValue.name,
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140
         }
       ]);
     }
+    form.resetFields();
   };
 
   const handleCancel = () => {

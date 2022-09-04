@@ -173,7 +173,7 @@ function SubmittalList() {
       headerName: "DEPENDS ON",
       minWidth: 160,
       tooltipField: "dependsOn",
-      cellClass(params) {
+      cellClass(params: any) {
         return params.value === "" ? "defaultCellColor" : "hoverColor";
       }
     },
@@ -181,7 +181,7 @@ function SubmittalList() {
       field: "assigned",
       headerName: "ASSIGNED",
       cellEditor: "agSelectCellEditor",
-      minWidth: 150,
+      minWidth: 100,
       cellEditorParams: {
         values: DropDownData.AssigneeOptions
       }
@@ -199,7 +199,10 @@ function SubmittalList() {
   ]);
   useEffect(() => {
     if (newColumnDataField.length > 0) {
-      setColumnDefs([...columnDefs, newColumnDataField]);
+      const columnDefsCopy = columnDefs;
+      columnDefsCopy.splice(columnDefs.length - 1, 0, ...newColumnDataField);
+      setColumnDefs(columnDefsCopy);
+      gridRef.current!.api.setColumnDefs(columnDefs);
     }
   }, [newColumnDataField]);
   const autoGroupColumnDef = useMemo(() => {
