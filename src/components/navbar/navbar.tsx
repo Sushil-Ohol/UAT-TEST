@@ -1,5 +1,6 @@
 /* Navigation Component */
-import { Col, Row, PageHeader } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { PageHeader } from "antd";
 import { useAppDispatch, useAppSelector } from "store";
 import { useHistory } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
@@ -13,33 +14,34 @@ function Nav() {
   const history = useHistory();
 
   return (
-    <Row className="navbar">
-      <Col span={3} offset={0}>
-        <span className="brandName">
-          <a href="/">
-            <AppLogoIcon />
-          </a>
-        </span>
-      </Col>
+    <div className="navbar">
+      <div className="brand-name">
+        <a href="/">
+          <AppLogoIcon />
+        </a>
+      </div>
       {projectId !== "" && (
-        <Col span={4} offset={1}>
-          <PageHeader
-            className="site-page-header"
-            onBack={() => {
-              dispatch(setProjectId(""));
-              history.push("/projects");
-            }}
-            title="All Projects"
-            subTitle="Creating new project"
-          />
-        </Col>
+        <PageHeader
+          className="site-page-header"
+          backIcon={
+            <span>
+              <ArrowLeftOutlined />
+              <span className="back-button-label">All projects</span>
+            </span>
+          }
+          onBack={() => {
+            dispatch(setProjectId(""));
+            history.push("/projects");
+          }}
+          title={projectId}
+        />
       )}
       {projectId !== "" && (
-        <Col span={10} offset={6}>
+        <div className="navmenu">
           <Menus projectId={projectId} />
-        </Col>
+        </div>
       )}
-    </Row>
+    </div>
   );
 }
 
