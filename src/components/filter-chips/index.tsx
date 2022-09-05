@@ -15,10 +15,10 @@ function FilterChips(props: FilterChipProps) {
   };
 
   return (
-    <div>
+    <div className="filter">
       {items.map((item: any) => (
-        <div className="tag-item" key={item}>
-          {item.field}
+        <div className="tag-item" key={item.field}>
+          {item.header}
           <Button className="button" onClick={() => handleDelete(item)}>
             x
           </Button>

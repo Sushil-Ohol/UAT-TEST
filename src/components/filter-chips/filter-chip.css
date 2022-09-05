@@ -1,3 +1,6 @@
+.filter {
+  display: flex;
+}
 .tag-item {
     background-color: #d4d5d6;
     display: inline-block;

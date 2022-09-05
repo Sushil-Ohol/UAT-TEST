@@ -323,7 +323,8 @@ function SubmittalList() {
         if (filtersApplied[key].values.length > 0) {
           const field = columnDefs.filter((x) => x.field === key)[0];
           items.push({
-            field: field ? field.headerName : key,
+            field: key,
+            header: field ? field.headerName : key,
             value: filtersApplied[key].values.join()
           });
         }
