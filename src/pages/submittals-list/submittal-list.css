@@ -14,14 +14,8 @@
   width: "auto";
   border: "0.2px solid #e5e5e5";
 }
-
-.SearchInput {
-  width: 150 !important;
-  height: 30px !important;
-  font-weight: 900;
-  color: black !important;
-  background: lightgray !important;
-  opacity: 0.5 !important;
+.searchInput{
+  margin-left: 15px !important;
 }
 #filter-text-box {
   text-align: left;
@@ -163,6 +157,8 @@
 }
 .hoverColor:hover {
   color: #0073cf !important;
+   text-decoration: underline;
+   text-decoration-style: dashed;
 }
 .defaultCellColor {
   text-align: center !important;
@@ -170,4 +166,7 @@
 }
 .select-custom-dropDown {
   width: fit-content !important;
+}
+.ag-header-cell-label {
+  justify-content: center;
 }
