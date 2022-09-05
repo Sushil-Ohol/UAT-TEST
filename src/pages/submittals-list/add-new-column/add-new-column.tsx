@@ -5,7 +5,7 @@ import { PlusIcon } from "components/svg-icons";
 import "./add-new-column.css";
 
 function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
-  const [form] = Form.useForm<{ name: string; gender: string }>();
+  const [form] = Form.useForm<{ name: string; inputType: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Option } = Select;
 
@@ -18,7 +18,27 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
   const handleOk = () => {
     setIsModalVisible(false);
     const formValue = form.getFieldsValue();
-    if (formValue.gender === "date") {
+    if (formValue.inputType === "date") {
+      setNewColumnDataField([
+        ...newColumnDataField,
+        {
+          field: formValue.name,
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140,
+          cellEditor: NewDatePicker
+        }
+      ]);
+    } else if (formValue.inputType === "number") {
+      setNewColumnDataField([
+        ...newColumnDataField,
+        {
+          field: formValue.name,
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140,
+          cellEditor: NewDatePicker
+        }
+      ]);
+    } else if (formValue.inputType === "currency") {
       setNewColumnDataField([
         ...newColumnDataField,
         {
@@ -64,7 +84,7 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
           </Form.Item>
           <Form.Item
             className="add-new-column-label"
-            name="gender"
+            name="inputType"
             label="Input type"
           >
             <Select
@@ -73,9 +93,10 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
               placeholder=""
               allowClear
             >
-              <Option value="string">String</Option>
               <Option value="text">Text</Option>
+              <Option value="number">Number</Option>
               <Option value="date">Date</Option>
+              <Option value="currency">Currency</Option>
             </Select>
           </Form.Item>
         </Form>
