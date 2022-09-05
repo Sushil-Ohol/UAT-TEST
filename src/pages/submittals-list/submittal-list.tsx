@@ -62,19 +62,21 @@ function SubmittalList() {
       checkboxSelection: true,
       headerCheckboxSelection: true,
       headerCheckboxSelectionFilteredOnly: true,
-      minWidth: 102,
+      minWidth: 20,
+      maxWidth: 100,
       editable: false
     },
     {
       field: "submittal",
       headerName: "SUBMITTAL",
-      minWidth: 250,
+      minWidth: 350,
       tooltipField: "submittal"
     },
     {
       field: "notification",
       headerName: "NOTIFICATION",
-      minWidth: 20,
+      minWidth: 10,
+      maxWidth: 60,
       cellRendererFramework: notificationCellRenderer,
       headerComponentFramework: NotificationIcon,
       editable: false
@@ -82,25 +84,28 @@ function SubmittalList() {
     {
       field: "comments",
       headerName: "COMMENTS",
-      minWidth: 20,
+      minWidth: 10,
+      maxWidth: 60,
       headerComponentFramework: ChatIcon,
       editable: false
     },
     {
       field: "revision",
       headerName: "REVISION",
-      minWidth: 20,
+      minWidth: 10,
+      maxWidth: 60,
       headerComponentFramework: DocAttachIcon,
       editable: false
     },
     {
       field: "status",
       headerName: "STATUS",
-      minWidth: 120,
+      minWidth: 50,
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
         values: DropDownData.StatusOptions
-      }
+      },
+      cellStyle: { color: "#000000FA" }
     },
     {
       field: "dueBy",
@@ -132,6 +137,7 @@ function SubmittalList() {
       headerName: "DEPENDS ON",
       minWidth: 160,
       tooltipField: "dependsOn",
+      tooltipComponent: DependsOnToolTip,
       cellClass(params) {
         return params.value === "" ? "defaultCellColor" : "hoverColor";
       }
@@ -173,7 +179,7 @@ function SubmittalList() {
       filter: true,
       width: 120,
       alignItems: "center",
-      tooltipComponent: DependsOnToolTip
+      resizable: true
     };
   }, []);
 
@@ -269,12 +275,20 @@ function SubmittalList() {
     gridRef.current!.api.getSelectedRows().forEach((row: any) => {
       const { id } = row;
       const index = newData.findIndex((x) => x.id === id);
+
+      let dueByDateFormat;
+      if (data.dueBy !== undefined) {
+        dueByDateFormat = moment(data.dueBy).format("MM-DD-YYYY");
+      } else {
+        dueByDateFormat = "";
+      }
+
       const newitem = {
         ...newData[index],
         status: data.status,
         contractor: data.contractor,
         assigned: data.assigned,
-        dueBy: moment(data.dueBy).format("DD-MM-YYYY")
+        dueBy: dueByDateFormat
       };
       newData[index] = newitem;
       gridRef.current!.api.setRowData(newData);
