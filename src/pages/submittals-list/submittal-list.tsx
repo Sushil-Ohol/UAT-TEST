@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { DateFilter } from "utils/dateutils";
+import { FilterItem } from "models/types";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -103,6 +104,7 @@ function SubmittalList() {
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
+  const [filters, setFilters] = useState<FilterItem[]>([]);
 
   const [columnDefs] = useState<ColDef[]>([
     {
@@ -382,9 +384,31 @@ function SubmittalList() {
     setShowNewDrawer(false);
   };
 
+  const onFiltersApplied = (event: any) => {
+    const filtersApplied = event.api.getFilterModel();
+    if (filtersApplied) {
+      const items: FilterItem[] = new Array<FilterItem>();
+      Object.keys(filtersApplied).forEach((key: any) => {
+        if (filtersApplied[key].values.length > 0) {
+          const field = columnDefs.filter((x) => x.field === key)[0];
+          items.push({
+            field: key,
+            header: field ? field.headerName : key,
+            value: filtersApplied[key].values.join()
+          });
+        }
+      });
+      setFilters(items);
+    }
+  };
+
   return (
     <div>
-      <SubmittalListFilterComponent gridRef={gridRef} onNewClick={onNewClick} />
+      <SubmittalListFilterComponent
+        gridRef={gridRef}
+        onNewClick={onNewClick}
+        items={filters}
+      />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
           ref={gridRef}
@@ -406,6 +430,7 @@ function SubmittalList() {
           onCellEditRequest={onCellEditRequest}
           tooltipShowDelay={0}
           tooltipHideDelay={2000}
+          onFilterChanged={onFiltersApplied}
         />
       </div>
       <SubmittalListBottomBar
