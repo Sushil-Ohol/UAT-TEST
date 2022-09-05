@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker, Drawer, message } from "antd";
+import { Drawer, message } from "antd";
 import React, {
   useCallback,
   useEffect,
@@ -40,10 +40,6 @@ import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import DueDateFilters from "./due-date-filter";
 import { dateCellEditor } from "./add-new-column/components";
-
-function NewDatePicker() {
-  return <DatePicker />;
-}
 
 const notificationCellRenderer = () => {
   return "";
@@ -124,7 +120,7 @@ function SubmittalList() {
     {
       headerName: "GOVERNING DATE",
       minWidth: 180,
-      cellEditor: NewDatePicker,
+      cellEditor: dateCellEditor,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
       filterParams: DateFilter
