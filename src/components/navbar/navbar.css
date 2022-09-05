@@ -1,41 +1,56 @@
 .App .navbar {
   width: 100%;
-  min-height: 10vh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: black;
-  background: rgb(202, 204, 206);
-}
-
-.App .navbar {
-  width: 100%;
-  min-height: 5vh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  height: 46px;
+  overflow: hidden;
   color: black;
   background-color: white;
-  margin: 0px 0px 0px 0px;
 }
 
-.ant-page-header {
-  width: 80vw;
+.brand-name {
+  float: left;
+  height: 46px;
+  line-height: 0;
+  padding: 12px 16px 16px 12px;
+}
+
+.brand-name svg {
+  height: 18px;
+  width: auto;
+}
+
+.site-page-header {
+  float: left;
+  padding: 3px 0px;
+}
+
+.ant-page-header-heading-left {
+  padding-left: 16px;
+  border-left: 1px solid rgba(128, 128, 128, 0.184);
+}
+
+.ant-page-header-back {
+  font-size: 10px;
+}
+
+.ant-page-header-back .back-button-label {
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0px;
   padding: 0px;
+  padding-left: 6px;
 }
 
 .ant-page-header-heading-title {
   font-size: 14px;
-  margin-right: 0px;
-  padding-right: 10px;
-  border-right: 1px solid rgba(128, 128, 128, 0.184);
-}
-.ant-page-header-heading-sub-title {
-  margin-left: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  font-weight: 300;
+  margin: 0px;
+  padding-left: 16px;
+  border-left: 1px solid rgba(128, 128, 128, 0.184);
+  color: rgba(0, 0, 0, 0.45);
 }
 
+
 .menus {
-  float: right;
+  border-bottom: 1px solid #ffffff;
+  justify-content: end;
 }
