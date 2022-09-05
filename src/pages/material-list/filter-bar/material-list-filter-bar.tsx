@@ -48,8 +48,8 @@ function MaterialListFilterBar(props: any) {
             defaultValue="All"
           >
             {DropDownData.AssigneeOptions.map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
+              <Select.Option key={item.assignedTo} value={item.assignedTo}>
+                {item.assignedTo}
               </Select.Option>
             ))}
           </Select>
