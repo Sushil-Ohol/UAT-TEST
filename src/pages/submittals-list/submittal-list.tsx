@@ -134,7 +134,8 @@ function SubmittalList() {
       tooltipField: "dependsOn",
       cellClass(params) {
         return params.value === "" ? "defaultCellColor" : "hoverColor";
-      }
+      },
+      tooltipComponent: DependsOnToolTip
     },
     {
       field: "assigned",
@@ -172,8 +173,7 @@ function SubmittalList() {
       editable: true,
       filter: true,
       width: 120,
-      alignItems: "center",
-      tooltipComponent: DependsOnToolTip
+      alignItems: "center"
     };
   }, []);
 
