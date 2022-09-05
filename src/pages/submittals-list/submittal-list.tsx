@@ -155,7 +155,13 @@ function SubmittalList() {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
       headerComponentFramework: AddNewColumn,
-      suppressColumnsToolPanel: true
+      suppressColumnsToolPanel: true,
+      headerClass: "ag-center-header",
+      cellClass: "ag-center-cell",
+      cellStyle: {
+        textAlign: "center",
+        marginRight: "-46px"
+      }
     }
   ]);
 

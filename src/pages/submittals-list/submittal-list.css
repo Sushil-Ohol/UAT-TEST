@@ -158,11 +158,12 @@
 .hoverColor:hover {
   color: #0073cf !important;
    text-decoration: underline;
-   text-decoration-style: dashed;
 }
 .defaultCellColor {
   text-align: center !important;
   color: black !important;
+  text-decoration: underline;
+  text-decoration-style: dashed;
 }
 .select-custom-dropDown {
   width: fit-content !important;
