@@ -1,10 +1,24 @@
-import { Modal, DatePicker } from "antd";
+import { Modal } from "antd";
 import "./date-range-picker.css";
-
-const { RangePicker } = DatePicker;
+import { DateRangePicker } from "react-date-range";
+import { useState } from "react";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 function DateRangePickerModal(props: any) {
   const { title, isOpen, setIsOpen, setCustomDateRange, onOkClick } = props;
+
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date()
+    }
+  ]);
+
+  const handleChange = (item: any) => {
+    setState([item.range1]);
+    setCustomDateRange(item.range1);
+  };
 
   return (
     <div>
@@ -22,11 +36,14 @@ function DateRangePickerModal(props: any) {
           setIsOpen(false);
         }}
       >
-        <RangePicker
-          format="DD-MM-YYYY"
-          onChange={(value) => setCustomDateRange(value)}
+        <DateRangePicker
+          onChange={(item: any) => handleChange(item)}
+          moveRangeOnFirstSelection={false}
+          months={2}
+          ranges={state}
+          direction="horizontal"
+          showDateDisplay={false}
         />
-        <div className="customRangePicker" />
       </Modal>
     </div>
   );
