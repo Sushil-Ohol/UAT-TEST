@@ -16,14 +16,21 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
+      const selectedContractor = DropDownData.ContractorOptions.filter(
+        (contractor) => contractor.name === values.contractor
+      );
+      const assigned = DropDownData.AssigneeOptions.filter(
+        (assignee) => assignee.assignedTo === values.assignee
+      );
+      
       const data = {
         submittal: values.submittal,
         description: values.description || "",
         dueBy: values.dueDate
           ? moment(values.dueDate).format("DD-MM-YYYY")
           : "",
-        contractor: values.contractor || "",
-        assigned: values.assignee || "",
+        contractor: selectedContractor[0] || "",
+        assigned: assigned[0] || "",
         package: values.package || "",
         dependsOn: values.dependsOn || ""
       };
@@ -81,13 +88,12 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
           bordered={false}
           placeholder="Select Contractor"
         >
-          {DropDownData.ContractorOptions.map(
-            (item) =>
-              item !== "All" && (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              )
+            {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
+            (item) => (
+              <Select.Option key={item.name} value={item.name}>
+                {item.name}
+              </Select.Option>
+            )
           )}
         </Select>
       </Form.Item>
@@ -99,8 +105,8 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
           placeholder="Select Assignee"
         >
           {DropDownData.AssigneeOptions.map((item) => (
-            <Select.Option key={item} value={item}>
-              {item}
+          <Select.Option key={item.assignedTo} value={item.assignedTo}>
+              {item.assignedTo}
             </Select.Option>
           ))}
         </Select>
