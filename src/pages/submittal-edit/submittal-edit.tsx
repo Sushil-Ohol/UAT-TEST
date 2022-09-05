@@ -20,7 +20,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         contractor: values.contractor,
         status: values.status,
         assigned: values.assigned,
-        dueBy: values.dueBy.format("MM/DD/YYYY")
+        dueBy: values.dueBy
       };
       onApplyClick(data);
     });
@@ -28,12 +28,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   return (
     <Form layout="vertical" preserve form={form}>
-      <Form.Item
-        name="status"
-        label="Status"
-        required
-        rules={[{ required: true, message: "Please select Status" }]}
-      >
+      <Form.Item name="status" label="Status">
         <Select className="statusSelect">
           {DropDownData.StatusOptions.filter((x) => x !== "All").map((item) => (
             <Select.Option key={item} value={item}>
@@ -42,20 +37,10 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item
-        name="dueBy"
-        label="Due Date"
-        required
-        rules={[{ required: true, message: "Please select Due Date" }]}
-      >
+      <Form.Item name="dueBy" label="Due Date">
         <DatePicker className="drawerDatePicker" />
       </Form.Item>
-      <Form.Item
-        name="contractor"
-        label="Contractor"
-        required
-        rules={[{ required: true, message: "Please select Contractor" }]}
-      >
+      <Form.Item name="contractor" label="Contractor">
         <Select className="constructionSelect">
           {DropDownData.ContractorOptions.filter((x) => x !== "All").map(
             (item) => (
@@ -66,12 +51,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           )}
         </Select>
       </Form.Item>
-      <Form.Item
-        name="assigned"
-        label="Assignee"
-        required
-        rules={[{ required: true, message: "Please select Assignee" }]}
-      >
+      <Form.Item name="assigned" label="Assignee">
         <Select className="constructionSelect">
           {DropDownData.AssigneeOptions.filter((x) => x !== "All").map(
             (item) => (
