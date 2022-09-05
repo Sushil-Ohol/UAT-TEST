@@ -1,6 +1,7 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { IDoesFilterPassParams, IFilterParams } from "ag-grid-community";
 import { Input, List } from "antd";
+import { DateRangePickerModal } from "components";
 import moment from "moment";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import "./due-date-filters.css";
@@ -15,6 +16,8 @@ export default forwardRef((props: IFilterParams, ref: any) => {
     "Next 3 days",
     "Custom"
   ];
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [customDateRange, setCustomDateRange] = useState<any>({});
 
   // expose AG Grid Filter Lifecycle callbacks
   useImperativeHandle(ref, () => {
@@ -61,8 +64,12 @@ export default forwardRef((props: IFilterParams, ref: any) => {
             return currentDate <= nextDate && currentDate > today && value;
           }
           case "Custom":
-            // custom date code is pending
-            return value;
+            setIsOpen(true);
+            return true;
+          case "FilterCustom": {
+            const { from, to } = customDateRange;
+            return currentDate >= from && currentDate <= to;
+          }
           default:
             return false;
         }
@@ -77,25 +84,43 @@ export default forwardRef((props: IFilterParams, ref: any) => {
   useEffect(() => {
     props.filterChangedCallback();
   }, [selectedVal, props]);
+  
+  const onCustomDateFilterChanged = () => {
+    if (customDateRange) {
+      const from = moment(customDateRange.startDate).format("MM/DD/YYYY");
+      const to = moment(customDateRange.endDate).format("MM/DD/YYYY");
+      setCustomDateRange({ from, to });
+      setSelectedVal("FilterCustom");
+    }
+  };
 
   return (
-    <div className="due-date-filters">
-      <Input
-        prefix={<SearchOutlined />}
-        placeholder="Search"
-        allowClear
-        style={{ background: "#0000000D" }}
-        bordered={false}
-        onChange={(e) => setSearchText(e.target.value)}
-      />
+    <>
+      <div className="due-date-filters">
+        <Input
+          prefix={<SearchOutlined />}
+          placeholder="Search"
+          allowClear
+          style={{ background: "#0000000D" }}
+          bordered={false}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
 
-      <List
-        className="filter-list"
-        dataSource={dueDateFilters}
-        renderItem={(item) => (
-          <List.Item onClick={() => setSelectedVal(item)}>{item}</List.Item>
-        )}
+        <List
+          className="filter-list"
+          dataSource={dueDateFilters}
+          renderItem={(item) => (
+            <List.Item onClick={() => setSelectedVal(item)}>{item}</List.Item>
+          )}
+        />
+      </div>
+      <DateRangePickerModal
+        title="Due By"
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setCustomDateRange={setCustomDateRange}
+        onOkClick={onCustomDateFilterChanged}
       />
-    </div>
+    </>
   );
 });
