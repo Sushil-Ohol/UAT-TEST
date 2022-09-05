@@ -26,7 +26,7 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
-import { DateFilter } from "utils/dateutils";
+// import { DateFilter } from "utils/dateutils";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -118,12 +118,11 @@ function SubmittalList() {
       filter: DueDateFilters
     },
     {
+      field: "governingDate",
       headerName: "GOVERNING DATE",
-      minWidth: 180,
       cellEditor: dateCellEditor,
-      cellEditorPopup: true,
       filter: "agDateColumnFilter",
-      filterParams: DateFilter
+      cellEditorPopup: true
     },
     {
       field: "contractor",
