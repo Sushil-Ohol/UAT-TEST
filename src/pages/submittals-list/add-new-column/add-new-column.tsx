@@ -1,9 +1,13 @@
-/* eslint-disable @typescript-eslint/default-param-last */
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from "react";
-import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { PlusIcon } from "components/svg-icons";
 import "./add-new-column.css";
+import {
+  dateCellEditor,
+  numberCellEditor,
+  currencyCellEditor
+} from "./components";
 
 function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
   const [form] = Form.useForm<{ name: string; inputType: string }>();
@@ -13,14 +17,6 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
   const showModal = () => {
     setIsModalVisible(true);
   };
-  function NewDatePicker() {
-    return <DatePicker />;
-  }
-  function currencyFormatter(currency: number = 0, sign: string) {
-    const sansDec = currency.toFixed(2);
-    const formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return `${sign} ${formatted}`;
-  }
   const handleOk = () => {
     form.validateFields().then(() => {
       setIsModalVisible(false);
@@ -32,7 +28,7 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
             field: formValue.name,
             headerName: formValue.name.toUpperCase(),
             minWidth: 140,
-            cellEditor: NewDatePicker
+            cellEditor: dateCellEditor
           }
         ]);
       } else if (formValue.inputType === "number") {
@@ -42,7 +38,7 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
             field: formValue.name,
             headerName: formValue.name.toUpperCase(),
             minWidth: 140,
-            cellEditor: () => <Input type="number" />
+            cellEditor: numberCellEditor
           }
         ]);
       } else if (formValue.inputType === "currency") {
@@ -54,8 +50,7 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
             minWidth: 140,
             editable: true,
             filter: "agNumberColumnFilter",
-            valueFormatter: (params: any) =>
-              currencyFormatter(params.data.currency, "$")
+            cellEditor: currencyCellEditor
           }
         ]);
       } else {

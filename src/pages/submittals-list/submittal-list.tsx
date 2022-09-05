@@ -39,6 +39,7 @@ import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import DueDateFilters from "./due-date-filter";
+import { dateCellEditor } from "./add-new-column/components";
 
 function NewDatePicker() {
   return <DatePicker />;
@@ -116,7 +117,7 @@ function SubmittalList() {
       field: "dueBy",
       headerName: "DUE BY",
       minWidth: 140,
-      cellEditor: NewDatePicker,
+      cellEditor: dateCellEditor,
       cellEditorPopup: true,
       filter: DueDateFilters
     },
@@ -143,10 +144,9 @@ function SubmittalList() {
       minWidth: 160,
       tooltipField: "dependsOn",
       tooltipComponent: DependsOnToolTip,
-      cellClass(params) {
+      cellClass(params: any) {
         return params.value === "" ? "defaultCellColor" : "hoverColor";
-      },
-      tooltipComponent: DependsOnToolTip
+      }
     },
     {
       field: "assigned",
