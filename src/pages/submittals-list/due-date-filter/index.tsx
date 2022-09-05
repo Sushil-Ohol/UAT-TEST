@@ -84,7 +84,7 @@ export default forwardRef((props: IFilterParams, ref: any) => {
   useEffect(() => {
     props.filterChangedCallback();
   }, [selectedVal, props]);
-  
+
   const onCustomDateFilterChanged = () => {
     if (customDateRange) {
       const from = moment(customDateRange.startDate).format("MM/DD/YYYY");
