@@ -170,3 +170,19 @@
 .ag-header-cell-label {
   justify-content: center;
 }
+.colFirstValue{
+  margin-bottom: 0px !important;
+  text-align: left;
+  letter-spacing: 0px;
+  color: #000000FA;
+  opacity: 1
+}
+
+.colSecondValue{
+  line-height: 0;
+  color: #707070;
+  text-align: left;
+  font: normal normal normal 14px/17px Inter;
+  letter-spacing: 0px;
+  opacity: 1
+}
