@@ -311,7 +311,11 @@ function SubmittalList() {
       const items: FilterItem[] = new Array<FilterItem>();
       Object.keys(filtersApplied).forEach((key: any) => {
         if (filtersApplied[key].values.length > 0) {
-          items.push({ field: key, value: filtersApplied[key].values.join() });
+          const field = columnDefs.filter((x) => x.field === key)[0];
+          items.push({
+            field: field ? field.headerName : key,
+            value: filtersApplied[key].values.join()
+          });
         }
       });
       setFilters(items);
