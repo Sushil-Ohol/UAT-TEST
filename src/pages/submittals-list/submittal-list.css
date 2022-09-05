@@ -151,15 +151,15 @@
 .NweSubmittalBtn {
   margin-left: 10px !important;
 }
-.hoverColor {
+.dependsOnHoverColor {
   color: black !important ;
   text-align: center;
 }
-.hoverColor:hover {
+.dependsOnHoverColor:hover {
   color: #0073cf !important;
    text-decoration: underline;
 }
-.defaultCellColor {
+.dependsOnDefaultCellColor {
   text-align: center !important;
   color: black !important;
   text-decoration: underline;
