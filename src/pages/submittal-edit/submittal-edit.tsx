@@ -16,10 +16,16 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
+        const selectedContractor = DropDownData.ContractorOptions.filter(
+        (contractor) => contractor.name === values.contractor
+      );
+      const assigned = DropDownData.AssigneeOptions.filter(
+        (assignee) => assignee.assignedTo === values.assigned
+      );
       const data = {
-        contractor: values.contractor,
+        contractor: selectedContractor[0],
         status: values.status,
-        assigned: values.assigned,
+        assigned: assigned[0],
         dueBy: values.dueBy
       };
       onApplyClick(data);
@@ -42,10 +48,10 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       </Form.Item>
       <Form.Item name="contractor" label="Contractor">
         <Select className="constructionSelect">
-          {DropDownData.ContractorOptions.filter((x) => x !== "All").map(
+         {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
             (item) => (
-              <Option key={item} value={item}>
-                {item}
+              <Option key={item.name} value={item.name}>
+                {item.name}
               </Option>
             )
           )}
@@ -53,13 +59,13 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       </Form.Item>
       <Form.Item name="assigned" label="Assignee">
         <Select className="constructionSelect">
-          {DropDownData.AssigneeOptions.filter((x) => x !== "All").map(
-            (item) => (
-              <Option key={item} value={item}>
-                {item}
-              </Option>
-            )
-          )}
+          {DropDownData.AssigneeOptions.filter(
+            (x) => x.assignedTo !== "All"
+          ).map((item) => (
+            <Option key={item.assignedTo} value={item.assignedTo}>
+              {item.assignedTo}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
 
