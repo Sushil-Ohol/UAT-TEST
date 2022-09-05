@@ -43,6 +43,55 @@ const notificationCellRenderer = () => {
   return "";
 };
 
+const submittalCellRenderer = (props: any) => {
+  return (
+    <>
+      <p className="colFirstValue">{props.data.submittal}</p>
+      <p className="colSecondValue">{props.data.description}</p>
+    </>
+  );
+};
+
+const dateCellRenderer = (props: any) => {
+  const dates = props.value && props.value.split("-");
+  const newDate =
+    dates &&
+    moment()
+      .year(dates[2])
+      .month(dates[1] - 1)
+      .date(dates[0]);
+  return (
+    <>
+      <p className="colFirstValue">{props.value}</p>
+      <p className="colSecondValue">
+        {newDate ? moment(newDate).fromNow() : ""}
+      </p>
+    </>
+  );
+};
+
+const contractorCellRenderer = (props: any) => {
+  return (
+    <>
+      <p className="colFirstValue">{props.value.name}</p>
+      <p className="colSecondValue">{props.value.email}</p>
+    </>
+  );
+};
+
+const contractorEditCellRenderer = (params: any) => params.value.name;
+
+const assignedCellRenderer = (props: any) => {
+  return (
+    <>
+      <p className="colFirstValue">{props.value.assignedTo}</p>
+      <p className="colSecondValue">{props.value.destination}</p>
+    </>
+  );
+};
+
+const assignedEditCellRenderer = (params: any) => params.value.assignedTo;
+
 let immutableRowData: any[];
 
 function SubmittalList() {
@@ -70,7 +119,16 @@ function SubmittalList() {
       field: "submittal",
       headerName: "SUBMITTAL",
       minWidth: 350,
-      tooltipField: "submittal"
+      maxWidth: 250,
+      autoHeight: true,
+      tooltipField: "description",
+      cellRenderer: submittalCellRenderer,
+      cellStyle: {
+        "text-overflow": "ellipsis",
+        "white-space": "nowrap",
+        overflow: "hidden",
+        padding: 0
+      }    
     },
     {
       field: "notification",
@@ -111,26 +169,34 @@ function SubmittalList() {
       field: "dueBy",
       headerName: "DUE BY",
       minWidth: 140,
+      autoHeight: true,
       cellEditor: NewDatePicker,
+      cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: DueDateFilters
     },
-    {
+      {
+      field: "governingDate",
       headerName: "GOVERNING DATE",
       minWidth: 180,
+      autoHeight: true,
       cellEditor: NewDatePicker,
+      cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
       filterParams: DateFilter
     },
-    {
+     {
       field: "contractor",
       headerName: "CONTRACTOR",
       minWidth: 180,
-      cellEditor: "agSelectCellEditor",
+      autoHeight: true,
+      cellEditor: "agRichSelectCellEditor",
       cellEditorParams: {
+        cellRenderer: contractorEditCellRenderer,
         values: DropDownData.ContractorOptions
-      }
+      },
+      cellRenderer: contractorCellRenderer
     },
     {
       field: "dependsOn",
@@ -145,11 +211,14 @@ function SubmittalList() {
     {
       field: "assigned",
       headerName: "ASSIGNED",
-      cellEditor: "agSelectCellEditor",
+      cellEditor: "agRichSelectCellEditor",
       minWidth: 150,
+      autoHeight: true,
       cellEditorParams: {
+        cellRenderer: assignedEditCellRenderer,
         values: DropDownData.AssigneeOptions
-      }
+      },
+      cellRenderer: assignedCellRenderer
     },
     {
       cellRendererFramework: Buttons.MoreOutlinedButton,
@@ -320,6 +389,7 @@ function SubmittalList() {
         <AgGridReact<SubmittalLog>
           ref={gridRef}
           rowData={rowData}
+          enableBrowserTooltips
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}
