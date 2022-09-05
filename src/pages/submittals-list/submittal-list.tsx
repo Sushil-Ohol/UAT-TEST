@@ -276,19 +276,15 @@ function SubmittalList() {
       const { id } = row;
       const index = newData.findIndex((x) => x.id === id);
 
-      let dueByDateFormat;
-      if (data.dueBy !== undefined) {
-        dueByDateFormat = moment(data.dueBy).format("MM-DD-YYYY");
-      } else {
-        dueByDateFormat = "";
-      }
-
       const newitem = {
         ...newData[index],
         status: data.status,
         contractor: data.contractor,
         assigned: data.assigned,
-        dueBy: dueByDateFormat
+        dueBy:
+          data.dueBy !== undefined
+            ? moment(data.dueBy).format("MM-DD-YYYY")
+            : ""
       };
       newData[index] = newitem;
       gridRef.current!.api.setRowData(newData);
