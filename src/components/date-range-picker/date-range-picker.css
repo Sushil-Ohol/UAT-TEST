@@ -1,9 +1,34 @@
+.custom-date-picker {
+  width: 720px !important;
+}
+.custom-date-picker .ant-modal-content {
+  background-color: #fff !important;
+}
 .custom-date-picker .ant-modal-footer {
-    padding-bottom: 20px;
-    text-align: center;
-    border-top: none;
+  padding-bottom: 20px;
+  text-align: center;
+  border-top: none;
 }
 
-.custom-date-picker .ant-picker-range{
-    width: 100%;
+.custom-date-picker .ant-picker-range {
+  width: 100%;
+}
+
+.rdrDefinedRangesWrapper {
+  display: none;
+}
+
+.rdrMonthAndYearWrapper {
+  display: none !important;
+}
+.rdrMonth {
+  background: #eaeae8;
+}
+
+.rdrMonth:nth-child(1) {
+    margin-right: 5px;
+}
+
+.rdrMonth:nth-child(2) {
+    margin-left: 5px;
 }
