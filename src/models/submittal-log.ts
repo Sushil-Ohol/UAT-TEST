@@ -10,9 +10,9 @@ export type SubmittalLog = {
   status: string;
   dueBy: string;
   governingDate: string;
-  contractor: { name: string, email: string };
+  contractor: { name: string; email: string };
   dependsOn: string;
-  assigned: { assignedTo: string, destination: string };
+  assigned: { assignedTo: string; destination: string };
 };
 export type SubmittalListResponse = BaseResponse & {
   response: SubmittalLog[];

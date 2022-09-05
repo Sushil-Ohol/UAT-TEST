@@ -22,7 +22,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
       const assigned = DropDownData.AssigneeOptions.filter(
         (assignee) => assignee.assignedTo === values.assignee
       );
-      
+
       const data = {
         submittal: values.submittal,
         description: values.description || "",
@@ -88,7 +88,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
           bordered={false}
           placeholder="Select Contractor"
         >
-            {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
+          {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
             (item) => (
               <Select.Option key={item.name} value={item.name}>
                 {item.name}
@@ -105,7 +105,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
           placeholder="Select Assignee"
         >
           {DropDownData.AssigneeOptions.map((item) => (
-          <Select.Option key={item.assignedTo} value={item.assignedTo}>
+            <Select.Option key={item.assignedTo} value={item.assignedTo}>
               {item.assignedTo}
             </Select.Option>
           ))}

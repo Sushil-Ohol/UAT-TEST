@@ -16,7 +16,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-        const selectedContractor = DropDownData.ContractorOptions.filter(
+      const selectedContractor = DropDownData.ContractorOptions.filter(
         (contractor) => contractor.name === values.contractor
       );
       const assigned = DropDownData.AssigneeOptions.filter(
@@ -48,7 +48,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       </Form.Item>
       <Form.Item name="contractor" label="Contractor">
         <Select className="constructionSelect">
-         {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
+          {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
             (item) => (
               <Option key={item.name} value={item.name}>
                 {item.name}

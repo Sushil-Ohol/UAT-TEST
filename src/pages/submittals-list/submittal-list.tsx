@@ -130,7 +130,7 @@ function SubmittalList() {
         "white-space": "nowrap",
         overflow: "hidden",
         padding: 0
-      }    
+      }
     },
     {
       field: "notification",
@@ -177,7 +177,7 @@ function SubmittalList() {
       cellEditorPopup: true,
       filter: DueDateFilters
     },
-      {
+    {
       field: "governingDate",
       headerName: "GOVERNING DATE",
       minWidth: 180,
@@ -188,7 +188,7 @@ function SubmittalList() {
       filter: "agDateColumnFilter",
       filterParams: DateFilter
     },
-     {
+    {
       field: "contractor",
       headerName: "CONTRACTOR",
       minWidth: 180,
