@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
-import { DateCellEditor } from "components/cell-editor";
+// import { DateCellEditor } from "components/cell-editor";
 import { IdLinkComponent } from "components/cell-renders";
 import {
   ChatIcon,
@@ -102,12 +102,14 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
+
   const onNewColumnAddition = (object: object) => {
     const columnDefsCopy = columnDefs;
     columnDefsCopy.splice(columnDefs.length - 1, 0, object);
     setColumnDefs(columnDefsCopy);
     gridRef.current!.api.setColumnDefs(columnDefs);
   };
+
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     {
       field: "id",
@@ -140,8 +142,6 @@ function SubmittalList() {
       tooltipField: "description",
       cellRenderer: submittalCellRenderer,
       cellStyle: {
-        "text-overflow": "ellipsis",
-        "white-space": "nowrap",
         overflow: "hidden",
         padding: 0
       }
@@ -186,7 +186,7 @@ function SubmittalList() {
       headerName: "DUE BY",
       minWidth: 140,
       autoHeight: true,
-      cellEditor: DateCellEditor,
+      // cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: DueDateFilters
@@ -196,7 +196,7 @@ function SubmittalList() {
       headerName: "GOVERNING DATE",
       minWidth: 180,
       autoHeight: true,
-      cellEditor: DateCellEditor,
+      // cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
@@ -214,7 +214,10 @@ function SubmittalList() {
         cellHeight: 20
       },
       cellRenderer: contractorCellRenderer,
-      cellEditorPopup: true
+      cellEditorPopup: true,
+      keyCreator: (contractor) => {
+        return contractor.value.name;
+      }
     },
     {
       field: "dependsOn",
@@ -245,7 +248,10 @@ function SubmittalList() {
         values: DropDownData.AssigneeOptions,
         cellHeight: 20
       },
-      cellRenderer: assignedCellRenderer
+      cellRenderer: assignedCellRenderer,
+      keyCreator: (contractor) => {
+        return contractor.value.assignedTo;
+      }
     },
     {
       cellRendererFramework: Buttons.MoreOutlinedButton,
@@ -263,6 +269,7 @@ function SubmittalList() {
       maxWidth: 70
     }
   ]);
+
   const autoGroupColumnDef = useMemo(() => {
     return {
       headerName: "",
