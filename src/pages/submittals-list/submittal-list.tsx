@@ -140,8 +140,10 @@ function SubmittalList() {
       minWidth: 160,
       tooltipField: "dependsOn",
       tooltipComponent: DependsOnToolTip,
-      cellClass(params: any) {
-        return params.value === "" ? "defaultCellColor" : "hoverColor";
+      cellClass(params) {
+        return params.value === ""
+          ? "dependsOnDefaultCellColor"
+          : "dependsOnHoverColor";
       }
     },
     {
@@ -160,7 +162,12 @@ function SubmittalList() {
       headerComponentParams: {
         addNewColumnFunction
       },
-      suppressColumnsToolPanel: true
+      suppressColumnsToolPanel: true,
+      headerClass: "ag-center-header",
+      cellClass: "ag-center-cell",
+      cellStyle: {
+        textAlign: "center"
+      }
     }
   ]);
   const autoGroupColumnDef = useMemo(() => {
