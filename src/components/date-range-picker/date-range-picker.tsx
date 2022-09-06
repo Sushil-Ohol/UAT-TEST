@@ -12,6 +12,10 @@ function DateRangePickerModal(props: any) {
         title={title}
         visible={isOpen}
         className="custom-date-picker"
+        onCancel={() => {
+          onOkClick();
+          setIsOpen(false);
+        }}
         footer={[
           <Button
             key="back"
