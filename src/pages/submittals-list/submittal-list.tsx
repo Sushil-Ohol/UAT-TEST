@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
-// import { DateCellEditor } from "components/cell-editor";
+import { DateCellEditor } from "components";
 import { IdLinkComponent } from "components/cell-renders";
 import {
   ChatIcon,
@@ -190,7 +190,7 @@ function SubmittalList() {
       headerName: "DUE BY",
       minWidth: 140,
       autoHeight: true,
-      // cellEditor: DateCellEditor,
+      cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: DueDateFilters
@@ -200,7 +200,7 @@ function SubmittalList() {
       headerName: "GOVERNING DATE",
       minWidth: 180,
       autoHeight: true,
-      // cellEditor: DateCellEditor,
+      cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
