@@ -11,6 +11,7 @@
     display: inline-flex;
     align-items: center;
     margin: 0 0.3rem 0.3rem 0;
+    width: max-content;
   }
   
   .tag-item > .button {

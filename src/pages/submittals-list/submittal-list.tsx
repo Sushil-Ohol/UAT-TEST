@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
-import { DateCellEditor } from "components/cell-editor";
+// import { DateCellEditor } from "components/cell-editor";
 import { IdLinkComponent } from "components/cell-renders";
 import {
   ChatIcon,
@@ -41,6 +41,59 @@ const notificationCellRenderer = () => {
   return "";
 };
 
+const submittalCellRenderer = (props: any) => {
+  return (
+    <>
+      <p className="colFirstValue">{props.data.submittal}</p>
+      <p className="colSecondValue">{props.data.description}</p>
+    </>
+  );
+};
+
+const dateCellRenderer = (props: any) => {
+  const dates = props.value && props.value.split("-");
+  const newDate =
+    dates &&
+    moment()
+      .year(dates[2])
+      .month(dates[1] - 1)
+      .date(dates[0]);
+  return (
+    <>
+      <p className="colFirstValue">{props.value}</p>
+      <p className="colSecondValue">
+        {newDate ? moment(newDate).fromNow() : ""}
+      </p>
+    </>
+  );
+};
+
+const contractorCellRenderer = (props: any) => {
+  return (
+    <>
+      <p className="colFirstValue">{props.value.name}</p>
+      <p className="colSecondValue">{props.value.email}</p>
+    </>
+  );
+};
+
+const contractorEditCellRenderer = (params: any) => {
+  return params.value ? params.value.name : "";
+};
+
+const assignedCellRenderer = (props: any) => {
+  return (
+    <>
+      <p className="colFirstValue">{props.value.assignedTo}</p>
+      <p className="colSecondValue">{props.value.destination}</p>
+    </>
+  );
+};
+
+const assignedEditCellRenderer = (params: any) => {
+  return params.value ? params.value.assignedTo : "";
+};
+
 let immutableRowData: any[];
 
 function SubmittalList() {
@@ -53,12 +106,14 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
+
   const onNewColumnAddition = (object: object) => {
     const columnDefsCopy = columnDefs;
     columnDefsCopy.splice(columnDefs.length - 1, 0, object);
     setColumnDefs(columnDefsCopy);
     gridRef.current!.api.setColumnDefs(columnDefs);
   };
+
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     {
       field: "id",
@@ -86,7 +141,14 @@ function SubmittalList() {
       field: "submittal",
       headerName: "SUBMITTAL",
       minWidth: 350,
-      tooltipField: "submittal"
+      maxWidth: 250,
+      autoHeight: true,
+      tooltipField: "description",
+      cellRenderer: submittalCellRenderer,
+      cellStyle: {
+        overflow: "hidden",
+        padding: 0
+      }
     },
     {
       field: "notification",
@@ -127,24 +189,38 @@ function SubmittalList() {
       field: "dueBy",
       headerName: "DUE BY",
       minWidth: 140,
-      cellEditor: DateCellEditor,
+      autoHeight: true,
+      // cellEditor: DateCellEditor,
+      cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: DueDateFilters
     },
     {
       field: "governingDate",
       headerName: "GOVERNING DATE",
-      cellEditor: DateCellEditor,
+      minWidth: 180,
+      autoHeight: true,
+      // cellEditor: DateCellEditor,
+      cellRenderer: dateCellRenderer,
+      cellEditorPopup: true,
       filter: "agDateColumnFilter",
-      cellEditorPopup: true
+      filterParams: NodeFilter
     },
     {
       field: "contractor",
       headerName: "CONTRACTOR",
       minWidth: 180,
-      cellEditor: "agSelectCellEditor",
+      autoHeight: true,
+      cellEditor: "agRichSelectCellEditor",
       cellEditorParams: {
-        values: DropDownData.ContractorOptions
+        cellRenderer: contractorEditCellRenderer,
+        values: DropDownData.ContractorOptions,
+        cellHeight: 20
+      },
+      cellRenderer: contractorCellRenderer,
+      cellEditorPopup: true,
+      keyCreator: (contractor) => {
+        return contractor.value.name;
       }
     },
     {
@@ -167,10 +243,18 @@ function SubmittalList() {
     {
       field: "assigned",
       headerName: "ASSIGNED",
-      cellEditor: "agSelectCellEditor",
+      cellEditor: "agRichSelectCellEditor",
       minWidth: 100,
+      autoHeight: true,
+      cellEditorPopup: true,
       cellEditorParams: {
-        values: DropDownData.AssigneeOptions
+        cellRenderer: assignedEditCellRenderer,
+        values: DropDownData.AssigneeOptions,
+        cellHeight: 20
+      },
+      cellRenderer: assignedCellRenderer,
+      keyCreator: (contractor) => {
+        return contractor.value.assignedTo;
       }
     },
     {
@@ -189,6 +273,7 @@ function SubmittalList() {
       maxWidth: 70
     }
   ]);
+
   const autoGroupColumnDef = useMemo(() => {
     return {
       headerName: "",
@@ -308,13 +393,17 @@ function SubmittalList() {
 
       const newitem = {
         ...newData[index],
-        status: data.status,
-        contractor: data.contractor,
-        assigned: data.assigned,
+        status: data.status !== undefined ? data.status : newData[index].status,
+        contractor:
+          data.contractor !== undefined
+            ? data.contractor
+            : newData[index].contractor,
+        assigned:
+          data.assigned !== undefined ? data.assigned : newData[index].assigned,
         dueBy:
           data.dueBy !== undefined
-            ? moment(data.dueBy).format("MM-DD-YYYY")
-            : ""
+            ? moment(data.dueBy).format("DD-MM-YYYY")
+            : newData[index].dueBy
       };
       newData[index] = newitem;
       gridRef.current!.api.setRowData(newData);
@@ -372,6 +461,7 @@ function SubmittalList() {
         <AgGridReact<SubmittalLog>
           ref={gridRef}
           rowData={rowData}
+          enableBrowserTooltips
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}
