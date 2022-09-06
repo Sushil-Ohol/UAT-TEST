@@ -87,8 +87,8 @@ export default forwardRef((props: IFilterParams, ref: any) => {
 
   const onCustomDateFilterChanged = () => {
     if (customDateRange) {
-      const from = moment(customDateRange.startDate).format("MM/DD/YYYY");
-      const to = moment(customDateRange.endDate).format("MM/DD/YYYY");
+      const from = moment(customDateRange[0]).format("MM/DD/YYYY");
+      const to = moment(customDateRange[1]).format("MM/DD/YYYY");
       setCustomDateRange({ from, to });
       setSelectedVal("FilterCustom");
     }
