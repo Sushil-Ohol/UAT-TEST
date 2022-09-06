@@ -8,7 +8,8 @@ import {
   CellEditRequestEvent,
   ColDef,
   GetRowIdFunc,
-  GetRowIdParams
+  GetRowIdParams,
+  ICellRendererParams
 } from "ag-grid-community";
 import "./submittal-list.css";
 import moment from "moment";
@@ -46,6 +47,15 @@ const notificationCellRenderer = () => {
 
 let immutableRowData: any[];
 
+function IdLinkComponent(props: ICellRendererParams) {
+  const { value } = props;
+  return (
+    <a target="_blank" rel="noopener noreferrer" href="/submittals/details">
+      {value}
+    </a>
+  );
+}
+
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
   const [showNewDrawer, setShowNewDrawer] = useState(false);
@@ -66,7 +76,16 @@ function SubmittalList() {
       headerCheckboxSelectionFilteredOnly: true,
       minWidth: 20,
       maxWidth: 100,
-      editable: false
+      editable: false,
+      cellRenderer: IdLinkComponent,
+      cellClass(params) {
+        return params.value === "" ? "idDefaultCellColor" : "idHoverColor";
+      },
+      cellStyle: {
+        textAlign: "left",
+        textDecoration: "underline",
+        textDecorationStyle: "dashed"
+      }
     },
     {
       field: "submittal",
