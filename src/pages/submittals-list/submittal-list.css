@@ -14,7 +14,7 @@
   width: "auto";
   border: "0.2px solid #e5e5e5";
 }
-.searchInput{
+.searchInput {
   margin-left: 15px !important;
 }
 #filter-text-box {
@@ -157,7 +157,7 @@
 }
 .dependsOnHoverColor:hover {
   color: #0073cf !important;
-   text-decoration: underline;
+  text-decoration: underline;
 }
 .dependsOnDefaultCellColor {
   text-align: center !important;
@@ -168,6 +168,48 @@
 .select-custom-dropDown {
   width: fit-content !important;
 }
-.ag-header-cell-label {
-  justify-content: center;
+.idHoverColor {
+  color: black !important ;
+  text-align: center;
+}
+.idHoverColor:hover {
+  color: #0073cf !important;
+  text-decoration: underline;
+}
+.idCellColor {
+  text-align: center !important;
+  color: black !important;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+}
+
+.colFirstValue {
+  margin-bottom: 0px !important;
+  text-align: left;
+  letter-spacing: 0px;
+  color: #000000fa;
+  opacity: 1;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.colSecondValue {
+  line-height: 0;
+  color: #707070;
+  text-align: left;
+  font: normal normal normal 14px/17px Inter;
+  letter-spacing: 0px;
+  opacity: 1;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+div.ag-rich-select .ag-rich-select-list {
+  width: 100%;
+  min-width: 200px;
+  height: 100% !important;
 }

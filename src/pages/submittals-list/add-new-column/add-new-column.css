@@ -1,80 +1,89 @@
 .add-new-column-btn {
-    background-color: transparent !important;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    margin-left: 35%;
+  background-color: transparent !important;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
 }
 
-.ant-modal-body {
-    padding: 24px;
-    font-size: 14px;
-    line-height: 1.5715;
-    word-wrap: break-word;
-    width: 600px;
+.add-new-column .ant-modal-body {
+  padding: 24px;
+  font-size: 14px;
+  line-height: 1.5715;
+  word-wrap: break-word;
+  width: 600px;
 }
 
-.ant-modal-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: auto;
+.add-new-column .ant-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: auto;
 }
 
 .add-new-column {
-    margin-top: 70px;
-    height: 329px !important;
-    width: 572px !important;
-    display: flex;
-    justify-content: center !important;
-    background-color: #F7F6F4 0% 0% no-repeat padding-box;
+  margin-top: 70px;
+  height: max-content;
+
+  width: 572px !important;
+  display: flex;
+  justify-content: center !important;
+  background-color: #f7f6f4 0% 0% no-repeat padding-box;
 }
 
 .add-new-column-input {
-    border: 1px solid lightgray !important;
-    background: #0000000D 0% 0% no-repeat padding-box !important;
+  height: 40px;
+  background: #0000000d 0% 0% no-repeat padding-box !important;
 }
 
 .add-new-column-input-type {
-    border: 1px solid lightgray !important;
-    background: #0000000D 0% 0% no-repeat padding-box !important;
+  border: 1px solid lightgray !important;
+  background: #0000000d 0% 0% no-repeat padding-box !important;
 }
 
-.ant-form-vertical .ant-form-item-label>label,
-.ant-col-24.ant-form-item-label>label,
-.ant-col-xl-24.ant-form-item-label>label {
-    margin: 0;
-    font-weight: 590 !important;
-    font: normal normal normal 14px/17px Inter;
-    color: black;
+.ant-form-vertical .ant-form-item-label > label,
+.ant-col-24.ant-form-item-label > label,
+.ant-col-xl-24.ant-form-item-label > label {
+  margin: 0;
+  font-weight: 590 !important;
+  font: normal normal normal 14px/17px Inter;
+  color: black;
 }
 
-.ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
-    padding: 0 11px;
-    background: #0000000D 0% 0% no-repeat padding-box !important;
+.ant-select-single.ant-select-lg:not(.ant-select-customize-input)
+  .ant-select-selector {
+  padding: 0 11px;
+  background: #0000000d 0% 0% no-repeat padding-box !important;
 }
 
 .add-new-column-container {
-    background-color: #F7F6F4 0% 0% no-repeat padding-box;
-    opacity: 1;
+  background-color: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
 }
-.ant-modal-content {
-    position: relative;
-    background: #F7F6F4 0% 0% no-repeat padding-box;
-    background-clip: padding-box;
-    border: 0;
-    border-radius: 2px;
-    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-    pointer-events: auto;
-    opacity: 1 !important;
+.add-new-column .ant-modal-content {
+  position: relative;
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  background-clip: padding-box;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
+    0 9px 28px 8px rgb(0 0 0 / 5%);
+  pointer-events: auto;
+  opacity: 1 !important;
 }
-.ant-modal-header {
-    padding: 16px 24px;
-    color: rgba(0, 0, 0, 0.85);
-    background: #F7F6F4 0% 0% no-repeat padding-box;
-    border-bottom: 1px solid #f0f0f0;
-    border-radius: 2px 2px 0 0;
-    opacity: 1 !important;
+.add-new-column .ant-modal-header {
+  padding: 16px 24px;
+  color: rgba(0, 0, 0, 0.85);
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 2px 2px 0 0;
+  opacity: 1 !important;
+}
+
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
+  background: #0000000d 0% 0% no-repeat padding-box !important;
+  border-color: #ff4d4f;
+  border: 1px solid #ff4d4f;
 }
