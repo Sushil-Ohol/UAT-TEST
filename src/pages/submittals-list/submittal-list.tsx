@@ -210,9 +210,11 @@ function SubmittalList() {
       cellEditor: "agRichSelectCellEditor",
       cellEditorParams: {
         cellRenderer: contractorEditCellRenderer,
-        values: DropDownData.ContractorOptions
+        values: DropDownData.ContractorOptions,
+        cellHeight: 20
       },
-      cellRenderer: contractorCellRenderer
+      cellRenderer: contractorCellRenderer,
+      cellEditorPopup: true
     },
     {
       field: "dependsOn",
@@ -237,9 +239,11 @@ function SubmittalList() {
       cellEditor: "agRichSelectCellEditor",
       minWidth: 100,
       autoHeight: true,
+      cellEditorPopup: true,
       cellEditorParams: {
         cellRenderer: assignedEditCellRenderer,
-        values: DropDownData.AssigneeOptions
+        values: DropDownData.AssigneeOptions,
+        cellHeight: 20
       },
       cellRenderer: assignedCellRenderer
     },
@@ -378,13 +382,17 @@ function SubmittalList() {
 
       const newitem = {
         ...newData[index],
-        status: data.status,
-        contractor: data.contractor,
-        assigned: data.assigned,
+        status: data.status !== undefined ? data.status : newData[index].status,
+        contractor:
+          data.contractor !== undefined
+            ? data.contractor
+            : newData[index].contractor,
+        assigned:
+          data.assigned !== undefined ? data.assigned : newData[index].assigned,
         dueBy:
           data.dueBy !== undefined
-            ? moment(data.dueBy).format("MM-DD-YYYY")
-            : ""
+            ? moment(data.dueBy).format("DD-MM-YYYY")
+            : newData[index].dueBy
       };
       newData[index] = newitem;
       gridRef.current!.api.setRowData(newData);
