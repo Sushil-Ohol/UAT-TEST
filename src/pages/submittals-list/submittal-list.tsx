@@ -144,6 +144,11 @@ function SubmittalList() {
         return params.value === ""
           ? "dependsOnDefaultCellColor"
           : "dependsOnHoverColor";
+      },
+      cellStyle: {
+        textAlign: "left",
+        textDecoration: "underline",
+        textDecorationStyle: "dashed"
       }
     },
     {
@@ -167,7 +172,8 @@ function SubmittalList() {
       cellClass: "ag-center-cell",
       cellStyle: {
         textAlign: "center"
-      }
+      },
+      maxWidth: 70
     }
   ]);
   const autoGroupColumnDef = useMemo(() => {
