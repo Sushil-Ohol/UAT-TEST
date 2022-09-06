@@ -141,7 +141,9 @@ function SubmittalList() {
       tooltipField: "dependsOn",
       tooltipComponent: DependsOnToolTip,
       cellClass(params) {
-        return params.value === "" ? "defaultCellColor" : "hoverColor";
+        return params.value === ""
+          ? "dependsOnDefaultCellColor"
+          : "dependsOnHoverColor";
       }
     },
     {
@@ -157,7 +159,12 @@ function SubmittalList() {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
       headerComponentFramework: AddNewColumn,
-      suppressColumnsToolPanel: true
+      suppressColumnsToolPanel: true,
+      headerClass: "ag-center-header",
+      cellClass: "ag-center-cell",
+      cellStyle: {
+        textAlign: "center"
+      }
     }
   ]);
 
