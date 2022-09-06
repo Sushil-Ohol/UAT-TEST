@@ -9,7 +9,7 @@ import {
   currencyCellEditor
 } from "./components";
 
-function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
+function AddNewColumn({ addNewColumnFunction }: any) {
   const [form] = Form.useForm<{ name: string; inputType: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Option } = Select;
@@ -17,52 +17,50 @@ function AddNewColumn({ setNewColumnDataField, newColumnDataField }: any) {
   const showModal = () => {
     setIsModalVisible(true);
   };
+
+  const camelCase = (text: any) => {
+    const newText = text.replace(/[-_\s.]+(.)?/g, (_: any, c: any) =>
+      c ? c.toUpperCase() : ""
+    );
+    return newText.substring(0, 1).toLowerCase() + newText.substring(1);
+  };
+
   const handleOk = () => {
     form.validateFields().then(() => {
       setIsModalVisible(false);
       const formValue = form.getFieldsValue();
+      let object;
       if (formValue.inputType === "date") {
-        setNewColumnDataField([
-          ...newColumnDataField,
-          {
-            field: formValue.name,
-            headerName: formValue.name.toUpperCase(),
-            minWidth: 140,
-            cellEditor: dateCellEditor
-          }
-        ]);
+        object = {
+          field: camelCase(formValue.name),
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140,
+          cellEditor: dateCellEditor
+        };
       } else if (formValue.inputType === "number") {
-        setNewColumnDataField([
-          ...newColumnDataField,
-          {
-            field: formValue.name,
-            headerName: formValue.name.toUpperCase(),
-            minWidth: 140,
-            cellEditor: numberCellEditor
-          }
-        ]);
+        object = {
+          field: camelCase(formValue.name),
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140,
+          cellEditor: numberCellEditor
+        };
       } else if (formValue.inputType === "currency") {
-        setNewColumnDataField([
-          ...newColumnDataField,
-          {
-            field: formValue.name,
-            headerName: formValue.name.toUpperCase(),
-            minWidth: 140,
-            editable: true,
-            filter: "agNumberColumnFilter",
-            cellEditor: currencyCellEditor
-          }
-        ]);
+        object = {
+          field: camelCase(formValue.name),
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140,
+          editable: true,
+          filter: "agNumberColumnFilter",
+          cellEditor: currencyCellEditor
+        };
       } else {
-        setNewColumnDataField([
-          ...newColumnDataField,
-          {
-            field: formValue.name,
-            headerName: formValue.name.toUpperCase(),
-            minWidth: 140
-          }
-        ]);
+        object = {
+          field: camelCase(formValue.name),
+          headerName: formValue.name.toUpperCase(),
+          minWidth: 140
+        };
       }
+      addNewColumnFunction(object);
       form.resetFields();
     });
   };

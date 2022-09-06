@@ -1,17 +1,13 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Drawer, message } from "antd";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import {
   CellEditRequestEvent,
+  ColDef,
   GetRowIdFunc,
   GetRowIdParams
 } from "ag-grid-community";
@@ -26,14 +22,13 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
-// import { DateFilter } from "utils/dateutils";
+import { FilterItem } from "models/types";
 import {
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
 } from "../../components/svg-icons/index";
 import AddNewColumn from "./add-new-column/add-new-column";
-// LicenseManager.setLicenseKey("<enterprisekey>");
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
@@ -56,8 +51,14 @@ function SubmittalList() {
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
-  const [newColumnDataField, setNewColumnDataField] = useState<any[]>([]);
-  const [columnDefs, setColumnDefs] = useState<any[]>([
+  const [filters, setFilters] = useState<FilterItem[]>([]);
+  const addNewColumnFunction = (object: any) => {
+    const columnDefsCopy = columnDefs;
+    columnDefsCopy.splice(columnDefs.length - 1, 0, object);
+    setColumnDefs(columnDefsCopy);
+    gridRef.current!.api.setColumnDefs(columnDefs);
+  };
+  const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     {
       field: "id",
       headerName: "ID",
@@ -157,20 +158,11 @@ function SubmittalList() {
       editable: false,
       headerComponentFramework: AddNewColumn,
       headerComponentParams: {
-        setNewColumnDataField,
-        newColumnDataField
+        addNewColumnFunction
       },
       suppressColumnsToolPanel: true
     }
   ]);
-  useEffect(() => {
-    if (newColumnDataField.length > 0) {
-      const columnDefsCopy = columnDefs;
-      columnDefsCopy.splice(columnDefs.length - 1, 0, ...newColumnDataField);
-      setColumnDefs(columnDefsCopy);
-      gridRef.current!.api.setColumnDefs(columnDefs);
-    }
-  }, [newColumnDataField]);
   const autoGroupColumnDef = useMemo(() => {
     return {
       headerName: "",
@@ -325,9 +317,31 @@ function SubmittalList() {
     setShowNewDrawer(false);
   };
 
+  const onFiltersApplied = (event: any) => {
+    const filtersApplied = event.api.getFilterModel();
+    if (filtersApplied) {
+      const items: FilterItem[] = new Array<FilterItem>();
+      Object.keys(filtersApplied).forEach((key: any) => {
+        if (filtersApplied[key].values.length > 0) {
+          const field = columnDefs.filter((x) => x.field === key)[0];
+          items.push({
+            field: key,
+            header: field ? field.headerName : key,
+            value: filtersApplied[key].values.join()
+          });
+        }
+      });
+      setFilters(items);
+    }
+  };
+
   return (
     <div>
-      <SubmittalListFilterComponent gridRef={gridRef} onNewClick={onNewClick} />
+      <SubmittalListFilterComponent
+        gridRef={gridRef}
+        onNewClick={onNewClick}
+        items={filters}
+      />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
           ref={gridRef}
@@ -348,6 +362,7 @@ function SubmittalList() {
           onCellEditRequest={onCellEditRequest}
           tooltipShowDelay={0}
           tooltipHideDelay={2000}
+          onFilterChanged={onFiltersApplied}
         />
       </div>
       <SubmittalListBottomBar
