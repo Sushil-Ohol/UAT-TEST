@@ -142,10 +142,10 @@ card {
 .text-check {
   background-color: white;
 }
-textarea.ant-input:hover {
+.textarea .ant-input:hover {
   border: 0px dashed rgba(128, 128, 128, 0.276);
 }
-.ant-input {
+.textarea .ant-input {
   color: black;
   font-size: 16px;
   border: 1px dashed #0000004d;
@@ -153,20 +153,28 @@ textarea.ant-input:hover {
   padding: 6px 11px;
   text-transform: capitalize;
 }
-.ant-input:hover {
+.form-item .ant-input {
+  color: black;
+  font-size: 16px;
+  border: 1px dashed #0000004d;
+  font-weight: 400;
+  padding: 6px 11px;
+  text-transform: capitalize;
+}
+.form-item .ant-input:hover {
   border: 1px dashed #0000004d;
   color: black;
   border: 0px;
   padding: 6px 11px;
 }
-.ant-input:focus {
+.form-item .ant-input:focus {
   border: 1px dashed #0000004d;
   color: black;
 
   padding: 6px 11px;
   box-shadow: unset;
 }
-.ant-input:active {
+.form-item .ant-input:active {
   border: 1px dashed #0000004d;
   color: black;
 

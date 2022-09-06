@@ -4,12 +4,16 @@ import { Button, Form, Input, Modal, Select } from "antd";
 import { PlusIcon } from "components/svg-icons";
 import "./add-new-column.css";
 import {
-  dateCellEditor,
-  numberCellEditor,
-  currencyCellEditor
-} from "./components";
+  NumberCellEditor,
+  CurrencyCellEditor,
+  DateCellEditor
+} from "components";
+import { camelCase } from "utils/stringutil";
 
-function AddNewColumn({ addNewColumnFunction }: any) {
+interface Props {
+  addNewColumnFunction: Function;
+}
+function AddNewColumn({ addNewColumnFunction }: Props) {
   const [form] = Form.useForm<{ name: string; inputType: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Option } = Select;
@@ -18,16 +22,9 @@ function AddNewColumn({ addNewColumnFunction }: any) {
     setIsModalVisible(true);
   };
 
-  const camelCase = (text: any) => {
-    const newText = text.replace(/[-_\s.]+(.)?/g, (_: any, c: any) =>
-      c ? c.toUpperCase() : ""
-    );
-    return newText.substring(0, 1).toLowerCase() + newText.substring(1);
-  };
-
   const handleOk = () => {
     form.validateFields().then(() => {
-      // setIsModalVisible(false);
+      setIsModalVisible(false);
       const formValue = form.getFieldsValue();
       let object;
       if (formValue.inputType === "date") {
@@ -35,14 +32,14 @@ function AddNewColumn({ addNewColumnFunction }: any) {
           field: camelCase(formValue.name),
           headerName: formValue.name.toUpperCase(),
           minWidth: 140,
-          cellEditor: dateCellEditor
+          cellEditor: DateCellEditor
         };
       } else if (formValue.inputType === "number") {
         object = {
           field: camelCase(formValue.name),
           headerName: formValue.name.toUpperCase(),
           minWidth: 140,
-          cellEditor: numberCellEditor
+          cellEditor: NumberCellEditor
         };
       } else if (formValue.inputType === "currency") {
         object = {
@@ -51,7 +48,7 @@ function AddNewColumn({ addNewColumnFunction }: any) {
           minWidth: 140,
           editable: true,
           filter: "agNumberColumnFilter",
-          cellEditor: currencyCellEditor
+          cellEditor: CurrencyCellEditor
         };
       } else {
         object = {
@@ -66,6 +63,7 @@ function AddNewColumn({ addNewColumnFunction }: any) {
   };
 
   const handleCancel = () => {
+    form.resetFields();
     setIsModalVisible(false);
   };
 
@@ -87,20 +85,28 @@ function AddNewColumn({ addNewColumnFunction }: any) {
             name="name"
             label="Name"
             className="add-new-column-label"
-            rules={[{ required: true, message: "Please input your name!" }]}
+            rules={[
+              { required: true, message: "Please Enter new column name!" }
+            ]}
           >
-            <Input name="name" className="add-new-column-input" />
+            <Input
+              name="name"
+              className="add-new-column-input"
+              placeholder="Enter column name"
+            />
           </Form.Item>
           <Form.Item
             className="add-new-column-label"
             name="inputType"
             label="Input type"
-            rules={[{ required: true, message: "Please select the type!" }]}
+            rules={[
+              { required: true, message: "Please select the column data type" }
+            ]}
           >
             <Select
               className="add-new-column-input-type"
               size="large"
-              placeholder=""
+              placeholder="Select column data type"
               allowClear
             >
               <Option value="text">Text</Option>

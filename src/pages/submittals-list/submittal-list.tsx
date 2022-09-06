@@ -23,6 +23,7 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
+import { DateCellEditor } from "components";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -34,7 +35,6 @@ import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import DueDateFilters from "./due-date-filter";
-import { dateCellEditor } from "./add-new-column/components";
 
 const notificationCellRenderer = () => {
   return "";
@@ -52,7 +52,7 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
-  const addNewColumnFunction = (object: any) => {
+  const addNewColumnFunction = (object: object) => {
     const columnDefsCopy = columnDefs;
     columnDefsCopy.splice(columnDefs.length - 1, 0, object);
     setColumnDefs(columnDefsCopy);
@@ -114,14 +114,14 @@ function SubmittalList() {
       field: "dueBy",
       headerName: "DUE BY",
       minWidth: 140,
-      cellEditor: dateCellEditor,
+      cellEditor: DateCellEditor,
       cellEditorPopup: true,
       filter: DueDateFilters
     },
     {
       field: "governingDate",
       headerName: "GOVERNING DATE",
-      cellEditor: dateCellEditor,
+      cellEditor: DateCellEditor,
       filter: "agDateColumnFilter",
       cellEditorPopup: true
     },
