@@ -77,7 +77,9 @@ const contractorCellRenderer = (props: any) => {
   );
 };
 
-const contractorEditCellRenderer = (params: any) => params.value.name;
+const contractorEditCellRenderer = (params: any) => {
+  return params.value ? params.value.name : "";
+};
 
 const assignedCellRenderer = (props: any) => {
   return (
@@ -88,7 +90,9 @@ const assignedCellRenderer = (props: any) => {
   );
 };
 
-const assignedEditCellRenderer = (params: any) => params.value.assignedTo;
+const assignedEditCellRenderer = (params: any) => {
+  return params.value ? params.value.assignedTo : "";
+};
 
 let immutableRowData: any[];
 
