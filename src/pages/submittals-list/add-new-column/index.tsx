@@ -51,7 +51,9 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
             editable: true,
             filter: "agNumberColumnFilter",
             cellEditor: CurrencyCellEditor,
-            cellRenderer: (params: any) => `$ ${params.value || 0}`
+            cellRenderer: (params: any) =>
+              params.value !== undefined &&
+              `$ ${parseFloat(params.value).toFixed(2)}`
           };
           break;
 
@@ -93,7 +95,10 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
             label="Name"
             className="add-new-column-label"
             rules={[
-              { required: true, message: "Please Enter new column name!" }
+              {
+                required: true,
+                message: "Please enter a name for the new column!"
+              }
             ]}
           >
             <Input
@@ -107,7 +112,10 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
             name="inputType"
             label="Input type"
             rules={[
-              { required: true, message: "Please select the column data type!" }
+              {
+                required: true,
+                message: "Please select an input type for the new column!"
+              }
             ]}
           >
             <Select
