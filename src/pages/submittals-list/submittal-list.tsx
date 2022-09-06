@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker, Drawer, message } from "antd";
+import { Drawer, message } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -21,24 +22,20 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
-import { DateFilter } from "utils/dateutils";
 import { FilterItem } from "models/types";
+import { DateCellEditor } from "components/cell-editor";
+import { IdLinkComponent } from "components/cell-renders";
 import {
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
 } from "../../components/svg-icons/index";
-import AddNewColumn from "./add-new-column/add-new-column";
-// LicenseManager.setLicenseKey("<enterprisekey>");
+import AddNewColumn from "./add-new-column";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import DueDateFilters from "./due-date-filter";
-
-function NewDatePicker() {
-  return <DatePicker />;
-}
 
 const notificationCellRenderer = () => {
   return "";
@@ -105,8 +102,13 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
-
-  const [columnDefs] = useState<ColDef[]>([
+  const onNewColumnAddition = (object: object) => {
+    const columnDefsCopy = columnDefs;
+    columnDefsCopy.splice(columnDefs.length - 1, 0, object);
+    setColumnDefs(columnDefsCopy);
+    gridRef.current!.api.setColumnDefs(columnDefs);
+  };
+  const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     {
       field: "id",
       headerName: "ID",
@@ -115,7 +117,19 @@ function SubmittalList() {
       headerCheckboxSelectionFilteredOnly: true,
       minWidth: 20,
       maxWidth: 100,
-      editable: false
+      editable: false,
+      cellRenderer: IdLinkComponent,
+      cellRendererParams: {
+        link: "/submittals/details"
+      },
+      cellClass(params) {
+        return params.value === "" ? "idDefaultCellColor" : "idHoverColor";
+      },
+      cellStyle: {
+        textAlign: "left",
+        textDecoration: "underline",
+        textDecorationStyle: "dashed"
+      }
     },
     {
       field: "submittal",
@@ -172,7 +186,7 @@ function SubmittalList() {
       headerName: "DUE BY",
       minWidth: 140,
       autoHeight: true,
-      cellEditor: NewDatePicker,
+      cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: DueDateFilters
@@ -182,11 +196,11 @@ function SubmittalList() {
       headerName: "GOVERNING DATE",
       minWidth: 180,
       autoHeight: true,
-      cellEditor: NewDatePicker,
+      cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
-      filterParams: DateFilter
+      filterParams: NodeFilter
     },
     {
       field: "contractor",
@@ -207,14 +221,21 @@ function SubmittalList() {
       tooltipField: "dependsOn",
       tooltipComponent: DependsOnToolTip,
       cellClass(params) {
-        return params.value === "" ? "defaultCellColor" : "hoverColor";
+        return params.value === ""
+          ? "dependsOnDefaultCellColor"
+          : "dependsOnHoverColor";
+      },
+      cellStyle: {
+        textAlign: "left",
+        textDecoration: "underline",
+        textDecorationStyle: "dashed"
       }
     },
     {
       field: "assigned",
       headerName: "ASSIGNED",
       cellEditor: "agRichSelectCellEditor",
-      minWidth: 150,
+      minWidth: 100,
       autoHeight: true,
       cellEditorParams: {
         cellRenderer: assignedEditCellRenderer,
@@ -226,10 +247,18 @@ function SubmittalList() {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
       headerComponentFramework: AddNewColumn,
-      suppressColumnsToolPanel: true
+      headerComponentParams: {
+        onNewColumnAddition
+      },
+      suppressColumnsToolPanel: true,
+      headerClass: "ag-center-header",
+      cellClass: "ag-center-cell",
+      cellStyle: {
+        textAlign: "center"
+      },
+      maxWidth: 70
     }
   ]);
-
   const autoGroupColumnDef = useMemo(() => {
     return {
       headerName: "",
