@@ -106,7 +106,7 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
             name="inputType"
             label="Input type"
             rules={[
-              { required: true, message: "Please select the column data type" }
+              { required: true, message: "Please select the column data type!" }
             ]}
           >
             <Select
