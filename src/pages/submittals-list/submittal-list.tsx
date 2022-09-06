@@ -23,7 +23,8 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
-import { DateCellEditor } from "components";
+import { DateCellEditor } from "components/cell-editor";
+import { IdLinkComponent } from "components/cell-renders";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -67,7 +68,19 @@ function SubmittalList() {
       headerCheckboxSelectionFilteredOnly: true,
       minWidth: 20,
       maxWidth: 100,
-      editable: false
+      editable: false,
+      cellRenderer: IdLinkComponent,
+      cellRendererParams: {
+        link: "/submittals/details"
+      },
+      cellClass(params) {
+        return params.value === "" ? "idDefaultCellColor" : "idHoverColor";
+      },
+      cellStyle: {
+        textAlign: "left",
+        textDecoration: "underline",
+        textDecorationStyle: "dashed"
+      }
     },
     {
       field: "submittal",

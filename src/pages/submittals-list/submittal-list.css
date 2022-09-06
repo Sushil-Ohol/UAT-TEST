@@ -14,7 +14,7 @@
   width: "auto";
   border: "0.2px solid #e5e5e5";
 }
-.searchInput{
+.searchInput {
   margin-left: 15px !important;
 }
 #filter-text-box {
@@ -157,7 +157,7 @@
 }
 .dependsOnHoverColor:hover {
   color: #0073cf !important;
-   text-decoration: underline;
+  text-decoration: underline;
 }
 .dependsOnDefaultCellColor {
   text-align: center !important;
@@ -168,4 +168,17 @@
 .select-custom-dropDown {
   width: fit-content !important;
 }
-
+.idHoverColor {
+  color: black !important ;
+  text-align: center;
+}
+.idHoverColor:hover {
+  color: #0073cf !important;
+  text-decoration: underline;
+}
+.idCellColor {
+  text-align: center !important;
+  color: black !important;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+}
