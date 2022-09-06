@@ -27,7 +27,7 @@ function AddNewColumn({ addNewColumnFunction }: any) {
 
   const handleOk = () => {
     form.validateFields().then(() => {
-      setIsModalVisible(false);
+      // setIsModalVisible(false);
       const formValue = form.getFieldsValue();
       let object;
       if (formValue.inputType === "date") {
@@ -82,13 +82,12 @@ function AddNewColumn({ addNewColumnFunction }: any) {
         okText="Add"
         onCancel={handleCancel}
       >
-        <Form form={form} layout="vertical" name="control-hooks" preserve>
+        <Form layout="vertical" name="control-hooks" preserve form={form}>
           <Form.Item
             name="name"
             label="Name"
             className="add-new-column-label"
             rules={[{ required: true, message: "Please input your name!" }]}
-            validateTrigger="onBlur"
           >
             <Input name="name" className="add-new-column-input" />
           </Form.Item>
