@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker, Drawer, message } from "antd";
+import { Drawer, message } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -22,24 +23,19 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
-import { DateFilter } from "utils/dateutils";
 import { FilterItem } from "models/types";
+import { DateCellEditor } from "components";
 import {
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
 } from "../../components/svg-icons/index";
-import AddNewColumn from "./add-new-column/add-new-column";
-// LicenseManager.setLicenseKey("<enterprisekey>");
+import AddNewColumn from "./add-new-column";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import DueDateFilters from "./due-date-filter";
-
-function NewDatePicker() {
-  return <DatePicker />;
-}
 
 const notificationCellRenderer = () => {
   return "";
@@ -66,8 +62,13 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
-
-  const [columnDefs] = useState<ColDef[]>([
+  const onNewColumnAddition = (object: object) => {
+    const columnDefsCopy = columnDefs;
+    columnDefsCopy.splice(columnDefs.length - 1, 0, object);
+    setColumnDefs(columnDefsCopy);
+    gridRef.current!.api.setColumnDefs(columnDefs);
+  };
+  const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     {
       field: "id",
       headerName: "ID",
@@ -132,17 +133,16 @@ function SubmittalList() {
       field: "dueBy",
       headerName: "DUE BY",
       minWidth: 140,
-      cellEditor: NewDatePicker,
+      cellEditor: DateCellEditor,
       cellEditorPopup: true,
       filter: DueDateFilters
     },
     {
+      field: "governingDate",
       headerName: "GOVERNING DATE",
-      minWidth: 180,
-      cellEditor: NewDatePicker,
-      cellEditorPopup: true,
+      cellEditor: DateCellEditor,
       filter: "agDateColumnFilter",
-      filterParams: DateFilter
+      cellEditorPopup: true
     },
     {
       field: "contractor",
@@ -174,7 +174,7 @@ function SubmittalList() {
       field: "assigned",
       headerName: "ASSIGNED",
       cellEditor: "agSelectCellEditor",
-      minWidth: 150,
+      minWidth: 100,
       cellEditorParams: {
         values: DropDownData.AssigneeOptions
       }
@@ -183,6 +183,9 @@ function SubmittalList() {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
       headerComponentFramework: AddNewColumn,
+      headerComponentParams: {
+        onNewColumnAddition
+      },
       suppressColumnsToolPanel: true,
       headerClass: "ag-center-header",
       cellClass: "ag-center-cell",
@@ -192,7 +195,6 @@ function SubmittalList() {
       maxWidth: 70
     }
   ]);
-
   const autoGroupColumnDef = useMemo(() => {
     return {
       headerName: "",

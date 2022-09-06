@@ -310,7 +310,7 @@ function ProjectCreate() {
                               <Form.Item
                                 label="Project Name"
                                 name="projectname"
-                                className="form-item"
+                                className="project-input"
                               >
                                 {defaultValue.projectName.length === 0 &&
                                   count > 0 && (
@@ -410,7 +410,7 @@ function ProjectCreate() {
                                     </small>
                                   )}
                                 <Input.Group>
-                                  <Row className="textarea">
+                                  <Row className="detail-text">
                                     <Col span={20}>
                                       <TextArea
                                         autoSize={{ minRows: 5, maxRows: 2 }}
