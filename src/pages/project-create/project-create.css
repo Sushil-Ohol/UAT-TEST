@@ -142,10 +142,10 @@ card {
 .text-check {
   background-color: white;
 }
-.textarea .ant-input:hover {
+.detail-text .ant-input:hover {
   border: 0px dashed rgba(128, 128, 128, 0.276);
 }
-.textarea .ant-input {
+.detail-text.ant-input {
   color: black;
   font-size: 16px;
   border: 1px dashed #0000004d;
@@ -153,7 +153,7 @@ card {
   padding: 6px 11px;
   text-transform: capitalize;
 }
-.form-item .ant-input {
+.project-input .ant-input {
   color: black;
   font-size: 16px;
   border: 1px dashed #0000004d;
@@ -161,20 +161,20 @@ card {
   padding: 6px 11px;
   text-transform: capitalize;
 }
-.form-item .ant-input:hover {
+.project-input .ant-input:hover {
   border: 1px dashed #0000004d;
   color: black;
   border: 0px;
   padding: 6px 11px;
 }
-.form-item .ant-input:focus {
+.project-input .ant-input:focus {
   border: 1px dashed #0000004d;
   color: black;
 
   padding: 6px 11px;
   box-shadow: unset;
 }
-.form-item .ant-input:active {
+.project-input .ant-input:active {
   border: 1px dashed #0000004d;
   color: black;
 
@@ -413,8 +413,9 @@ p.project-name-hint {
   margin-left: 1%;
 }
 
-textarea.ant-input {
+.detail-text textarea.ant-input {
   height: 65px;
+  border: 1px dashed #0000004d;
   overflow: auto;
   text-transform: capitalize;
 }
@@ -468,7 +469,7 @@ textarea.ant-input {
 .ant-progress-bg {
   background-color: #ffa41b;
 }
-.form-item {
+.project-input {
   position: relative;
   margin-bottom: 21px;
 }

@@ -29,7 +29,7 @@ import {
   DocAttachIcon,
   NotificationIcon
 } from "../../components/svg-icons/index";
-import AddNewColumn from "./add-new-column/add-new-column";
+import AddNewColumn from "./add-new-column";
 import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
@@ -52,7 +52,7 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
-  const addNewColumnFunction = (object: object) => {
+  const onNewColumnAddition = (object: object) => {
     const columnDefsCopy = columnDefs;
     columnDefsCopy.splice(columnDefs.length - 1, 0, object);
     setColumnDefs(columnDefsCopy);
@@ -165,7 +165,7 @@ function SubmittalList() {
       editable: false,
       headerComponentFramework: AddNewColumn,
       headerComponentParams: {
-        addNewColumnFunction
+        onNewColumnAddition
       },
       suppressColumnsToolPanel: true,
       headerClass: "ag-center-header",

@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
+
 import React, { useState } from "react";
 import { Button, Form, Input, Modal, Select } from "antd";
 import { PlusIcon } from "components/svg-icons";
@@ -11,9 +12,9 @@ import {
 import { camelCase } from "utils/stringutil";
 
 interface Props {
-  addNewColumnFunction: Function;
+  onNewColumnAddition: Function;
 }
-function AddNewColumn({ addNewColumnFunction }: Props) {
+function AddNewColumn({ onNewColumnAddition }: Props) {
   const [form] = Form.useForm<{ name: string; inputType: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Option } = Select;
@@ -23,41 +24,46 @@ function AddNewColumn({ addNewColumnFunction }: Props) {
   };
 
   const handleOk = () => {
-    form.validateFields().then(() => {
-      setIsModalVisible(false);
-      const formValue = form.getFieldsValue();
-      let object;
-      if (formValue.inputType === "date") {
-        object = {
-          field: camelCase(formValue.name),
-          headerName: formValue.name.toUpperCase(),
-          minWidth: 140,
-          cellEditor: DateCellEditor
-        };
-      } else if (formValue.inputType === "number") {
-        object = {
-          field: camelCase(formValue.name),
-          headerName: formValue.name.toUpperCase(),
-          minWidth: 140,
-          cellEditor: NumberCellEditor
-        };
-      } else if (formValue.inputType === "currency") {
-        object = {
-          field: camelCase(formValue.name),
-          headerName: formValue.name.toUpperCase(),
-          minWidth: 140,
-          editable: true,
-          filter: "agNumberColumnFilter",
-          cellEditor: CurrencyCellEditor
-        };
-      } else {
-        object = {
-          field: camelCase(formValue.name),
-          headerName: formValue.name.toUpperCase(),
-          minWidth: 140
-        };
+    form.validateFields().then((value) => {
+      let newColumObject;
+      switch (value.inputType) {
+        case "date":
+          newColumObject = {
+            field: camelCase(value.name),
+            headerName: value.name.toUpperCase(),
+            minWidth: 140,
+            cellEditor: DateCellEditor
+          };
+          break;
+        case "number":
+          newColumObject = {
+            field: camelCase(value.name),
+            headerName: value.name.toUpperCase(),
+            minWidth: 140,
+            cellEditor: NumberCellEditor
+          };
+          break;
+        case "currency":
+          newColumObject = {
+            field: camelCase(value.name),
+            headerName: value.name.toUpperCase(),
+            minWidth: 140,
+            editable: true,
+            filter: "agNumberColumnFilter",
+            cellEditor: CurrencyCellEditor
+          };
+          break;
+
+        default:
+          newColumObject = {
+            field: camelCase(value.name),
+            headerName: value.name.toUpperCase(),
+            minWidth: 140
+          };
+          break;
       }
-      addNewColumnFunction(object);
+      onNewColumnAddition(newColumObject);
+      setIsModalVisible(false);
       form.resetFields();
     });
   };
