@@ -9,8 +9,7 @@ import {
   CellEditRequestEvent,
   ColDef,
   GetRowIdFunc,
-  GetRowIdParams,
-  ICellRendererParams
+  GetRowIdParams
 } from "ag-grid-community";
 import "./submittal-list.css";
 import moment from "moment";
@@ -24,7 +23,8 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
-import { DateCellEditor } from "components";
+import { DateCellEditor } from "components/cell-editor";
+import { IdLinkComponent } from "components/cell-renders";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -42,15 +42,6 @@ const notificationCellRenderer = () => {
 };
 
 let immutableRowData: any[];
-
-function IdLinkComponent(props: ICellRendererParams) {
-  const { value } = props;
-  return (
-    <a target="_blank" rel="noopener noreferrer" href="/submittals/details">
-      {value}
-    </a>
-  );
-}
 
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
@@ -79,6 +70,9 @@ function SubmittalList() {
       maxWidth: 100,
       editable: false,
       cellRenderer: IdLinkComponent,
+      cellRendererParams: {
+        link: "/submittals/details"
+      },
       cellClass(params) {
         return params.value === "" ? "idDefaultCellColor" : "idHoverColor";
       },
