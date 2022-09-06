@@ -6,7 +6,7 @@ const currencyCellEditor = forwardRef((props: any, ref) => {
   useImperativeHandle(ref, () => {
     return {
       getValue() {
-        return `$ ${value}`;
+        return value;
       }
     };
   });

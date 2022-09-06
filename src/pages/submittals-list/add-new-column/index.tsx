@@ -50,7 +50,8 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
             minWidth: 140,
             editable: true,
             filter: "agNumberColumnFilter",
-            cellEditor: CurrencyCellEditor
+            cellEditor: CurrencyCellEditor,
+            cellRenderer: (params: any) => `$ ${params.value || 0}`
           };
           break;
 
