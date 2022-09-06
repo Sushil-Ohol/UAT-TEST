@@ -5,7 +5,6 @@
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  margin-left: 35%;
 }
 
 .add-new-column .ant-modal-body {
