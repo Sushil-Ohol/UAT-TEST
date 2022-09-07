@@ -1,9 +1,50 @@
-.custom-date-picker .ant-modal-footer {
-    padding-bottom: 20px;
-    text-align: center;
-    border-top: none;
+.custom-date-picker {
+  width: 600px !important;
+}
+.custom-date-picker .ant-modal-content {
+  background-color: #fff !important;
 }
 
-.custom-date-picker .ant-picker-range{
-    width: 100%;
+.custom-date-picker .ant-picker {
+  border: 0;
+}
+
+.custom-date-picker .ant-picker-range-separator,
+.custom-date-picker .ant-picker-active-bar,
+.ant-picker-suffix {
+  display: none;
+}
+
+.ant-picker-panel-container {
+  box-shadow: none;
+  margin-top: -30px !important;
+}
+.custom-date-picker .ant-picker-input {
+  display: none;
+}
+.custom-date-picker .ant-modal-body {
+  height: 285px;
+}
+.custom-date-picker .ant-modal-footer {
+  padding-bottom: 20px;
+  text-align: center;
+  border-top: none;
+}
+
+.custom-date-picker .ant-picker-range {
+  width: 100%;
+}
+.ant-picker-panel:nth-child(1) {
+  background: #eaeae8;
+  margin-right: 5px;
+}
+.ant-picker-panel:nth-child(2) {
+  background: #eaeae8;
+  margin-left: 10px;
+}
+.customRangePicker .ant-picker-dropdown-hidden {
+  display: block !important;
+}
+.custom-date-picker .ant-picker-range-arrow {
+  display: none !important;
 }

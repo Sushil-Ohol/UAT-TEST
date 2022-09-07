@@ -1,4 +1,4 @@
-import { Modal, DatePicker } from "antd";
+import { Modal, DatePicker, Button } from "antd";
 import "./date-range-picker.css";
 
 const { RangePicker } = DatePicker;
@@ -12,21 +12,43 @@ function DateRangePickerModal(props: any) {
         title={title}
         visible={isOpen}
         className="custom-date-picker"
-        okText="Apply"
-        onOk={() => {
+        onCancel={() => {
           onOkClick();
           setIsOpen(false);
         }}
-        onCancel={() => {
-          setCustomDateRange();
-          setIsOpen(false);
-        }}
+        footer={[
+          <Button
+            key="back"
+            onClick={() => {
+              setCustomDateRange();
+              setIsOpen(false);
+            }}
+          >
+            Cancel
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            onClick={() => {
+              onOkClick();
+              setIsOpen(false);
+            }}
+          >
+            Apply
+          </Button>
+        ]}
       >
         <RangePicker
+          autoFocus
+          open
+          className="customRangePicker1"
           format="DD-MM-YYYY"
           onChange={(value) => setCustomDateRange(value)}
+          defaultOpen
+          getPopupContainer={(trigger) => {
+            return trigger;
+          }}
         />
-        <div className="customRangePicker" />
       </Modal>
     </div>
   );
