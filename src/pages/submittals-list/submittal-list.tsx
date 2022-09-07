@@ -345,8 +345,7 @@ function SubmittalList() {
     loadList();
   }, []);
 
-  // eslint-disable-next-line prettier/prettier
-  React.useEffect(() => { }, [immutableRowData]);
+  React.useEffect(() => {}, [immutableRowData]);
 
   React.useEffect(() => {
     dispatch(setProjectId(projectId));
