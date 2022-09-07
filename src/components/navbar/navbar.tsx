@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "store";
 import { useHistory } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import { AppLogoIcon } from "components/svg-icons";
+import { slugToText } from "utils/stringutil";
 import Menus from "./menus";
 import "./navbar.css";
 
@@ -33,7 +34,7 @@ function Nav() {
             dispatch(setProjectId(""));
             history.push("/projects");
           }}
-          title={projectId}
+          title={slugToText(projectId)}
         />
       )}
       {projectId !== "" && (

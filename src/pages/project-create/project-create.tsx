@@ -23,6 +23,7 @@ import {
   hexagoanStyleScreen2
 } from "constants/index";
 import { addProject } from "store/slices/projectSlice";
+import { textToSlug } from "utils/stringutil";
 
 function ProjectCreate() {
   const history = useHistory();
@@ -622,7 +623,9 @@ function ProjectCreate() {
                           <Col span={12} offset={6}>
                             <Button
                               type="link"
-                              href={`/project/details/${defaultValue.projectName}/submittals`}
+                              href={`/project/details/${textToSlug(
+                                defaultValue.projectName
+                              )}/submittals`}
                               className="btn-submittals"
                             >
                               View Submittals <ArrowRightOutlined />

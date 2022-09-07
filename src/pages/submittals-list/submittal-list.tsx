@@ -145,8 +145,9 @@ function SubmittalList() {
       minWidth: 350,
       maxWidth: 250,
       autoHeight: true,
-      tooltipField: "description",
+      tooltipField: "submittal",
       cellRenderer: submittalCellRenderer,
+      tooltipComponent: DependsOnToolTip,
       cellStyle: {
         overflow: "hidden",
         padding: 0
