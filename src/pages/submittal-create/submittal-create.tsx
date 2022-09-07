@@ -32,7 +32,8 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
         contractor: selectedContractor[0] || "",
         assigned: assigned[0] || "",
         package: values.package || "",
-        dependsOn: values.dependsOn || ""
+        dependsOn: values.dependsOn || "",
+        status: values.status || ""
       };
       onApplyClick(data);
     });
@@ -112,27 +113,13 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
         </Select>
       </Form.Item>
 
-      <Form.Item name="package" label="Package">
-        <Select
-          className="select-box"
-          bordered={false}
-          placeholder="Select Package"
-        >
-          {DropDownData.PackageOptions.map((item) => (
-            <Select.Option key={item} value={item}>
-              {item}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-
       <Form.Item name="dependsOn" label="Depends On">
         <Select
           className="select-box"
           bordered={false}
           placeholder="Select depends on"
         >
-          <Select.Option key="5" value="5">
+          <Select.Option key="other" value="other">
             Other
           </Select.Option>
         </Select>

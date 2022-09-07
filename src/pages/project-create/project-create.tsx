@@ -23,6 +23,7 @@ import {
   hexagoanStyleScreen2
 } from "constants/index";
 import { addProject } from "store/slices/projectSlice";
+import { textToSlug } from "utils/stringutil";
 
 function ProjectCreate() {
   const history = useHistory();
@@ -187,14 +188,14 @@ function ProjectCreate() {
       defaultValue.projectName.length === 0 &&
       defaultValue.details.length > 0
     ) {
-      str = " Please confirm the project name before you can proceed.";
+      str = " Please confirm the project name to proceed.";
     }
     if (
       defaultValue.details.length === 0 &&
       !confirmDetailsText &&
       countCall.details
     ) {
-      str = " Please confirm the details before you can proceed.";
+      str = " Please confirm the details to proceed.";
     }
     if (
       defaultValue.projectName.length === 0 &&
@@ -622,7 +623,9 @@ function ProjectCreate() {
                           <Col span={12} offset={6}>
                             <Button
                               type="link"
-                              href="/project/details/:projectId/submittals"
+                              href={`/project/details/${textToSlug(
+                                defaultValue.projectName
+                              )}/submittals`}
                               className="btn-submittals"
                             >
                               View Submittals <ArrowRightOutlined />

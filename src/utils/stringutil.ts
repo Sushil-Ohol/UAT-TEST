@@ -4,3 +4,14 @@ export const camelCase = (text: string) => {
   );
   return newText.substring(0, 1).toLowerCase() + newText.substring(1);
 };
+
+export const textToSlug = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+};
+
+export const slugToText = (text: string) => {
+  return text.toLowerCase().replace(/-/g, " ");
+};

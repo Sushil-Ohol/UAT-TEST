@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
-// import { DateCellEditor } from "components/cell-editor";
+import { DateCellEditor } from "components";
 import { IdLinkComponent } from "components/cell-renders";
 import {
   ChatIcon,
@@ -56,8 +56,8 @@ const dateCellRenderer = (props: any) => {
     dates &&
     moment()
       .year(dates[2])
-      .month(dates[1] - 1)
-      .date(dates[0]);
+      .month(dates[0] - 1)
+      .date(dates[1]);
   return (
     <>
       <p className="colFirstValue">{props.value}</p>
@@ -123,6 +123,7 @@ function SubmittalList() {
       headerCheckboxSelectionFilteredOnly: true,
       minWidth: 20,
       maxWidth: 100,
+      filter: false,
       editable: false,
       cellRenderer: IdLinkComponent,
       cellRendererParams: {
@@ -140,11 +141,13 @@ function SubmittalList() {
     {
       field: "submittal",
       headerName: "SUBMITTAL",
+      filter: false,
       minWidth: 350,
       maxWidth: 250,
       autoHeight: true,
-      tooltipField: "description",
+      tooltipField: "submittal",
       cellRenderer: submittalCellRenderer,
+      tooltipComponent: DependsOnToolTip,
       cellStyle: {
         overflow: "hidden",
         padding: 0
@@ -190,7 +193,7 @@ function SubmittalList() {
       headerName: "DUE BY",
       minWidth: 140,
       autoHeight: true,
-      // cellEditor: DateCellEditor,
+      cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: DueDateFilters
@@ -200,7 +203,7 @@ function SubmittalList() {
       headerName: "GOVERNING DATE",
       minWidth: 180,
       autoHeight: true,
-      // cellEditor: DateCellEditor,
+      cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
       filter: "agDateColumnFilter",
@@ -260,6 +263,7 @@ function SubmittalList() {
     {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
+      headerTooltip: "Add new column",
       headerComponentFramework: AddNewColumn,
       headerComponentParams: {
         onNewColumnAddition
@@ -422,8 +426,7 @@ function SubmittalList() {
       ...data,
       notification: 0,
       comments: 0,
-      revision: 0,
-      status: ""
+      revision: 0
     };
     newData.push(newItem);
     setRowData(newData);
@@ -461,7 +464,6 @@ function SubmittalList() {
         <AgGridReact<SubmittalLog>
           ref={gridRef}
           rowData={rowData}
-          enableBrowserTooltips
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}
