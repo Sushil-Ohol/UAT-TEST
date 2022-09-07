@@ -260,6 +260,7 @@ function SubmittalList() {
     {
       cellRendererFramework: Buttons.MoreOutlinedButton,
       editable: false,
+      headerTooltip: "Add new column",
       headerComponentFramework: AddNewColumn,
       headerComponentParams: {
         onNewColumnAddition
@@ -461,7 +462,6 @@ function SubmittalList() {
         <AgGridReact<SubmittalLog>
           ref={gridRef}
           rowData={rowData}
-          enableBrowserTooltips
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}

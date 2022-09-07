@@ -31,7 +31,6 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
           newColumObject = {
             field: camelCase(value.name),
             headerName: value.name.toUpperCase(),
-            minWidth: 140,
             cellEditor: DateCellEditor
           };
           break;
@@ -39,7 +38,6 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
           newColumObject = {
             field: camelCase(value.name),
             headerName: value.name.toUpperCase(),
-            minWidth: 140,
             cellEditor: NumberCellEditor
           };
           break;
@@ -47,9 +45,6 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
           newColumObject = {
             field: camelCase(value.name),
             headerName: value.name.toUpperCase(),
-            minWidth: 140,
-            editable: true,
-            filter: "agNumberColumnFilter",
             cellEditor: CurrencyCellEditor,
             cellRenderer: (params: any) =>
               params.value !== undefined &&
@@ -60,8 +55,7 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
         default:
           newColumObject = {
             field: camelCase(value.name),
-            headerName: value.name.toUpperCase(),
-            minWidth: 140
+            headerName: value.name.toUpperCase()
           };
           break;
       }

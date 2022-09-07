@@ -622,7 +622,7 @@ function ProjectCreate() {
                           <Col span={12} offset={6}>
                             <Button
                               type="link"
-                              href="/project/details/:projectId/submittals"
+                              href={`/project/details/${defaultValue.projectName}/submittals`}
                               className="btn-submittals"
                             >
                               View Submittals <ArrowRightOutlined />

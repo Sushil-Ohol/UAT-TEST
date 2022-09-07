@@ -161,12 +161,12 @@ export default class Hexagon extends Component {
             y={
               text === "Schedule" && sideLength !== 100
                 ? (1.3 * height) / 2 + fontSizeOffset + 4
-                : (1.4 * height) / 2 + fontSizeOffset + 4
+                : (1.3 * height) / 2 + fontSizeOffset + 6
             }
             textAnchor="middle"
             style={{
               fill: colorCode.error,
-              fontSize: sideLength === 100 ? "9px" : "7px"
+              fontSize: sideLength === 100 ? "9px" : "6px"
             }}
           >
             {error && "Unsupported format."}
@@ -189,12 +189,12 @@ export default class Hexagon extends Component {
             y={
               text === "Schedule" && sideLength !== 100
                 ? (1.4 * height) / 2 + fontSizeOffset + 6
-                : (1.5 * height) / 2 + fontSizeOffset + 6
+                : (1.4 * height) / 2 + fontSizeOffset + 8
             }
             textAnchor="middle"
             style={{
               fill: colorCode.error,
-              fontSize: sideLength === 100 ? "9px" : "7px"
+              fontSize: sideLength === 100 ? "9px" : "6px"
             }}
           >
             {error && error}

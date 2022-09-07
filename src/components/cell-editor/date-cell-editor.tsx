@@ -4,23 +4,23 @@ import { forwardRef, useState, useImperativeHandle } from "react";
 
 const dateCellEditor = forwardRef((props: any, ref) => {
   const [value, setValue] = useState(
-    moment(props.value || moment().format("MM-DD-YYYY"), "MM-DD-YYYY")
+    moment(props.value || moment().format("DD-MM-YYYY"), "DD-MM-YYYY")
   );
 
   useImperativeHandle(ref, () => {
     return {
       getValue() {
-        return moment(value).format("MM-DD-YYYY");
+        return moment(value).format("DD-MM-YYYY");
       }
     };
   });
 
   return (
     <DatePicker
-      format="MM-DD-YYYY"
+      format="DD-MM-YYYY"
       value={value}
       onChange={(date: any) => {
-        setValue(date);
+        setValue(date || moment(moment().format("DD-MM-YYYY"), "DD-MM-YYYY"));
       }}
       style={{ width: "100%" }}
     />
