@@ -35,6 +35,7 @@ import { DropDownData } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
+import SubmittalTooltip from "./submittal-tooltip";
 import DueDateFilters from "./due-date-filter";
 
 const notificationCellRenderer = () => {
@@ -147,7 +148,7 @@ function SubmittalList() {
       autoHeight: true,
       tooltipField: "submittal",
       cellRenderer: submittalCellRenderer,
-      tooltipComponent: DependsOnToolTip,
+      tooltipComponent: SubmittalTooltip,
       cellStyle: {
         overflow: "hidden",
         padding: 0
