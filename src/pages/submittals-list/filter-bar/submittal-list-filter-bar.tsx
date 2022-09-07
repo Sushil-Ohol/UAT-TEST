@@ -9,10 +9,12 @@ export type FilterProps = {
   gridRef: any;
   onNewClick: any;
   items: FilterItem[];
+  setItems: any;
+  setDueDateFilter: any;
 };
 
 function SubmittalListFilterComponent(props: FilterProps) {
-  const { gridRef, onNewClick, items } = props;
+  const { gridRef, onNewClick, items, setItems, setDueDateFilter } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
     gridRef.current!.api.setQuickFilter(
@@ -21,9 +23,19 @@ function SubmittalListFilterComponent(props: FilterProps) {
   }, [gridRef]);
 
   const onFilterChipDelete = (item: FilterItem) => {
-    const filterModel = gridRef.current!.api.getFilterModel();
-    delete filterModel[item.field];
-    gridRef.current!.api.setFilterModel(filterModel);
+    if (item.field === "dueBy") {
+      const index = items.findIndex((val) => val.field === "dueBy");
+      if (index > -1) {
+        delete items[index];
+      }
+      setItems([...items].filter(Boolean));
+      setDueDateFilter("");
+      gridRef.current.api.destroyFilter("dueBy");
+    } else {
+      const filterModel = gridRef.current!.api.getFilterModel();
+      delete filterModel[item.field];
+      gridRef.current!.api.setFilterModel(filterModel);
+    }
   };
 
   return (

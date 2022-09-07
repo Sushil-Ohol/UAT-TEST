@@ -107,6 +107,7 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
+  const [dueDateFilter, setDueDateFilter] = useState("");
 
   const onNewColumnAddition = (object: object) => {
     const columnDefsCopy = columnDefs;
@@ -197,7 +198,8 @@ function SubmittalList() {
       cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
-      filter: DueDateFilters
+      filter: DueDateFilters,
+      filterParams: { setDueDateFilter }
     },
     {
       field: "governingDate",
@@ -450,6 +452,13 @@ function SubmittalList() {
           });
         }
       });
+      if (dueDateFilter) {
+        items.push({
+          field: "dueBy",
+          header: "Due Date",
+          value: dueDateFilter
+        });
+      }
       setFilters(items);
     }
   };
@@ -460,6 +469,8 @@ function SubmittalList() {
         gridRef={gridRef}
         onNewClick={onNewClick}
         items={filters}
+        setItems={setFilters}
+        setDueDateFilter={setDueDateFilter}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
