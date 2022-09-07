@@ -6,12 +6,9 @@ export const camelCase = (text: string) => {
 };
 
 export const textToSlug = (text: string) => {
-  return text
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
+  return text.replace(/ /g, "-").replace(/[^\w-]+/g, "");
 };
 
 export const slugToText = (text: string) => {
-  return text.toLowerCase().replace(/-/g, " ");
+  return text.replace(/-/g, " ");
 };
