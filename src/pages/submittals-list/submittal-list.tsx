@@ -35,6 +35,7 @@ import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import DueDateFilters from "./due-date-filter";
+import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
 function NewDatePicker() {
   return <DatePicker />;
@@ -72,7 +73,11 @@ function SubmittalList() {
       field: "submittal",
       headerName: "SUBMITTAL",
       minWidth: 350,
-      tooltipField: "submittal"
+      tooltipField: "submittal",
+      editable: false,
+      onCellClicked: (event) => {
+        event.node.setExpanded(!event.node.expanded);
+      }
     },
     {
       field: "notification",
@@ -229,7 +234,8 @@ function SubmittalList() {
     loadList();
   }, []);
 
-  React.useEffect(() => {}, [immutableRowData]);
+  // eslint-disable-next-line prettier/prettier
+  React.useEffect(() => { }, [immutableRowData]);
 
   React.useEffect(() => {
     dispatch(setProjectId(projectId));
@@ -368,6 +374,10 @@ function SubmittalList() {
           tooltipShowDelay={0}
           tooltipHideDelay={2000}
           onFilterChanged={onFiltersApplied}
+          rowClass="table-row"
+          masterDetail
+          detailRowAutoHeight
+          detailCellRenderer={SubmittalSourceDetailRenderer}
         />
       </div>
       <SubmittalListBottomBar

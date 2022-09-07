@@ -14,9 +14,11 @@
   width: "auto";
   border: "0.2px solid #e5e5e5";
 }
-.searchInput{
+
+.searchInput {
   margin-left: 15px !important;
 }
+
 #filter-text-box {
   text-align: left;
   font: normal normal normal 16px/20px Inter;
@@ -123,10 +125,12 @@
   width: 100%;
   text-align: end;
 }
+
 .inner {
   display: inline-block;
   height: 30px;
 }
+
 .EditBtn {
   margin-left: 10px;
   height: 30px;
@@ -151,23 +155,38 @@
 .NweSubmittalBtn {
   margin-left: 10px !important;
 }
+
 .dependsOnHoverColor {
-  color: black !important ;
+  color: black !important;
   text-align: center;
 }
+
 .dependsOnHoverColor:hover {
   color: #0073cf !important;
-   text-decoration: underline;
+  text-decoration: underline;
 }
+
 .dependsOnDefaultCellColor {
   text-align: center !important;
   color: black !important;
   text-decoration: underline;
   text-decoration-style: dashed;
 }
+
 .select-custom-dropDown {
   width: fit-content !important;
 }
+
 .ag-header-cell-label {
   justify-content: center;
+}
+
+.table-row {
+  background-color: white;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+.ag-full-width-container .table-row {
+  border: none;
 }

@@ -1,0 +1,55 @@
+.source-detail-container {
+  padding: 12px;
+  margin-left: 90px;
+}
+
+@media (max-width: 1233px) {
+  .source-detail-container {
+    margin-left: 8px;
+  }
+}
+
+.source-detail-element {
+  padding: 8px;
+  margin: 0 6px;
+}
+
+.source-detail-screenshot img {
+  width: 100%;
+  border: 1px solid #999;
+}
+
+.source-detail-name-editor {
+  flex: 0 0 300px;
+  white-space: break-spaces;
+  display: flex;
+  flex-flow: nowrap;
+}
+
+.source-detail-name {
+  padding: 3px;
+  border: 1px dashed #999;
+  width: 240px;
+  height: fit-content;
+}
+
+.source-detail-edit-icons {
+  display: flex;
+  position: relative;
+}
+
+.source-detail-edit-icons button {
+  padding: 4px;
+  border: 1px dashed #999;
+  box-shadow: none;
+  margin: -1px;
+  width: 28px;
+  height: 28px;
+  line-height: 1;
+}
+
+.source-detail-auto-icon {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+}
