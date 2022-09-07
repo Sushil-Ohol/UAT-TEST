@@ -9,7 +9,6 @@ type FilterChipProps = {
 
 function FilterChips(props: FilterChipProps) {
   const { items, onChipDelete } = props;
-
   const handleDelete = (item: any) => {
     onChipDelete(item);
   };
@@ -18,8 +17,20 @@ function FilterChips(props: FilterChipProps) {
     <div className="filter">
       {items.map((item: any) => (
         <div className="tag-item" key={item.field}>
-          {item.header}
-          <Button className="button" onClick={() => handleDelete(item)}>
+          {item.header}:{item.value.split(",")[0]}
+          <div className="tooltip">
+            <Button className="button">{item.value.split(",").length}</Button>
+            <span className="tooltip-text">
+              {item.value.split(",").slice(1)}
+            </span>
+          </div>
+          <Button
+            className="button"
+            onClick={() => {
+              handleDelete(item);
+              items.pop();
+            }}
+          >
             x
           </Button>
         </div>

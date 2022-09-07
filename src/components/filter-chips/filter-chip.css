@@ -30,3 +30,52 @@
     align-items: center;
     justify-content: center;
   }
+/* .tooltip{
+  display:none;
+}
+.tooltip-on-hover:hover + .tooltip { display: block; }
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+} */
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(219, 218, 218);
+  color: #fff;
+  text-align: center;
+  border-radius: 30px;
+  padding: 5px 0;
+  color:black;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+ top:90px;
+ 
+}
+.tooltip-text:empty{
+  display: none;
+}
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  width:200px;
+}
+.button {
+  background-color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  margin-left: 10px;
+  font-weight: bold;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
