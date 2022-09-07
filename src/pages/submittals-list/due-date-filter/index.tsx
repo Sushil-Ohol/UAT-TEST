@@ -45,7 +45,7 @@ export default forwardRef(
 
           const tempDate = value.split("-");
           const currentDate = moment(
-            `${tempDate[1]}/${tempDate[0]}/${tempDate[2]}`
+            `${tempDate[0]}/${tempDate[1]}/${tempDate[2]}`
           ).format("MM/DD/YYYY");
 
           switch (selectedVal) {
