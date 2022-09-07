@@ -206,6 +206,7 @@
   overflow: hidden !important;
   text-overflow: ellipsis;
   display: block;
+  height: 25px;
 }
 
 div.ag-rich-select .ag-rich-select-list {

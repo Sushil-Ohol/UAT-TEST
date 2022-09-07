@@ -56,8 +56,8 @@ const dateCellRenderer = (props: any) => {
     dates &&
     moment()
       .year(dates[2])
-      .month(dates[1] - 1)
-      .date(dates[0]);
+      .month(dates[0] - 1)
+      .date(dates[1]);
   return (
     <>
       <p className="colFirstValue">{props.value}</p>
@@ -123,6 +123,7 @@ function SubmittalList() {
       headerCheckboxSelectionFilteredOnly: true,
       minWidth: 20,
       maxWidth: 100,
+      filter: false,
       editable: false,
       cellRenderer: IdLinkComponent,
       cellRendererParams: {
@@ -140,6 +141,7 @@ function SubmittalList() {
     {
       field: "submittal",
       headerName: "SUBMITTAL",
+      filter: false,
       minWidth: 350,
       maxWidth: 250,
       autoHeight: true,
@@ -423,8 +425,7 @@ function SubmittalList() {
       ...data,
       notification: 0,
       comments: 0,
-      revision: 0,
-      status: ""
+      revision: 0
     };
     newData.push(newItem);
     setRowData(newData);
