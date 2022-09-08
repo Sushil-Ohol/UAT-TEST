@@ -24,7 +24,16 @@ import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
 import { DateCellEditor } from "components";
-import { IdLinkComponent } from "components/cell-renders";
+import {
+  IdLinkComponent,
+  notificationCellRenderer,
+  submittalCellRenderer,
+  dateCellRenderer,
+  contractorCellRenderer,
+  contractorEditCellRenderer,
+  assignedCellRenderer,
+  assignedEditCellRenderer
+} from "components/cell-renders";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -38,63 +47,6 @@ import DependsOnToolTip from "./depends-on-tooltip";
 import SubmittalTooltip from "./submittal-tooltip";
 import DueDateFilters from "./due-date-filter";
 import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
-
-const notificationCellRenderer = () => {
-  return "";
-};
-
-const submittalCellRenderer = (props: any) => {
-  return (
-    <>
-      <p className="colFirstValue">{props.data.submittal}</p>
-      <p className="colSecondValue">{props.data.description}</p>
-    </>
-  );
-};
-
-const dateCellRenderer = (props: any) => {
-  const dates = props.value && props.value.split("-");
-  const newDate =
-    dates &&
-    moment()
-      .year(dates[2])
-      .month(dates[0] - 1)
-      .date(dates[1]);
-  return (
-    <>
-      <p className="colFirstValue">{props.value}</p>
-      <p className="colSecondValue">
-        {newDate ? moment(newDate).fromNow() : ""}
-      </p>
-    </>
-  );
-};
-
-const contractorCellRenderer = (props: any) => {
-  return (
-    <>
-      <p className="colFirstValue">{props.value.name}</p>
-      <p className="colSecondValue">{props.value.email}</p>
-    </>
-  );
-};
-
-const contractorEditCellRenderer = (params: any) => {
-  return params.value ? params.value.name : "";
-};
-
-const assignedCellRenderer = (props: any) => {
-  return (
-    <>
-      <p className="colFirstValue">{props.value.assignedTo}</p>
-      <p className="colSecondValue">{props.value.destination}</p>
-    </>
-  );
-};
-
-const assignedEditCellRenderer = (params: any) => {
-  return params.value ? params.value.assignedTo : "";
-};
 
 let immutableRowData: any[];
 
