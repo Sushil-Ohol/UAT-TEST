@@ -1,0 +1,38 @@
+[
+  {
+    "id": "P00001",
+    "name": "Northgate Hospital",
+    "description": "Northgate Hospital",
+    "documents":"12",
+    "floors":"3",
+    "materials":"55",
+    "submittals":"100"
+  },
+  {
+    "id": "P00002",
+    "name": "Trade Center Phase 1",
+    "description": "Trade Center Phase 1",
+    "documents":"12",
+    "floors":"3",
+    "materials":"55",
+    "submittals":"100"
+  },
+  {
+    "id": "P00003",
+    "name": "Trade Center Phase 2",
+    "description": "Trade Center Phase 1",
+    "documents":"12",
+    "floors":"3",
+    "materials":"55",
+    "submittals":"100"
+  },
+  {
+    "id": "P00004",
+    "name": "Xion Mall",
+    "description": "Xion Mall",
+    "documents":"12",
+    "floors":"3",
+    "materials":"55",
+    "submittals":"100"
+  }
+]
