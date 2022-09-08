@@ -1,6 +1,6 @@
 import { Button, Form, Select, DatePicker } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { DropDownData, dateFormat } from "../../constants";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-edit.css";
 
 const { Option } = Select;
@@ -44,7 +44,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         </Select>
       </Form.Item>
       <Form.Item name="dueBy" label="Due Date">
-        <DatePicker format={dateFormat} className="drawerDatePicker" />
+        <DatePicker format={DATE_FORMAT_MMDDYYY} className="drawerDatePicker" />
       </Form.Item>
       <Form.Item name="contractor" label="Contractor">
         <Select className="constructionSelect">

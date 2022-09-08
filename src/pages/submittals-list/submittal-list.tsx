@@ -31,7 +31,7 @@ import {
   NotificationIcon
 } from "../../components/svg-icons/index";
 import AddNewColumn from "./add-new-column";
-import { DropDownData } from "../../constants";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
@@ -413,7 +413,7 @@ function SubmittalList() {
           data.assigned !== undefined ? data.assigned : newData[index].assigned,
         dueBy:
           data.dueBy !== undefined
-            ? moment(data.dueBy).format("MM-DD-YYYY")
+            ? moment(data.dueBy).format(DATE_FORMAT_MMDDYYY)
             : newData[index].dueBy
       };
       newData[index] = newitem;
