@@ -125,7 +125,7 @@ function SubmittalList() {
       headerCheckboxSelection: true,
       headerCheckboxSelectionFilteredOnly: true,
       minWidth: 20,
-      maxWidth: 100,
+      maxWidth: 125,
       filter: false,
       editable: false,
       cellRenderer: IdLinkComponent,
@@ -305,7 +305,6 @@ function SubmittalList() {
       editable: true,
       filter: true,
       width: 120,
-      alignItems: "center",
       resizable: true
     };
   }, []);
@@ -414,7 +413,7 @@ function SubmittalList() {
           data.assigned !== undefined ? data.assigned : newData[index].assigned,
         dueBy:
           data.dueBy !== undefined
-            ? moment(data.dueBy).format("DD-MM-YYYY")
+            ? moment(data.dueBy).format("MM-DD-YYYY")
             : newData[index].dueBy
       };
       newData[index] = newitem;
