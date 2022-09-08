@@ -37,6 +37,7 @@ import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import SubmittalTooltip from "./submittal-tooltip";
 import DueDateFilters from "./due-date-filter";
+import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
 const notificationCellRenderer = () => {
   return "";
@@ -153,6 +154,10 @@ function SubmittalList() {
       cellStyle: {
         overflow: "hidden",
         padding: 0
+      },
+      editable: false,
+      onCellClicked: (event) => {
+        event.node.setExpanded(!event.node.expanded);
       }
     },
     {
@@ -493,6 +498,10 @@ function SubmittalList() {
           tooltipShowDelay={0}
           tooltipHideDelay={2000}
           onFilterChanged={onFiltersApplied}
+          rowClass="table-row"
+          masterDetail
+          detailRowAutoHeight
+          detailCellRenderer={SubmittalSourceDetailRenderer}
         />
       </div>
       <SubmittalListBottomBar

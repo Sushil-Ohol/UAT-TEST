@@ -27,12 +27,6 @@ export default function ApprovedIcon() {
             transform="translate(-2.715 -3.397)"
             fill="#24c30a"
           />
-          <path
-            id="Path_249"
-            data-name="Path 249"
-            d="M12.375,4.587a7.785,7.785,0,1,1-5.508,2.28,7.737,7.737,0,0,1,5.508-2.28m0-1.212a9,9,0,1,0,9,9,9,9,0,0,0-9-9Z"
-            fill="#24c30a"
-          />
         </g>
       </g>
     </svg>
