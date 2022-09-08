@@ -1,11 +1,10 @@
 import { Card } from "antd";
-import { ITooltipParams } from "ag-grid-community";
 import "./depends-on-tooltip.css";
 
-function DependsOnTooltip(props: ITooltipParams) {
+function DependsOnTooltip(props: any) {
   const { value, api } = props;
-  const data = api.getRowNode(value!)?.data || {};
 
+  const data = api.getRowNode(value!)?.data || {};
   return (
     <>
       <span />

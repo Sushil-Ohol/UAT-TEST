@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Drawer, message } from "antd";
+import { Drawer, message, Tooltip } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -49,6 +49,21 @@ import DueDateFilters from "./due-date-filter";
 import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
 let immutableRowData: any[];
+
+const dependsOnCellRenderer = (props: any) => {
+  const values = props.value.toString().split(",");
+  return (
+    <>
+      {values.map((val: any) => {
+        return (
+          <Tooltip title={<DependsOnToolTip value={val} api={props.api} />}>
+            <span>{val}</span>
+          </Tooltip>
+        );
+      })}
+    </>
+  );
+};
 
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
@@ -190,8 +205,7 @@ function SubmittalList() {
       field: "dependsOn",
       headerName: "DEPENDS ON",
       minWidth: 160,
-      tooltipField: "dependsOn",
-      tooltipComponent: DependsOnToolTip,
+      cellRenderer: dependsOnCellRenderer,
       cellClass(params) {
         return params.value === ""
           ? "dependsOnDefaultCellColor"
@@ -344,6 +358,7 @@ function SubmittalList() {
         oldItem.id === newItem.id ? newItem : oldItem
       );
       gridRef.current!.api.setRowData(immutableRowData);
+      gridRef.current!.api.refreshCells({ force: true });
     },
     [immutableRowData]
   );
