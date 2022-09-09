@@ -13,7 +13,7 @@ import {
   SpecificationdocIcon
 } from "components/svg-icons";
 import { getProjectSuggest } from "store/slices/project-suggest";
-import { PostProjectFile } from "services/file-upload";
+import { PostProjectFile } from "services/projects-service";
 
 function Fileupload({
   width,

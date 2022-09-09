@@ -14,17 +14,14 @@ export const initialState: ProjectState = {
   loading: false
 };
 
-export const getProjectList = createAsyncThunk(
-  "project/list",
-  async (pageIndex: number, { rejectWithValue }: any) => {
-    const response = await api.GetProjects(pageIndex);
-    if (response.remote === "success") {
-      const { data } = response;
-      return { ...data };
-    }
-    return rejectWithValue(response.error.errors);
-  }
-);
+export const getProjectList = createAsyncThunk("project/list", async () => {
+  const response = await api.GetProjects();
+  // if (response.remote === "success") {
+  const { data } = response;
+  return { ...data };
+  // }
+  // return rejectWithValue(response.error.errors);
+});
 
 const projectSlice = createSlice({
   name: "submittalSlice",

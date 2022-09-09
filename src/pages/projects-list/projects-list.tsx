@@ -59,7 +59,7 @@ function ProjectList() {
   ];
 
   const loadList = async () => {
-    await dispatch(getProjectList(0));
+    await dispatch(getProjectList());
   };
 
   React.useEffect(() => {
