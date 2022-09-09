@@ -13,7 +13,7 @@ import {
   SpecificationdocIcon
 } from "components/svg-icons";
 import { getProjectSuggest } from "store/slices/project-suggest";
-import { PostProjectFile1 } from "services/projects-service";
+import { PostProjectFile } from "services/projects-service";
 
 function Fileupload({
   width,
@@ -122,7 +122,7 @@ function Fileupload({
             const formData = new FormData();
             formData.append("image", file);
             formData.append("title", title);
-            const result = await PostProjectFile1(formData, setProgress);
+            const result = await PostProjectFile(formData, setProgress);
             if ((await result.data).data.success) {
               setSelectedFile(file.path);
               setTimeout(() => {
