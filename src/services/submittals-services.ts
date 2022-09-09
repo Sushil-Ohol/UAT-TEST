@@ -19,8 +19,12 @@ import { mockUpClient } from "./mock-server";
   return response;
 }; */
 
-export const GetSubmittals = async () => {
+export const GetSubmittals = async (projectId: string) => {
   mockUpClient(client);
-  const response = await client.get(`${BASE_URL}/${SUBMITTAL_LIST}`);
+  const response = await client.get(`${BASE_URL}/${SUBMITTAL_LIST}`, {
+    params: {
+      projectId
+    }
+  });
   return response;
 };

@@ -297,7 +297,7 @@ function SubmittalList() {
   }, []);
 
   const loadList = async () => {
-    const actionResult = await dispatch(getSubmittalList());
+    const actionResult = await dispatch(getSubmittalList(projectId));
     if (isFulfilled(actionResult)) {
       const { payload } = actionResult;
       if (payload.success) {

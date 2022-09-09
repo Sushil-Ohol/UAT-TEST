@@ -64,7 +64,17 @@ export function mockUpClient(client: AxiosInstance) {
     return [200, { success: true, title: "file 1", fileData: {} }];
   });
 
-  mock.onGet(`${BASE_URL}/${SUBMITTAL_LIST}`).reply(() => {
+  mock.onGet(`${BASE_URL}/${SUBMITTAL_LIST}`).reply((config) => {
+    if (config.params.projectId === "P00001") {
+      const submittals = require("./mock-data/submittals_details.json");
+      return [
+        200,
+        {
+          success: true,
+          response: submittals
+        }
+      ];
+    }
     const submittals = require("./mock-data/submittals.json");
     return [
       200,
