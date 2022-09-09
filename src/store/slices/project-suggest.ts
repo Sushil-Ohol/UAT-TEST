@@ -2,7 +2,7 @@
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProjectSuggestResponse, ProjectSuggest } from "models/project-suggest";
-import * as api from "services/project-suggest";
+import * as api from "services/projects-service";
 
 type SuggestProject = {
   projectSug: ProjectSuggest;
@@ -18,12 +18,12 @@ export const getProjectSuggest = createAsyncThunk(
   "project/suggest",
   async () => {
     const response = await api.GetProjectSuggest();
-    if (response.remote === "success") {
-      const { data } = response;
-      return { ...data };
-    }
-    return response.error.errors;
+    // if (response.remote === "success") {
+    const { data } = response;
+    return { ...data };
   }
+  // return response.error.errors;
+  // }
 );
 
 const projectSuggestSlice = createSlice({

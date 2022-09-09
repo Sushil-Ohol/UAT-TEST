@@ -2,7 +2,7 @@
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProjectValueResponse, Project } from "models/project-value";
-import * as api from "services/project-value";
+import * as api from "services/projects-service";
 
 type ProjectValue = {
   projectValue: Project;
@@ -16,11 +16,11 @@ export const initialState: ProjectValue = {
 
 export const getProjectValue = createAsyncThunk("project/value", async () => {
   const response = await api.GetProjectValue();
-  if (response.remote === "success") {
-    const { data } = response;
-    return { ...data };
-  }
-  return response.error.errors;
+  // if (response.remote === "success") {
+  const { data } = response;
+  return { ...data };
+  // }
+  // return response.error.errors;
 });
 
 const projectValueSlice = createSlice({

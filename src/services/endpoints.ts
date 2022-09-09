@@ -1,4 +1,4 @@
-export const BASE_URL = "https://constructiveiq-new-ygohzdyx3q-uc.a.run.app";
+export const BASE_URL = "http://localhost:3000";
 
 export const SUBMITTAL_LIST = "submittals";
 export const PROJECT_LIST = "projects";

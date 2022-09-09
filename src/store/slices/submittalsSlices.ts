@@ -2,6 +2,7 @@
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SubmittalListResponse, SubmittalLog } from "models/submittal-log";
+
 import * as api from "services/submittals-services";
 
 type SubmittalState = {
@@ -18,14 +19,14 @@ export const initialState: SubmittalState = {
 
 export const getSubmittalList = createAsyncThunk(
   "submittal/list",
-  async (projectId: string, { rejectWithValue }: any) => {
+  async (projectId: string) => {
     const response = await api.GetSubmittals(projectId);
-    if (response.remote === "success") {
-      const { data } = response;
-      return { ...data };
-    }
-    return rejectWithValue(response.error.errors);
+    // if (response.remote === "success") {
+    const { data } = response;
+    return { ...data };
   }
+  // return rejectWithValue(response.error.errors);
+  // }
 );
 
 const submittalSlice = createSlice({
