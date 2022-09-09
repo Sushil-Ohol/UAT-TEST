@@ -1,5 +1,5 @@
 import { ProjectSuggestResponse } from "models/project-suggest";
-import { client, http } from "./axios";
+import { client } from "./axios";
 import {
   BASE_URL,
   FILE_UPLOAD,
