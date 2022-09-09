@@ -77,10 +77,11 @@ function SubmittalList() {
   const [filters, setFilters] = useState<FilterItem[]>([]);
   const [dueDateFilter, setDueDateFilter] = useState("");
 
-  const onNewColumnAddition = (object: object) => {
+  const onNewColumnAddition = (object: any) => {
     const columnDefsCopy = columnDefs;
     columnDefsCopy.splice(columnDefs.length - 1, 0, object);
     setColumnDefs(columnDefsCopy);
+    message.success("New column added sucessfully");
     gridRef.current!.api.setColumnDefs(columnDefs);
   };
 
@@ -240,7 +241,8 @@ function SubmittalList() {
       headerTooltip: "Add new column",
       headerComponentFramework: AddNewColumn,
       headerComponentParams: {
-        onNewColumnAddition
+        onNewColumnAddition,
+        gridRef
       },
       suppressColumnsToolPanel: true,
       headerClass: "ag-center-header",

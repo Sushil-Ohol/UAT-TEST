@@ -116,7 +116,7 @@ function Fileupload({
     if (acceptedFiles.length <= 1) {
       acceptedFiles.forEach(async (file: any) => {
         const splitedData = file.name.split(".");
-        const fileextension = splitedData[1];
+        const fileextension = splitedData[splitedData.length - 1];
         if (extension.includes(fileextension.toUpperCase())) {
           if (file.size < FILESIZE) {
             const formData = new FormData();

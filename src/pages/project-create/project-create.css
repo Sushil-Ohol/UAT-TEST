@@ -417,7 +417,6 @@ p.project-name-hint {
   height: 65px;
   border: 1px dashed #0000004d;
   overflow: auto;
-  text-transform: capitalize;
 }
 .ant-input-group .ant-input:hover {
   border: 1px dashed #0000004d;
