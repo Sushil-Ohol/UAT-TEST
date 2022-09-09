@@ -1,6 +1,3 @@
-/* eslint-disable prefer-promise-reject-errors */
-/* eslint-disable react/no-unstable-nested-components */
-
 import React, { useState } from "react";
 import { Button, Form, Input, message, Modal, Select } from "antd";
 import { PlusIcon } from "components/svg-icons";
@@ -25,7 +22,7 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
     setIsModalVisible(true);
   };
 
-  const checkColumnName = (columnName: string): boolean => {
+  const isColumnExists = (columnName: string): boolean => {
     const index = gridRef.current.props.columnDefs.findIndex(
       (x: any) => x.field === camelCase(columnName)
     );
@@ -34,7 +31,7 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
 
   const handleOk = () => {
     form.validateFields().then((value) => {
-      if (!checkColumnName(value.name)) {
+      if (!isColumnExists(value.name)) {
         let newColumObject;
         switch (value.inputType) {
           case "date":
