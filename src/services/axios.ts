@@ -8,10 +8,3 @@ export const client = axios.create({
     "Content-type": "application/json"
   }
 });
-
-export const http = axios.create({
-  baseURL: "http://localhost:3000",
-  headers: {
-    "Content-type": "application/json"
-  }
-});

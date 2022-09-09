@@ -52,9 +52,8 @@ export function mockUpClient(client: AxiosInstance) {
   const sleep = (value: number) =>
     new Promise((resolve) => setTimeout(resolve, value));
 
-  // this mocks a request which slowly resolves (20% progress every 500ms)
   mock.onPost(`${BASE_URL}/${FILE_UPLOAD}`).reply(async (config) => {
-    const total = 1024; // mocked file size
+    const total = 1024;
     for (const progress of [0, 0.2, 0.4, 0.6, 0.8, 1]) {
       await sleep(500);
       if (config.onUploadProgress) {
