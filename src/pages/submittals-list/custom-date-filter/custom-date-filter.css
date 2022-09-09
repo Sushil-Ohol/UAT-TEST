@@ -1,0 +1,25 @@
+.custom-date-filters {
+    padding: 10px;
+    background: #eaeae8;
+}
+
+.custom-date-filters .filter-list {
+    margin-top: 10px;
+}
+
+.custom-date-filters .ant-list-items .ant-list-item {
+    font: normal normal normal 16px/20px Inter;
+    letter-spacing: 0px !important;
+    color: #0000004d !important;
+    opacity: 1 !important;
+    padding: 5px 10px !important;
+    border: 0 !important;
+    border-bottom: 0 !important;
+    cursor: pointer;
+}
+
+.custom-date-filters .ant-list-items .ant-list-item:hover {
+    font: normal normal normal 16px/20px Inter !important;
+    letter-spacing: 0px !important;
+    color: #000000fa !important;
+}

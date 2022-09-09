@@ -10,11 +10,19 @@ export type FilterProps = {
   onNewClick: any;
   items: FilterItem[];
   setItems: any;
-  setDueDateFilter: any;
+  customDateFilter: any;
+  setCustomDateFilter: any;
 };
 
 function SubmittalListFilterComponent(props: FilterProps) {
-  const { gridRef, onNewClick, items, setItems, setDueDateFilter } = props;
+  const {
+    gridRef,
+    onNewClick,
+    items,
+    setItems,
+    customDateFilter,
+    setCustomDateFilter
+  } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
     gridRef.current!.api.setQuickFilter(
@@ -23,14 +31,16 @@ function SubmittalListFilterComponent(props: FilterProps) {
   }, [gridRef]);
 
   const onFilterChipDelete = (item: FilterItem) => {
-    if (item.field === "dueBy") {
-      const index = items.findIndex((val) => val.field === "dueBy");
+    if (item.field === customDateFilter.field) {
+      const index = items.findIndex(
+        (val) => val.field === customDateFilter.field
+      );
       if (index > -1) {
         delete items[index];
       }
       setItems([...items].filter(Boolean));
-      setDueDateFilter("");
-      gridRef.current.api.destroyFilter("dueBy");
+      setCustomDateFilter({});
+      gridRef.current.api.destroyFilter(customDateFilter.field);
     } else {
       const filterModel = gridRef.current!.api.getFilterModel();
       delete filterModel[item.field];

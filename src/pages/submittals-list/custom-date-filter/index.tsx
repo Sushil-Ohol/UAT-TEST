@@ -1,14 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { SearchOutlined } from "@ant-design/icons";
 import { IDoesFilterPassParams, IFilterParams } from "ag-grid-community";
 import { Input, List } from "antd";
 import { DateRangePickerModal } from "components";
 import moment from "moment";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import "./due-date-filters.css";
+import "./custom-date-filter.css";
 
 export default forwardRef(
-  (props: IFilterParams & { setDueDateFilter: any }, ref: any) => {
-    const { api, setDueDateFilter } = props;
+  (
+    props: IFilterParams & { columnData: any; setCustomDateFilter: any },
+    ref: any
+  ) => {
+    const { api, columnData, setCustomDateFilter } = props;
     const [searchText, setSearchText] = useState<string>("");
     const [selectedVal, setSelectedVal] = useState<string>("");
     const dueDateFilters = [
@@ -30,7 +34,7 @@ export default forwardRef(
           const { colDef, column, columnApi, context, valueGetter } = props;
           const { node } = params;
 
-          const value = valueGetter({
+          let value = valueGetter({
             api,
             colDef,
             column,
@@ -39,41 +43,43 @@ export default forwardRef(
             data: node.data,
             getValue: (field) => node.data[field],
             node
-          })
-            .toString()
-            .toLowerCase();
+          });
 
-          const tempDate = value.split("-");
-          const currentDate = moment(
-            `${tempDate[0]}/${tempDate[1]}/${tempDate[2]}`
-          ).format("MM/DD/YYYY");
+          if (value) {
+            value = value.toString().toLowerCase();
+            const tempDate = value.split("-");
+            const currentDate = moment(
+              `${tempDate[0]}/${tempDate[1]}/${tempDate[2]}`
+            ).format("MM/DD/YYYY");
 
-          switch (selectedVal) {
-            case "Past due date": {
-              const selectedDate = moment()
-                .subtract(1, "days")
-                .format("MM/DD/YYYY");
-              return selectedDate > currentDate && value;
+            switch (selectedVal) {
+              case "Past due date": {
+                const selectedDate = moment()
+                  .subtract(1, "days")
+                  .format("MM/DD/YYYY");
+                return selectedDate > currentDate && value;
+              }
+              case "Due today": {
+                const selectedDate = moment().format("MM/DD/YYYY");
+                return currentDate === selectedDate && value;
+              }
+              case "Next 3 days": {
+                const nextDate = moment().add(3, "days").format("MM/DD/YYYY");
+                const today = moment().format("MM/DD/YYYY");
+                return currentDate <= nextDate && currentDate > today && value;
+              }
+              case "Custom":
+                setIsOpen(true);
+                return true;
+              case "FilterCustom": {
+                const { from, to } = customDateRange;
+                return currentDate >= from && currentDate <= to;
+              }
+              default:
+                return false;
             }
-            case "Due today": {
-              const selectedDate = moment().format("MM/DD/YYYY");
-              return currentDate === selectedDate && value;
-            }
-            case "Next 3 days": {
-              const nextDate = moment().add(3, "days").format("MM/DD/YYYY");
-              const today = moment().format("MM/DD/YYYY");
-              return currentDate <= nextDate && currentDate > today && value;
-            }
-            case "Custom":
-              setIsOpen(true);
-              return true;
-            case "FilterCustom": {
-              const { from, to } = customDateRange;
-              return currentDate >= from && currentDate <= to;
-            }
-            default:
-              return false;
           }
+          return false;
         }
       };
     });
@@ -85,9 +91,9 @@ export default forwardRef(
     useEffect(() => {
       props.filterChangedCallback();
       if (selectedVal) {
-        setDueDateFilter(selectedVal);
+        setCustomDateFilter({ ...columnData, value: selectedVal || "" });
       }
-    }, [selectedVal, props, setDueDateFilter]);
+    }, [selectedVal, props, setCustomDateFilter]);
 
     const onCustomDateFilterChanged = () => {
       if (customDateRange) {
@@ -100,7 +106,7 @@ export default forwardRef(
 
     return (
       <>
-        <div className="due-date-filters">
+        <div className="custom-date-filters">
           <Input
             prefix={<SearchOutlined />}
             placeholder="Search"

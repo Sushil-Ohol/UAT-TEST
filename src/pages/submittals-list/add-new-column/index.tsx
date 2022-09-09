@@ -55,6 +55,7 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
               cellEditor: CurrencyCellEditor,
               cellRenderer: (params: any) =>
                 params.value !== undefined &&
+                params.value !== "" &&
                 `$ ${parseFloat(params.value).toFixed(2)}`
             };
             break;

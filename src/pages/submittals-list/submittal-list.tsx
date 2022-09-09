@@ -24,6 +24,7 @@ import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
 import { DateCellEditor } from "components";
+
 import {
   IdLinkComponent,
   notificationCellRenderer,
@@ -45,7 +46,7 @@ import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import SubmittalTooltip from "./submittal-tooltip";
-import DueDateFilters from "./due-date-filter";
+import CustomDateFilters from "./custom-date-filter";
 import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
 let immutableRowData: any[];
@@ -75,7 +76,7 @@ function SubmittalList() {
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
-  const [dueDateFilter, setDueDateFilter] = useState("");
+  const [customDateFilter, setCustomDateFilter] = useState<any>({});
 
   const onNewColumnAddition = (object: any) => {
     const columnDefsCopy = columnDefs;
@@ -171,8 +172,11 @@ function SubmittalList() {
       cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
-      filter: DueDateFilters,
-      filterParams: { setDueDateFilter }
+      filter: CustomDateFilters,
+      filterParams: {
+        columnData: { field: "dueBy", header: "DUE BY" },
+        setCustomDateFilter
+      }
     },
     {
       field: "governingDate",
@@ -182,8 +186,11 @@ function SubmittalList() {
       cellEditor: DateCellEditor,
       cellRenderer: dateCellRenderer,
       cellEditorPopup: true,
-      filter: "agDateColumnFilter",
-      filterParams: NodeFilter
+      filter: CustomDateFilters,
+      filterParams: {
+        columnData: { field: "governingDate", header: "GOVERNING DATE" },
+        setCustomDateFilter
+      }
     },
     {
       field: "contractor",
@@ -268,7 +275,6 @@ function SubmittalList() {
 
   const defaultColDef: {} = useMemo(() => {
     return {
-      flex: 1,
       sortable: true,
       editable: true,
       filter: true,
@@ -425,12 +431,8 @@ function SubmittalList() {
           });
         }
       });
-      if (dueDateFilter) {
-        items.push({
-          field: "dueBy",
-          header: "Due Date",
-          value: dueDateFilter
-        });
+      if (Object.keys(customDateFilter).length > 0) {
+        items.push(customDateFilter);
       }
       setFilters(items);
     }
@@ -442,8 +444,9 @@ function SubmittalList() {
         gridRef={gridRef}
         onNewClick={onNewClick}
         items={filters}
+        customDateFilter={customDateFilter}
+        setCustomDateFilter={setCustomDateFilter}
         setItems={setFilters}
-        setDueDateFilter={setDueDateFilter}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
