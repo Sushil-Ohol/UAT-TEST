@@ -98,7 +98,6 @@ In that file you'll find two sections:
 | react-redux   | Added antd icons(https://react-redux.js.org)                                                                  |
 | @reduxjs/toolkit   | Added antd icons(https://redux-toolkit.js.org)                                                                  |
 | moment   | For Date Manipulation(https://github.com/moment/moment)                                                                  |
-
 | axios-mock-adapter   | For Mocking API Response(https://www.npmjs.com/package/axios-mock-adapter)                                                                  |
 
 ## `devDependencies`
