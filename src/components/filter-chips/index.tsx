@@ -19,10 +19,18 @@ function FilterChips(props: FilterChipProps) {
         <div className="tag-item" key={item.field}>
           {item.header}:{item.value.split(",")[0]}
           <div className="tooltip">
-            <Button className="button">{item.value.split(",").length}</Button>
-            <span className="tooltip-text">
-              {item.value.split(",").slice(1)}
-            </span>
+            {item.value.split(",").length - 1 > 0 && (
+              <Button className="button" id="numbers-filters">
+                +
+                {item.value.split(",") === ""
+                  ? item.value.split(",").length - 2
+                  : item.value.split(",").length - 1}
+              </Button>
+            )}
+
+            <span className="tooltip-text">{`${item.value
+              .split(",")
+              .slice(1)}`}</span>
           </div>
           <Button
             className="button"

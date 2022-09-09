@@ -54,6 +54,8 @@ const AssigneeOptions = [
 ];
 const PackageOptions = ["920:Electrical", "Piping"];
 
+export const DATE_FORMAT_MMDDYYY = "MM-DD-YYYY";
+
 export const DropDownData = {
   ContractorOptions,
   StatusOptions,

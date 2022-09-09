@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Drawer, message } from "antd";
+import { Drawer, message, Tooltip } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -24,14 +24,23 @@ import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import { FilterItem } from "models/types";
 import { DateCellEditor } from "components";
-import { IdLinkComponent } from "components/cell-renders";
+import {
+  IdLinkComponent,
+  notificationCellRenderer,
+  submittalCellRenderer,
+  dateCellRenderer,
+  contractorCellRenderer,
+  contractorEditCellRenderer,
+  assignedCellRenderer,
+  assignedEditCellRenderer
+} from "components/cell-renders";
 import {
   ChatIcon,
   DocAttachIcon,
   NotificationIcon
 } from "../../components/svg-icons/index";
 import AddNewColumn from "./add-new-column";
-import { DropDownData } from "../../constants";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
@@ -39,64 +48,22 @@ import SubmittalTooltip from "./submittal-tooltip";
 import DueDateFilters from "./due-date-filter";
 import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
-const notificationCellRenderer = () => {
-  return "";
-};
-
-const submittalCellRenderer = (props: any) => {
-  return (
-    <>
-      <p className="colFirstValue">{props.data.submittal}</p>
-      <p className="colSecondValue">{props.data.description}</p>
-    </>
-  );
-};
-
-const dateCellRenderer = (props: any) => {
-  const dates = props.value && props.value.split("-");
-  const newDate =
-    dates &&
-    moment()
-      .year(dates[2])
-      .month(dates[0] - 1)
-      .date(dates[1]);
-  return (
-    <>
-      <p className="colFirstValue">{props.value}</p>
-      <p className="colSecondValue">
-        {newDate ? moment(newDate).fromNow() : ""}
-      </p>
-    </>
-  );
-};
-
-const contractorCellRenderer = (props: any) => {
-  return (
-    <>
-      <p className="colFirstValue">{props.value.name}</p>
-      <p className="colSecondValue">{props.value.email}</p>
-    </>
-  );
-};
-
-const contractorEditCellRenderer = (params: any) => {
-  return params.value ? params.value.name : "";
-};
-
-const assignedCellRenderer = (props: any) => {
-  return (
-    <>
-      <p className="colFirstValue">{props.value.assignedTo}</p>
-      <p className="colSecondValue">{props.value.destination}</p>
-    </>
-  );
-};
-
-const assignedEditCellRenderer = (params: any) => {
-  return params.value ? params.value.assignedTo : "";
-};
-
 let immutableRowData: any[];
+
+const dependsOnCellRenderer = (props: any) => {
+  const values = props.value.toString().split(",");
+  return (
+    <>
+      {values.map((val: any) => {
+        return (
+          <Tooltip title={<DependsOnToolTip value={val} api={props.api} />}>
+            <span>{val}</span>
+          </Tooltip>
+        );
+      })}
+    </>
+  );
+};
 
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
@@ -125,7 +92,7 @@ function SubmittalList() {
       headerCheckboxSelection: true,
       headerCheckboxSelectionFilteredOnly: true,
       minWidth: 20,
-      maxWidth: 100,
+      maxWidth: 125,
       filter: false,
       editable: false,
       cellRenderer: IdLinkComponent,
@@ -238,8 +205,7 @@ function SubmittalList() {
       field: "dependsOn",
       headerName: "DEPENDS ON",
       minWidth: 160,
-      tooltipField: "dependsOn",
-      tooltipComponent: DependsOnToolTip,
+      cellRenderer: dependsOnCellRenderer,
       cellClass(params) {
         return params.value === ""
           ? "dependsOnDefaultCellColor"
@@ -305,7 +271,6 @@ function SubmittalList() {
       editable: true,
       filter: true,
       width: 120,
-      alignItems: "center",
       resizable: true
     };
   }, []);
@@ -393,6 +358,7 @@ function SubmittalList() {
         oldItem.id === newItem.id ? newItem : oldItem
       );
       gridRef.current!.api.setRowData(immutableRowData);
+      gridRef.current!.api.refreshCells({ force: true });
     },
     [immutableRowData]
   );
@@ -414,7 +380,7 @@ function SubmittalList() {
           data.assigned !== undefined ? data.assigned : newData[index].assigned,
         dueBy:
           data.dueBy !== undefined
-            ? moment(data.dueBy).format("DD-MM-YYYY")
+            ? moment(data.dueBy).format(DATE_FORMAT_MMDDYYY)
             : newData[index].dueBy
       };
       newData[index] = newitem;

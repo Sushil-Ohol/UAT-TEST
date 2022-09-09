@@ -177,10 +177,6 @@
   width: fit-content !important;
 }
 
-.ag-header-cell-label {
-  justify-content: center;
-}
-
 .idHoverColor {
   color: black !important;
   text-align: center;
@@ -239,3 +235,4 @@ div.ag-rich-select .ag-rich-select-list {
 .ag-full-width-container .table-row {
   border: none;
 }
+
