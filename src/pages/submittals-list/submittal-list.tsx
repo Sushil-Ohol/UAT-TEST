@@ -278,7 +278,6 @@ function SubmittalList() {
       sortable: true,
       editable: true,
       filter: true,
-      width: 120,
       resizable: true
     };
   }, []);
