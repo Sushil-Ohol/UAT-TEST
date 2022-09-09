@@ -1,0 +1,9 @@
+{
+    "id": "P00001",
+    "name": "Northgate Hospital",
+    "description": "Northgate Hospital",
+    "documents":"12",
+    "floors":"3",
+    "materials":"55",
+    "submittals":"100"
+  }
