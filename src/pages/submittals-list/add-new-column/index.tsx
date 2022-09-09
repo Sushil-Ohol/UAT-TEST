@@ -1,7 +1,5 @@
-/* eslint-disable react/no-unstable-nested-components */
-
 import React, { useState } from "react";
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, message, Modal, Select } from "antd";
 import { PlusIcon } from "components/svg-icons";
 import "./add-new-column.css";
 import {
@@ -13,8 +11,9 @@ import { camelCase } from "utils/stringutil";
 
 interface Props {
   onNewColumnAddition: Function;
+  gridRef: any;
 }
-function AddNewColumn({ onNewColumnAddition }: Props) {
+function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
   const [form] = Form.useForm<{ name: string; inputType: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Option } = Select;
@@ -23,46 +22,56 @@ function AddNewColumn({ onNewColumnAddition }: Props) {
     setIsModalVisible(true);
   };
 
+  const isColumnExists = (columnName: string): boolean => {
+    const index = gridRef.current.props.columnDefs.findIndex(
+      (x: any) => x.field === camelCase(columnName)
+    );
+    return index > -1;
+  };
+
   const handleOk = () => {
     form.validateFields().then((value) => {
-      let newColumObject;
-      switch (value.inputType) {
-        case "date":
-          newColumObject = {
-            field: camelCase(value.name),
-            headerName: value.name.toUpperCase(),
-            cellEditor: DateCellEditor
-          };
-          break;
-        case "number":
-          newColumObject = {
-            field: camelCase(value.name),
-            headerName: value.name.toUpperCase(),
-            cellEditor: NumberCellEditor
-          };
-          break;
-        case "currency":
-          newColumObject = {
-            field: camelCase(value.name),
-            headerName: value.name.toUpperCase(),
-            cellEditor: CurrencyCellEditor,
-            cellRenderer: (params: any) =>
-              params.value !== undefined &&
-              params.value !== "" &&
-              `$ ${parseFloat(params.value).toFixed(2)}`
-          };
-          break;
+      if (!isColumnExists(value.name)) {
+        let newColumObject;
+        switch (value.inputType) {
+          case "date":
+            newColumObject = {
+              field: camelCase(value.name),
+              headerName: value.name.toUpperCase(),
+              cellEditor: DateCellEditor
+            };
+            break;
+          case "number":
+            newColumObject = {
+              field: camelCase(value.name),
+              headerName: value.name.toUpperCase(),
+              cellEditor: NumberCellEditor
+            };
+            break;
+          case "currency":
+            newColumObject = {
+              field: camelCase(value.name),
+              headerName: value.name.toUpperCase(),
+              cellEditor: CurrencyCellEditor,
+              cellRenderer: (params: any) =>
+                params.value !== undefined &&
+                `$ ${parseFloat(params.value).toFixed(2)}`
+            };
+            break;
 
-        default:
-          newColumObject = {
-            field: camelCase(value.name),
-            headerName: value.name.toUpperCase()
-          };
-          break;
+          default:
+            newColumObject = {
+              field: camelCase(value.name),
+              headerName: value.name.toUpperCase()
+            };
+            break;
+        }
+        onNewColumnAddition(newColumObject);
+        setIsModalVisible(false);
+        form.resetFields();
+      } else {
+        message.error("Column already exists");
       }
-      onNewColumnAddition(newColumObject);
-      setIsModalVisible(false);
-      form.resetFields();
     });
   };
 
