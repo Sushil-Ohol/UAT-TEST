@@ -2,7 +2,7 @@ import { DatePicker, Select, Form, Input, Button } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import { DropDownData } from "../../constants";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-create.css";
 
 export type NewSubmittalLog = {
@@ -27,7 +27,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
         submittal: values.submittal,
         description: values.description || "",
         dueBy: values.dueDate
-          ? moment(values.dueDate).format("DD-MM-YYYY")
+          ? moment(values.dueDate).format(DATE_FORMAT_MMDDYYY)
           : "",
         contractor: selectedContractor[0] || "",
         assigned: assigned[0] || "",
@@ -80,7 +80,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
       </Form.Item>
 
       <Form.Item name="dueDate" label="Due Date">
-        <DatePicker className="drawerDatePicker" />
+        <DatePicker format={DATE_FORMAT_MMDDYYY} className="drawerDatePicker" />
       </Form.Item>
 
       <Form.Item name="contractor" label="Contractor">
