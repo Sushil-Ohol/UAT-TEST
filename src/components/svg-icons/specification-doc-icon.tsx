@@ -32,7 +32,7 @@ export default function SpecificationdocIcon({
           selectedFile
             ? (progress !== 100 ? colorCode.orange : colorCode.success) ||
               colorCode.success
-            : (fileError && colorCode.error) || colorCode.lightGrey
+            : (fileError && colorCode.error) || colorCode.grey
         }
         strokeWidth="1.52"
         strokeLinecap="round"

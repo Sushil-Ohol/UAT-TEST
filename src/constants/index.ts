@@ -4,7 +4,7 @@ export const colorCode = {
   white: "white",
   error: "#FF3535",
   success: "#65D154",
-  grey: "#dedede",
+  grey: "#b1b1b1",
   process: "#00000033",
   lightGrey: "#dedede",
   fileName: "#CCCCCC",
