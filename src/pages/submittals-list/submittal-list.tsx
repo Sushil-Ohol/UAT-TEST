@@ -55,11 +55,11 @@ const dependsOnCellRenderer = (props: any) => {
   const values = props.value.toString().split(",");
   return (
     <>
-      {values.map((val: any, i: any) => {
+      {values.map((val: any, index: any) => {
         return (
           <Tooltip title={<DependsOnToolTip value={val} api={props.api} />}>
             <span>{val}</span>
-            {values[i + 1] ? "," : ""}
+            {values[index + 1] ? "," : ""}
           </Tooltip>
         );
       })}
