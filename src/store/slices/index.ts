@@ -6,13 +6,15 @@ import submittalReducer from "./submittalsSlices";
 import projectReducer from "./projectSlice";
 import projectValueReducer from "./project-value";
 import projectSuggestReducer from "./project-suggest";
+import stagingZoneReducer from "./staging-zone-slice";
 
 const combinedReducer1 = combineReducers({
   homeState: homeReducer,
   submittals: submittalReducer,
   projects: projectReducer,
   projectValue: projectValueReducer,
-  projectSuggest: projectSuggestReducer
+  projectSuggest: projectSuggestReducer,
+  stagingZone: stagingZoneReducer
 });
 
 export type RootState = ReturnType<typeof combinedReducer1>;

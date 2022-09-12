@@ -1,0 +1,21 @@
+export type Conversation = {
+  id: string;
+  message: string;
+  date: string;
+  userId: string;
+};
+
+export type ConversationDoc = {
+  id: string;
+  fileName: string;
+  uploadDate: Date;
+  annotationCount: number;
+};
+
+export type Discussion = {
+  topicId: string;
+  topicName: string;
+  unreadCount: number;
+  chats?: Conversation[];
+  docs?: ConversationDoc[];
+};
