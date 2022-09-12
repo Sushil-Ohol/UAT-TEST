@@ -427,14 +427,14 @@ function SubmittalList() {
           items.push({
             field: key,
             header: field ? field.headerName : key,
-            value: filtersApplied[key].values.join()
+            value: filtersApplied[key].values.filter(Boolean).join(", ")
           });
         }
       });
       if (Object.keys(customDateFilter).length > 0) {
         items.push(customDateFilter);
       }
-      setFilters(items);
+      setFilters(items.filter(Boolean));
     }
   };
 
