@@ -50,7 +50,7 @@ export const contractorCellRenderer = (props: any) => {
 };
 
 export const contractorEditCellRenderer = (params: any) => {
-  return params.value ? params.value.name : "";
+  return params?.value?.name || "";
 };
 
 export const assignedCellRenderer = (props: any) => {
@@ -63,5 +63,5 @@ export const assignedCellRenderer = (props: any) => {
 };
 
 export const assignedEditCellRenderer = (params: any) => {
-  return params.value ? params.value.assignedTo : "";
+  return params?.value?.assignedTo || "";
 };
