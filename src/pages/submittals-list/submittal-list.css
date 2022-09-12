@@ -156,17 +156,17 @@
   margin-left: 10px !important;
 }
 
-.dependsOnHoverColor {
+.dependsOnHoverColor span {
   color: black !important;
   text-align: center;
 }
 
-.dependsOnHoverColor:hover {
+.dependsOnHoverColor span:hover {
   color: #0073cf !important;
   text-decoration: underline;
 }
 
-.dependsOnDefaultCellColor {
+.dependsOnDefaultCellColor span {
   text-align: center !important;
   color: black !important;
   text-decoration: underline;
