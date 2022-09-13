@@ -2,8 +2,12 @@ import { Button, Card, Space } from "antd";
 import "./submittal-list-bottom-bar.css";
 
 function SubmittalListBottomBar(props: any) {
-  const { selected, onSubmittalEditClick, onStagingZoneClick,
-    showStagingZone } = props;
+  const {
+    selected,
+    onSubmittalEditClick,
+    onStagingZoneClick,
+    showStagingZone
+  } = props;
   return (
     <section className="blue-grid" style={{ marginTop: "15px" }}>
       <Card
@@ -41,7 +45,7 @@ function SubmittalListBottomBar(props: any) {
             </Button>
           </div>
         </Space>
-         {!showStagingZone && (
+        {!showStagingZone && (
           <Button
             onClick={onStagingZoneClick}
             size="middle"

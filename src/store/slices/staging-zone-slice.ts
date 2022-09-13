@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Conversation } from "models/discussion";
+import { Discussion } from "models/discussion";
 import * as api from "services/staging-zone-service";
 
 type StagingZoneState = {
-  list: Conversation[];
+  list: Discussion[];
 };
 
 export const initialState: StagingZoneState = {

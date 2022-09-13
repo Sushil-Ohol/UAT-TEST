@@ -8,6 +8,8 @@ export type Conversation = {
 export type ConversationDoc = {
   id: string;
   fileName: string;
+  url: string;
+  uploadedBy: string;
   uploadDate: Date;
   annotationCount: number;
 };

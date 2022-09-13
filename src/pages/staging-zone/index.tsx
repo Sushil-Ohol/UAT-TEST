@@ -1,40 +1,34 @@
-import { useAppDispatch } from "store";
-import { useSelector } from "react-redux";
-import { RootState } from "store/slices";
-import React from "react";
-import { Col, Row } from "antd";
-import { GetDiscussions } from "store/slices/staging-zone-slice";
+import React, { useState } from "react";
 import Discussions from "./discussion-list";
 import DiscussionDetails from "./discussion-details";
 import DiscussionDocs from "./discussion-docs";
 import "./staging-zone.css";
 
 function StagingZone() {
-  const dispatch = useAppDispatch();
+  const [discussionId, setDiscussionId] = useState("");
 
-  const discussions = useSelector((state: RootState) => state.projects.list);
+  console.log("zone");
 
-  const loadList = async () => {
-    await dispatch(GetDiscussions());
+  React.useEffect(() => {}, []);
+
+  const OnDiscussionSelected = (id: string) => {
+    setDiscussionId(id);
   };
 
-  React.useEffect(() => {
-    loadList();
-    console.log(discussions);
-  }, []);
-
   return (
-     <Row className="stagingZone">
-      <Col span={8} style={{ borderRight: "3px solid #0000001A" }}>
-        <Discussions className="stagingZoneCardContent" />
-      </Col>
-      <Col span={8} style={{ borderRight: "3px solid #0000001A" }}>
-        <DiscussionDetails className="stagingZoneCardContent" />
-      </Col>
-      <Col span={8}>
-        <DiscussionDocs className="stagingZoneCardContent" />
-      </Col>
-    </Row>
+    <div id="page-wrap">
+      <div className="five-columns group">
+        <Discussions
+          className="col discussion"
+          onClick={OnDiscussionSelected}
+        />
+        <DiscussionDetails
+          className="col discussion"
+          discussionId={discussionId}
+        />
+        <DiscussionDocs className="col" discussionId={discussionId} />
+      </div>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {Typography, Drawer, message, Space, Tooltip } from "antd";
+import { Typography, Drawer, message, Space, Tooltip } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -76,7 +76,7 @@ function SubmittalList() {
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
-const gridStyle = useMemo(
+  const gridStyle = useMemo(
     () => ({
       height: showStagingZone ? "300px" : "780px",
       width: "100%",
@@ -365,14 +365,14 @@ const gridStyle = useMemo(
     setShowSubmittalEdit(false);
   };
 
-   const onStagingZoneClick = () => {
+  const onStagingZoneClick = () => {
     setShowStagingZone(true);
   };
 
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
   };
-  
+
   const onFirstDataRendered = useCallback(() => {
     setTimeout(() => {
       gridRef.current!.api.getDisplayedRowAtIndex(1)!.setExpanded(true);
@@ -534,7 +534,7 @@ const gridStyle = useMemo(
           />
         )}
       </Drawer>
-           <Drawer
+      <Drawer
         title={
           <Space>
             <Title level={5}>Staging Zone</Title>

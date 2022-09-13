@@ -1,6 +1,10 @@
+import React from "react";
+
 function DiscussionDetails(props: any) {
-  const { className } = props;
-  return <div className={className}>DiscussionDetails</div>;
+  console.log("details");
+  const { className, discussionId } = props;
+  React.useEffect(() => {}, [props]);
+  return <div className={className}>{discussionId} Discussion Details</div>;
 }
 
 export default DiscussionDetails;
