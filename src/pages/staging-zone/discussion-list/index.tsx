@@ -13,7 +13,6 @@ function DiscussionList(props: any) {
   const { className, onClick } = props;
   const dispatch = useAppDispatch();
 
-  console.log("list");
   const loadList = async () => {
     await dispatch(GetDiscussions());
   };

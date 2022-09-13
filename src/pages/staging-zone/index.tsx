@@ -7,8 +7,6 @@ import "./staging-zone.css";
 function StagingZone() {
   const [discussionId, setDiscussionId] = useState("");
 
-  console.log("zone");
-
   React.useEffect(() => {}, []);
 
   const OnDiscussionSelected = (id: string) => {
