@@ -305,7 +305,8 @@ card {
 
 .card-finish {
   border: 0px;
-  width: 612px;
+  min-width: min-content;
+  max-width: 612px;
   background: transparent;
   margin: 0px;
   padding-left: 30px;
@@ -495,10 +496,11 @@ p.project-name-hint {
   color: #007aff;
   border-bottom: 1px solid #007aff;
 }
-.document {
-  font-size: 18px;
-  padding-top: 5px;
-  padding-left: 9px;
+#document {
+  margin-top: 45%;
+  margin-left: 15%;
+  width: 150%;
+  height: 220%;
 }
 .footer-text {
   margin-top: 0px;
@@ -751,5 +753,28 @@ div .error-text-project-name-details {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+  }
+  .upload-number {
+    padding-right: 0px;
+  }
+  .floor-number {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .submittal-number {
+    padding-left: 0px;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 425px) {
+  .upload-number {
+    padding-right: 0px;
+  }
+  .floor-number {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .submittal-number {
+    padding-left: 0px;
   }
 }

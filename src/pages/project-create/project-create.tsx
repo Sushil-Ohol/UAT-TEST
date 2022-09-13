@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* Project Create Page Component */
 
 import { Button, Card, Col, Row, Typography, Steps, Form, Input } from "antd";
@@ -7,14 +8,13 @@ import { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import {
   CheckOutlined,
-  FileDoneOutlined,
   ArrowLeftOutlined,
   ArrowRightOutlined,
   CloseOutlined,
   CheckSquareOutlined
 } from "@ant-design/icons";
 import "./project-create.css";
-import { CogIcon, ArrowIcon } from "components/svg-icons";
+import { CogIcon, ArrowIcon, ViewDocumentIcon } from "components/svg-icons";
 import { useAppDispatch, useAppSelector } from "store";
 import { getProjectValue } from "store/slices/project-value";
 import {
@@ -24,6 +24,7 @@ import {
 } from "constants/index";
 import { addProject } from "store/slices/projectSlice";
 import { textToSlug } from "utils/stringutil";
+import { voidStartingSpaceInput } from "utils/inpututils";
 
 function ProjectCreate() {
   const history = useHistory();
@@ -184,11 +185,12 @@ function ProjectCreate() {
   }
   function toolTipHints() {
     let str = "";
+
     if (
       defaultValue.projectName.length === 0 &&
       defaultValue.details.length > 0
     ) {
-      str = " Please confirm the project name to proceed.";
+      str = " Please enter the project name to proceed.";
     }
     if (
       defaultValue.details.length === 0 &&
@@ -208,13 +210,13 @@ function ProjectCreate() {
       defaultValue.details.length === 0 &&
       defaultValue.projectName.length > 0
     ) {
-      str = "Please confirm the details to proceed.";
+      str = "Please enter the details to proceed.";
     }
     if (
       defaultValue.details.length === 0 &&
       defaultValue.projectName.length === 0
     ) {
-      str = "Please confirm the project name and details to proceed.";
+      str = "Please enter the project name and details to proceed.";
     }
 
     if (defaultValue.details.length > 0 && !confirmDetailsText) {
@@ -223,6 +225,16 @@ function ProjectCreate() {
 
     if (defaultValue.projectName.length > 0 && !confirmProjectName) {
       str = "Please confirm the project name to proceed.";
+    }
+    if (
+      (!confirmDetailsText &&
+        defaultValue.projectName.length === 0 &&
+        confirmProjectName) ||
+      (!confirmProjectName &&
+        defaultValue.details.length === 0 &&
+        confirmDetailsText)
+    ) {
+      str = "Please confirm the project name and details to proceed.";
     }
     return <div id="topRight">{str}</div>;
   }
@@ -283,10 +295,11 @@ function ProjectCreate() {
                                       <Row align="middle">
                                         <div className="selected-file">
                                           <Col span={1}>
-                                            <FileDoneOutlined className="document" />
+                                            {/* <FileDoneOutlined className="document" /> */}
+                                            <ViewDocumentIcon className="document" />
                                           </Col>
                                           <Col
-                                            span={22}
+                                            span={21}
                                             className="text-col-align"
                                           >
                                             <Text>
@@ -331,6 +344,7 @@ function ProjectCreate() {
                                           />
                                         )}
                                       <Input
+                                        onInput={voidStartingSpaceInput}
                                         ref={projectInputRef}
                                         type="text"
                                         value={defaultValue.projectName}
@@ -381,13 +395,16 @@ function ProjectCreate() {
                                       siteDrawing.path.length > 0 ||
                                       schedule.path.length > 0) &&
                                     !confirmProjectName &&
-                                    !confirmProjectName && (
+                                    !confirmProjectName &&
+                                    count === 1 && (
                                       <Row>
                                         <Col>
                                           <p className="project-name-hint">
-                                            We guessed this name from your
-                                            Specification Document. So it has
-                                            the{" "}
+                                            We guessed this name from your{" "}
+                                            {specificationDoc.title ||
+                                              schedule.title ||
+                                              siteDrawing.title}
+                                            . So it has the{" "}
                                             <CogIcon
                                               className=""
                                               width="10"
@@ -401,6 +418,25 @@ function ProjectCreate() {
                                         </Col>
                                       </Row>
                                     )}
+                                  {count > 1 && !confirmProjectName && (
+                                    <Row>
+                                      <Col>
+                                        <p className="project-name-hint">
+                                          We guessed this name from the uploaded
+                                          documents. So it has the{" "}
+                                          <CogIcon
+                                            className=""
+                                            width="10"
+                                            height="10"
+                                          />{" "}
+                                          symbol, <br /> please correct if it is
+                                          wrong. You can press
+                                          <CheckSquareOutlined className="hint-check-icon" />
+                                          tick to confirm
+                                        </p>
+                                      </Col>
+                                    </Row>
+                                  )}
                                 </Input.Group>
                               </Form.Item>
                               <Form.Item label="Details" name="details">
@@ -414,6 +450,7 @@ function ProjectCreate() {
                                   <Row className="detail-text">
                                     <Col span={20}>
                                       <TextArea
+                                        onInput={voidStartingSpaceInput}
                                         autoSize={{ minRows: 5, maxRows: 2 }}
                                         value={defaultValue.details}
                                         onChange={(e) => {
@@ -613,9 +650,14 @@ function ProjectCreate() {
                             <Col xs={24} offset={0}>
                               <p className="para-finish-screenp">
                                 We have identified {projectValue.submittals}{" "}
-                                submittals from the specification document. You
-                                can confirm,change, split or merge them in the
-                                next step <br />
+                                submittals from the{" "}
+                                {count > 1
+                                  ? "the uploaded documents"
+                                  : specificationDoc.title ||
+                                    schedule.title ||
+                                    siteDrawing.title}
+                                . You can confirm, change, split or merge them
+                                in the next step <br />
                               </p>
                               <ArrowIcon className="arrow-icon" />
                             </Col>

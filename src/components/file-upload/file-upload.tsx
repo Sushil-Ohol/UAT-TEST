@@ -46,7 +46,6 @@ function Fileupload({
   const [fileError, setFileError] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
   const [progress, setProgress] = useState(0);
-  const [hoverColor, setHoverColor] = useState("");
 
   function antIcon() {
     switch (icon) {
@@ -126,7 +125,6 @@ function Fileupload({
             if ((await result.data).data.success) {
               setSelectedFile(file.path);
               setTimeout(() => {
-                setHoverColor("green");
                 if (count === 0) {
                   if (
                     !(
@@ -143,34 +141,26 @@ function Fileupload({
                 }
                 setState({ ...file, title, url: URL.createObjectURL(file) });
                 setCount((prev: number) => prev + 1);
-              }, 1000);
+              }, 100);
             }
           } else {
-            setHoverColor("red");
             setFileError("Upload file less than 100MB");
-            setTimeout(() => {
-              setHoverColor("");
-            }, 4000);
           }
         } else {
           setFileError(() => {
+            if (title === "Schedule") {
+              return `Upload ${extension[0]}, ${extension[1]} & ${extension[2]} file `;
+            }
             return `Upload ${extension} file `;
           });
-          setHoverColor("red");
+
           setState({ path: "", title: "" });
           setSelectedFile("");
           setProgress(0);
-          setTimeout(() => {
-            setHoverColor("");
-          }, 4000);
         }
       });
     } else {
-      setHoverColor("red");
       setFileError("only single file");
-      setTimeout(() => {
-        setHoverColor("");
-      }, 4000);
     }
   };
   const colorCode: any = {
@@ -205,7 +195,7 @@ function Fileupload({
                   .toString()}
               />
               <Hexagon
-                color={hoverColor}
+                color=""
                 img=""
                 filename={selectedFile}
                 progressBar={progress}

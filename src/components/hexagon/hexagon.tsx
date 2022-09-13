@@ -263,7 +263,7 @@ export default class Hexagon extends Component {
               width: sideLength === 100 ? "60%" : "60%",
               position: "absolute",
               bottom: sideLength === 100 ? `${+sideLength - 40}px` : "40px",
-              left: sideLength === 100 ? "46px" : "36px"
+              left: sideLength === 100 ? "46px" : "26px"
             }}
             status="normal"
             percent={progressBar}

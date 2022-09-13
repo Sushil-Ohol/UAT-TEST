@@ -186,7 +186,11 @@ const gridStyle = useMemo(
       cellEditorPopup: true,
       filter: CustomDateFilters,
       filterParams: {
-        columnData: { field: "dueBy", header: "DUE BY" },
+        title: "Due By",
+        columnData: {
+          field: "dueBy",
+          header: "DUE BY"
+        },
         setCustomDateFilter
       }
     },
@@ -200,7 +204,11 @@ const gridStyle = useMemo(
       cellEditorPopup: true,
       filter: CustomDateFilters,
       filterParams: {
-        columnData: { field: "governingDate", header: "GOVERNING DATE" },
+        title: "Governing Date",
+        columnData: {
+          field: "governingDate",
+          header: "GOVERNING DATE"
+        },
         setCustomDateFilter
       }
     },
@@ -441,19 +449,19 @@ const gridStyle = useMemo(
     if (filtersApplied) {
       const items: FilterItem[] = new Array<FilterItem>();
       Object.keys(filtersApplied).forEach((key: any) => {
-        if (filtersApplied[key].values.length > 0) {
+        if (
+          filtersApplied[key]?.values &&
+          filtersApplied[key].values.length > 0
+        ) {
           const field = columnDefs.filter((x) => x.field === key)[0];
           items.push({
             field: key,
             header: field ? field.headerName : key,
-            value: filtersApplied[key].values.join()
+            value: filtersApplied[key].values.filter(Boolean).join(", ")
           });
         }
       });
-      if (Object.keys(customDateFilter).length > 0) {
-        items.push(customDateFilter);
-      }
-      setFilters(items);
+      setFilters(items.filter(Boolean));
     }
   };
 

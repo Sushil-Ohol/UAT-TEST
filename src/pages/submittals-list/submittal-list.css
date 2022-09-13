@@ -177,12 +177,12 @@
   width: fit-content !important;
 }
 
-.idHoverColor {
+.idHoverColor a{
   color: black !important;
   text-align: center;
 }
 
-.idHoverColor:hover {
+.idHoverColor:hover a{
   color: #0073cf !important;
   text-decoration: underline;
 }
@@ -217,7 +217,8 @@
   overflow: hidden !important;
   text-overflow: ellipsis;
   display: block;
-  height: 25px;
+  height: 15px;
+  margin-top: -10px;
 }
 
 div.ag-rich-select .ag-rich-select-list {
