@@ -1,0 +1,24 @@
+[
+  {
+    "topicId": "0001",
+    "topicName": "Piping Package",
+    "unreadCount": 3,
+    "type": "general"
+  },
+  {
+    "topicId": "0002",
+    "topicName": "Submittal#1098",
+    "unreadCount": 3,
+    "type": "related",
+    "relation": "submittalLog",
+    "recordId": "P0001"
+  },
+  {
+    "topicId": "0001",
+    "topicName": "Submittal#1099",
+    "unreadCount": 3,
+    "type": "related",
+    "relation": "submittalLog",
+    "recordId": "P0001"
+  }
+]

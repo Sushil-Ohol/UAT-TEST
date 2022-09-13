@@ -10,7 +10,9 @@ import {
   PROJECT_LIST,
   PROJECT_SUG,
   PROJECT_VALUE_V1,
-  SUBMITTAL_LIST
+  SUBMITTAL_LIST,
+  CONVERSATION_LIST,
+  CONVERSATION_DETAILS
 } from "./endpoints";
 
 export function mockUpClient(client: AxiosInstance) {
@@ -80,6 +82,27 @@ export function mockUpClient(client: AxiosInstance) {
       {
         success: true,
         response: submittals
+      }
+    ];
+  });
+
+  mock.onGet(`${BASE_URL}/${CONVERSATION_LIST}`).reply(() => {
+    const discussions = require("./mock-data/discussions.json");
+    return [
+      200,
+      {
+        success: true,
+        response: discussions
+      }
+    ];
+  });
+  mock.onGet(`${BASE_URL}/${CONVERSATION_DETAILS}`).reply(() => {
+    const details = require("./mock-data/discussion-details.json");
+    return [
+      200,
+      {
+        success: true,
+        response: details
       }
     ];
   });
