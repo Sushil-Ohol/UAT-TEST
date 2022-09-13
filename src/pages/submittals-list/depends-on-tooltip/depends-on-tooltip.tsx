@@ -19,7 +19,7 @@ function DependsOnTooltip(props: any) {
                 </section>
                 <section>
                   <span className="submittalStatus">{data.status}</span>
-
+                  &nbsp;
                   <span className="dueBy"> Due by {data.dueBy}</span>
                 </section>
               </span>
