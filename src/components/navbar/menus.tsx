@@ -1,8 +1,8 @@
 /* Project List Page Component */
 import { useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import "./navbar.css";
+import { UserIcon } from "../svg-icons/index";
 
 function Menus(props: any) {
   const { projectId } = props;
@@ -43,7 +43,7 @@ function Menus(props: any) {
           href={`/project/details/${projectId}/materials`}
           rel="noopener noreferrer"
         >
-          Material
+          Materials
         </a>
       ),
       key: "4"
@@ -54,12 +54,12 @@ function Menus(props: any) {
           href={`/project/details/${projectId}/submittals`}
           rel="noopener noreferrer"
         >
-          Submittal
+          Submittals
         </a>
       ),
       key: "5"
     },
-    { label: <UserOutlined className="UserOutlined" />, key: "6" }
+    { label: <UserIcon />, key: "6" }
   ];
 
   const [current, setCurrent] = useState("");

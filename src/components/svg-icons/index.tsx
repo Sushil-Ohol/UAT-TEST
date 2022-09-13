@@ -16,6 +16,7 @@ import ArrowIcon from "./arrow-icon";
 import PlusIcon from "./plus-icon";
 import AppLogoIcon from "./app-logo-icon";
 import AutoInferredIcon from "./auto-inferred-icon";
+import UserIcon from "./user-icon";
 
 export {
   AppLogoIcon,
@@ -35,5 +36,6 @@ export {
   RejectedIcon,
   ArrowIcon,
   PlusIcon,
-  AutoInferredIcon
+  AutoInferredIcon,
+  UserIcon
 };

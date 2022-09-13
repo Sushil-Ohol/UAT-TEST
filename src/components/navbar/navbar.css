@@ -54,3 +54,16 @@
   border-bottom: 1px solid #ffffff;
   justify-content: end;
 }
+
+.ant-menu-item span a{
+  text-align: left;
+  font: normal normal normal 18px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.ant-menu-item span svg{
+  margin-top: 4px;
+  opacity: 1;
+}
