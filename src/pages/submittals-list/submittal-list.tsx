@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Drawer, message, Tooltip } from "antd";
+import {Typography, Drawer, message, Space, Tooltip } from "antd";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -22,6 +22,7 @@ import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
+import StagingZone from "pages/staging-zone";
 import { FilterItem } from "models/types";
 import { DateCellEditor } from "components";
 
@@ -49,6 +50,8 @@ import SubmittalTooltip from "./submittal-tooltip";
 import CustomDateFilters from "./custom-date-filter";
 import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
+const { Title } = Typography;
+
 let immutableRowData: any[];
 
 const dependsOnCellRenderer = (props: any) => {
@@ -71,8 +74,16 @@ function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
   const [showNewDrawer, setShowNewDrawer] = useState(false);
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
+  const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
-  const gridStyle = useMemo(() => ({ height: "780px", width: "100%" }), []);
+const gridStyle = useMemo(
+    () => ({
+      height: showStagingZone ? "300px" : "780px",
+      width: "100%",
+      transition: "all 0.3s"
+    }),
+    [showStagingZone]
+  );
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
@@ -346,6 +357,14 @@ function SubmittalList() {
     setShowSubmittalEdit(false);
   };
 
+   const onStagingZoneClick = () => {
+    setShowStagingZone(true);
+  };
+
+  const onStagingZoneClose = () => {
+    setShowStagingZone(false);
+  };
+  
   const onFirstDataRendered = useCallback(() => {
     setTimeout(() => {
       gridRef.current!.api.getDisplayedRowAtIndex(1)!.setExpanded(true);
@@ -477,6 +496,8 @@ function SubmittalList() {
       </div>
       <SubmittalListBottomBar
         onSubmittalEditClick={onSubmittalEditClick}
+        onStagingZoneClick={onStagingZoneClick}
+        showStagingZone={showStagingZone}
         selected={selectedRows}
       />
       <Drawer
@@ -504,6 +525,37 @@ function SubmittalList() {
             onApplyClick={onEditLogs}
           />
         )}
+      </Drawer>
+           <Drawer
+        title={
+          <Space>
+            <Title level={5}>Staging Zone</Title>
+            <Title
+              level={5}
+              style={{
+                background: "#808080 0% 0% no-repeat padding-box",
+                borderRadius: "2px",
+                opacity: "1",
+                padding: "2px 6px"
+              }}
+            >
+              Private within org
+            </Title>
+            <Title level={5}>
+              Use this space to discuss within your team mates, share documents.
+              All content are private within your org.
+            </Title>
+          </Space>
+        }
+        placement="bottom"
+        className="stagingZoneDrawer"
+        onClose={onStagingZoneClose}
+        visible={showStagingZone}
+        mask={false}
+        headerStyle={{ borderBottom: "none" }}
+        height="460px"
+      >
+        {showStagingZone && <StagingZone />}
       </Drawer>
     </div>
   );
