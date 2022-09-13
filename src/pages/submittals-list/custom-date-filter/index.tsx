@@ -9,10 +9,14 @@ import "./custom-date-filter.css";
 
 export default forwardRef(
   (
-    props: IFilterParams & { columnData: any; setCustomDateFilter: any },
+    props: IFilterParams & {
+      title: string;
+      columnData: any;
+      setCustomDateFilter: any;
+    },
     ref: any
   ) => {
-    const { api, columnData, setCustomDateFilter } = props;
+    const { title, api, columnData, setCustomDateFilter } = props;
     const [searchText, setSearchText] = useState<string>("");
     const [selectedVal, setSelectedVal] = useState<string>("");
     const dueDateFilters = [
@@ -70,6 +74,7 @@ export default forwardRef(
               }
               case "Custom":
                 setIsOpen(true);
+                setSelectedVal("");
                 return true;
               case "FilterCustom": {
                 const { from, to } = customDateRange;
@@ -80,6 +85,25 @@ export default forwardRef(
             }
           }
           return false;
+        },
+        getModel() {
+          if (
+            selectedVal &&
+            selectedVal !== "FilterCustom" &&
+            selectedVal !== "Custom"
+          ) {
+            return { filterType: "set", values: [selectedVal] };
+          }
+
+          if (
+            selectedVal &&
+            selectedVal === "FilterCustom" &&
+            customDateRange?.from &&
+            customDateRange?.to
+          ) {
+            return { filterType: "set", values: ["Custom"] };
+          }
+          return {};
         }
       };
     });
@@ -101,6 +125,8 @@ export default forwardRef(
         const to = moment(customDateRange[1]).format("MM/DD/YYYY");
         setCustomDateRange({ from, to });
         setSelectedVal("FilterCustom");
+      } else {
+        setSelectedVal("");
       }
     };
 
@@ -125,7 +151,7 @@ export default forwardRef(
           />
         </div>
         <DateRangePickerModal
-          title="Due By"
+          title={title}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setCustomDateRange={setCustomDateRange}

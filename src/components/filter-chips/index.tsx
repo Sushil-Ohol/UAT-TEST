@@ -17,7 +17,7 @@ function FilterChips(props: FilterChipProps) {
     <div className="filter">
       {items.map((item: any) => (
         <div className="tag-item" key={item.field}>
-          {item.header}:{item.value.split(",")[0]}
+          {item.header}: {item.value.split(",")[0]}
           <div className="tooltip">
             {item.value.split(",").length - 1 > 0 && (
               <Button className="button" id="numbers-filters">

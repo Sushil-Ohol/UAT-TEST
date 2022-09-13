@@ -175,7 +175,11 @@ function SubmittalList() {
       cellEditorPopup: true,
       filter: CustomDateFilters,
       filterParams: {
-        columnData: { field: "dueBy", header: "DUE BY" },
+        title: "Due By",
+        columnData: {
+          field: "dueBy",
+          header: "DUE BY"
+        },
         setCustomDateFilter
       }
     },
@@ -189,7 +193,11 @@ function SubmittalList() {
       cellEditorPopup: true,
       filter: CustomDateFilters,
       filterParams: {
-        columnData: { field: "governingDate", header: "GOVERNING DATE" },
+        title: "Governing Date",
+        columnData: {
+          field: "governingDate",
+          header: "GOVERNING DATE"
+        },
         setCustomDateFilter
       }
     },
@@ -422,7 +430,10 @@ function SubmittalList() {
     if (filtersApplied) {
       const items: FilterItem[] = new Array<FilterItem>();
       Object.keys(filtersApplied).forEach((key: any) => {
-        if (filtersApplied[key].values.length > 0) {
+        if (
+          filtersApplied[key]?.values &&
+          filtersApplied[key].values.length > 0
+        ) {
           const field = columnDefs.filter((x) => x.field === key)[0];
           items.push({
             field: key,
@@ -431,9 +442,6 @@ function SubmittalList() {
           });
         }
       });
-      if (Object.keys(customDateFilter).length > 0) {
-        items.push(customDateFilter);
-      }
       setFilters(items.filter(Boolean));
     }
   };

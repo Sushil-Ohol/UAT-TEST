@@ -42,9 +42,7 @@ function SubmittalListFilterComponent(props: FilterProps) {
       setCustomDateFilter({});
       gridRef.current.api.destroyFilter(customDateFilter.field);
     } else {
-      const filterModel = gridRef.current!.api.getFilterModel();
-      delete filterModel[item.field];
-      gridRef.current!.api.setFilterModel(filterModel);
+      gridRef.current.api.destroyFilter(item.field);
     }
   };
 
