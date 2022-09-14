@@ -10,7 +10,7 @@ function SubmittalTooltip(props: ITooltipParams) {
     <>
       <span />
       {Object.keys(data).length > 0 && (
-        <Card className="depends-tooltip">
+        <Card className="submittal-tooltip">
           <div>
             <span>
               <section className="submittalId">

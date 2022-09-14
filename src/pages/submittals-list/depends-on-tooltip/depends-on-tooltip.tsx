@@ -27,6 +27,22 @@ function DependsOnTooltip(props: any) {
           </div>
         </Card>
       )}
+
+      {Object.keys(data).length === 0 && (
+        <Card className="depends-tooltip">
+          <div>
+            <p>
+              <span>
+                <section>
+                  <span className="submittalNotExisst">
+                    Please enter a valid Submittal ID
+                  </span>
+                </section>
+              </span>
+            </p>
+          </div>
+        </Card>
+      )}
     </>
   );
 }
