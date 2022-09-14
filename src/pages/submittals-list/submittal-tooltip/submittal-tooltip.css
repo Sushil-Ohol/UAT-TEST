@@ -1,4 +1,4 @@
-.depends-tooltip {
+.submittal-tooltip {
   width: auto;
   height: auto;
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -7,7 +7,7 @@
   padding: 10px;
 }
 
-.depends-tooltip p {
+.submittal-tooltip p {
   margin: 5px;
   white-space: nowrap;
 }

@@ -60,7 +60,9 @@ const dependsOnCellRenderer = (props: any) => {
     <>
       {values.map((val: any, index: any) => {
         return (
-          <Tooltip title={<DependsOnToolTip value={val} api={props.api} />}>
+          <Tooltip
+            title={<DependsOnToolTip value={val.trim()} api={props.api} />}
+          >
             <span>{val}</span>
             {values[index + 1] ? "," : ""}
           </Tooltip>

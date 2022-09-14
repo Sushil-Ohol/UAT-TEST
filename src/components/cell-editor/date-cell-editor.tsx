@@ -22,7 +22,7 @@ const dateCellEditor = forwardRef((props: any, ref) => {
       onChange={(date: any) => {
         setValue(date || moment(moment().format("MM-DD-YYYY"), "MM-DD-YYYY"));
       }}
-      style={{ width: "100%" }}
+      style={{ width: "150%" }}
     />
   );
 });
