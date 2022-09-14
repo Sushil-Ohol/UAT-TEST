@@ -454,10 +454,16 @@ function SubmittalList() {
           filtersApplied[key].values.length > 0
         ) {
           const field = columnDefs.filter((x) => x.field === key)[0];
+          const { values } = filtersApplied[key];
+          if (field?.cellEditorParams?.type === "currency") {
+            values.forEach((value: any, index: number) => {
+              values[index] = parseFloat(value).toFixed(2);
+            });
+          }
           items.push({
             field: key,
             header: field ? field.headerName : key,
-            value: filtersApplied[key].values.filter(Boolean).join(", ")
+            value: values.filter(Boolean).join(", ")
           });
         }
       });

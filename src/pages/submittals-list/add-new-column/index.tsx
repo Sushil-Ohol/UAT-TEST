@@ -38,14 +38,16 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
             newColumObject = {
               field: camelCase(value.name),
               headerName: value.name.toUpperCase(),
-              cellEditor: DateCellEditor
+              cellEditor: DateCellEditor,
+              cellEditorParams: { type: "date" }
             };
             break;
           case "number":
             newColumObject = {
               field: camelCase(value.name),
               headerName: value.name.toUpperCase(),
-              cellEditor: NumberCellEditor
+              cellEditor: NumberCellEditor,
+              cellEditorParams: { type: "number" }
             };
             break;
           case "currency":
@@ -53,6 +55,7 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
               field: camelCase(value.name),
               headerName: value.name.toUpperCase(),
               cellEditor: CurrencyCellEditor,
+              cellEditorParams: { type: "currency" },
               cellRenderer: (params: any) =>
                 params.value !== undefined &&
                 params.value !== "" &&
