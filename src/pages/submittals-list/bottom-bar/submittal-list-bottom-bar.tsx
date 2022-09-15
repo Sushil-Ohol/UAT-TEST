@@ -1,4 +1,5 @@
 import { Button, Card, Space } from "antd";
+import { ExpandIcon } from "components/svg-icons";
 import "./submittal-list-bottom-bar.css";
 
 function SubmittalListBottomBar(props: any) {
@@ -48,16 +49,10 @@ function SubmittalListBottomBar(props: any) {
         {!showStagingZone && (
           <Button
             onClick={onStagingZoneClick}
-            size="middle"
-            style={{
-              float: "right",
-              marginTop: "0%",
-              backgroundColor: "#F0F0F0",
-              color: "#000",
-              border: "1px solid D0D0D0"
-            }}
+            size="large"
+            className="staging-zone-btn"
           >
-            Staging Zone
+            Staging Zone <ExpandIcon />
           </Button>
         )}
       </Card>

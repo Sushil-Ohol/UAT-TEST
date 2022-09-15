@@ -24,7 +24,10 @@ function StagingZone() {
           className="col discussion"
           discussionId={discussionId}
         />
-        <DiscussionDocs className="col" discussionId={discussionId} />
+        <DiscussionDocs
+          className="col discussion"
+          discussionId={discussionId}
+        />
       </div>
     </div>
   );

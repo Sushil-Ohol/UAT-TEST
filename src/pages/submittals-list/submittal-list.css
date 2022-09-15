@@ -177,12 +177,12 @@
   width: fit-content !important;
 }
 
-.idHoverColor a{
+.idHoverColor a {
   color: black !important;
   text-align: center;
 }
 
-.idHoverColor:hover a{
+.idHoverColor:hover a {
   color: #0073cf !important;
   text-decoration: underline;
 }
@@ -249,7 +249,8 @@ div.ag-rich-select .ag-rich-select-list {
 }
 
 .stagingZoneDrawer .ant-drawer-title {
-  font: normal normal medium 16px/20px;
+  text-align: left;
+  font: normal normal medium 16px/21px "Inter";
   letter-spacing: 0px;
   color: #000000fa;
   opacity: 1;
@@ -258,15 +259,37 @@ div.ag-rich-select .ag-rich-select-list {
 .stagingZoneDrawer .ant-drawer-body {
   padding: 0px 24px;
 }
-
+.private-org {
+  background: #808080 0% 0% no-repeat padding-box;
+  border-radius: 2px;
+  text-align: left;
+  font: normal normal normal 10px "Inter";
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  padding: 0px 10px;
+}
 .stagingZoneDrawer .ant-drawer-wrapper-body {
   border: 1px solid black;
-  background-color: #0000001a;
+  background-color: #eaeae8;
   background-image: repeating-linear-gradient(
     -45deg,
     transparent,
-    transparent 18px,
-    #c7c6c3e5 21px
+    transparent 12px,
+    #d1d1cf 15px
   );
 }
-
+.expand-icon-right {
+  position: absolute;
+  top: 1%;
+  right: 1.7%;
+}
+.expand-icon-right:hover {
+  cursor: pointer;
+}
+.stagingZoneDrawer .anticon-close {
+  display: none;
+}
+.ant-badge-not-a-wrapper:not(.ant-badge-status) {
+  vertical-align: initial;
+}

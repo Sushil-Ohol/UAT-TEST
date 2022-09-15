@@ -3,20 +3,41 @@
     "topicId": "0001",
     "topicName": "Piping Package",
     "unreadCount": 3,
+    "documentCount": 2,
     "type": "general"
   },
   {
     "topicId": "0002",
     "topicName": "Submittal#1098",
-    "unreadCount": 3,
+    "unreadCount": 2,
+    "documentCount": 1,
     "type": "related",
     "relation": "submittalLog",
     "recordId": "P0001"
   },
   {
-    "topicId": "0001",
+    "topicId": "0003",
     "topicName": "Submittal#1099",
+    "unreadCount": 4,
+    "documentCount": 2,
+    "type": "related",
+    "relation": "submittalLog",
+    "recordId": "P0001"
+  },
+  {
+    "topicId": "0004",
+    "topicName": "Submittal#1100",
+    "unreadCount": 5,
+    "documentCount": 2,
+    "type": "related",
+    "relation": "submittalLog",
+    "recordId": "P0001"
+  },
+  {
+    "topicId": "0005",
+    "topicName": "Submittal#1101",
     "unreadCount": 3,
+    "documentCount": 2,
     "type": "related",
     "relation": "submittalLog",
     "recordId": "P0001"

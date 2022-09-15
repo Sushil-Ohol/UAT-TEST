@@ -18,6 +18,7 @@ export type Discussion = {
   topicId: string;
   topicName: string;
   unreadCount: number;
+  documentCount: number;
   chats?: Conversation[];
   docs?: ConversationDoc[];
 };

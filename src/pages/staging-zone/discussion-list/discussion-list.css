@@ -1,0 +1,100 @@
+.discussion {
+  border-right: 2px solid grey;
+  height: 100%;
+  overflow-y: auto;
+}
+.discussion-header {
+  width: 100%;
+  border-bottom: 2px solid grey;
+  padding: 2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+}
+.discussion-header .new-discussion-btn {
+  margin: 0px 9.7%;
+  font: normal normal normal 14px "Inter";
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  padding-right: 13px;
+  height: 35px;
+}
+.discussion-header .new-discussion-btn .add-icon {
+  font-size: 13px;
+  font-weight: bold;
+}
+.discussion-header .search-input {
+  border: none;
+  width: 95%;
+}
+.discussion-header .ant-input {
+  border: none;
+  height: 40px;
+  background-color: transparent;
+  padding: 0px 10px;
+}
+.discussion-header .ant-input:hover {
+  border: none;
+}
+.discussion-header .ant-input-group {
+  background-color: #0000001a;
+}
+.discussion-header .ant-input-group-addon {
+  background-color: transparent;
+  width: 12%;
+}
+.discussion .ant-list-split .ant-list-item {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 1%;
+  padding: 1.5%;
+  font: normal normal normal 16px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+.discussion .ant-list-header {
+  padding: 0px;
+}
+.discussion .ant-spin-nested-loading {
+  position: relative;
+  margin: 0px 3%;
+}
+.recent-dropdown {
+  padding: 1%;
+  font-weight: 600;
+  margin: 1.5% 3%;
+  text-align: left;
+  font: normal normal normal 14px/19px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+.discussion .ant-list-items .discussion-list {
+  background-color: white;
+}
+.discussion .ant-list-items .discussion-list-active {
+  background-color: white;
+  border-right: 4px solid #000000;
+}
+.search-icon {
+  padding-top: 20%;
+  margin-left: 32%;
+  width: 30px;
+  height: 30px;
+}
+
+.discussion .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  text-align: left;
+  font: normal normal normal 14px/19px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  border: 0px;
+  background-color: transparent;
+  margin-left: 8%;
+  width: 165px;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
