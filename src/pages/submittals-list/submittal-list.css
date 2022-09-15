@@ -177,12 +177,12 @@
   width: fit-content !important;
 }
 
-.idHoverColor a  {
+.idHoverColor a {
   color: black !important;
   text-align: center;
 }
 
-.idHoverColor:hover a  {
+.idHoverColor:hover a {
   color: #0073cf !important;
   text-decoration: underline;
 }
@@ -236,8 +236,6 @@ div.ag-rich-select .ag-rich-select-list {
 .ag-full-width-container .table-row {
   border: none;
 }
-<<<<<<< HEAD
-=======
 
 /* staging zone drawer css */
 .stagingZoneDrawer .ant-drawer-close {

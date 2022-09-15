@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Col, Input, List, Row, Badge, Select } from "antd";
+import { Button, Col, List, Row, Badge, Select } from "antd";
 import { PlusOutlined, RightOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "store";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { GetDiscussions } from "store/slices/staging-zone-slice";
 import React, { useState } from "react";
 import { IconText, SearchableDropdown } from "components/widgets";
 import { Discussion } from "models/discussion";
-import { DocAttachIcon, MessageIcon, SearchIcon } from "components/svg-icons";
+import { DocAttachIcon, MessageIcon } from "components/svg-icons";
 import "./discussion-list.css";
 
 function DiscussionList(props: any) {
