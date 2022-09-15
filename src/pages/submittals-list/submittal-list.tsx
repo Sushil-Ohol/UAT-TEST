@@ -22,7 +22,8 @@ import moment from "moment";
 import { Buttons } from "components/widgets";
 import { useAppDispatch } from "store";
 import { getSubmittalList } from "store/slices/submittalsSlices";
-import SubmittalCreateComponent from "pages/submittal-create/submittal-create";
+import SubmittalCreateComponent from "pages/submittal-create";
+import SubmittalLogCreateComponent from "pages/submittal-log-create";
 import { SubmittalLog } from "models/submittal-log";
 import { isFulfilled } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
@@ -82,6 +83,7 @@ const dependsOnCellRenderer = (props: any) => {
 function SubmittalList() {
   const gridRef = useRef<AgGridReact<SubmittalLog>>(null);
   const [showNewDrawer, setShowNewDrawer] = useState(false);
+  const [showLogDrawer, setShowLogDrawer] = useState(false);
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
@@ -513,6 +515,29 @@ function SubmittalList() {
     };
   });
 
+  const onCreateLogDrawerClose = () => {
+    setShowLogDrawer(false);
+  };
+
+  const onCreateLogClick = () => {
+    setShowLogDrawer(true);
+  };
+
+  const onCreateLog = (data: any) => {
+    const newData = [...immutableRowData];
+    const newItem = {
+      ...data,
+      notification: 0,
+      comments: 0,
+      revision: 0
+    };
+    newData.push(newItem);
+    setRowData(newData);
+    immutableRowData = newData;
+    message.success("submittal log added successfully");
+    setShowLogDrawer(false);
+  };
+
   return (
     <div>
       <SubmittalListFilterComponent
@@ -522,6 +547,7 @@ function SubmittalList() {
         customDateFilter={customDateFilter}
         setCustomDateFilter={setCustomDateFilter}
         setItems={setFilters}
+        onCreateLogClick={onCreateLogClick}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
@@ -566,6 +592,20 @@ function SubmittalList() {
           <SubmittalCreateComponent
             onCancelClick={onDrawerClose}
             onApplyClick={onNewLog}
+          />
+        )}
+      </Drawer>
+      <Drawer
+        title="Create Submittal Log"
+        placement="right"
+        onClose={onCreateLogDrawerClose}
+        visible={showLogDrawer}
+      >
+        {showLogDrawer && (
+          <SubmittalLogCreateComponent
+            onCancelClick={onCreateLogDrawerClose}
+            onCreateClick={onCreateLog}
+            gridRef={gridRef}
           />
         )}
       </Drawer>

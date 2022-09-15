@@ -12,6 +12,7 @@ export type FilterProps = {
   setItems: any;
   customDateFilter: any;
   setCustomDateFilter: any;
+  onCreateLogClick: any;
 };
 
 function SubmittalListFilterComponent(props: FilterProps) {
@@ -21,7 +22,8 @@ function SubmittalListFilterComponent(props: FilterProps) {
     items,
     setItems,
     customDateFilter,
-    setCustomDateFilter
+    setCustomDateFilter,
+    onCreateLogClick
   } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
@@ -68,6 +70,15 @@ function SubmittalListFilterComponent(props: FilterProps) {
       <div id="outer" className="EditSubmittalbtn">
         <span>
           <div>
+            <div className="inner">
+              <Button
+                onClick={onCreateLogClick}
+                size="middle"
+                className="newSubmittalBtn"
+              >
+                + Submittal Log
+              </Button>
+            </div>
             <div className="inner">
               <Button
                 onClick={onNewClick}
