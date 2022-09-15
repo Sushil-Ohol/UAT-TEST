@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Typography, Drawer, message, Space, Tooltip } from "antd";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -79,6 +85,7 @@ function SubmittalList() {
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
+  const [height, setHeight] = useState(505);
   const gridStyle = useMemo(
     () => ({
       height: showStagingZone ? "300px" : "780px",
@@ -87,6 +94,7 @@ function SubmittalList() {
     }),
     [showStagingZone]
   );
+  const [isResizing, setIsResizing] = useState(false);
   const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
@@ -374,6 +382,7 @@ function SubmittalList() {
 
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
+    setHeight(505);
   };
 
   const onFirstDataRendered = useCallback(() => {
@@ -474,6 +483,36 @@ function SubmittalList() {
     }
   };
 
+  const onMouseDown = () => {
+    setIsResizing(true);
+  };
+
+  const onMouseUp = () => {
+    setIsResizing(false);
+  };
+
+  const onMouseMove = (e: { clientY: number }) => {
+    if (isResizing) {
+      const offsetBottom =
+        document.body.offsetHeight - (e.clientY - document.body.offsetTop);
+      const minHeight = 50;
+      const maxHeight = document.body.offsetHeight;
+      if (offsetBottom > minHeight && offsetBottom < maxHeight) {
+        setHeight(offsetBottom);
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+  });
+
   return (
     <div>
       <SubmittalListFilterComponent
@@ -565,9 +604,9 @@ function SubmittalList() {
         visible={showStagingZone}
         mask={false}
         headerStyle={{ borderBottom: "none" }}
-        height="500px"
+        height={height}
       >
-        {showStagingZone && <StagingZone />}
+        {showStagingZone && <StagingZone onMouseDown={onMouseDown} />}
       </Drawer>
     </div>
   );
