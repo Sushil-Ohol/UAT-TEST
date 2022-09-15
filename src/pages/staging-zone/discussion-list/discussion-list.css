@@ -19,6 +19,7 @@
   opacity: 1;
   padding-right: 13px;
   height: 28px;
+  margin-left: 24%;
 }
 .discussion-header .new-discussion-btn .add-icon {
   font-size: 13px;
@@ -26,7 +27,7 @@
 }
 .discussion-header .search-input {
   border: none;
-  width: 100%;
+  width: 80%;
   height: 30px;
 }
 .discussion-header .ant-input {
@@ -47,7 +48,7 @@
 }
 .discussion .ant-list-split .ant-list-item {
   border-bottom: 1px solid #f0f0f0;
-  margin-bottom: 1%;
+  margin-bottom: 0.5%;
   padding: 1.5%;
   font: normal normal normal 16px/21px Inter;
   letter-spacing: 0px;
@@ -63,7 +64,6 @@
 }
 .recent-dropdown {
   padding: 1%;
-  font-weight: 600;
   margin: 1.5% 3%;
   text-align: left;
   font: normal normal normal 14px/19px Inter;
@@ -103,7 +103,7 @@
   background: #0000000d 0% 0% no-repeat padding-box;
   opacity: 1;
   height: 30px;
-  width: 100%;
+  width: 96%;
   padding: 1%;
   margin: 0%;
 }
@@ -127,13 +127,9 @@
   margin-bottom: 0px;
 }
 
-.ant-select-selection-search-input {
-  box-shadow: unset;
-  border: 0px;
-}
 .discussion-select-input {
   width: 163px;
-  margin-left: 2%;
+  margin-left: 1%;
   margin-top: 1%;
   margin-bottom: 1%;
 }
@@ -142,8 +138,12 @@
   font-size: 11px;
   background: #eaeae8 0% 0% no-repeat padding-box;
   opacity: 1;
+  border-bottom: 1px solid #00000029;
 }
 
 .search-align .ant-select-arrow {
   display: none;
+}
+.search-align .ant-select-selector {
+  box-shadow: unset !important;
 }

@@ -1,5 +1,4 @@
 import { Col, Row, Select } from "antd";
-// import { useState } from "react";
 import { SearchIcon } from "components/svg-icons";
 
 function SearchableDropdown({
@@ -12,18 +11,11 @@ function SearchableDropdown({
   onSelect: Function;
 }) {
   const { Option } = Select;
-  //   const [searchValue, setsearchValue] = useState("");
   const onChange = (value: string) => {
     onSelect(value);
   };
 
   return (
-    // <Input
-    //   className="search-input"
-    //   addonBefore={<SearchIcon className="search-icon" />}
-    //   placeholder="Search"
-    // />
-
     <div className="search-align">
       <Row>
         <Col span={4}>

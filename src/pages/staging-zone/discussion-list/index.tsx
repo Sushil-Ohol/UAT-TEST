@@ -86,7 +86,7 @@ function DiscussionList(props: any) {
                   Start new discussion
                 </Button>
               </Col>
-              <Col span={6} offset={16} className="wrapper-input-search">
+              <Col span={7} offset={16} className="wrapper-input-search">
                 <SearchableDropdown
                   placeholder="Search"
                   data={data}

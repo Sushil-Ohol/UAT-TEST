@@ -39,6 +39,7 @@ import {
 import {
   ChatIcon,
   DocAttachIcon,
+  ExpandIcon,
   NotificationIcon
 } from "../../components/svg-icons/index";
 import AddNewColumn from "./add-new-column";
@@ -546,20 +547,15 @@ function SubmittalList() {
         title={
           <Space>
             <Title level={5}>Staging Zone</Title>
-            <Title
-              level={5}
-              style={{
-                background: "#808080 0% 0% no-repeat padding-box",
-                borderRadius: "2px",
-                opacity: "1",
-                padding: "2px 6px"
-              }}
-            >
+            <Title level={5} className="private-org">
               Private within org
             </Title>
             <Title level={5}>
               Use this space to discuss within your team mates, share documents.
               All content are private within your org.
+            </Title>
+            <Title level={5} onClick={onStagingZoneClose}>
+              <ExpandIcon className="expand-icon-right" />
             </Title>
           </Space>
         }
@@ -569,7 +565,7 @@ function SubmittalList() {
         visible={showStagingZone}
         mask={false}
         headerStyle={{ borderBottom: "none" }}
-        height="460px"
+        height="500px"
       >
         {showStagingZone && <StagingZone />}
       </Drawer>
