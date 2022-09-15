@@ -2,3 +2,15 @@
   border-color: #007aff;
   color: #007aff;
 }
+.staging-zone-btn {
+  float: right;
+  margin-top: 0%;
+  background-color: #f0f0f0;
+  border: 1px solid D0D0D0;
+  width: 170px;
+  text-align: left;
+  font: normal normal normal 16px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}

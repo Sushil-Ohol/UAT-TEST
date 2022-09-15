@@ -17,6 +17,10 @@ import PlusIcon from "./plus-icon";
 import AppLogoIcon from "./app-logo-icon";
 import AutoInferredIcon from "./auto-inferred-icon";
 import UserIcon from "./user-icon";
+import AddIcon from "./add-icon";
+import SearchIcon from "./search-icon";
+import ExpandIcon from "./expand-icon";
+import MessageIcon from "./message-icon";
 
 export {
   AppLogoIcon,
@@ -30,6 +34,7 @@ export {
   ChatIcon,
   DocAttachIcon,
   InreviewIcon,
+  ExpandIcon,
   Notification1Icon,
   Notification2Icon,
   NotificationIcon,
@@ -37,5 +42,8 @@ export {
   ArrowIcon,
   PlusIcon,
   AutoInferredIcon,
-  UserIcon
+  UserIcon,
+  AddIcon,
+  SearchIcon,
+  MessageIcon
 };
