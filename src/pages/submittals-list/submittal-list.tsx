@@ -626,17 +626,7 @@ function SubmittalList() {
         title={
           <Space>
             <Title level={5}>Staging Zone</Title>
-            <Title
-              level={5}
-              style={{
-                background: "#808080 0% 0% no-repeat padding-box",
-                borderRadius: "2px",
-                opacity: "1",
-                padding: "2px 6px",
-                color: "#ffffff",
-                fontWeight: "500"
-              }}
-            >
+            <Title level={5} className="private-org">
               Private within org
             </Title>
             <Title level={5}>

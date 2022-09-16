@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Col, Input, List, Row, Badge, Select } from "antd";
+import { Button, Col, List, Row, Badge, Select } from "antd";
 import { PlusOutlined, RightOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "store";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices";
 import { GetDiscussions } from "store/slices/staging-zone-slice";
 import React, { useState } from "react";
-import { IconText } from "components/widgets";
+import { IconText, SearchableDropdown } from "components/widgets";
 import { Discussion } from "models/discussion";
-import { DocAttachIcon, MessageIcon, SearchIcon } from "components/svg-icons";
+import { DocAttachIcon, MessageIcon } from "components/svg-icons";
 import "./discussion-list.css";
 
 function DiscussionList(props: any) {
@@ -31,10 +31,15 @@ function DiscussionList(props: any) {
     onClick(id);
     setSelectedId(id);
   };
+  const onSearchSelectClick = (id: string) => {
+    onClick(id);
+    setSelectedId(id);
+  };
 
   const discussionCard = (item: Discussion) => {
     return (
       <List.Item
+        onClick={() => onDiscussionClick(item.topicId)}
         className={
           selectedId === item.topicId
             ? " discussion-list discussion-list-active"
@@ -72,7 +77,7 @@ function DiscussionList(props: any) {
         header={
           <div>
             <Row className="discussion-header">
-              <Col span={4}>
+              <Col span={1}>
                 <Button
                   size="middle"
                   className="new-discussion-btn"
@@ -81,11 +86,11 @@ function DiscussionList(props: any) {
                   Start new discussion
                 </Button>
               </Col>
-              <Col span={7} offset={13} className="wrapper-input-search">
-                <Input
-                  className="search-input"
-                  addonBefore={<SearchIcon className="search-icon" />}
+              <Col span={7} offset={16} className="wrapper-input-search">
+                <SearchableDropdown
                   placeholder="Search"
+                  data={data}
+                  onSelect={onSearchSelectClick}
                 />
               </Col>
             </Row>
