@@ -18,6 +18,8 @@ test("Welcome To ConstructivIQ", () => {
   });
   renderWithProviders(<App />);
 
-  const linkElement = screen.getByText("Welcome To ConstructivIQ");
+  const linkElement = screen.getByText(
+    "Upload any of the document to get started!"
+  );
   expect(linkElement).toBeInTheDocument();
 });

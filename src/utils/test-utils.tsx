@@ -10,6 +10,9 @@ import type { AppStore, RootState1 } from "store";
 import homeReducer from "store/slices/homeSlice";
 import submittalReducer from "store/slices/submittalsSlices";
 import projectReducer from "store/slices/projectSlice";
+import projectValueReducer from "store/slices/project-value";
+import projectSuggestReducer from "store/slices/project-suggest";
+import stagingZoneReducer from "store/slices/staging-zone-slice";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -27,7 +30,10 @@ export function renderWithProviders(
       reducer: {
         homeState: homeReducer,
         submittals: submittalReducer,
-        projects: projectReducer
+        projects: projectReducer,
+        projectValue: projectValueReducer,
+        projectSuggest: projectSuggestReducer,
+        stagingZone: stagingZoneReducer
       },
       preloadedState
     }),
