@@ -5,8 +5,8 @@
 }
 .discussion-header {
   width: 100%;
-  border-bottom: 2px solid grey;
-  padding: 2%;
+  height: 61px;
+  border-bottom: 1px solid darkgrey;  padding: 2%;
   display: flex;
   align-items: center;
   background: #f7f6f4 0% 0% no-repeat padding-box;

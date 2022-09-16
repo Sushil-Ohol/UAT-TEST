@@ -6,10 +6,12 @@ import * as api from "services/staging-zone-service";
 
 type StagingZoneState = {
   list: Discussion[];
+  discussionList: Discussion[];
 };
 
 export const initialState: StagingZoneState = {
-  list: []
+  list: [],
+  discussionList: []
 };
 
 export const GetDiscussions = createAsyncThunk("discussion/list", async () => {
@@ -33,12 +35,19 @@ const stagingZoneSlice = createSlice({
     reset: () => initialState
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      GetDiscussions.fulfilled,
-      (state, { payload }: PayloadAction<any>) => {
-        state.list = payload.response;
-      }
-    );
+    builder
+      .addCase(
+        GetDiscussions.fulfilled,
+        (state, { payload }: PayloadAction<any>) => {
+          state.list = payload.response;
+        }
+      )
+      .addCase(
+        GetDiscussionDetails.fulfilled,
+        (state, { payload }: PayloadAction<any>) => {
+          state.discussionList = payload.response;
+        }
+      );
   }
 });
 

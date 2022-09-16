@@ -1,0 +1,57 @@
+.discussionDetails {
+  height: 61px;
+  position: sticky;
+  top: 0px;
+  background-color: #f7f6f4;
+  padding: 3% 0;
+  z-index: 1;
+  border-bottom: 1px solid darkgrey;
+}
+
+.archieveBtn {
+  padding: 2px;
+  float: right;
+  margin-right: 13px;
+  margin-top: 0px;
+}
+
+.currentUserChat {
+  float: right;
+  clear: both;
+  padding: 0 1.5%;
+  margin-left: 50px;
+  margin-right: 0px;
+}
+
+.otherUserChat {
+  float: left;
+  clear: both;
+  padding: 0 1.5%;
+  margin-left: 0px;
+  margin-right: 50px;
+}
+
+.currentUserMsg {
+  background-color: white;
+  clear: both;
+  color: #000000;
+  font: normal normal normal 16px/21px Inter;
+  padding: 11px 12px 12px 22px;
+  border-radius: 8px 0px 8px 8px;
+}
+
+.otherUserMsg {
+  background-color: white;
+  clear: both;
+  color: #000000;
+  font: normal normal normal 16px/21px Inter;
+  padding: 11px 22px 12px 12px;
+  border-radius: 0px 8px 8px 8px;
+}
+
+.sendMsgDiv {
+  position: sticky;
+  bottom: 0px;
+  background-color: #f7f6f4;
+  padding: 11px 1.5%;
+}

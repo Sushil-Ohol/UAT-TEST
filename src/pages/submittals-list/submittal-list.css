@@ -258,6 +258,7 @@ div.ag-rich-select .ag-rich-select-list {
 
 .stagingZoneDrawer .ant-drawer-body {
   padding: 0px 24px;
+  overflow: hidden;
 }
 .private-org {
   background: #808080 0% 0% no-repeat padding-box;

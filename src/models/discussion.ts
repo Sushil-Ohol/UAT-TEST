@@ -1,8 +1,8 @@
 export type Conversation = {
   id: string;
+  messageBy: string;
+  messageDate: string;
   message: string;
-  date: string;
-  userId: string;
 };
 
 export type ConversationDoc = {
