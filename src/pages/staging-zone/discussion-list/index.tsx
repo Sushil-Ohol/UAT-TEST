@@ -25,7 +25,9 @@ function DiscussionList(props: any) {
     loadList();
   }, []);
 
-  const data = useSelector((state: RootState) => state.stagingZone.list);
+  const data = useSelector(
+    (state: RootState) => state.stagingZone.discussionList
+  );
 
   const onDiscussionClick = (id: string) => {
     onClick(id);
