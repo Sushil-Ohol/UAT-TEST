@@ -2,7 +2,7 @@
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Divider } from "antd";
 import Dragger from "antd/lib/upload/Dragger";
-import { Discussion, ConversationDoc } from "models/discussion";
+import { ConversationDoc } from "models/discussion";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store";
@@ -13,48 +13,42 @@ import { DownloadIcon, CopyIcon } from "components/svg-icons";
 
 function DiscussionDocs(props: any) {
   const { className, discussionId } = props;
-
-  const [discussionInfo, setDiscussionInfo] = useState<Discussion>();
   const [filterByDate, setFilterByDate] = useState<any>();
   const [uploadedDate, setUploadDate] = useState<string[]>();
-  const docs = useAppSelector(
-    (state: RootState) => state.stagingZone.discussionList
-  );
   const dispatch = useAppDispatch();
   const bottomRef = useRef<any>(null);
+  const selectedDiscussion = useAppSelector(
+    (state: RootState) => state.stagingZone.selectedDiscussion
+  );
 
   // get Total doc count
-  const totalDocs = discussionInfo ? discussionInfo.docs?.length : 0;
+  const totalDocs = selectedDiscussion ? selectedDiscussion.docs?.length : 0;
 
   // dummy user for testing
   const currentUser = "John";
 
-  const loadList = async () => {
-    await dispatch(GetDiscussionDetails());
+  const loadDiscussionDetails = async () => {
+    await dispatch(GetDiscussionDetails(discussionId));
   };
+
+  useEffect(() => {
+    if (selectedDiscussion === null) {
+      loadDiscussionDetails();
+    }
+  }, []);
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [filterByDate]);
-  useEffect(() => {
-    loadList();
-  }, []);
 
   React.useEffect(() => {
-    const discussion = docs.find((data) => data.topicId === discussionId);
-    setDiscussionInfo(discussion);
-  }, [docs, discussionId]);
-
-  React.useEffect(() => {
-    const sortedChatByDate = discussionInfo?.docs
+    const sortedChatByDate = selectedDiscussion?.docs
       ?.slice()
       .sort(
         (a: any, b: any) =>
           new Date(a.uploadDate).getTime() - new Date(b.uploadDate).getTime()
       );
-
-    const newSortedData = { ...discussionInfo, docs: sortedChatByDate };
-
+    const newSortedData = { ...selectedDiscussion, docs: sortedChatByDate };
     const filterByDateData = newSortedData?.docs?.reduce(
       (result: any, currentValue: any) => {
         const newArray = result;
@@ -77,7 +71,7 @@ function DiscussionDocs(props: any) {
     const keys = filterByDateData ? Object.keys(filterByDateData) : [];
 
     setUploadDate(keys);
-  }, [discussionInfo]);
+  }, [selectedDiscussion, selectedDiscussion?.docs]);
 
   return (
     <div className={className}>
