@@ -1,0 +1,66 @@
+.discussionDocs {
+  height: 61px;
+  position: sticky;
+  top: 0px;
+  background-color: #f7f6f4;
+  padding: 3% 0;
+  z-index: 1;
+  border-bottom: 1px solid darkgrey;
+}
+
+.importBtn {
+  padding: 2px;
+  float: right;
+  margin-right: 13px;
+  margin-top: 0px;
+}
+
+.currentUserFile {
+  float: right;
+  clear: both;
+  padding: 0 1.5%;
+  margin-left: 50px;
+  margin-right: 0px;
+  width: 100%;
+}
+
+.otherUserFile {
+  float: left;
+  clear: both;
+  padding: 0 1.5%;
+  margin-left: 0px;
+  margin-right: 50px;
+  width: 100%;
+}
+
+.currentUserFilenName {
+  background-color: white;
+  clear: both;
+  color: #000000;
+  font: normal normal normal 16px/21px Inter;
+  padding: 11px 12px 12px 22px;
+  border-radius: 8px 0px 8px 8px;
+}
+
+.otherUserFilenName {
+  background-color: white;
+  clear: both;
+  color: #000000;
+  font: normal normal normal 16px/21px Inter;
+  padding: 11px 22px 12px 12px;
+  border-radius: 0px 8px 8px 8px;
+}
+
+.uploadFileDiv {
+  position: sticky;
+  bottom: 0px;
+  background-color: #f7f6f4;
+  padding: 11px 1.5%;
+}
+.downloadIcon {
+  float: right;
+}
+.copyIcon {
+  float: right;
+  margin-right: 5px;
+}

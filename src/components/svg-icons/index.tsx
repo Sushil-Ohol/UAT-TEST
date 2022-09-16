@@ -21,6 +21,8 @@ import AddIcon from "./add-icon";
 import SearchIcon from "./search-icon";
 import ExpandIcon from "./expand-icon";
 import MessageIcon from "./message-icon";
+import CopyIcon from "./copy-icon";
+import DownloadIcon from "./download-icon";
 
 export {
   AppLogoIcon,
@@ -45,5 +47,7 @@ export {
   UserIcon,
   AddIcon,
   SearchIcon,
-  MessageIcon
+  MessageIcon,
+  CopyIcon,
+  DownloadIcon
 };
