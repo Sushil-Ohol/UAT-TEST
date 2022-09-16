@@ -1,35 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SendOutlined } from "@ant-design/icons";
 import { Button, Divider, Input, InputRef } from "antd";
-import { Conversation, Discussion } from "models/discussion";
+import { Conversation } from "models/discussion";
 import moment from "moment";
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
-import { GetDiscussionDetails } from "store/slices/staging-zone-slice";
+import {
+  GetDiscussionDetails,
+  newMessage
+} from "store/slices/staging-zone-slice";
 import "./discussion-details.css";
 
 function DiscussionDetails(props: any) {
   const { className, discussionId } = props;
 
-  const [discussionInfo, setDiscussionInfo] = useState<Discussion>();
   const [filterByDate, setFilterByDate] = useState<any>();
   const [msgDate, setMsgDate] = useState<string[]>();
-  const chats = useAppSelector(
-    (state: RootState) => state.stagingZone.discussionList
+  const discussionObj = useAppSelector(
+    (state: RootState) => state.stagingZone.selectedDiscussion
   );
   const dispatch = useAppDispatch();
   const sendMessage = useRef<InputRef>(null);
   const bottomRef = useRef<any>(null);
 
   // get Total chat count
-  const totalChat = discussionInfo ? discussionInfo.chats?.length : 0;
+  const totalChat = discussionObj ? discussionObj.chats?.length : 0;
 
   // dummy user for testing
   const currentUser = "ram";
 
   const loadList = async () => {
-    await dispatch(GetDiscussionDetails());
+    await dispatch(GetDiscussionDetails(discussionId));
   };
 
   useEffect(() => {
@@ -38,26 +40,31 @@ function DiscussionDetails(props: any) {
 
   useEffect(() => {
     loadList();
-  }, []);
+  }, [discussionId]);
 
-  useEffect(() => {
-    const discussion = chats.find((data) => data.topicId === discussionId);
-    setDiscussionInfo(discussion);
-  }, [chats, discussionId]);
+  const onClickSendBtn = async () => {
+    const msg = sendMessage.current?.input?.value;
+    const chatInfo = {
+      id: "10",
+      messageBy: currentUser,
+      messageDate: "2022-11-26 2:36 pm",
+      message: msg
+    };
 
-  const onClickSendBtn = () => {
+    await dispatch(newMessage({ chatInfo }));
+
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    const sortedChatByDate = discussionInfo?.chats
+    const sortedChatByDate = discussionObj?.chats
       ?.slice()
       .sort(
         (a: any, b: any) =>
           new Date(a.messageDate).getTime() - new Date(b.messageDate).getTime()
       );
 
-    const newSortedData = { ...discussionInfo, chats: sortedChatByDate };
+    const newSortedData = { ...discussionObj, chats: sortedChatByDate };
 
     const filterByDateData = newSortedData?.chats?.reduce(
       (result: any, currentValue: any) => {
@@ -81,7 +88,7 @@ function DiscussionDetails(props: any) {
     const keys = filterByDateData ? Object.keys(filterByDateData) : [];
 
     setMsgDate(keys);
-  }, [discussionInfo]);
+  }, [discussionObj?.chats]);
 
   return (
     <div className={className}>
