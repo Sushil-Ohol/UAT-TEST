@@ -7,8 +7,10 @@ import projectReducer from "./projectSlice";
 import projectValueReducer from "./project-value";
 import projectSuggestReducer from "./project-suggest";
 import stagingZoneReducer from "./staging-zone-slice";
+import signIn from "./signIn";
 
 const combinedReducer1 = combineReducers({
+  auth: signIn,
   homeState: homeReducer,
   submittals: submittalReducer,
   projects: projectReducer,
