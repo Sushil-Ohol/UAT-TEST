@@ -1,0 +1,16 @@
+[{
+    "userId":"user1001",
+    "name":"john",
+    "email":"john@gmail.com",
+    "password":"john1234"
+},{
+    "userId":"user1002",
+    "name":"roman",
+    "email":"roman@gmail.com",
+    "password":"roman1234"
+},{
+    "userId":"user1003",
+    "name":"seth",
+    "email":"seth@gmail.com",
+    "password":"seth1234"
+}]
