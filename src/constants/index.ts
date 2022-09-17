@@ -10,6 +10,13 @@ export const colorCode = {
   fileName: "#CCCCCC",
   orange: "#FFA41B"
 };
+
+export const validationErrorMsg = {
+  onEmailIdFieldEmpty: "please enter email id",
+  onEmailIdIsNotValid: "please enter valid email id",
+  onPasswordFieldEmpty: "please enter your password"
+};
+
 export const steps = [
   {
     title: "Details",
