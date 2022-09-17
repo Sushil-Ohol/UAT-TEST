@@ -8,6 +8,5 @@ export const Login = async (request: LoginRequest) => {
   const response = await client.get<LoginResponse>(`${BASE_URL}/${LOGIN}`, {
     params: request
   });
-  console.log(response.data);
   return response;
 };
