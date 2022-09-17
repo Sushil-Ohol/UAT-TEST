@@ -12,7 +12,8 @@ import {
   PROJECT_VALUE_V1,
   SUBMITTAL_LIST,
   CONVERSATION_LIST,
-  CONVERSATION_DETAILS
+  CONVERSATION_DETAILS,
+  LOGIN
 } from "./endpoints";
 
 export function mockUpClient(client: AxiosInstance) {
@@ -107,6 +108,35 @@ export function mockUpClient(client: AxiosInstance) {
       {
         success: true,
         response: discussion
+      }
+    ];
+  });
+  
+  mock.onGet(`${BASE_URL}/${LOGIN}`).reply((config) => {
+    const userDetails = require("./mock-data/user.json");
+    const discussion = userDetails.find(
+      (data: any) =>
+        data.email === config.params.email &&
+        data.password === config.params.password
+    );
+
+    if (discussion) {
+      delete discussion.password;
+      return [
+        200,
+        {
+          success: true,
+          response: discussion,
+          message: "Successfully Login"
+        }
+      ];
+    }
+    return [
+      200,
+      {
+        success: false,
+        response: {},
+        message: "User Not Found"
       }
     ];
   });
