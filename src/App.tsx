@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
+  Login,
   HomePage,
   ProjectsListpage,
   ProjectCreatePage,
@@ -16,9 +17,9 @@ function App() {
       <div className="App">
         <Navbar />
         <Switch>
+          <Route exact path="/" component={Login} />
           <Route path="/home" exact component={HomePage} />
           <Route path="/projects" exact component={ProjectsListpage} />
-          <Route path="/" exact component={ProjectCreatePage} />
           <Route
             path="/project/details/:projectId/submittals"
             exact
