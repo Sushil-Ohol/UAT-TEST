@@ -17,13 +17,10 @@ export const login = createAsyncThunk(
   "auth/login",
   async (request: LoginRequest, { rejectWithValue }) => {
     const response = await api.Login(request);
-    console.log(response.data);
     if (response.data.success === true) {
       const { data } = response;
-      console.log(data);
       return { ...data };
     }
-    console.log(response.data);
     return rejectWithValue(response.data);
   }
 );
