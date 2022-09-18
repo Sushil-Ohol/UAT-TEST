@@ -96,13 +96,17 @@ export function mockUpClient(client: AxiosInstance) {
       }
     ];
   });
-  mock.onGet(`${BASE_URL}/${CONVERSATION_DETAILS}`).reply(() => {
+
+  mock.onGet(`${BASE_URL}/${CONVERSATION_DETAILS}`).reply((config) => {
     const details = require("./mock-data/discussion-details.json");
+    const discussion = details.find(
+      (data: any) => data.topicId === config.params.topicId
+    );
     return [
       200,
       {
         success: true,
-        response: details
+        response: discussion
       }
     ];
   });

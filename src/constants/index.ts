@@ -56,6 +56,11 @@ const PackageOptions = ["920:Electrical", "Piping"];
 
 export const DATE_FORMAT_MMDDYYY = "MM-DD-YYYY";
 
+export const isGenericDiscussionContent =
+  "This discussion will be associated with the selected Submittal. Please unselect the Submittal, prior to adding a new discussion if an association is not desired.";
+export const linkDiscussionContent =
+  " This will be a general discussion. Please select a Submittal prior to adding a new discussion if an association is desired.";
+
 export const DropDownData = {
   ContractorOptions,
   StatusOptions,

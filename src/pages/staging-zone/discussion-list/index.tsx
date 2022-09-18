@@ -1,21 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Col, List, Row, Badge, Select } from "antd";
-import { PlusOutlined, RightOutlined } from "@ant-design/icons";
+import { List, Badge, message } from "antd";
+import { RightOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "store";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices";
-import { GetDiscussions } from "store/slices/staging-zone-slice";
-import React, { useState } from "react";
-import { IconText, SearchableDropdown } from "components/widgets";
+import {
+  addNewDiscussion,
+  GetDiscussions
+} from "store/slices/staging-zone-slice";
+import React, { useRef, useState } from "react";
+import { IconText } from "components/widgets";
 import { Discussion } from "models/discussion";
 import { DocAttachIcon, MessageIcon } from "components/svg-icons";
 import "./discussion-list.css";
+import DiscussionHeader from "./discussion-header";
 
 function DiscussionList(props: any) {
-  const { className, onClick } = props;
+  const { className, onClick, selectedData } = props;
   const dispatch = useAppDispatch();
+  const bottomRef = useRef<any>();
+  const [isVisible, setIsVisible] = useState(false);
   const [selectedId, setSelectedId] = useState("");
-  const { Option } = Select;
 
   const loadList = async () => {
     await dispatch(GetDiscussions());
@@ -25,7 +30,9 @@ function DiscussionList(props: any) {
     loadList();
   }, []);
 
-  const data = useSelector((state: RootState) => state.stagingZone.list);
+  const data = useSelector(
+    (state: RootState) => state.stagingZone.discussionList
+  );
 
   const onDiscussionClick = (id: string) => {
     onClick(id);
@@ -34,6 +41,33 @@ function DiscussionList(props: any) {
   const onSearchSelectClick = (id: string) => {
     onClick(id);
     setSelectedId(id);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const onAddHandle = (topicName: string) => {
+    setIsVisible(false);
+    const existDiscussion = data.find(
+      (item: any) => item.topicName === topicName
+    );
+    if (existDiscussion) {
+      message.error("Topic name exists, please enter a unique name.");
+    } else {
+      const newTopicId = data.length + 1;
+      const newDiscussion = {
+        topicId: newTopicId.toString(),
+        topicName,
+        unreadCount: 0,
+        documentCount: 0,
+        type: selectedData.length === 1 ? "related" : "general",
+        relation: selectedData.length === 1 ? "submittalLog" : "",
+        recordId: selectedData.length === 1 ? selectedData[0].id : ""
+      };
+      dispatch(addNewDiscussion(newDiscussion));
+      setSelectedId(newDiscussion.topicId.toString());
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const onCancelClickHandle = () => {
+    setIsVisible(false);
   };
 
   const discussionCard = (item: Discussion) => {
@@ -49,16 +83,20 @@ function DiscussionList(props: any) {
         actions={
           selectedId !== item.topicId
             ? [
-                <IconText
-                  icon={MessageIcon}
-                  text={<Badge count={item.unreadCount} />}
-                  key="list-vertical-star-o"
-                />,
-                <IconText
-                  icon={DocAttachIcon}
-                  text={<Badge count={item.documentCount} />}
-                  key="list-vertical-message"
-                />,
+                item.unreadCount > 0 && (
+                  <IconText
+                    icon={MessageIcon}
+                    text={<Badge count={item.unreadCount} />}
+                    key="list-vertical-star-o"
+                  />
+                ),
+                item.documentCount > 0 && (
+                  <IconText
+                    icon={DocAttachIcon}
+                    text={<Badge count={item.documentCount} />}
+                    key="list-vertical-message"
+                  />
+                ),
                 <RightOutlined
                   onClick={() => onDiscussionClick(item.topicId)}
                 />
@@ -75,36 +113,19 @@ function DiscussionList(props: any) {
     <div className={className}>
       <List
         header={
-          <div>
-            <Row className="discussion-header">
-              <Col span={1}>
-                <Button
-                  size="middle"
-                  className="new-discussion-btn"
-                  icon={<PlusOutlined className="add-icon" />}
-                >
-                  Start new discussion
-                </Button>
-              </Col>
-              <Col span={7} offset={16} className="wrapper-input-search">
-                <SearchableDropdown
-                  placeholder="Search"
-                  data={data}
-                  onSelect={onSearchSelectClick}
-                />
-              </Col>
-            </Row>
-            <Select
-              defaultValue="Recently edited"
-              className="discussion-select-input"
-            >
-              <Option value="Recently edited">Recently edited</Option>
-            </Select>
-          </div>
+          <DiscussionHeader
+            onSearchSelect={onSearchSelectClick}
+            setIsVisible={setIsVisible}
+            selectedData={selectedData}
+            onAddHandle={onAddHandle}
+            isVisible={isVisible}
+            onCancelClickHandle={onCancelClickHandle}
+          />
         }
         dataSource={data}
-        renderItem={(item) => discussionCard(item)}
+        renderItem={(item: any) => discussionCard(item)}
       />
+      <div ref={bottomRef} />
     </div>
   );
 }
