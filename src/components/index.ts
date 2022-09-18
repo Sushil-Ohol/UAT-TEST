@@ -8,6 +8,7 @@ import {
   CurrencyCellEditor,
   DateCellEditor
 } from "./cell-editor";
+import NewDiscussion from "./new-discussion";
 
 export {
   FileUpload,
@@ -17,5 +18,6 @@ export {
   FilterChips,
   NumberCellEditor,
   CurrencyCellEditor,
-  DateCellEditor
+  DateCellEditor,
+  NewDiscussion
 };

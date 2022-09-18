@@ -13,7 +13,7 @@ import { IconText } from "components/widgets";
 import { Discussion } from "models/discussion";
 import { DocAttachIcon, MessageIcon } from "components/svg-icons";
 import "./discussion-list.css";
-import DiscussionHeader from "./discussion-header";
+import DiscussionHeader from "./header";
 
 function DiscussionList(props: any) {
   const { className, onClick, selectedData } = props;
