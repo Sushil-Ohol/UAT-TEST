@@ -22,15 +22,16 @@ function DiscussionDetails(props: any) {
   const bottomRef = useRef<any>(null);
   const inputdiv = useRef<any>(null);
   const topRef = useRef<any>();
-
-  const dispatch = useAppDispatch();
-  const discussionObj = useAppSelector(
-    (state: RootState) => state.stagingZone.selectedDiscussion
+  const chatMessages = useAppSelector(
+    (state: RootState) => state.stagingZone.discussions
   );
+  const dispatch = useAppDispatch();
 
   const height = topRef.current ? topRef.current.offsetHeight - 121 : 100;
   // get Total chat count
-  const totalChat = discussionObj ? discussionObj.chats?.length : 0;
+  const totalChat = chatMessages[discussionId]
+    ? chatMessages[discussionId].list?.length
+    : 0;
 
   // dummy user for testing
   const currentUser = "roman";
@@ -44,8 +45,9 @@ function DiscussionDetails(props: any) {
   }, [filterByDate]);
 
   useEffect(() => {
-    setSendMessage("");
-    loadList();
+    if (!chatMessages[discussionId]) {
+      loadList();
+    }
   }, [discussionId]);
 
   const onClickSendBtn = async () => {
@@ -56,19 +58,22 @@ function DiscussionDetails(props: any) {
       message: sendMessage
     };
 
-    await dispatch(newMessage({ chatInfo }));
+    await dispatch(newMessage({ discussionId, chatInfo }));
     setSendMessage("");
   };
 
   useEffect(() => {
-    const sortedChatByDate = discussionObj?.chats
+    const sortedChatByDate = chatMessages[discussionId]?.list
       ?.slice()
       .sort(
         (a: any, b: any) =>
           new Date(a.messageDate).getTime() - new Date(b.messageDate).getTime()
       );
 
-    const newSortedData = { ...discussionObj, chats: sortedChatByDate };
+    const newSortedData = {
+      ...chatMessages[discussionId]?.list,
+      chats: sortedChatByDate
+    };
 
     const filterByDateData = newSortedData?.chats?.reduce(
       (result: any, currentValue: any) => {
@@ -92,7 +97,7 @@ function DiscussionDetails(props: any) {
     const keys = filterByDateData ? Object.keys(filterByDateData) : [];
 
     setMsgDate(keys);
-  }, [discussionObj?.chats]);
+  }, [chatMessages[discussionId]?.list]);
 
   return (
     <div ref={topRef} className={className}>

@@ -17,12 +17,14 @@ function DiscussionDocs(props: any) {
   const [uploadedDate, setUploadDate] = useState<string[]>();
   const dispatch = useAppDispatch();
   const bottomRef = useRef<any>(null);
-  const selectedDiscussion = useAppSelector(
-    (state: RootState) => state.stagingZone.selectedDiscussion
+  const documentsData = useAppSelector(
+    (state: RootState) => state.stagingZone.documents
   );
 
   // get Total doc count
-  const totalDocs = selectedDiscussion ? selectedDiscussion.docs?.length : 0;
+  const totalDocs = documentsData[discussionId]
+    ? documentsData[discussionId].list?.length
+    : 0;
 
   // dummy user for testing
   const currentUser = "John";
@@ -32,7 +34,7 @@ function DiscussionDocs(props: any) {
   };
 
   useEffect(() => {
-    if (selectedDiscussion === null) {
+    if (!documentsData[discussionId]) {
       loadDiscussionDetails();
     }
   }, []);
@@ -42,13 +44,16 @@ function DiscussionDocs(props: any) {
   }, [filterByDate]);
 
   React.useEffect(() => {
-    const sortedChatByDate = selectedDiscussion?.docs
+    const sortedChatByDate = documentsData[discussionId]?.list
       ?.slice()
       .sort(
         (a: any, b: any) =>
           new Date(a.uploadDate).getTime() - new Date(b.uploadDate).getTime()
       );
-    const newSortedData = { ...selectedDiscussion, docs: sortedChatByDate };
+    const newSortedData = {
+      ...documentsData[discussionId].list,
+      docs: sortedChatByDate
+    };
     const filterByDateData = newSortedData?.docs?.reduce(
       (result: any, currentValue: any) => {
         const newArray = result;
@@ -71,7 +76,7 @@ function DiscussionDocs(props: any) {
     const keys = filterByDateData ? Object.keys(filterByDateData) : [];
 
     setUploadDate(keys);
-  }, [selectedDiscussion, selectedDiscussion?.docs]);
+  }, [documentsData[discussionId], documentsData[discussionId]?.list]);
 
   return (
     <div className={className}>
