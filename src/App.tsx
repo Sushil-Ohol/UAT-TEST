@@ -17,7 +17,6 @@ function DefaultLayout() {
   return (
     <div className="container">
       <Navbar />
-
       <PrivateRoute path="/home" exact component={HomePage} />
       <PrivateRoute path="/projects" exact component={ProjectsListpage} />
       <PrivateRoute
