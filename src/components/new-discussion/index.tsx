@@ -10,6 +10,7 @@ export type NewDiscussionProps = {
   addBtnClick: any;
   onCancel: any;
   selectedData: any;
+  linkType: string;
 };
 
 function NewDiscussionPopup({
@@ -20,7 +21,8 @@ function NewDiscussionPopup({
   onCancel,
   title,
   addBtnText,
-  modelContent
+  modelContent,
+  linkType
 }: NewDiscussionProps) {
   const [form] = Form.useForm<{ topicName: string }>();
   form.resetFields();
@@ -46,9 +48,8 @@ function NewDiscussionPopup({
       {isGeneric ? (
         <>
           <div className="selected-topic-name">
-            Discussion Name:
             <div className="topic-title">
-              {selectedData[0].id}: {selectedData[0].submittal}
+              {linkType} {selectedData[0].id}: {selectedData[0].submittal}
             </div>
           </div>
           <p className="pop-content">{modelContent}</p>

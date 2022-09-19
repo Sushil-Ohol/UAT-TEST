@@ -120,6 +120,7 @@ function DiscussionList(props: any) {
             selectedData={selectedData}
             onAddHandle={onAddHandle}
             onCancelClickHandle={onCancelClickHandle}
+            linkType="Submittal"
           />
         }
         dataSource={data}

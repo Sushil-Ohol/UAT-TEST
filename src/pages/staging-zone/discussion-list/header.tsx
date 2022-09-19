@@ -14,6 +14,7 @@ export type DicussionListHeaderProps = {
   onAddHandle: any;
   onSearchSelect: any;
   onCancelClickHandle: any;
+  linkType: string;
 };
 
 function DiscussionHeader(props: DicussionListHeaderProps) {
@@ -23,7 +24,8 @@ function DiscussionHeader(props: DicussionListHeaderProps) {
     selectedData,
     onAddHandle,
     showNewConPopup,
-    onCancelClickHandle
+    onCancelClickHandle,
+    linkType
   } = props;
   const { Option } = Select;
   const data: any = useSelector(
@@ -48,6 +50,7 @@ function DiscussionHeader(props: DicussionListHeaderProps) {
             selectedData={selectedData}
             addBtnClick={onAddHandle}
             onCancel={onCancelClickHandle}
+            linkType={linkType}
             title={
               selectedData.length === 1
                 ? "Add Discussion"
