@@ -49,9 +49,48 @@ const StatusOptions = [
   "Rejected"
 ];
 const AssigneeOptions = [
-  { assignedTo: "Luke", destination: "Architect" },
-  { assignedTo: "James", destination: "Project Manager" }
+  {
+    assignedTo: "Luke",
+    destination: "Architect",
+    contractor: "ABC Construction"
+  },
+  {
+    assignedTo: "James",
+    destination: "Project Manager",
+    contractor: "ABC Construction"
+  },
+  {
+    assignedTo: "John",
+    destination: "Project Manager",
+    contractor: "A Construction"
+  },
+  {
+    assignedTo: "Maria",
+    destination: "Architect",
+    contractor: "A Construction"
+  },
+  {
+    assignedTo: "Roger",
+    destination: "Project Manager",
+    contractor: "B Construction"
+  },
+  {
+    assignedTo: "Mark",
+    destination: "Architect",
+    contractor: "B Construction"
+  },
+  {
+    assignedTo: "Lionel",
+    destination: "Project Manager",
+    contractor: "C Construction"
+  },
+  {
+    assignedTo: "Ronaldo",
+    destination: "Architect",
+    contractor: "C Construction"
+  }
 ];
+
 const PackageOptions = ["920:Electrical", "Piping"];
 
 export const DATE_FORMAT_MMDDYYY = "MM-DD-YYYY";
