@@ -36,11 +36,11 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     });
   };
 
-  const [assigneeData, setAssigneeData] = useState(
+  const [assigneeData, setAssigneeData] = useState<any>(
     DropDownData.AssigneeOptions
   );
 
-  const [contractorData, setContractorData] = useState(
+  const [contractorData, setContractorData] = useState<any>(
     DropDownData.ContractorOptions
   );
 
@@ -95,8 +95,8 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           }
         >
           {contractorData
-            .filter((x) => x.name !== "All")
-            .map((item) => (
+            .filter((x: any) => x.name !== "All")
+            .map((item: any) => (
               <Option key={item.name} value={item.name}>
                 {item.name}
               </Option>
@@ -123,8 +123,8 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           }
         >
           {assigneeData
-            .filter((x) => x.assignedTo !== "All")
-            .map((item) => (
+            .filter((x: any) => x.assignedTo !== "All")
+            .map((item: any) => (
               <Option key={item.assignedTo} value={item.assignedTo}>
                 {item.assignedTo}
               </Option>

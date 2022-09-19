@@ -12,7 +12,8 @@ interface Props {
 function AddContractorModal({ contractorOptions, onOkClick }: Props) {
   const [form] = useForm();
 
-  const [isContractorModalOpen, setIsContractorModalOpen] = useState(false);
+  const [isContractorModalOpen, setIsContractorModalOpen] =
+    useState<boolean>(false);
 
   const showContractorModal = () => {
     setIsContractorModalOpen(true);

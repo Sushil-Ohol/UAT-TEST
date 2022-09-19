@@ -12,7 +12,8 @@ interface Props {
 function AddAssigneeModal({ assigneeOptions, onOkClick }: Props) {
   const [form] = useForm();
 
-  const [isAssigneeModalOpen, setIsAssigneeModalOpen] = useState(false);
+  const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
+    useState<boolean>(false);
 
   const showAssigneeModal = () => {
     setIsAssigneeModalOpen(true);
