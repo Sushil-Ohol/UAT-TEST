@@ -1,6 +1,6 @@
 import { BaseResponse } from "./base";
 
-export type CurrentUser = {
+export type User = {
   userId: string;
   name: string;
   email: string;
@@ -9,5 +9,5 @@ export type CurrentUser = {
 export type LoginRequest = { email: string; password: string };
 
 export type LoginResponse = BaseResponse & {
-  response: CurrentUser | null;
+  response: User | null;
 };

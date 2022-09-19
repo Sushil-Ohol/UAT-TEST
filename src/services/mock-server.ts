@@ -111,22 +111,22 @@ export function mockUpClient(client: AxiosInstance) {
       }
     ];
   });
-  
+
   mock.onGet(`${BASE_URL}/${LOGIN}`).reply((config) => {
     const userDetails = require("./mock-data/user.json");
-    const discussion = userDetails.find(
+    const user = userDetails.find(
       (data: any) =>
         data.email === config.params.email &&
         data.password === config.params.password
     );
 
-    if (discussion) {
-      delete discussion.password;
+    if (user) {
+      delete user.password;
       return [
         200,
         {
           success: true,
-          response: discussion,
+          response: user,
           message: "Successfully Login"
         }
       ];

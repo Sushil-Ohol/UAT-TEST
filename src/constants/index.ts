@@ -11,10 +11,10 @@ export const colorCode = {
   orange: "#FFA41B"
 };
 
-export const validationErrorMsg = {
-  onEmailIdFieldEmpty: "please enter email id",
-  onEmailIdIsNotValid: "please enter valid email id",
-  onPasswordFieldEmpty: "please enter your password"
+export const ErrorMessages = {
+  EmailRequired: "please enter email id",
+  EmailInvalid: "please enter valid email id",
+  PasswordRequired: "please enter your password"
 };
 
 export const steps = [

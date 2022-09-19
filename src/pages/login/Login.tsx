@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { useAppDispatch } from "store";
 import { LoginRequest } from "models/user";
 import { login } from "store/slices/signIn";
-import { validationErrorMsg } from "../../constants";
+import { ErrorMessages } from "constants/index";
 
 function Login() {
   const [loader, setLoader] = useState(false);
@@ -26,7 +26,7 @@ function Login() {
       setLoader(false);
       if (actoinResult.payload.success) {
         messages.success(actoinResult.payload.message);
-        history.push("/project/new", { replace: true });
+        history.push("/projects", { replace: true });
       }
     } else if (actoinResult && isRejected(actoinResult)) {
       setLoader(false);
@@ -57,11 +57,11 @@ function Login() {
             rules={[
               {
                 required: true,
-                message: validationErrorMsg.onEmailIdFieldEmpty
+                message: ErrorMessages.EmailRequired
               },
               {
                 type: "email",
-                message: validationErrorMsg.onEmailIdIsNotValid
+                message: ErrorMessages.EmailInvalid
               }
             ]}
           >
@@ -74,7 +74,7 @@ function Login() {
             rules={[
               {
                 required: true,
-                message: validationErrorMsg.onPasswordFieldEmpty
+                message: ErrorMessages.PasswordRequired
               }
             ]}
           >

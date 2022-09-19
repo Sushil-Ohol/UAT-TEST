@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CurrentUser, LoginRequest, LoginResponse } from "models/user";
+import { User, LoginRequest, LoginResponse } from "models/user";
 import * as api from "../../services/login-service";
 
 type AuthState = {
-  currentUser: CurrentUser | null;
+  currentUser: User | null;
   loading: boolean;
 };
 
