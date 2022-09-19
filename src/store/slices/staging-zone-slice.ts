@@ -33,6 +33,9 @@ const stagingZoneSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
+    addNewDiscussion: (state: any, { payload }: any) => {
+      state.discussionList = [...state.discussionList, payload];
+    },
     newMessage: (state, { payload }: PayloadAction<any>) => {
       const { chatInfo } = payload;
       if (state.selectedDiscussion !== null) {
@@ -59,4 +62,4 @@ const stagingZoneSlice = createSlice({
 
 export default stagingZoneSlice.reducer;
 
-export const { reset, newMessage } = stagingZoneSlice.actions;
+export const { reset, newMessage, addNewDiscussion } = stagingZoneSlice.actions;
