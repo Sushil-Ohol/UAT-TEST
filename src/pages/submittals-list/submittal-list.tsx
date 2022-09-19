@@ -247,6 +247,7 @@ function SubmittalList() {
       headerName: "DEPENDS ON",
       minWidth: 160,
       cellRenderer: dependsOnCellRenderer,
+      editable: false,
       cellClass(params) {
         return params.value === ""
           ? "dependsOnDefaultCellColor"
