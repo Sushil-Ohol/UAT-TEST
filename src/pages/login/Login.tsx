@@ -80,15 +80,16 @@ function Login() {
           >
             <Input.Password placeholder="Enter Password" />
           </FormItem>
-          <FormItem>
+          <div style={{ paddingTop: "1em" }}>
             <Button
               htmlType="submit"
-              className="login-form-button"
+              size="middle"
+              style={{ margin: "auto", display: "block" }}
               loading={loader}
             >
               Login
             </Button>
-          </FormItem>
+          </div>
         </Form>
       </div>
     </div>
