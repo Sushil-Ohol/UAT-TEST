@@ -87,6 +87,7 @@ function SubmittalList() {
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
+  const [selectedRowsData, setSelectedRowsData] = useState([]);
   const [height, setHeight] = useState(505);
   const gridStyle = useMemo(
     () => ({
@@ -365,6 +366,7 @@ function SubmittalList() {
 
   const onSelectionChanged = (grid: any) => {
     setSelectedRows(grid.api.getSelectedRows().length);
+    setSelectedRowsData(grid.api.getSelectedRows());
   };
 
   const onDrawerClose = () => {
@@ -647,7 +649,12 @@ function SubmittalList() {
         headerStyle={{ borderBottom: "none" }}
         height={height}
       >
-        {showStagingZone && <StagingZone onMouseDown={onMouseDown} />}
+        {showStagingZone && (
+          <StagingZone
+            onMouseDown={onMouseDown}
+            selectedData={selectedRowsData}
+          />
+        )}
       </Drawer>
     </div>
   );

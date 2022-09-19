@@ -1,12 +1,13 @@
 .discussion {
   border-right: 2px solid grey;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .discussion-header {
   width: 100%;
   height: 61px;
-  border-bottom: 1px solid darkgrey;  padding: 2%;
+  border-bottom: 1px solid darkgrey;
+  padding: 2%;
   display: flex;
   align-items: center;
   background: #f7f6f4 0% 0% no-repeat padding-box;
@@ -27,8 +28,9 @@
 }
 .discussion-header .search-input {
   border: none;
-  width: 80%;
+  width: 98%;
   height: 30px;
+  padding-right: 1%;
 }
 .discussion-header .ant-input {
   border: none;
@@ -57,6 +59,10 @@
 }
 .discussion .ant-list-header {
   padding: 0px;
+  position: sticky;
+  top: 0%;
+  z-index: 1;
+  background-color: #f7f6f4;
 }
 .discussion .ant-spin-nested-loading {
   position: relative;
@@ -70,6 +76,11 @@
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
+}
+.discussion .ant-list-items {
+  margin-top: 2%;
+  height: auto;
+  overflow-y: auto;
 }
 .discussion .ant-list-items .discussion-list {
   background-color: white;
@@ -111,7 +122,7 @@
   box-shadow: unset;
   display: none;
 }
-.search-input .ant-select {
+.discussion-header .search-input .ant-select {
   box-shadow: unset;
   display: none;
   width: 100%;
@@ -128,7 +139,7 @@
 }
 
 .discussion-select-input {
-  width: 163px;
+  width: 153px;
   margin-left: 1%;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -146,4 +157,68 @@
 }
 .search-align .ant-select-selector {
   box-shadow: unset !important;
+}
+.add-new-discussion .ant-modal-header {
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
+  border: 1px solid #0000001a;
+  opacity: 1;
+}
+.add-new-discussion .ant-modal-header .ant-modal-title {
+  text-align: left;
+  font: normal normal medium 18px/24px Inter;
+  letter-spacing: 0px;
+  color: #000000fa;
+  opacity: 1;
+}
+.add-new-discussion .ant-modal-body {
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+.add-new-discussion .ant-modal-footer {
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
+  border-top: 0px;
+}
+.align-footer-btn .ant-modal-footer {
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
+  border-top: 0px;
+  text-align: center;
+}
+.add-new-discussion .topic-name {
+  text-align: left;
+  font: normal normal normal 14px/19px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+.add-new-discussion .selected-topic-name {
+  text-align: left;
+  font: normal normal medium 18px/24px Inter;
+  letter-spacing: 0px;
+  opacity: 1;
+  display: inline;
+}
+.add-new-discussion .selected-topic-name .topic-title {
+  text-align: left;
+  font: normal normal medium 18px/24px Inter;
+  letter-spacing: 0px;
+  opacity: 1;
+  display: inline;
+}
+.add-new-discussion .pop-content {
+  text-align: left;
+  font: normal normal normal 14px/21px Inter;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+  margin-top: 1.5%;
+}
+.add-new-discussion .ant-modal-body .ant-input {
+  background: #0000000d 0% 0% no-repeat padding-box;
+  opacity: 1;
+  margin: 3px 0px 10px 0px;
+  border: 0px;
+  height: 43px;
 }
