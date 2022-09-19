@@ -1,7 +1,11 @@
-import { Button, Form, Select, DatePicker } from "antd";
+/* eslint-disable react/jsx-no-bind */
+import { Button, Form, Select, DatePicker, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import { useState } from "react";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-edit.css";
+import AddContractorModal from "./add-contractor";
+import AddAssigneeModal from "./add-assignee";
 
 const { Option } = Select;
 
@@ -32,6 +36,31 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     });
   };
 
+  const [assigneeData, setAssigneeData] = useState<any>(
+    DropDownData.AssigneeOptions
+  );
+
+  const [contractorData, setContractorData] = useState<any>(
+    DropDownData.ContractorOptions
+  );
+
+  function assigneeUpdate(contractor: any) {
+    const assignedData = DropDownData.AssigneeOptions.filter(
+      (x) => x.contractor === contractor
+    );
+    setAssigneeData(assignedData);
+  }
+
+  function updateContractorData(object: any) {
+    setContractorData(object);
+    message.success("Contractor Added Successfully");
+  }
+
+  function updateAssigneeData(object: any) {
+    setAssigneeData(object);
+    message.success("Assignee Added Successfully");
+  }
+
   return (
     <Form layout="vertical" preserve form={form}>
       <Form.Item name="status" label="Status">
@@ -46,26 +75,60 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       <Form.Item name="dueBy" label="Due Date">
         <DatePicker format={DATE_FORMAT_MMDDYYY} className="drawerDatePicker" />
       </Form.Item>
-      <Form.Item name="contractor" label="Contractor">
-        <Select className="constructionSelect">
-          {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
-            (item) => (
+      <Form.Item name="contractor">
+        <span>
+          Contractor
+          <AddContractorModal
+            contractorOptions={contractorData}
+            onOkClick={updateContractorData}
+          />
+        </span>
+        <Select
+          onChange={assigneeUpdate}
+          showSearch
+          optionFilterProp="children"
+          className="constructionSelect"
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+        >
+          {contractorData
+            .filter((x: any) => x.name !== "All")
+            .map((item: any) => (
               <Option key={item.name} value={item.name}>
                 {item.name}
               </Option>
-            )
-          )}
+            ))}
         </Select>
       </Form.Item>
-      <Form.Item name="assigned" label="Assignee">
-        <Select className="constructionSelect">
-          {DropDownData.AssigneeOptions.filter(
-            (x) => x.assignedTo !== "All"
-          ).map((item) => (
-            <Option key={item.assignedTo} value={item.assignedTo}>
-              {item.assignedTo}
-            </Option>
-          ))}
+      <Form.Item name="assigned">
+        <span>
+          Assignee
+          <AddAssigneeModal
+            assigneeOptions={assigneeData}
+            onOkClick={updateAssigneeData}
+          />
+        </span>
+
+        <Select
+          className="constructionSelect"
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+        >
+          {assigneeData
+            .filter((x: any) => x.assignedTo !== "All")
+            .map((item: any) => (
+              <Option key={item.assignedTo} value={item.assignedTo}>
+                {item.assignedTo}
+              </Option>
+            ))}
         </Select>
       </Form.Item>
 
