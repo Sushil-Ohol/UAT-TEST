@@ -4,8 +4,8 @@ import { useForm } from "antd/lib/form/Form";
 import { useState } from "react";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-edit.css";
-import AddContractorModal from "./add-contractor";
-import AddAssigneeModal from "./add-assignee";
+import AddContractorModal from "../assignee-contractor-modal/add-contractor";
+import AddAssigneeModal from "../assignee-contractor-modal/add-assignee";
 
 const { Option } = Select;
 
@@ -44,22 +44,46 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     DropDownData.ContractorOptions
   );
 
-  function assigneeUpdate(contractor: any) {
+  const onChangeContractor = (contractor: any) => {
     const assignedData = DropDownData.AssigneeOptions.filter(
       (x) => x.contractor === contractor
     );
     setAssigneeData(assignedData);
-  }
+  };
 
-  function updateContractorData(object: any) {
+  const [isContractorModalOpen, setIsContractorModalOpen] =
+    useState<boolean>(false);
+
+  const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
+    useState<boolean>(false);
+
+  const updateContractorData = (object: any) => {
     setContractorData(object);
     message.success("Contractor Added Successfully");
-  }
+    setIsContractorModalOpen(false);
+  };
 
-  function updateAssigneeData(object: any) {
+  const updateAssigneeData = (object: any) => {
     setAssigneeData(object);
     message.success("Assignee Added Successfully");
-  }
+    setIsAssigneeModalOpen(false);
+  };
+
+  const showContractorModal = () => {
+    setIsContractorModalOpen(true);
+  };
+
+  const handleContractorCancel = () => {
+    setIsContractorModalOpen(false);
+  };
+
+  const showAssigneeModal = () => {
+    setIsAssigneeModalOpen(true);
+  };
+
+  const handleAssigneeCancel = () => {
+    setIsContractorModalOpen(false);
+  };
 
   return (
     <Form layout="vertical" preserve form={form}>
@@ -78,13 +102,21 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       <Form.Item name="contractor">
         <span>
           Contractor
+          <Button
+            className="add-new-contractor-btn"
+            onClick={showContractorModal}
+          >
+            + New
+          </Button>
           <AddContractorModal
             contractorOptions={contractorData}
             onOkClick={updateContractorData}
+            show={isContractorModalOpen}
+            onCancelClick={handleContractorCancel}
           />
         </span>
         <Select
-          onChange={assigneeUpdate}
+          onChange={onChangeContractor}
           showSearch
           optionFilterProp="children"
           className="constructionSelect"
@@ -106,9 +138,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       <Form.Item name="assigned">
         <span>
           Assignee
+          <Button className="add-new-assignee-btn" onClick={showAssigneeModal}>
+            + New
+          </Button>
           <AddAssigneeModal
             assigneeOptions={assigneeData}
             onOkClick={updateAssigneeData}
+            show={isAssigneeModalOpen}
+            onCancelClick={handleAssigneeCancel}
           />
         </span>
 
