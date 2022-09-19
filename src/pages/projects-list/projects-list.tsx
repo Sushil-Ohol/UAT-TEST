@@ -37,12 +37,12 @@ function ProjectList() {
       </a>
       <List
         grid={{
-          gutter: 16,
           column: 3
         }}
+        style={{ margin: "15px" }}
         dataSource={allProjects}
         renderItem={(item: Project) => (
-          <List.Item>
+          <List.Item style={{ margin: "15px" }}>
             <Card
               hoverable
               cover={<img alt="example" src={construction} />}
@@ -50,7 +50,11 @@ function ProjectList() {
                 history.push(`/project/details/${item.id}/submittals`)
               }
             >
-              <Meta title={item.name} description={item.description} />
+              <Meta
+                style={{ margin: "5px" }}
+                title={item.name}
+                description={item.description}
+              />
             </Card>
           </List.Item>
         )}
