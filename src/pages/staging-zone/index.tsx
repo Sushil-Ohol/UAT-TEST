@@ -6,7 +6,7 @@ import DiscussionDocs from "./discussion-docs";
 import "./staging-zone.css";
 
 function StagingZone(props: any) {
-  const { onMouseDown } = props;
+  const { onMouseDown, selectedData } = props;
   const [discussionId, setDiscussionId] = useState("");
 
   React.useEffect(() => {}, []);
@@ -35,6 +35,7 @@ function StagingZone(props: any) {
         <Discussions
           className="col discussion"
           onClick={OnDiscussionSelected}
+          selectedData={selectedData}
         />
         <DiscussionDetails
           className="col discussion"
