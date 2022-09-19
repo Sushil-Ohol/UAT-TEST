@@ -44,7 +44,8 @@ function ProjectList() {
           <List.Item style={{ margin: "15px" }}>
             <a href={`/project/details/${item.id}/submittals`}>
               <Card hoverable cover={<img alt="example" src={construction} />}>
-                <Meta title={item.name} description={item.description} />
+                <Meta                   style={{ margin: "5px" }}
+ title={item.name} description={item.description} />
               </Card>
             </a>
           </List.Item>
