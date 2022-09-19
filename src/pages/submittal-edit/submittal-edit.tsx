@@ -4,8 +4,7 @@ import { useForm } from "antd/lib/form/Form";
 import { useState } from "react";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-edit.css";
-import AddContractorModal from "../assignee-contractor-modal/add-contractor";
-import AddAssigneeModal from "../assignee-contractor-modal/add-assignee";
+import { AddContractorModal, AddAssigneeModal } from "../../popups";
 
 const { Option } = Select;
 
@@ -44,11 +43,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     DropDownData.ContractorOptions
   );
 
-  const onChangeContractor = (contractor: any) => {
-    const assignedData = DropDownData.AssigneeOptions.filter(
-      (x) => x.contractor === contractor
+  const [isContractorSelected, setIsContractorSelected] = useState<string>("");
+
+  const onChangeContractor = (contractor: string) => {
+    const assignedData = assigneeData.filter(
+      (x: any) => x.contractor === contractor
     );
     setAssigneeData(assignedData);
+    setIsContractorSelected(contractor);
   };
 
   const [isContractorModalOpen, setIsContractorModalOpen] =
@@ -113,6 +115,8 @@ function SubmittalEdit(props: EditSubmittalLogs) {
             onOkClick={updateContractorData}
             show={isContractorModalOpen}
             onCancelClick={handleContractorCancel}
+            assigneeOptions={assigneeData}
+            saveAssignee={updateAssigneeData}
           />
         </span>
         <Select
@@ -146,6 +150,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
             onOkClick={updateAssigneeData}
             show={isAssigneeModalOpen}
             onCancelClick={handleAssigneeCancel}
+            selectedContractor={isContractorSelected}
           />
         </span>
 
