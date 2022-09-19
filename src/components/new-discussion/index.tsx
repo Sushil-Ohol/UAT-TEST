@@ -1,21 +1,33 @@
 import { Form, Input, Modal } from "antd";
 import { voidStartingSpaceInput } from "utils/inpututils";
 
-function DiscussionPopup({
+export type NewDiscussionProps = {
+  isGeneric: boolean;
+  show: boolean;
+  title: string;
+  modelContent: string;
+  addBtnText: string;
+  addBtnClick: any;
+  onCancel: any;
+  selectedData: any;
+};
+
+function NewDiscussionPopup({
   isGeneric,
-  isVisible,
+  show,
   selectedData,
-  onAdd,
+  addBtnClick,
   onCancel,
-  modelHeaderTitle,
-  onAddText,
+  title,
+  addBtnText,
   modelContent
-}: any) {
+}: NewDiscussionProps) {
   const [form] = Form.useForm<{ topicName: string }>();
   form.resetFields();
+
   const onHandleClick = () => {
     form.validateFields().then((value) => {
-      onAdd(value.topicName || selectedData[0].submittal);
+      addBtnClick(value.topicName || selectedData[0].submittal);
       form.resetFields();
     });
   };
@@ -24,12 +36,12 @@ function DiscussionPopup({
       className={
         isGeneric ? "add-new-discussion" : "add-new-discussion align-footer-btn"
       }
-      title={modelHeaderTitle}
+      title={title}
       centered
-      visible={isVisible}
+      visible={show}
       onOk={onHandleClick}
       onCancel={onCancel}
-      okText={onAddText}
+      okText={addBtnText}
     >
       {isGeneric ? (
         <>
@@ -65,4 +77,4 @@ function DiscussionPopup({
   );
 }
 
-export default DiscussionPopup;
+export default NewDiscussionPopup;

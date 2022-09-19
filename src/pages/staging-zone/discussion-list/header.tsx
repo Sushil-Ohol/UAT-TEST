@@ -2,55 +2,62 @@ import React from "react";
 import { Button, Col, Row, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchableDropdown } from "components/widgets";
-import DiscussionPopup from "components/new-discussion";
-import {
-  linkDiscussionContent,
-  isGenericDiscussionContent
-} from "constants/index";
+import NewDiscussionPopup from "components/new-discussion";
+import { NewConversationContent } from "constants/index";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices";
 
-function DiscussionHeader(props: any) {
+export type DicussionListHeaderProps = {
+  selectedData: any;
+  showNewConPopup: boolean;
+  setShowNewConPopup: any;
+  onAddHandle: any;
+  onSearchSelect: any;
+  onCancelClickHandle: any;
+};
+
+function DiscussionHeader(props: DicussionListHeaderProps) {
   const {
     onSearchSelect,
-    setIsVisible,
+    setShowNewConPopup,
     selectedData,
     onAddHandle,
-    isVisible,
+    showNewConPopup,
     onCancelClickHandle
   } = props;
   const { Option } = Select;
   const data: any = useSelector(
     (state: RootState) => state.stagingZone.discussionList
   );
+
   return (
     <div>
       <Row className="discussion-header">
         <Col span={1}>
           <Button
-            onClick={() => setIsVisible(true)}
+            onClick={() => setShowNewConPopup(true)}
             size="middle"
             className="new-discussion-btn"
             icon={<PlusOutlined className="add-icon" />}
           >
             Start new discussion
           </Button>
-          <DiscussionPopup
+          <NewDiscussionPopup
             isGeneric={selectedData.length === 1}
-            isVisible={isVisible}
+            show={showNewConPopup}
             selectedData={selectedData}
-            onAdd={onAddHandle}
+            addBtnClick={onAddHandle}
             onCancel={onCancelClickHandle}
-            modelHeaderTitle={
+            title={
               selectedData.length === 1
-                ? "Add discussion"
-                : "Add general discussion"
+                ? "Add Discussion"
+                : "Add General Discussion"
             }
-            onAddText={selectedData.length === 1 ? "Continue" : "Add"}
+            addBtnText={selectedData.length === 1 ? "Continue" : "Add"}
             modelContent={
               selectedData.length === 1
-                ? isGenericDiscussionContent
-                : linkDiscussionContent
+                ? NewConversationContent.General
+                : NewConversationContent.Submittal
             }
           />
         </Col>

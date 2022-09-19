@@ -19,7 +19,7 @@ function DiscussionList(props: any) {
   const { className, onClick, selectedData } = props;
   const dispatch = useAppDispatch();
   const bottomRef = useRef<any>();
-  const [isVisible, setIsVisible] = useState(false);
+  const [showNewConPopup, setShowNewConPopup] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState("");
 
   const loadList = async () => {
@@ -44,7 +44,7 @@ function DiscussionList(props: any) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   const onAddHandle = (topicName: string) => {
-    setIsVisible(false);
+    setShowNewConPopup(false);
     const existDiscussion = data.find(
       (item: any) => item.topicName === topicName
     );
@@ -67,7 +67,7 @@ function DiscussionList(props: any) {
     }
   };
   const onCancelClickHandle = () => {
-    setIsVisible(false);
+    setShowNewConPopup(false);
   };
 
   const discussionCard = (item: Discussion) => {
@@ -115,10 +115,10 @@ function DiscussionList(props: any) {
         header={
           <DiscussionHeader
             onSearchSelect={onSearchSelectClick}
-            setIsVisible={setIsVisible}
+            setShowNewConPopup={setShowNewConPopup}
+            showNewConPopup={showNewConPopup}
             selectedData={selectedData}
             onAddHandle={onAddHandle}
-            isVisible={isVisible}
             onCancelClickHandle={onCancelClickHandle}
           />
         }
