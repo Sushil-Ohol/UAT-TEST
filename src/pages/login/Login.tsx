@@ -8,6 +8,7 @@ import { useAppDispatch } from "store";
 import { LoginRequest } from "models/user";
 import { login } from "store/slices/signIn";
 import { ErrorMessages } from "constants/index";
+import { AppLogoIcon } from "components/svg-icons";
 
 function Login() {
   const [loader, setLoader] = useState(false);
@@ -40,6 +41,9 @@ function Login() {
   return (
     <div className="login">
       <div className="login-form">
+        <div style={{ margin: "auto", display: "block" }}>
+          <AppLogoIcon />
+        </div>
         <div className="login-logo">
           <Title level={3}>Login</Title>
         </div>
