@@ -79,7 +79,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         <span>
           Contractor
           <AddContractorModal
-            ContractorOptions={contractorData}
+            contractorOptions={contractorData}
             onOkClick={updateContractorData}
           />
         </span>
@@ -107,7 +107,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         <span>
           Assignee
           <AddAssigneeModal
-            AssigneeOptions={assigneeData}
+            assigneeOptions={assigneeData}
             onOkClick={updateAssigneeData}
           />
         </span>

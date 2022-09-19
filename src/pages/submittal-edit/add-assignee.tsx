@@ -6,10 +6,10 @@ import "./submittal-edit.css";
 
 interface Props {
   onOkClick: Function;
-  AssigneeOptions: any;
+  assigneeOptions: any;
 }
 
-function AddAssigneeModal({ AssigneeOptions, onOkClick }: Props) {
+function AddAssigneeModal({ assigneeOptions, onOkClick }: Props) {
   const [form] = useForm();
 
   const [isAssigneeModalOpen, setIsAssigneeModalOpen] = useState(false);
@@ -20,7 +20,7 @@ function AddAssigneeModal({ AssigneeOptions, onOkClick }: Props) {
 
   const handleAssigneeOk = () => {
     form.validateFields().then((values) => {
-      const newAssigneeData = [...AssigneeOptions];
+      const newAssigneeData = [...assigneeOptions];
       const data = {
         assignedTo: values.assigneeUserName,
         destination: values.assigneeEmailId,

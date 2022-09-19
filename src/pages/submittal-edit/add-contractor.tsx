@@ -6,10 +6,10 @@ import "./submittal-edit.css";
 
 interface Props {
   onOkClick: Function;
-  ContractorOptions: any;
+  contractorOptions: any;
 }
 
-function AddContractorModal({ ContractorOptions, onOkClick }: Props) {
+function AddContractorModal({ contractorOptions, onOkClick }: Props) {
   const [form] = useForm();
 
   const [isContractorModalOpen, setIsContractorModalOpen] = useState(false);
@@ -20,7 +20,7 @@ function AddContractorModal({ ContractorOptions, onOkClick }: Props) {
 
   const handleContractorOk = () => {
     form.validateFields().then((values) => {
-      const newContractorData = [...ContractorOptions];
+      const newContractorData = [...contractorOptions];
       const data = {
         name: values.companyName,
         email: values.emailId
