@@ -67,6 +67,7 @@ function AddAssigneeModal({ AssigneeOptions, onOkClick }: Props) {
             name="assigneeEmailId"
             label="Email ID"
             className="add-new-assignee-label"
+            rules={[{ type: "email", message: "Please enter a valid email" }]}
           >
             <Input
               name="emailId"

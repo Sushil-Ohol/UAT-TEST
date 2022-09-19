@@ -53,7 +53,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   function updateContractorData(object: any) {
     setContractorData(object);
-    message.success("Contractot Added Successfully");
+    message.success("Contractor Added Successfully");
   }
 
   function updateAssigneeData(object: any) {

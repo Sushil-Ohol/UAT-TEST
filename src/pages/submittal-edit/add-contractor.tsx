@@ -78,6 +78,7 @@ function AddContractorModal({ ContractorOptions, onOkClick }: Props) {
             name="emailId"
             label="Email ID"
             className="add-new-contractor-label"
+            rules={[{ type: "email", message: "Please enter a valid email" }]}
           >
             <Input
               name="emailId"
