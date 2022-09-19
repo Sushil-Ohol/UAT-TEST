@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User, LoginRequest, LoginResponse } from "models/user";
 import * as api from "../../services/login-service";
 
-type AuthState = {
+export type AuthState = {
   currentUser: User | null;
   loading: boolean;
 };
@@ -46,5 +46,3 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-
-export const { reset, setLoading } = authSlice.actions;
