@@ -1,3 +1,5 @@
+import { BaseResponse } from "./base";
+
 export type Conversation = {
   id: string;
   messageBy: string;
@@ -21,4 +23,8 @@ export type Discussion = {
   documentCount: number;
   chats?: Conversation[];
   docs?: ConversationDoc[];
+};
+
+export type DiscussionDetailsResponse = BaseResponse & {
+  response: Discussion;
 };

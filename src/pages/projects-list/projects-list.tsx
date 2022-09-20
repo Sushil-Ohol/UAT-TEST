@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* Project List Page Component */
 
-import React from "react";
+import React, { useState } from "react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { Project } from "models/project";
 import { useAppDispatch } from "store";
 import { getProjectList } from "store/slices/projectSlice";
-import { Button, Card, List } from "antd";
+import { Card, List } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices";
 import { useHistory } from "react-router";
@@ -19,7 +19,7 @@ function ProjectList() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const allProjects = useSelector((state: RootState) => state.projects.list);
-
+  const [projects, setProjects] = useState<Project[]>(allProjects);
   const loadList = async () => {
     await dispatch(getProjectList());
   };
@@ -30,24 +30,34 @@ function ProjectList() {
     }
   }, []);
 
+  React.useEffect(() => {
+    const newProject: Project = {
+      id: "0",
+      description: "New project",
+      name: " Create New Project"
+    };
+    setProjects([...allProjects, newProject]);
+  }, [allProjects]);
+
   return (
     <div style={{ height: "60vh" }}>
-      <a href="/project/new" rel="noopener noreferrer">
-        <Button style={{ margin: "5px" }}>Create New Project</Button>
-      </a>
       <List
         grid={{
           column: 3
         }}
         style={{ margin: "15px" }}
-        dataSource={allProjects}
+        dataSource={projects}
         renderItem={(item: Project) => (
           <List.Item style={{ margin: "15px" }}>
             <Card
               hoverable
-              cover={<img alt="example" src={construction} />}
+              cover={
+                item.id === "0" ? "" : <img alt="example" src={construction} />
+              }
               onClick={() =>
-                history.push(`/project/details/${item.id}/submittals`)
+                item.id === "0"
+                  ? history.push("/project/new")
+                  : history.push(`/project/details/${item.id}/submittals`)
               }
             >
               <Meta

@@ -38,11 +38,13 @@ function DiscussionList(props: any) {
     onClick(id);
     setSelectedId(id);
   };
+
   const onSearchSelectClick = (id: string) => {
     onClick(id);
     setSelectedId(id);
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
   const onAddHandle = (topicName: string) => {
     setShowNewConPopup(false);
     const existDiscussion = data.find(
@@ -66,6 +68,7 @@ function DiscussionList(props: any) {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   const onCancelClickHandle = () => {
     setShowNewConPopup(false);
   };
