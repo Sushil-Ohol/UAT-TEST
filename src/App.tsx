@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
+  Login,
   HomePage,
   ProjectsListpage,
   ProjectCreatePage,
@@ -9,34 +10,49 @@ import {
   MaterialListpage
 } from "pages";
 import { Navbar } from "components";
+import AuthProvider from "AuthProvider";
+import PrivateRoute from "ProtectedRoute";
+
+function DefaultLayout() {
+  return (
+    <div className="container">
+      <Navbar />
+      <PrivateRoute path="/home" exact component={HomePage} />
+      <PrivateRoute path="/projects" exact component={ProjectsListpage} />
+      <PrivateRoute
+        path="/project/details/:projectId/submittals"
+        exact
+        component={SubmittalListpage}
+      />
+      <PrivateRoute
+        path="/submittals/details"
+        component={SubmittalDetailspage}
+      />
+      <PrivateRoute
+        path="/project/details/:projectId/materials"
+        exact
+        component={MaterialListpage}
+      />
+      <PrivateRoute
+        path="/project/details/:projectId"
+        component={ProjectDetailsPage}
+      />
+      <PrivateRoute path="/project/new" exact component={ProjectCreatePage} />
+    </div>
+  );
+}
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Navbar />
-        <Switch>
-          <Route path="/home" exact component={HomePage} />
-          <Route path="/projects" exact component={ProjectsListpage} />
-          <Route path="/" exact component={ProjectCreatePage} />
-          <Route
-            path="/project/details/:projectId/submittals"
-            exact
-            component={SubmittalListpage}
-          />
-          <Route path="/submittals/details" component={SubmittalDetailspage} />
-          <Route
-            path="/project/details/:projectId/materials"
-            exact
-            component={MaterialListpage}
-          />
-          <Route
-            path="/project/details/:projectId"
-            component={ProjectDetailsPage}
-          />
-          <Route path="/project/new" exact component={ProjectCreatePage} />
-        </Switch>
-      </div>
+      <AuthProvider>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact component={DefaultLayout} />
+          </Switch>
+        </div>
+      </AuthProvider>
     </Router>
   );
 }

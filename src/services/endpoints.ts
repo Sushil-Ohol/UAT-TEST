@@ -1,5 +1,6 @@
 export const BASE_URL = "http://localhost:3000";
 
+export const LOGIN = "login";
 export const SUBMITTAL_LIST = "submittals";
 export const PROJECT_LIST = "projects";
 export const PROJECT_SUG = "project/suggesion";

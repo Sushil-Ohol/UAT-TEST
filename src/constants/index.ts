@@ -1,5 +1,5 @@
 export const FILESIZE = 100857000;
-const V1_URL = "http://localhost:5000/api/v1";
+
 export const colorCode = {
   white: "white",
   error: "#FF3535",
@@ -10,6 +10,13 @@ export const colorCode = {
   fileName: "#CCCCCC",
   orange: "#FFA41B"
 };
+
+export const ErrorMessages = {
+  EmailRequired: "Please Enter Email-id",
+  EmailInvalid: "Please Enter valid Email-id",
+  PasswordRequired: "Please Enter Password"
+};
+
 export const steps = [
   {
     title: "Details",
@@ -111,8 +118,4 @@ export const DropDownData = {
   PackageOptions,
   ProcureByOptions,
   ProcureBySecondValues
-};
-
-export const APIs = {
-  V1_URL
 };

@@ -1,62 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* Project List Page Component */
 
-import React, { useRef } from "react";
-import { AgGridReact } from "ag-grid-react";
+import React from "react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { Project } from "models/project";
 import { useAppDispatch } from "store";
 import { getProjectList } from "store/slices/projectSlice";
-import { ICellRendererParams } from "ag-grid-community";
-import { Button } from "antd";
+import { Button, Card, List } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices";
+import { useHistory } from "react-router";
+import construction from "../../assets/construction.jpg";
 
-function LinkComponent(props: ICellRendererParams) {
-  const { value } = props;
-  return <a href={`/project/details/${value}/submittals`}>{value}</a>;
-}
+const { Meta } = Card;
 
 function ProjectList() {
-  const gridRef = useRef<AgGridReact<Project>>(null);
   const dispatch = useAppDispatch();
-
+  const history = useHistory();
   const allProjects = useSelector((state: RootState) => state.projects.list);
-
-  const columnDefs: any = [
-    {
-      field: "id",
-      headerName: "ID",
-      cellRenderer: "LinkComponent"
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      tooltipField: "name"
-    },
-    {
-      field: "description",
-      tooltipField: "description",
-      headerName: "Description"
-    },
-    {
-      field: "documents",
-      headerName: "Documents"
-    },
-    {
-      field: "floors",
-      headerName: "Total Floors"
-    },
-    {
-      field: "materials",
-      headerName: "Total Materials"
-    },
-    {
-      field: "submittals",
-      headerName: "Total Submittals"
-    }
-  ];
 
   const loadList = async () => {
     await dispatch(getProjectList());
@@ -71,22 +33,32 @@ function ProjectList() {
   return (
     <div style={{ height: "60vh" }}>
       <a href="/project/new" rel="noopener noreferrer">
-        <Button>Create New Project</Button>
+        <Button style={{ margin: "5px" }}>Create New Project</Button>
       </a>
-      <div
-        style={{ height: "100%", width: "100%" }}
-        className="ag-theme-alpine"
-      >
-        <AgGridReact<Project>
-          ref={gridRef}
-          rowData={allProjects}
-          columnDefs={columnDefs}
-          frameworkComponents={{
-            LinkComponent
-          }}
-          masterDetail
-        />
-      </div>
+      <List
+        grid={{
+          column: 3
+        }}
+        style={{ margin: "15px" }}
+        dataSource={allProjects}
+        renderItem={(item: Project) => (
+          <List.Item style={{ margin: "15px" }}>
+            <Card
+              hoverable
+              cover={<img alt="example" src={construction} />}
+              onClick={() =>
+                history.push(`/project/details/${item.id}/submittals`)
+              }
+            >
+              <Meta
+                style={{ margin: "5px" }}
+                title={item.name}
+                description={item.description}
+              />
+            </Card>
+          </List.Item>
+        )}
+      />
     </div>
   );
 }
