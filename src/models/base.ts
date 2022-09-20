@@ -20,3 +20,9 @@ export type BaseResponse = {
   success: boolean;
   message: string;
 };
+
+export type List<T> = {
+  list: T[];
+};
+
+export type ListWithDictionary<T> = { [key: string]: List<T> };
