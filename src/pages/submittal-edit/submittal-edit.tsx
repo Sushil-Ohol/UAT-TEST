@@ -43,14 +43,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     DropDownData.ContractorOptions
   );
 
-  const [isContractorSelected, setIsContractorSelected] = useState<string>("");
+  const [contractorSelected, setContractorSelected] = useState<string>("");
 
   const onChangeContractor = (contractor: string) => {
     const assignedData = DropDownData.AssigneeOptions.filter(
       (x: any) => x.contractor === contractor
     );
     setAssigneeData(assignedData);
-    setIsContractorSelected(contractor);
+    setContractorSelected(contractor);
   };
 
   const [isContractorModalOpen, setIsContractorModalOpen] =
@@ -80,7 +80,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   const showAssigneeModal = () => {
-    if (isContractorSelected !== "") setIsAssigneeModalOpen(true);
+    if (contractorSelected !== "") setIsAssigneeModalOpen(true);
   };
 
   const handleAssigneeCancel = () => {
@@ -150,7 +150,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
             onOkClick={updateAssigneeData}
             show={isAssigneeModalOpen}
             onCancelClick={handleAssigneeCancel}
-            selectedContractor={isContractorSelected}
+            selectedContractor={contractorSelected}
           />
         </span>
 
