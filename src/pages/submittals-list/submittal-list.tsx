@@ -32,6 +32,7 @@ import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import StagingZone from "pages/staging-zone";
 import { FilterItem } from "models/types";
 import { DateCellEditor } from "components";
+import { AddNewColumn } from "popups";
 
 import {
   IdLinkComponent,
@@ -43,14 +44,13 @@ import {
   assignedCellRenderer,
   assignedEditCellRenderer
 } from "components/cell-renders";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import {
   ChatIcon,
   DocAttachIcon,
   ExpandIcon,
   NotificationIcon
 } from "../../components/svg-icons/index";
-import AddNewColumn from "./add-new-column";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import SubmittalListFilterComponent from "./filter-bar";
 import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";

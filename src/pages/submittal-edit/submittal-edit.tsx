@@ -2,9 +2,9 @@
 import { Button, Form, Select, DatePicker, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useState } from "react";
+import { AddContractorModal, AddAssigneeModal } from "popups";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-edit.css";
-import { AddContractorModal, AddAssigneeModal } from "../../popups";
 
 const { Option } = Select;
 
@@ -46,7 +46,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const [isContractorSelected, setIsContractorSelected] = useState<string>("");
 
   const onChangeContractor = (contractor: string) => {
-    const assignedData = assigneeData.filter(
+    const assignedData = DropDownData.AssigneeOptions.filter(
       (x: any) => x.contractor === contractor
     );
     setAssigneeData(assignedData);
@@ -80,11 +80,11 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   const showAssigneeModal = () => {
-    setIsAssigneeModalOpen(true);
+    if (isContractorSelected !== "") setIsAssigneeModalOpen(true);
   };
 
   const handleAssigneeCancel = () => {
-    setIsContractorModalOpen(false);
+    setIsAssigneeModalOpen(false);
   };
 
   return (
