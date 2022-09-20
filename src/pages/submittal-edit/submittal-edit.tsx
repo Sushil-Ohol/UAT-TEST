@@ -88,111 +88,128 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   return (
-    <Form layout="vertical" preserve form={form}>
-      <Form.Item name="status" label="Status">
-        <Select className="statusSelect">
-          {DropDownData.StatusOptions.filter((x) => x !== "All").map((item) => (
-            <Select.Option key={item} value={item}>
-              {item}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item name="dueBy" label="Due Date">
-        <DatePicker format={DATE_FORMAT_MMDDYYY} className="drawerDatePicker" />
-      </Form.Item>
-      <Form.Item name="contractor">
-        <span>
-          Contractor
-          <Button
-            className="add-new-contractor-btn"
-            onClick={showContractorModal}
+    <>
+      <Form layout="vertical" preserve form={form}>
+        <Form.Item name="status" label="Status">
+          <Select className="statusSelect">
+            {DropDownData.StatusOptions.filter((x) => x !== "All").map(
+              (item) => (
+                <Select.Option key={item} value={item}>
+                  {item}
+                </Select.Option>
+              )
+            )}
+          </Select>
+        </Form.Item>
+        <Form.Item name="dueBy" label="Due Date">
+          <DatePicker
+            format={DATE_FORMAT_MMDDYYY}
+            className="drawerDatePicker"
+          />
+        </Form.Item>
+        <Form.Item
+          name="contractor"
+          label={
+            <span>
+              Contractor{" "}
+              <Button
+                className="add-new-contractor-btn"
+                onClick={showContractorModal}
+              >
+                + New
+              </Button>
+            </span>
+          }
+        >
+          <Select
+            onChange={onChangeContractor}
+            showSearch
+            optionFilterProp="children"
+            className="constructionSelect"
+            filterOption={(input, option) =>
+              (option!.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
           >
-            + New
-          </Button>
-          <AddContractorModal
-            contractorOptions={contractorData}
-            onOkClick={updateContractorData}
-            show={isContractorModalOpen}
-            onCancelClick={handleContractorCancel}
-            assigneeOptions={assigneeData}
-            saveAssignee={updateAssigneeData}
-          />
-        </span>
-        <Select
-          onChange={onChangeContractor}
-          showSearch
-          optionFilterProp="children"
-          className="constructionSelect"
-          filterOption={(input, option) =>
-            (option!.children as unknown as string)
-              .toLowerCase()
-              .includes(input.toLowerCase())
+            {contractorData
+              .filter((x: any) => x.name !== "All")
+              .map((item: any) => (
+                <Option key={item.name} value={item.name}>
+                  {item.name}
+                </Option>
+              ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="assigned"
+          label={
+            <span>
+              Assignee{" "}
+              <Button
+                className="add-new-assignee-btn"
+                onClick={showAssigneeModal}
+              >
+                + New
+              </Button>
+            </span>
           }
         >
-          {contractorData
-            .filter((x: any) => x.name !== "All")
-            .map((item: any) => (
-              <Option key={item.name} value={item.name}>
-                {item.name}
-              </Option>
-            ))}
-        </Select>
-      </Form.Item>
-      <Form.Item name="assigned">
-        <span>
-          Assignee
-          <Button className="add-new-assignee-btn" onClick={showAssigneeModal}>
-            + New
-          </Button>
-          <AddAssigneeModal
-            assigneeOptions={assigneeData}
-            onOkClick={updateAssigneeData}
-            show={isAssigneeModalOpen}
-            onCancelClick={handleAssigneeCancel}
-            selectedContractor={contractorSelected}
-          />
-        </span>
+          <Select
+            className="constructionSelect"
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option!.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
+          >
+            {assigneeData
+              .filter((x: any) => x.assignedTo !== "All")
+              .map((item: any) => (
+                <Option key={item.assignedTo} value={item.assignedTo}>
+                  {item.assignedTo}
+                </Option>
+              ))}
+          </Select>
+        </Form.Item>
 
-        <Select
-          className="constructionSelect"
-          showSearch
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            (option!.children as unknown as string)
-              .toLowerCase()
-              .includes(input.toLowerCase())
-          }
-        >
-          {assigneeData
-            .filter((x: any) => x.assignedTo !== "All")
-            .map((item: any) => (
-              <Option key={item.assignedTo} value={item.assignedTo}>
-                {item.assignedTo}
-              </Option>
-            ))}
-        </Select>
-      </Form.Item>
-
-      <section className="mt-2">
-        <div id="outerBox">
-          <div className="innerBox">
-            <Button className="SubEditCancelBtn" onClick={onCancelClick}>
-              Cancel
-            </Button>
+        <section className="mt-2">
+          <div id="outerBox">
+            <div className="innerBox">
+              <Button className="SubEditCancelBtn" onClick={onCancelClick}>
+                Cancel
+              </Button>
+            </div>
+            <div className="innerBox">
+              <Button
+                type="primary"
+                className="SubEditApplyBtn"
+                onClick={onApplyButtonClick}
+              >
+                Apply
+              </Button>
+            </div>
           </div>
-          <div className="innerBox">
-            <Button
-              type="primary"
-              className="SubEditApplyBtn"
-              onClick={onApplyButtonClick}
-            >
-              Apply
-            </Button>
-          </div>
-        </div>
-      </section>
-    </Form>
+        </section>
+      </Form>
+      <AddContractorModal
+        contractorOptions={contractorData}
+        onOkClick={updateContractorData}
+        show={isContractorModalOpen}
+        onCancelClick={handleContractorCancel}
+        assigneeOptions={assigneeData}
+        saveAssignee={updateAssigneeData}
+      />
+      <AddAssigneeModal
+        assigneeOptions={assigneeData}
+        onOkClick={updateAssigneeData}
+        show={isAssigneeModalOpen}
+        onCancelClick={handleAssigneeCancel}
+        selectedContractor={contractorSelected}
+      />
+    </>
   );
 }
 
