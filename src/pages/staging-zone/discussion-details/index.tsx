@@ -29,9 +29,10 @@ function DiscussionDetails(props: any) {
 
   const height = topRef.current ? topRef.current.offsetHeight - 121 : 100;
   // get Total chat count
-  const totalChat = chatMessages[discussionId]
-    ? chatMessages[discussionId].list?.length
-    : 0;
+  const totalChat =
+    discussionId !== "" && chatMessages[discussionId]
+      ? chatMessages[discussionId].list?.length
+      : 0;
 
   // dummy user for testing
   const currentUser = "roman";
@@ -45,7 +46,7 @@ function DiscussionDetails(props: any) {
   }, [filterByDate]);
 
   useEffect(() => {
-    if (!chatMessages[discussionId]) {
+    if (discussionId !== "" && !chatMessages[discussionId]) {
       loadList();
     }
   }, [discussionId]);
@@ -63,40 +64,43 @@ function DiscussionDetails(props: any) {
   };
 
   useEffect(() => {
-    const sortedChatByDate = chatMessages[discussionId]?.list
-      ?.slice()
-      .sort(
-        (a: any, b: any) =>
-          new Date(a.messageDate).getTime() - new Date(b.messageDate).getTime()
-      );
+    if (discussionId !== "" && chatMessages[discussionId]) {
+      const sortedChatByDate = chatMessages[discussionId]?.list
+        ?.slice()
+        .sort(
+          (a: any, b: any) =>
+            new Date(a.messageDate).getTime() -
+            new Date(b.messageDate).getTime()
+        );
 
-    const newSortedData = {
-      ...chatMessages[discussionId]?.list,
-      chats: sortedChatByDate
-    };
+      const newSortedData = {
+        ...chatMessages[discussionId]?.list,
+        chats: sortedChatByDate
+      };
 
-    const filterByDateData = newSortedData?.chats?.reduce(
-      (result: any, currentValue: any) => {
-        const newArray = result;
-        (newArray[
-          moment(currentValue.messageDate)
-            .format("dddd, DD MMM YYYY ")
-            .toString()
-        ] =
-          newArray[
+      const filterByDateData = newSortedData?.chats?.reduce(
+        (result: any, currentValue: any) => {
+          const newArray = result;
+          (newArray[
             moment(currentValue.messageDate)
               .format("dddd, DD MMM YYYY ")
               .toString()
-          ] || []).push(currentValue);
-        return newArray;
-      },
-      {}
-    );
-    setFilterByDate(filterByDateData);
+          ] =
+            newArray[
+              moment(currentValue.messageDate)
+                .format("dddd, DD MMM YYYY ")
+                .toString()
+            ] || []).push(currentValue);
+          return newArray;
+        },
+        {}
+      );
+      setFilterByDate(filterByDateData);
 
-    const keys = filterByDateData ? Object.keys(filterByDateData) : [];
+      const keys = filterByDateData ? Object.keys(filterByDateData) : [];
 
-    setMsgDate(keys);
+      setMsgDate(keys);
+    }
   }, [chatMessages[discussionId]?.list]);
 
   return (
@@ -105,92 +109,105 @@ function DiscussionDetails(props: any) {
         <div style={{ padding: "2px 1.5%", float: "left" }}>
           Discussion({totalChat})
         </div>
-        <Button className="archieveBtn">Archieve...</Button>
+        <Button className="archieveBtn" disabled={discussionId === ""}>
+          Archieve
+        </Button>
       </div>
-      <div style={{ overflow: "hidden", height: "auto" }}>
-        <div
-          ref={bottomRef}
-          style={{ overflowY: "scroll", height: `${height}px` }}
-          id="chatSection"
-        >
-          {msgDate &&
-            msgDate.map((messageDay) => (
-              <div key={messageDay}>
-                <Divider style={{ color: "#0000007F" }}>{messageDay}</Divider>
-                {filterByDate &&
-                  filterByDate[messageDay].map((data: Conversation) => {
-                    return (
-                      <div key={data.id}>
-                        <div
-                          className={
-                            currentUser === data.messageBy
-                              ? "currentUserChat"
-                              : "otherUserChat"
-                          }
-                        >
+
+      {discussionId !== "" && (
+        <div className="chatMessageParent">
+          <div
+            ref={bottomRef}
+            style={{ overflowY: "scroll", height: `${height}px` }}
+            id="chatSection"
+            className="chatMessages"
+          >
+            {msgDate &&
+              msgDate.map((messageDay) => (
+                <div key={messageDay}>
+                  <Divider style={{ color: "#0000007F" }}>{messageDay}</Divider>
+                  {filterByDate &&
+                    filterByDate[messageDay].map((data: Conversation) => {
+                      return (
+                        <div key={data.id}>
                           <div
-                            style={{
-                              textTransform: "capitalize",
-                              float:
-                                currentUser === data.messageBy
-                                  ? "right"
-                                  : "left",
-                              clear: "both"
-                            }}
-                          >
-                            <span style={{ color: "#000000" }}>
-                              {currentUser === data.messageBy
-                                ? "you"
-                                : data.messageBy}
-                              &bull;
-                            </span>
-                            <span
-                              style={{ marginLeft: "5px", color: "#0000007F" }}
-                            >
-                              {moment(data.messageDate).format("h:mm a")}
-                            </span>
-                          </div>
-                          <p
                             className={
                               currentUser === data.messageBy
-                                ? "currentUserMsg"
-                                : "otherUserMsg"
+                                ? "currentUserChat"
+                                : "otherUserChat"
                             }
                           >
-                            {data.message}
-                          </p>
+                            <div
+                              style={{
+                                textTransform: "capitalize",
+                                float:
+                                  currentUser === data.messageBy
+                                    ? "right"
+                                    : "left",
+                                clear: "both"
+                              }}
+                            >
+                              <span style={{ color: "#000000" }}>
+                                {currentUser === data.messageBy
+                                  ? "you"
+                                  : data.messageBy}
+                                &bull;
+                              </span>
+                              <span
+                                style={{
+                                  marginLeft: "5px",
+                                  color: "#0000007F"
+                                }}
+                              >
+                                {moment(data.messageDate).format("h:mm a")}
+                              </span>
+                            </div>
+                            <p
+                              className={
+                                currentUser === data.messageBy
+                                  ? "currentUserMsg"
+                                  : "otherUserMsg"
+                              }
+                            >
+                              {data.message}
+                            </p>
+                          </div>
+                          <br />
+                          <br />
+                          <br />
+                          <br />
                         </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                      </div>
-                    );
-                  })}
-              </div>
-            ))}
+                      );
+                    })}
+                </div>
+              ))}
+          </div>
         </div>
-      </div>
-      <div ref={inputdiv} className="sendMsgDiv">
-        <Input
-          placeholder="Type your message"
-          value={sendMessage}
-          size="large"
-          suffix={
-            <SendOutlined
-              style={{ display: sendMessage !== "" ? "inline" : "none" }}
-              onClick={onClickSendBtn}
-            />
-          }
-          id="sendMsg"
-          style={{
-            background: "#0000000D 0% 0% no-repeat padding-box"
-          }}
-          onChange={(e) => {
-            setSendMessage(e.target.value);
-          }}
-        />
-      </div>
+      )}
+      {discussionId !== "" ? (
+        <div ref={inputdiv} className="sendMsgDiv">
+          <Input
+            placeholder="Type your message"
+            value={sendMessage}
+            size="large"
+            suffix={
+              <SendOutlined
+                style={{ display: sendMessage !== "" ? "inline" : "none" }}
+                onClick={onClickSendBtn}
+              />
+            }
+            id="sendMsg"
+            style={{
+              background: "#0000000D 0% 0% no-repeat padding-box"
+            }}
+            onChange={(e) => {
+              setSendMessage(e.target.value);
+            }}
+          />
+        </div>
+      ) : (
+        <h3> No Messages</h3>
+      )}
     </div>
   );
 }
