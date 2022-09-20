@@ -30,6 +30,7 @@ export const GetDiscussions = createAsyncThunk("discussion/list", async () => {
   const { data } = response;
   return { ...data };
 });
+
 export const GetDiscussionDetails = createAsyncThunk(
   "discussion/details",
   async (topicId: string) => {
