@@ -66,9 +66,11 @@ function SubmittalListFilterComponent(props: FilterProps) {
             />
           </div>
         </section>
-        <div>
-          <FilterChips items={items} onChipDelete={onFilterChipDelete} />
-        </div>
+        {showFiterChips && (
+          <div>
+            <FilterChips items={items} onChipDelete={onFilterChipDelete} />
+          </div>
+        )}
       </Space>
 
       <div id="outer" className="EditSubmittalbtn">
