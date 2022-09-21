@@ -74,7 +74,7 @@ function SubmittalListFilterComponent(props: FilterProps) {
       <div id="outer" className="EditSubmittalbtn">
         <span>
           <div>
-             <div className="inner">
+            <div className="inner">
               <Button
                 onClick={onRejectButtonClick}
                 size="middle"
