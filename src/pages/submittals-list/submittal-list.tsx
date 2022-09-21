@@ -564,7 +564,6 @@ function SubmittalList() {
       setShowFiterChips(true);
     }
   };
-  
   return (
     <div>
       <SubmittalListFilterComponent
