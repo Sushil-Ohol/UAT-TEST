@@ -135,7 +135,8 @@ function SubmittalList() {
       editable: false,
       cellRenderer: IdLinkComponent,
       cellRendererParams: {
-        link: "/submittals/details"
+        link: "/submittals/details",
+        projectId      
       },
       cellClass(params) {
         return params.value === "" ? "idDefaultCellColor" : "idHoverColor";
