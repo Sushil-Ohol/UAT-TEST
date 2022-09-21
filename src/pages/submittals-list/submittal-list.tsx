@@ -88,7 +88,8 @@ function SubmittalList() {
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
   const [selectedRowsData, setSelectedRowsData] = useState([]);
-  const [height, setHeight] = useState(505);
+  const [height, setHeight] = useState(50);
+  const [isDocumentView, setIsDocumentView] = useState(false);
   const gridStyle = useMemo(
     () => ({
       height: showStagingZone ? "300px" : "780px",
@@ -110,6 +111,15 @@ function SubmittalList() {
     setColumnDefs(columnDefsCopy);
     message.success("New column added sucessfully");
     gridRef.current!.api.setColumnDefs(columnDefs);
+  };
+
+  const viewDocument = (value: boolean) => {
+    if (value) {
+      setHeight(100);
+    } else {
+      setHeight(50);
+    }
+    setIsDocumentView(value);
   };
 
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
@@ -387,7 +397,7 @@ function SubmittalList() {
 
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
-    setHeight(505);
+    setHeight(50);
   };
 
   const onFirstDataRendered = useCallback(() => {
@@ -636,9 +646,11 @@ function SubmittalList() {
               Use this space to discuss within your team mates, share documents.
               All content are private within your org.
             </Title>
-            <Title level={5} onClick={onStagingZoneClose}>
-              <ExpandIcon className="expand-icon-right" />
-            </Title>
+            {!isDocumentView && (
+              <Title level={5} onClick={onStagingZoneClose}>
+                <ExpandIcon className="expand-icon-right" />
+              </Title>
+            )}
           </Space>
         }
         placement="bottom"
@@ -647,12 +659,14 @@ function SubmittalList() {
         visible={showStagingZone}
         mask={false}
         headerStyle={{ borderBottom: "none" }}
-        height={height}
+        height={`${height}vh`}
       >
         {showStagingZone && (
           <StagingZone
             onMouseDown={onMouseDown}
             selectedData={selectedRowsData}
+            documentView={viewDocument}
+            isDocumentView={isDocumentView}
           />
         )}
       </Drawer>

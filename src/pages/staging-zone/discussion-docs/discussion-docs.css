@@ -64,3 +64,16 @@
   float: right;
   margin-right: 5px;
 }
+.all-document-list {
+  margin: 3%;
+}
+.selected-file {
+  color: #007aff;
+  display: inline;
+  font-weight: 500;
+}
+.selected-file:hover {
+  color: #007aff;
+  display: inline;
+  cursor: pointer;
+}

@@ -7,6 +7,15 @@
   z-index: 1;
   border-bottom: 1px solid darkgrey;
 }
+.discussion-details-document-view {
+  height: 61px;
+  position: sticky;
+  top: 0px;
+  background-color: #f7f6f4;
+  padding: 3% 0;
+  z-index: 1;
+  border-top: 1px solid darkgrey;
+}
 
 .chatMessageParent {
   display: table;
