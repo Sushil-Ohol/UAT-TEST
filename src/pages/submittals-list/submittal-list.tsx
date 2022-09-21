@@ -20,8 +20,11 @@ import {
 import "./submittal-list.css";
 import moment from "moment";
 import { Buttons } from "components/widgets";
-import { useAppDispatch } from "store";
-import { getSubmittalList } from "store/slices/submittalsSlices";
+import { useAppDispatch, useAppSelector } from "store";
+import {
+  getSubmittalList,
+  updateSubmittal
+} from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create";
 import SubmittalLogCreateComponent from "pages/submittal-log-create";
 import { SubmittalLog } from "models/submittal-log";
@@ -44,6 +47,7 @@ import {
   assignedCellRenderer,
   assignedEditCellRenderer
 } from "components/cell-renders";
+import { RootState } from "store/slices";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import {
   ChatIcon,
@@ -98,11 +102,13 @@ function SubmittalList() {
     [showStagingZone]
   );
   const [isResizing, setIsResizing] = useState(false);
-  const [rowData, setRowData] = useState<SubmittalLog[]>();
+  // const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
   const [customDateFilter, setCustomDateFilter] = useState<any>({});
+
+  const submittalState = useAppSelector((state: RootState) => state.submittals);
 
   const onNewColumnAddition = (object: any) => {
     const columnDefsCopy = columnDefs;
@@ -234,7 +240,7 @@ function SubmittalList() {
       cellEditor: "agRichSelectCellEditor",
       cellEditorParams: {
         cellRenderer: contractorEditCellRenderer,
-        values: DropDownData.ContractorOptions,
+        values: submittalState.contractors,
         cellHeight: 20
       },
       cellRenderer: contractorCellRenderer,
@@ -269,7 +275,7 @@ function SubmittalList() {
       cellEditorPopup: true,
       cellEditorParams: {
         cellRenderer: assignedEditCellRenderer,
-        values: DropDownData.AssigneeOptions,
+        values: submittalState.assignees,
         cellHeight: 20
       },
       cellRenderer: assignedCellRenderer,
@@ -344,7 +350,7 @@ function SubmittalList() {
       const { payload } = actionResult;
       if (payload.success) {
         immutableRowData = payload.response;
-        setRowData(immutableRowData);
+        // setRowData(immutableRowData);
       }
     }
   };
@@ -409,8 +415,7 @@ function SubmittalList() {
       immutableRowData = immutableRowData.map((oldItem) =>
         oldItem.id === newItem.id ? newItem : oldItem
       );
-      gridRef.current!.api.setRowData(immutableRowData);
-      gridRef.current!.api.refreshCells({ force: true });
+      dispatch(updateSubmittal(immutableRowData));
     },
     [immutableRowData]
   );
@@ -436,7 +441,7 @@ function SubmittalList() {
             : newData[index].dueBy
       };
       newData[index] = newitem;
-      gridRef.current!.api.setRowData(newData);
+      // gridRef.current!.api.setRowData(newData);
     });
     immutableRowData = newData;
     message.success("Updated submittals sucessfully");
@@ -455,7 +460,7 @@ function SubmittalList() {
       revision: 0
     };
     newData.push(newItem);
-    setRowData(newData);
+    // setRowData(newData);
     immutableRowData = newData;
     message.success("New submittals added successfully");
     setShowNewDrawer(false);
@@ -535,7 +540,7 @@ function SubmittalList() {
       revision: 0
     };
     newData.push(newItem);
-    setRowData(newData);
+    // setRowData(newData);
     immutableRowData = newData;
     message.success("submittal log added successfully");
     setShowLogDrawer(false);
@@ -555,7 +560,7 @@ function SubmittalList() {
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
           ref={gridRef}
-          rowData={rowData}
+          rowData={submittalState.list}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}

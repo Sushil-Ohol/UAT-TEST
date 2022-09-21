@@ -1,20 +1,31 @@
 /* eslint-disable no-param-reassign */
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SubmittalListResponse, SubmittalLog } from "models/submittal-log";
+import {
+  Assignee,
+  Contractor,
+  SubmittalListResponse,
+  SubmittalLog
+} from "models/submittal-log";
+import { DropDownData } from "constants/index";
 
 import * as api from "services/submittals-services";
+import { ListWithDictionary } from "models/base";
 
 type SubmittalState = {
   projectId: string;
   list: SubmittalLog[];
   loading: boolean;
+  contractors: Contractor[];
+  assignees: ListWithDictionary<Assignee>;
 };
 
 export const initialState: SubmittalState = {
   projectId: "",
   list: [],
-  loading: false
+  loading: false,
+  contractors: [],
+  assignees: {}
 };
 
 export const getSubmittalList = createAsyncThunk(
@@ -36,6 +47,9 @@ const submittalSlice = createSlice({
     reset: () => initialState,
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
+    },
+    updateSubmittal: (state, { payload }: PayloadAction<any>) => {
+      state.list = payload;
     }
   },
   extraReducers: (builder) => {
@@ -46,6 +60,10 @@ const submittalSlice = createSlice({
       .addCase(
         getSubmittalList.fulfilled,
         (state, { payload }: PayloadAction<SubmittalListResponse>) => {
+          state.contractors = DropDownData.ContractorOptions;
+          DropDownData.ContractorOptions.forEach((element: any) => {
+            state.assignees[element.name] = element.assignees;
+          });
           state.list = payload.response;
         }
       );
@@ -54,4 +72,4 @@ const submittalSlice = createSlice({
 
 export default submittalSlice.reducer;
 
-export const { reset, setLoading } = submittalSlice.actions;
+export const { reset, setLoading, updateSubmittal } = submittalSlice.actions;
