@@ -37,12 +37,16 @@ function AddAssigneeModal({
     form.validateFields().then((values) => {
       if (!isAssigneeExists(values.assigneeUserName)) {
         const newAssigneeData = [...assigneeOptions];
-        const data = {
-          assignedTo: values.assigneeUserName,
-          destination: values.assigneeEmailId,
-          contractor: selectedContractor
+
+        const contractorData: any = assigneeOptions.filter(
+          (contractor: any) => contractor.name === selectedContractor
+        );
+        const assigneeData = {
+          name: values.assigneeUserName,
+          role: "Project Manager"
         };
-        newAssigneeData.push(data);
+        contractorData[0].assignees.push(assigneeData);
+        newAssigneeData.push(contractorData);
         onOkClick(newAssigneeData);
       } else {
         message.error("Assignee already exists for selected contractor");

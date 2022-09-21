@@ -50,6 +50,11 @@ const submittalSlice = createSlice({
     },
     updateSubmittal: (state, { payload }: PayloadAction<any>) => {
       state.list = payload;
+    },
+    updateContractorState: (state, { payload }: PayloadAction<any>) => {
+      payload.forEach((element: any) => {
+        state.assignees[element.name] = element.assignees;
+      });
     }
   },
   extraReducers: (builder) => {
@@ -71,4 +76,5 @@ const submittalSlice = createSlice({
 
 export default submittalSlice.reducer;
 
-export const { reset, setLoading, updateSubmittal } = submittalSlice.actions;
+export const { reset, setLoading, updateSubmittal, updateContractorState } =
+  submittalSlice.actions;

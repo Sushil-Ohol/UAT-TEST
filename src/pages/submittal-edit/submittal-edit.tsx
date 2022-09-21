@@ -4,8 +4,9 @@ import { useForm } from "antd/lib/form/Form";
 import { useState } from "react";
 import { AddContractorModal, AddAssigneeModal } from "popups";
 import "./submittal-edit.css";
-import { useAppSelector } from "store";
 import { RootState } from "store/slices";
+import { useAppDispatch, useAppSelector } from "store";
+import { updateContractorState } from "store/slices/submittalsSlices";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 
 const { Option } = Select;
@@ -19,12 +20,20 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const { onApplyClick, onCancelClick } = props;
   const [form] = useForm();
 
+  const dispatch = useAppDispatch();
+
   const submittalState = useAppSelector((state: RootState) => state.submittals);
+
+  const [assigneeData, setAssigneeData] = useState<any>();
+
+  const [contractorData, setContractorData] = useState<any>(
+    submittalState.contractors
+  );
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-      const selectedContractor: any = submittalState.contractors.filter(
-        (contractor) => contractor.name === values.contractor
+      const selectedContractor: any = contractorData.filter(
+        (contractor: any) => contractor.name === values.contractor
       );
 
       const assigned: any = selectedContractor[0].assignees.filter(
@@ -40,12 +49,6 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       onApplyClick(data);
     });
   };
-
-  const [assigneeData, setAssigneeData] = useState<any>();
-
-  const [contractorData, setContractorData] = useState<any>(
-    submittalState.contractors
-  );
 
   const [contractorSelected, setContractorSelected] = useState<string>("");
 
@@ -67,13 +70,15 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     useState<boolean>(false);
 
   const updateContractorData = (object: any) => {
+    dispatch(updateContractorState(object));
     setContractorData(object);
-    message.success("Contractor Added Successfully");
+    message.success("Contractor & Assignee Added Successfully");
     setIsContractorModalOpen(false);
   };
 
   const updateAssigneeData = (object: any) => {
-    setAssigneeData(object);
+    dispatch(updateContractorState(object));
+    setContractorData(object);
     message.success("Assignee Added Successfully");
     setIsAssigneeModalOpen(false);
   };
@@ -207,11 +212,9 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         onOkClick={updateContractorData}
         show={isContractorModalOpen}
         onCancelClick={handleContractorCancel}
-        assigneeOptions={assigneeData}
-        saveAssignee={updateAssigneeData}
       />
       <AddAssigneeModal
-        assigneeOptions={assigneeData}
+        assigneeOptions={contractorData}
         onOkClick={updateAssigneeData}
         show={isAssigneeModalOpen}
         onCancelClick={handleAssigneeCancel}
