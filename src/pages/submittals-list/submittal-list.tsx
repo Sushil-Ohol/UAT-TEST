@@ -567,7 +567,7 @@ function SubmittalList() {
   };
 
   return (
-    <div>
+    <div className="a">
       <SubmittalListFilterComponent
         gridRef={gridRef}
         onNewClick={onNewClick}
