@@ -31,23 +31,39 @@ function AddContractorModal({
   const handleContractorOk = () => {
     form.validateFields().then((values) => {
       if (!isContractorExists(values.companyName)) {
-        const newContractorData = [...contractorOptions];
-        const assigneeData = [
-          {
-            name: values.userName,
-            role: "Project Manager"
-          }
-        ];
         const contractorData = {
           name: values.companyName,
           email: values.emailId,
-          assignees: assigneeData
+          assignees: [
+            {
+              name: values.userName,
+              role: "Project Manager"
+            }
+          ]
         };
-        newContractorData.push(contractorData);
-        onOkClick(newContractorData);
+        onOkClick(contractorData);
       } else {
         message.error("Contractor already exists");
       }
+
+      // if (!isContractorExists(values.companyName)) {
+      //   const newContractorData = [...contractorOptions];
+      //   const assigneeData = [
+      //     {
+      //       name: values.userName,
+      //       role: "Project Manager"
+      //     }
+      //   ];
+      //   const contractorData = {
+      //     name: values.companyName,
+      //     email: values.emailId,
+      //     assignees: assigneeData
+      //   };
+      //   newContractorData.push(contractorData);
+      //   onOkClick(newContractorData);
+      // } else {
+      //   message.error("Contractor already exists");
+      // }
     });
   };
 

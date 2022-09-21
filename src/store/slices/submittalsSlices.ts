@@ -36,8 +36,6 @@ export const getSubmittalList = createAsyncThunk(
     const { data } = response;
     return { ...data };
   }
-  // return rejectWithValue(response.error.errors);
-  // }
 );
 
 const submittalSlice = createSlice({
@@ -50,6 +48,21 @@ const submittalSlice = createSlice({
     },
     updateSubmittal: (state, { payload }: PayloadAction<any>) => {
       state.list = payload;
+    },
+    newContractor: (state, { payload }: PayloadAction<any>) => {
+      state.contractors.push(payload);
+      state.assignees[payload.name] = payload.assignees;
+    },
+    newAssignee: (state, { payload }: PayloadAction<any>) => {
+      const index = state.contractors.findIndex(
+        (item) => item.name === payload.contractorName
+      );
+      if (index > -1) {
+        state.contractors[index].assignees?.push(payload.assignee);
+      }
+      const temp: any = state.assignees[payload.contractorName] || [];
+      temp.push(payload.assignee);
+      state.assignees[payload.contractorName] = temp;
     },
     updateContractorState: (state, { payload }: PayloadAction<any>) => {
       payload.forEach((element: any) => {
@@ -76,5 +89,11 @@ const submittalSlice = createSlice({
 
 export default submittalSlice.reducer;
 
-export const { reset, setLoading, updateSubmittal, updateContractorState } =
-  submittalSlice.actions;
+export const {
+  reset,
+  setLoading,
+  updateSubmittal,
+  updateContractorState,
+  newContractor,
+  newAssignee
+} = submittalSlice.actions;
