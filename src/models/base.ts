@@ -26,4 +26,3 @@ export type List<T> = {
 };
 
 export type ListWithDictionary<T> = { [key: string]: List<T> };
-
