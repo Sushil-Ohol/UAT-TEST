@@ -12,8 +12,14 @@ import {
 import { Conversation } from "models/discussion";
 import "./discussion-details.css";
 
-function DiscussionDetails(props: any) {
-  const { className, discussionId } = props;
+export type DiscussionDetailsProps = {
+  className: string;
+  discussionId: string;
+  isDocumentView: boolean;
+};
+
+function DiscussionDetails(props: DiscussionDetailsProps) {
+  const { className, discussionId, isDocumentView } = props;
 
   const [filterByDate, setFilterByDate] = useState<any>();
   const [msgDate, setMsgDate] = useState<string[]>();
@@ -105,13 +111,21 @@ function DiscussionDetails(props: any) {
 
   return (
     <div ref={topRef} className={className}>
-      <div className="discussionDetails">
+      <div
+        className={
+          isDocumentView
+            ? "discussion-details-document-view"
+            : "discussionDetails"
+        }
+      >
         <div style={{ padding: "2px 1.5%", float: "left" }}>
           Discussion({totalChat})
         </div>
-        <Button className="archieveBtn" disabled={discussionId === ""}>
-          Archieve
-        </Button>
+        {!isDocumentView && (
+          <Button className="archieveBtn" disabled={discussionId === ""}>
+            Archieve...
+          </Button>
+        )}
       </div>
 
       {discussionId !== "" && (

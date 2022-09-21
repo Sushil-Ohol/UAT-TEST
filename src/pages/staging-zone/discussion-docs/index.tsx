@@ -11,10 +11,18 @@ import { GetDiscussionDetails } from "store/slices/staging-zone-slice";
 import "./discussion-docs.css";
 import { DownloadIcon, CopyIcon } from "components/svg-icons";
 
-function DiscussionDocs(props: any) {
-  const { className, discussionId } = props;
+export type DiscussionDocsProps = {
+  className: string;
+  discussionId: string;
+  documentView: any;
+  onDocumentSelect: any;
+};
+
+function DiscussionDocs(props: DiscussionDocsProps) {
+  const { className, discussionId, documentView, onDocumentSelect } = props;
   const [filterByDate, setFilterByDate] = useState<any>();
   const [uploadedDate, setUploadDate] = useState<string[]>();
+
   const dispatch = useAppDispatch();
   const bottomRef = useRef<any>(null);
   const documentsData = useAppSelector(
@@ -32,6 +40,11 @@ function DiscussionDocs(props: any) {
 
   const loadDiscussionDetails = async () => {
     await dispatch(GetDiscussionDetails(discussionId));
+  };
+
+  const onDocumentClick = (value: boolean, selectedDoc: string) => {
+    documentView(value);
+    onDocumentSelect(selectedDoc);
   };
 
   useEffect(() => {
@@ -133,7 +146,20 @@ function DiscussionDocs(props: any) {
                             : "otherUserFilenName"
                         }
                       >
-                        <a href={data.url}> {data.fileName} </a>
+                        <div
+                          onClick={() => {
+                            onDocumentClick(true, data.fileName);
+                          }}
+                          onKeyDown={() => {
+                            onDocumentClick(true, data.fileName);
+                          }}
+                          role="button"
+                          tabIndex={0}
+                          className="selected-file"
+                        >
+                          {" "}
+                          {data.fileName}{" "}
+                        </div>
                         <span className="downloadIcon">
                           <DownloadIcon />
                         </span>

@@ -15,33 +15,46 @@ import { DocAttachIcon, MessageIcon } from "components/svg-icons";
 import "./discussion-list.css";
 import DiscussionHeader from "./header";
 
-function DiscussionList(props: any) {
+export type DiscussionListProps = {
+  className: string;
+  onClick: Function;
+  selectedData: any[];
+};
+
+function DiscussionList(props: DiscussionListProps) {
   const { className, onClick, selectedData } = props;
   const dispatch = useAppDispatch();
+  const rowId = selectedData[0]?.id.toString()
+    ? selectedData[0]?.id.toString()
+    : "1000";
   const bottomRef = useRef<any>();
   const [showNewConPopup, setShowNewConPopup] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState("");
+  const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
   const loadList = async () => {
     await dispatch(GetDiscussions());
   };
-
-  React.useEffect(() => {
-    loadList();
-  }, []);
-
   const data = useSelector(
     (state: RootState) => state.stagingZone.discussionList
   );
+  React.useEffect(() => {
+    loadList();
+  }, []);
+  React.useEffect(() => {
+    if (selectedData.length <= 1) {
+      onClick(rowId);
+      setSelectedTopicId(rowId);
+    }
+  }, [selectedData]);
 
   const onDiscussionClick = (id: string) => {
     onClick(id);
-    setSelectedId(id);
+    setSelectedTopicId(id);
   };
 
   const onSearchSelectClick = (id: string) => {
     onClick(id);
-    setSelectedId(id);
+    setSelectedTopicId(id);
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -64,7 +77,7 @@ function DiscussionList(props: any) {
         recordId: selectedData.length === 1 ? selectedData[0].id : ""
       };
       dispatch(addNewDiscussion(newDiscussion));
-      setSelectedId(newDiscussion.topicId.toString());
+      setSelectedTopicId(newDiscussion.topicId.toString());
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -78,13 +91,13 @@ function DiscussionList(props: any) {
       <List.Item
         onClick={() => onDiscussionClick(item.topicId)}
         className={
-          selectedId === item.topicId
+          selectedTopicId === item.topicId
             ? " discussion-list discussion-list-active"
             : "discussion-list"
         }
         key={item.topicName}
         actions={
-          selectedId !== item.topicId
+          selectedTopicId !== item.topicId
             ? [
                 item.unreadCount > 0 && (
                   <IconText

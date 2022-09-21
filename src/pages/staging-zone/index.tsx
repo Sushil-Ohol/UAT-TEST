@@ -1,20 +1,38 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from "react";
+import { Col, Row } from "antd";
 import Discussions from "./discussion-list";
 import DiscussionDetails from "./discussion-details";
 import DiscussionDocs from "./discussion-docs";
 import "./staging-zone.css";
+import DocumentViewHeader from "./document-view-header";
+import DocumentList from "./discussion-document-list";
 
-function StagingZone(props: any) {
-  const { onMouseDown, selectedData } = props;
+export type StagingZoneProps = {
+  onMouseDown: any;
+  selectedData: any[];
+  documentView: Function;
+  isDocumentView: boolean;
+};
+
+function StagingZone(props: StagingZoneProps) {
+  const { onMouseDown, selectedData, documentView, isDocumentView } = props;
   const [discussionId, setDiscussionId] = useState("");
-
+  const [selectedDocument, setSelectedDocument] = useState("");
   React.useEffect(() => {}, []);
 
   const OnDiscussionSelected = (id: string) => {
     setDiscussionId(id);
   };
-
+  const prev = () => {
+    documentView(false);
+  };
+  const onDocumentSelect = (fileName: string) => {
+    setSelectedDocument(fileName);
+  };
+  const onDocumentClose = () => {
+    setSelectedDocument("");
+  };
   return (
     <div id="page-wrap">
       <div
@@ -31,7 +49,48 @@ function StagingZone(props: any) {
         }}
         onMouseDown={onMouseDown}
       />
-      <div className="five-columns group">
+
+      <div
+        className="five-columns group"
+        style={{ display: isDocumentView ? "inline-block" : "none" }}
+      >
+        <DocumentViewHeader
+          prev={prev}
+          onDocumentClose={onDocumentClose}
+          selectedDocument={selectedDocument}
+        />
+
+        <Row>
+          <Col span={5}>
+            <Row>
+              <Col span={24} className="document-view-div-first">
+                <div className="all-document-list">
+                  <DocumentList
+                    selectedDocument={selectedDocument}
+                    onSelect={onDocumentSelect}
+                  />
+                </div>
+              </Col>
+              <Col span={24} className="document-view-div-second">
+                <DiscussionDetails
+                  className="col-two discussion"
+                  discussionId={discussionId}
+                  isDocumentView={isDocumentView}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col span={19}>
+            <div className="col-two discussion-document-view document-bg-color">
+              <h2> {selectedDocument || "Document"}</h2>
+            </div>
+          </Col>
+        </Row>
+      </div>
+      <div
+        className="five-columns group"
+        style={{ display: isDocumentView ? "none" : "inline-block" }}
+      >
         <Discussions
           className="col discussion"
           onClick={OnDiscussionSelected}
@@ -40,10 +99,13 @@ function StagingZone(props: any) {
         <DiscussionDetails
           className="col discussion"
           discussionId={discussionId}
+          isDocumentView={isDocumentView}
         />
         <DiscussionDocs
+          documentView={documentView}
           className="col discussion"
           discussionId={discussionId}
+          onDocumentSelect={setSelectedDocument}
         />
       </div>
     </div>
