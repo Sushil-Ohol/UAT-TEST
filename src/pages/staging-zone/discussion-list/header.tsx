@@ -59,12 +59,12 @@ function DiscussionHeader(props: DicussionListHeaderProps) {
             addBtnText={selectedData.length === 1 ? "Continue" : "Add"}
             modelContent={
               selectedData.length === 1
-                ? NewConversationContent.General
-                : NewConversationContent.Submittal
+                ? NewConversationContent.Submittal
+                : NewConversationContent.General
             }
           />
         </Col>
-        <Col span={7} offset={16} className="wrapper-input-search">
+        <Col span={9} offset={14} className="wrapper-input-search">
           <SearchableDropdown
             placeholder="Search"
             data={data}

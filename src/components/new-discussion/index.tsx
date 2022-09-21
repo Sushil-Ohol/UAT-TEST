@@ -26,7 +26,7 @@ function NewDiscussionPopup({
 }: NewDiscussionProps) {
   const [form] = Form.useForm<{ topicName: string }>();
   form.resetFields();
-
+  const text = modelContent.split(".");
   const onHandleClick = () => {
     form.validateFields().then((value) => {
       addBtnClick(value.topicName || selectedData[0].submittal);
@@ -44,15 +44,21 @@ function NewDiscussionPopup({
       onOk={onHandleClick}
       onCancel={onCancel}
       okText={addBtnText}
+      width={600}
     >
       {isGeneric ? (
         <>
           <div className="selected-topic-name">
             <div className="topic-title">
-              {linkType} {selectedData[0].id}: {selectedData[0].submittal}
+              {linkType} :{" "}
+              <div className="topic-heading">
+                {selectedData[0].id}: {selectedData[0].submittal}
+              </div>
             </div>
           </div>
-          <p className="pop-content">{modelContent}</p>
+          <p className="pop-content">
+            {text[0]}. <br /> {text[1]}.
+          </p>
         </>
       ) : (
         <>
@@ -71,7 +77,9 @@ function NewDiscussionPopup({
               <Input onInput={voidStartingSpaceInput} />
             </Form.Item>
           </Form>
-          <p className="pop-content">{modelContent}</p>
+          <p className="pop-content">
+            {text[0]}. <br /> {text[1]}.
+          </p>
         </>
       )}
     </Modal>

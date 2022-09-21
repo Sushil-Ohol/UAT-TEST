@@ -3,7 +3,7 @@ import { Button, Form, Select, DatePicker, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useState } from "react";
 import { AddContractorModal, AddAssigneeModal } from "popups";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "constants/index";
 import "./submittal-edit.css";
 
 const { Option } = Select;
