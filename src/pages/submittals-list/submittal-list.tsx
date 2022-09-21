@@ -113,6 +113,7 @@ function SubmittalList() {
 
   const submittalState = useAppSelector((state: RootState) => state.submittals);
 
+  const [showFiterChips, setShowFiterChips] = useState<boolean>(true);
   const onNewColumnAddition = (object: any) => {
     const columnDefsCopy = columnDefs;
     columnDefsCopy.splice(columnDefs.length - 1, 0, object);
@@ -572,6 +573,18 @@ function SubmittalList() {
     setShowLogDrawer(false);
   };
 
+  const onRejectButtonClick = () => {
+    if (showFiterChips) {
+      const filter = {
+        status: { filterType: "set", values: ["Rejected"] }
+      };
+      gridRef.current!.api.setFilterModel(filter);
+      setShowFiterChips(false);
+    } else {
+      gridRef.current!.api.setFilterModel({});
+      setShowFiterChips(true);
+    }
+  };
   return (
     <div className="a">
       <SubmittalListFilterComponent
@@ -582,6 +595,8 @@ function SubmittalList() {
         setCustomDateFilter={setCustomDateFilter}
         setItems={setFilters}
         onCreateLogClick={onCreateLogClick}
+        showFiterChips={showFiterChips}
+        onRejectButtonClick={onRejectButtonClick}
       />
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>

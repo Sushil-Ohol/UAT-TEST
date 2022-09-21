@@ -13,6 +13,8 @@ export type FilterProps = {
   customDateFilter: any;
   setCustomDateFilter: any;
   onCreateLogClick: any;
+  onRejectButtonClick: any;
+  showFiterChips: boolean;
 };
 
 function SubmittalListFilterComponent(props: FilterProps) {
@@ -23,7 +25,9 @@ function SubmittalListFilterComponent(props: FilterProps) {
     setItems,
     customDateFilter,
     setCustomDateFilter,
-    onCreateLogClick
+    onCreateLogClick,
+    onRejectButtonClick,
+    showFiterChips
   } = props;
 
   const onFilterTextBoxChanged = useCallback(() => {
@@ -62,14 +66,25 @@ function SubmittalListFilterComponent(props: FilterProps) {
             />
           </div>
         </section>
-        <div>
-          <FilterChips items={items} onChipDelete={onFilterChipDelete} />
-        </div>
+        {showFiterChips && (
+          <div>
+            <FilterChips items={items} onChipDelete={onFilterChipDelete} />
+          </div>
+        )}
       </Space>
 
       <div id="outer" className="EditSubmittalbtn">
         <span>
           <div>
+            <div className="inner">
+              <Button
+                onClick={onRejectButtonClick}
+                size="middle"
+                className="newSubmittalBtn"
+              >
+                {showFiterChips ? "Rejected List" : "Accepted List"}
+              </Button>
+            </div>
             <div className="inner">
               <Button
                 onClick={onCreateLogClick}
