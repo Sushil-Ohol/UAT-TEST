@@ -2,7 +2,7 @@ import { BaseResponse } from "./base";
 
 export type SubmittalLog = {
   id: string;
-  submittal: number;
+  submittal: string;
   description: string;
   notification: number;
   comments: number;
