@@ -105,7 +105,6 @@ function SubmittalList() {
   const [filters, setFilters] = useState<FilterItem[]>([]);
   const [customDateFilter, setCustomDateFilter] = useState<any>({});
   const [showFiterChips, setShowFiterChips] = useState<boolean>(true);
-  
   const onNewColumnAddition = (object: any) => {
     const columnDefsCopy = columnDefs;
     columnDefsCopy.splice(columnDefs.length - 1, 0, object);
