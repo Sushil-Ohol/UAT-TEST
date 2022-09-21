@@ -9,12 +9,27 @@ type SubmittalState = {
   projectId: string;
   list: SubmittalLog[];
   loading: boolean;
+  selectedSubmittalLog: SubmittalLog;
 };
 
 export const initialState: SubmittalState = {
   projectId: "",
   list: [],
-  loading: false
+  loading: false,
+  selectedSubmittalLog: {
+    id: "",
+    submittal: "",
+    description: "",
+    notification: 0,
+    comments: 0,
+    revision: 0,
+    status: "",
+    dueBy: "",
+    governingDate: "",
+    contractor: { name: "", email: "" },
+    dependsOn: "",
+    assigned: { assignedTo: "", destination: "" }
+  }
 };
 
 export const getSubmittalList = createAsyncThunk(
@@ -36,6 +51,11 @@ const submittalSlice = createSlice({
     reset: () => initialState,
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
+    },
+    updateSubmittal: (state, { payload }: PayloadAction<SubmittalLog>) => {
+      console.log(payload);
+      const dataIndex = state.list.findIndex((data) => data.id === payload.id);
+      state.list[dataIndex] = payload;
     }
   },
   extraReducers: (builder) => {
@@ -54,4 +74,4 @@ const submittalSlice = createSlice({
 
 export default submittalSlice.reducer;
 
-export const { reset, setLoading } = submittalSlice.actions;
+export const { reset, setLoading, updateSubmittal } = submittalSlice.actions;
