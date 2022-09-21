@@ -32,7 +32,6 @@ export const getSubmittalList = createAsyncThunk(
   "submittal/list",
   async (projectId: string) => {
     const response = await api.GetSubmittals(projectId);
-    // if (response.remote === "success") {
     const { data } = response;
     return { ...data };
   }
