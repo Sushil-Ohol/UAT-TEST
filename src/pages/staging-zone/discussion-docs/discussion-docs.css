@@ -67,12 +67,12 @@
 .all-document-list {
   margin: 3%;
 }
-.selected-file {
+.selected-document {
   color: #007aff;
   display: inline;
   font-weight: 500;
 }
-.selected-file:hover {
+.selected-document:hover {
   color: #007aff;
   display: inline;
   cursor: pointer;

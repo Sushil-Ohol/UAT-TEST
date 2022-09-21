@@ -49,7 +49,8 @@ import {
   assignedEditCellRenderer
 } from "components/cell-renders";
 import { RootState } from "store/slices";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
+import DropdownOption from "components/cell-editor/SubmittalStatusDropdownCtrl";
+import { DATE_FORMAT_MMDDYYY } from "../../constants";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -215,9 +216,7 @@ function SubmittalList() {
       headerName: "STATUS",
       minWidth: 50,
       cellEditor: "agSelectCellEditor",
-      cellEditorParams: {
-        values: DropDownData.StatusOptions
-      },
+      cellEditorParams: DropdownOption,
       cellStyle: { color: "#000000FA" }
     },
     {
@@ -258,7 +257,7 @@ function SubmittalList() {
     },
     {
       field: "contractor",
-      headerName: "CONTRACTOR",
+      headerName: "COMPANY",
       minWidth: 180,
       autoHeight: true,
       cellEditor: "agRichSelectCellEditor",
@@ -436,6 +435,11 @@ function SubmittalList() {
         oldItem.id === newItem.id ? newItem : oldItem
       );
       dispatch(updateSubmittal(immutableRowData));
+      immutableRowData = immutableRowData
+        .map((oldItem) => (oldItem.id === newItem.id ? newItem : oldItem))
+        .filter((item) => item.status !== "Not required");
+      gridRef.current!.api.setRowData(immutableRowData);
+      gridRef.current!.api.refreshCells({ force: true });
     },
     [immutableRowData]
   );
@@ -461,7 +465,9 @@ function SubmittalList() {
             : newData[index].dueBy
       };
       newData[index] = newitem;
-      gridRef.current!.api.setRowData(newData);
+      gridRef.current!.api.setRowData(
+        newData.filter((item) => item.status !== "Not required")
+      );
     });
     immutableRowData = newData;
     message.success("Updated submittals sucessfully");
@@ -647,6 +653,7 @@ function SubmittalList() {
           <SubmittalEdit
             onCancelClick={onSubmittalEditClose}
             onApplyClick={onEditLogs}
+            selectedRows={selectedRowsData}
           />
         )}
       </Drawer>

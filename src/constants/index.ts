@@ -71,6 +71,14 @@ const ContractorOptions = [
       { name: "Mark", role: "Architect" },
       { name: "Roger", role: "Project Manager" }
     ]
+  },
+  {
+    name: "Architect Company",
+    email: "john@cconstuct.com",
+    assignees: [
+      { name: "Mark", role: "Architect" },
+      { name: "Roger", role: "Project Manager" }
+    ]
   }
 ];
 const DependsOnOptions = ["All", "1079", "2098"];
@@ -81,7 +89,13 @@ const StatusOptions = [
   "In Review",
   "Approved",
   "Approved with Comments",
-  "Rejected"
+  "Rejected",
+  "Confirmation required"
+];
+const StatusOptionsForArchitects = [
+  "Required",
+  "Not required",
+  "Confirmation required"
 ];
 const AssigneeOptions = [
   {
@@ -123,6 +137,16 @@ const AssigneeOptions = [
     assignedTo: "Ronaldo",
     destination: "Architect",
     contractor: "C Construction"
+  },
+  {
+    assignedTo: "Ronaldo",
+    destination: "Architect",
+    contractor: "Architect company"
+  },
+  {
+    assignedTo: "John",
+    destination: "Architect",
+    contractor: "Architect company"
   }
 ];
 
@@ -140,6 +164,7 @@ export const NewConversationContent = {
 export const DropDownData = {
   ContractorOptions,
   StatusOptions,
+  StatusOptionsForArchitects,
   AssigneeOptions,
   DependsOnOptions,
   PastDueOptions,

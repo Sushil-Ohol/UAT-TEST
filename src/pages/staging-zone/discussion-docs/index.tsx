@@ -155,7 +155,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           }}
                           role="button"
                           tabIndex={0}
-                          className="selected-file"
+                          className="selected-document"
                         >
                           {" "}
                           {data.fileName}{" "}

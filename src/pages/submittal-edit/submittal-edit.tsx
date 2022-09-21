@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-no-bind */
 import { Button, Form, Select, DatePicker, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddContractorModal, AddAssigneeModal } from "popups";
 import "./submittal-edit.css";
 import { RootState } from "store/slices";
@@ -14,10 +15,11 @@ const { Option } = Select;
 export type EditSubmittalLogs = {
   onApplyClick: any;
   onCancelClick: any;
+  selectedRows: any;
 };
 
 function SubmittalEdit(props: EditSubmittalLogs) {
-  const { onApplyClick, onCancelClick } = props;
+  const { onApplyClick, onCancelClick, selectedRows } = props;
   const [form] = useForm();
 
   const dispatch = useAppDispatch();
@@ -50,6 +52,28 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   const [contractorSelected, setContractorSelected] = useState<string>("");
+
+  const [optionArray, setOptionArray] = useState<any>([]);
+
+  const onStatusDropDownChange = () => {
+    const confirmationRequired = selectedRows.filter(
+      (item: any) => item.status === "Confirmation required"
+    );
+    const notRequired = selectedRows.filter(
+      (item: any) => item.status === "Not required"
+    );
+    if (confirmationRequired.length > 0) {
+      setOptionArray(DropDownData.StatusOptionsForArchitects);
+    } else if (notRequired.length > 0) {
+      setOptionArray(DropDownData.StatusOptionsForArchitects);
+    } else {
+      setOptionArray(DropDownData.StatusOptions);
+    }
+  };
+
+  useEffect(() => {
+    onStatusDropDownChange();
+  }, [selectedRows]);
 
   const onChangeContractor = (contractor: string) => {
     const assignedData = Object.keys(submittalState.assignees)
@@ -102,13 +126,11 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       <Form layout="vertical" preserve form={form}>
         <Form.Item name="status" label="Status">
           <Select className="statusSelect">
-            {DropDownData.StatusOptions.filter((x) => x !== "All").map(
-              (item) => (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              )
-            )}
+            {optionArray.map((item: any) => (
+              <Select.Option key={item} value={item}>
+                {item}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item name="dueBy" label="Due Date">
@@ -121,7 +143,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           name="contractor"
           label={
             <span>
-              Contractor{" "}
+              Company{" "}
               <Button
                 className="add-new-contractor-btn"
                 onClick={showContractorModal}
