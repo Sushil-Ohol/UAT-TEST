@@ -1,11 +1,17 @@
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export function IdLinkComponent(props: any) {
-  const { value, link } = props;
+  const { value, link, data, projectId } = props;
   return (
-    <a target="_blank" rel="noopener noreferrer" href={link}>
+ <Link
+      to={{
+        pathname: link,
+        state: { data, projectId }
+      }}
+    >
       {value}
-    </a>
+    </Link>
   );
 }
 
