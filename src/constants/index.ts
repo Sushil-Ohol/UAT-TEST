@@ -43,22 +43,34 @@ const ContractorOptions = [
   {
     name: "ABC Construction",
     email: "john@abcconstuct.com",
-    assignees: [{ name: "Luke", role: "Architect" }]
+    assignees: [
+      { name: "Luke", role: "Architect" },
+      { name: "James", role: "Project Manager" }
+    ]
   },
   {
     name: "A Construction",
     email: "john@aconstuct.com",
-    assignees: [{ name: "Luke1", role: "Architect1" }]
+    assignees: [
+      { name: "John", role: "Architect" },
+      { name: "Maria", role: "Project Manager" }
+    ]
   },
   {
     name: "B Construction",
     email: "john@bconstuct.com",
-    assignees: [{ name: "Luke2", role: "Architect2" }]
+    assignees: [
+      { name: "Lionel", role: "Architect" },
+      { name: "Ronaldo", role: "Project Manager" }
+    ]
   },
   {
     name: "C Construction",
     email: "john@cconstuct.com",
-    assignees: [{ name: "Luke3", role: "Architect3" }]
+    assignees: [
+      { name: "Mark", role: "Architect" },
+      { name: "Roger", role: "Project Manager" }
+    ]
   }
 ];
 const DependsOnOptions = ["All", "1079", "2098"];

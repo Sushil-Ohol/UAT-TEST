@@ -24,7 +24,7 @@ export const initialState: SubmittalState = {
   projectId: "",
   list: [],
   loading: false,
-  contractors: [],
+  contractors: DropDownData.ContractorOptions,
   assignees: {}
 };
 
@@ -60,7 +60,6 @@ const submittalSlice = createSlice({
       .addCase(
         getSubmittalList.fulfilled,
         (state, { payload }: PayloadAction<SubmittalListResponse>) => {
-          state.contractors = DropDownData.ContractorOptions;
           DropDownData.ContractorOptions.forEach((element: any) => {
             state.assignees[element.name] = element.assignees;
           });

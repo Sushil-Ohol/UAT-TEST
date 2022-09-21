@@ -3,8 +3,10 @@ import { Button, Form, Select, DatePicker, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useState } from "react";
 import { AddContractorModal, AddAssigneeModal } from "popups";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-edit.css";
+import { useAppSelector } from "store";
+import { RootState } from "store/slices";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 
 const { Option } = Select;
 
@@ -17,14 +19,18 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const { onApplyClick, onCancelClick } = props;
   const [form] = useForm();
 
+  const submittalState = useAppSelector((state: RootState) => state.submittals);
+
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-      const selectedContractor = DropDownData.ContractorOptions.filter(
+      const selectedContractor: any = submittalState.contractors.filter(
         (contractor) => contractor.name === values.contractor
       );
-      const assigned = DropDownData.AssigneeOptions.filter(
-        (assignee) => assignee.assignedTo === values.assigned
+
+      const assigned: any = selectedContractor[0].assignees.filter(
+        (contractor: any) => contractor.name === values.assigned
       );
+
       const data = {
         contractor: selectedContractor[0],
         status: values.status,
@@ -35,21 +41,22 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     });
   };
 
-  const [assigneeData, setAssigneeData] = useState<any>(
-    DropDownData.AssigneeOptions
-  );
+  const [assigneeData, setAssigneeData] = useState<any>();
 
   const [contractorData, setContractorData] = useState<any>(
-    DropDownData.ContractorOptions
+    submittalState.contractors
   );
 
   const [contractorSelected, setContractorSelected] = useState<string>("");
 
   const onChangeContractor = (contractor: string) => {
-    const assignedData = DropDownData.AssigneeOptions.filter(
-      (x: any) => x.contractor === contractor
-    );
-    setAssigneeData(assignedData);
+    const assignedData = Object.keys(submittalState.assignees)
+      .filter((key) => key.includes(contractor))
+      .reduce((obj, key) => {
+        return submittalState.assignees[key];
+      }, {});
+
+    setAssigneeData(Object.values(assignedData));
     setContractorSelected(contractor);
   };
 
@@ -165,13 +172,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
                 .includes(input.toLowerCase())
             }
           >
-            {assigneeData
-              .filter((x: any) => x.assignedTo !== "All")
-              .map((item: any) => (
-                <Option key={item.assignedTo} value={item.assignedTo}>
-                  {item.assignedTo}
-                </Option>
-              ))}
+            {assigneeData?.length > 0 &&
+              assigneeData
+                .filter((x: any) => x.assignedTo !== "All")
+                .map((item: any) => (
+                  <Option key={item.name} value={item.name}>
+                    {item.name}
+                  </Option>
+                ))}
           </Select>
         </Form.Item>
 

@@ -15,7 +15,8 @@ import {
   CellEditRequestEvent,
   ColDef,
   GetRowIdFunc,
-  GetRowIdParams
+  GetRowIdParams,
+  ICellEditorParams
 } from "ag-grid-community";
 import "./submittal-list.css";
 import moment from "moment";
@@ -116,6 +117,19 @@ function SubmittalList() {
     setColumnDefs(columnDefsCopy);
     message.success("New column added sucessfully");
     gridRef.current!.api.setColumnDefs(columnDefs);
+  };
+
+  const contractorEditorParams = (params: ICellEditorParams) => {
+    const { contractor } = params.data;
+    const assignee = submittalState.contractors
+      .map((item) => {
+        return item.name === contractor.name && item.assignees;
+      })
+      .filter(Boolean);
+    return {
+      cellRenderer: assignedEditCellRenderer,
+      values: assignee[0] || []
+    };
   };
 
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
@@ -273,11 +287,7 @@ function SubmittalList() {
       minWidth: 100,
       autoHeight: true,
       cellEditorPopup: true,
-      cellEditorParams: {
-        cellRenderer: assignedEditCellRenderer,
-        values: submittalState.assignees,
-        cellHeight: 20
-      },
+      cellEditorParams: contractorEditorParams,
       cellRenderer: assignedCellRenderer,
       keyCreator: (contractor) => {
         return contractor.value.assignedTo;
@@ -441,7 +451,7 @@ function SubmittalList() {
             : newData[index].dueBy
       };
       newData[index] = newitem;
-      // gridRef.current!.api.setRowData(newData);
+      gridRef.current!.api.setRowData(newData);
     });
     immutableRowData = newData;
     message.success("Updated submittals sucessfully");
