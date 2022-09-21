@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "store";
 import { RootState } from "store/slices";
 import "./document-list.css";
@@ -9,7 +9,7 @@ export type DocumentListProps = {
 };
 
 function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
-  const [selectedDoc, setSelectedDoc] = useState(selectedDocument);
+  const [selectedDoc, setSelectedDoc] = useState("");
   const selectedDiscussion = useAppSelector(
     (state: RootState) => state.stagingZone.selectedDiscussion
   );
@@ -20,10 +20,14 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
     setSelectedDoc(fileName);
     onSelect(fileName);
   }
+  useEffect(() => {
+    setSelectedDoc(selectedDocument);
+  }, [selectedDocument]);
   return (
     <>
       <h4>
         {" "}
+        {selectedDoc}
         Document (
         {selectedDiscussion !== null &&
           documents[selectedDiscussion?.topicId]?.list.length}

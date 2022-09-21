@@ -43,7 +43,8 @@ const ContractorOptions = [
   { name: "ABC Construction", email: "john@abcconstuct.com" },
   { name: "A Construction", email: "john@aconstuct.com" },
   { name: "B Construction", email: "john@bconstuct.com" },
-  { name: "C Construction", email: "john@cconstuct.com" }
+  { name: "C Construction", email: "john@cconstuct.com" },
+  { name: "Architect company", email: "john@cconstuct.com" }
 ];
 const DependsOnOptions = ["All", "1079", "2098"];
 const PastDueOptions = ["Past due date", "Due today", "Next 3 days", "Custom"];
@@ -53,7 +54,13 @@ const StatusOptions = [
   "In Review",
   "Approved",
   "Approved with Comments",
-  "Rejected"
+  "Rejected",
+  "Confirmation required"
+];
+const StatusOptionsForArchitects = [
+  "Required",
+  "Not required",
+  "Confirmation required"
 ];
 const AssigneeOptions = [
   {
@@ -95,6 +102,16 @@ const AssigneeOptions = [
     assignedTo: "Ronaldo",
     destination: "Architect",
     contractor: "C Construction"
+  },
+  {
+    assignedTo: "Ronaldo",
+    destination: "Architect",
+    contractor: "Architect company"
+  },
+  {
+    assignedTo: "John",
+    destination: "Architect",
+    contractor: "Architect company"
   }
 ];
 
@@ -112,6 +129,7 @@ export const NewConversationContent = {
 export const DropDownData = {
   ContractorOptions,
   StatusOptions,
+  StatusOptionsForArchitects,
   AssigneeOptions,
   DependsOnOptions,
   PastDueOptions,
