@@ -20,7 +20,7 @@ import {
 import "./submittal-list.css";
 import moment from "moment";
 import { Buttons } from "components/widgets";
-import { useAppDispatch } from "store";
+import { useAppDispatch, useAppSelector } from "store";
 import { getSubmittalList } from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create";
 import SubmittalLogCreateComponent from "pages/submittal-log-create";
@@ -66,13 +66,13 @@ const dependsOnCellRenderer = (props: any) => {
   const values = props.value.toString().split(",");
   return (
     <>
-      {values.map((val: any, index: any) => {
+      {props.value.map((val: any, index: any) => {
         return (
           <Tooltip
-            title={<DependsOnToolTip value={val.trim()} api={props.api} />}
+            title={<DependsOnToolTip value={val.submittalId} api={props.api} />}
           >
-            <span>{val}</span>
-            {values[index + 1] ? "," : ""}
+            <span>{val.submittalId}</span>
+            {props.value[index + 1] ? " , " : ""}
           </Tooltip>
         );
       })}
@@ -98,8 +98,9 @@ function SubmittalList() {
     }),
     [showStagingZone]
   );
+  const submittalsList = useAppSelector((state) => state.submittals.list);
   const [isResizing, setIsResizing] = useState(false);
-  const [rowData, setRowData] = useState<SubmittalLog[]>();
+  const [rowData, setRowData] = useState<SubmittalLog[]>(submittalsList);
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
@@ -136,7 +137,7 @@ function SubmittalList() {
       cellRenderer: IdLinkComponent,
       cellRendererParams: {
         link: "/submittals/details",
-        projectId      
+        projectId
       },
       cellClass(params) {
         return params.value === "" ? "idDefaultCellColor" : "idHoverColor";
