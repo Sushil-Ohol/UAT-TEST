@@ -82,9 +82,7 @@ function SubmittalListFilterComponent(props: FilterProps) {
                 size="middle"
                 className="newSubmittalBtn"
               >
-                {showFiterChips
-                  ? "Not Approved Submittals"
-                  : "Approved Submittals"}
+                {showFiterChips ? "Not Required Submittals" : "All Submittals"}
               </Button>
             </div>
             <div className="inner">

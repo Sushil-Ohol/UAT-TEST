@@ -36,7 +36,7 @@ function DiscussionList(props: DiscussionListProps) {
   );
   const rowId = selectedData[0]?.id.toString()
     ? selectedData[0]?.id.toString()
-    : null;
+    : "1000";
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
   React.useEffect(() => {
