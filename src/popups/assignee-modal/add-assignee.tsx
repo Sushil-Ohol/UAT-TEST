@@ -43,6 +43,7 @@ function AddAssigneeModal({
           role: "Project Manager"
         };
         onOkClick(data);
+        form.resetFields();
       } else {
         message.error("Assignee already exists for selected contractor");
       }

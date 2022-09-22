@@ -434,9 +434,9 @@ function SubmittalList() {
       immutableRowData = immutableRowData.map((oldItem) =>
         oldItem.id === newItem.id ? newItem : oldItem
       );
-      immutableRowData = immutableRowData
-        .map((oldItem) => (oldItem.id === newItem.id ? newItem : oldItem))
-        .filter((item) => item.status !== "Not required");
+      immutableRowData = immutableRowData.map((oldItem) =>
+        oldItem.id === newItem.id ? newItem : oldItem
+      );
       dispatch(setSubmittalList(immutableRowData));
     },
     [immutableRowData]
@@ -479,9 +479,9 @@ function SubmittalList() {
     const newItem = {
       id: id + 1,
       ...data,
-      notification: 0,
-      comments: 0,
-      revision: 0
+      notification: "",
+      comments: "",
+      revision: ""
     };
     newData.push(newItem);
     dispatch(setSubmittalList(newData));
@@ -559,9 +559,9 @@ function SubmittalList() {
     const newData = [...immutableRowData];
     const newItem = {
       ...data,
-      notification: 0,
-      comments: 0,
-      revision: 0
+      notification: "",
+      comments: "",
+      revision: ""
     };
     newData.push(newItem);
     dispatch(setSubmittalList(newData));
@@ -573,7 +573,7 @@ function SubmittalList() {
   const onRejectButtonClick = () => {
     if (showFiterChips) {
       const filter = {
-        status: { filterType: "set", values: ["Not Required"] }
+        status: { filterType: "set", values: ["Not required"] }
       };
       gridRef.current!.api.setFilterModel(filter);
       setShowFiterChips(false);

@@ -1,8 +1,8 @@
-import { DatePicker, Select, Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
+import { DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-log-create.css";
 
 export type SubmittalLog = {
@@ -80,28 +80,6 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
           maxLength={150}
         />
       </Form.Item>
-
-      <Form.Item name="status" label="Status">
-        <Select
-          className="select-box"
-          bordered={false}
-          placeholder="Select Status"
-        >
-          {DropDownData.StatusOptions.map(
-            (item) =>
-              item !== "All" && (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              )
-          )}
-        </Select>
-      </Form.Item>
-
-      <Form.Item name="dueDate" label="Due Date">
-        <DatePicker format={DATE_FORMAT_MMDDYYY} className="drawerDatePicker" />
-      </Form.Item>
-
       <section className="mt-2">
         <div id="outerBox">
           <div className="innerBox">
