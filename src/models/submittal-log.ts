@@ -1,5 +1,10 @@
 import { BaseResponse } from "./base";
 
+export type DependsOn = {
+  submittalId: string;
+  submittal: string;
+};
+
 export type SubmittalLog = {
   id: string;
   submittal: string;
@@ -11,7 +16,7 @@ export type SubmittalLog = {
   dueBy: string;
   governingDate: string;
   contractor: { name: string; email: string };
-  dependsOn: string;
+  dependsOn: DependsOn[];
   assigned: { assignedTo: string; destination: string };
 };
 export type SubmittalListResponse = BaseResponse & {
