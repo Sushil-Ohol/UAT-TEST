@@ -370,7 +370,6 @@ function SubmittalList() {
       const { payload } = actionResult;
       if (payload.success) {
         immutableRowData = payload.response;
-        // setRowData(immutableRowData);
       }
     }
   };
@@ -435,12 +434,10 @@ function SubmittalList() {
       immutableRowData = immutableRowData.map((oldItem) =>
         oldItem.id === newItem.id ? newItem : oldItem
       );
-      dispatch(updateSubmittal(immutableRowData));
       immutableRowData = immutableRowData
         .map((oldItem) => (oldItem.id === newItem.id ? newItem : oldItem))
         .filter((item) => item.status !== "Not required");
-      gridRef.current!.api.setRowData(immutableRowData);
-      gridRef.current!.api.refreshCells({ force: true });
+      dispatch(updateSubmittal(immutableRowData));
     },
     [immutableRowData]
   );
@@ -487,7 +484,7 @@ function SubmittalList() {
       revision: 0
     };
     newData.push(newItem);
-    // setRowData(newData);
+    dispatch(updateSubmittal(newData));
     immutableRowData = newData;
     message.success("New submittals added successfully");
     setShowNewDrawer(false);
@@ -567,7 +564,7 @@ function SubmittalList() {
       revision: 0
     };
     newData.push(newItem);
-    // setRowData(newData);
+    dispatch(updateSubmittal(newData));
     immutableRowData = newData;
     message.success("submittal log added successfully");
     setShowLogDrawer(false);
@@ -576,7 +573,7 @@ function SubmittalList() {
   const onRejectButtonClick = () => {
     if (showFiterChips) {
       const filter = {
-        status: { filterType: "set", values: ["Rejected"] }
+        status: { filterType: "set", values: ["Not Required"] }
       };
       gridRef.current!.api.setFilterModel(filter);
       setShowFiterChips(false);

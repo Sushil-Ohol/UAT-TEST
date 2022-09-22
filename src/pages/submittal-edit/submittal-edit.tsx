@@ -114,7 +114,11 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   const showAssigneeModal = () => {
-    if (contractorSelected !== "") setIsAssigneeModalOpen(true);
+    if (contractorSelected !== "") {
+      setIsAssigneeModalOpen(true);
+    } else {
+      message.info("Please select company first");
+    }
   };
 
   const handleAssigneeCancel = () => {
