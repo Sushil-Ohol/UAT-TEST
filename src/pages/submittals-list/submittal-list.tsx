@@ -373,6 +373,7 @@ function SubmittalList() {
         immutableRowData = payload.response;
       }
     }
+    gridRef.current!.api.onFilterChanged();
   };
 
   React.useEffect(() => {
@@ -427,6 +428,16 @@ function SubmittalList() {
     return (params: GetRowIdParams) => params.data.id;
   }, []);
 
+  const isExternalFilterPresent = () => {
+    return true;
+  };
+  const doesExternalFilterPass = (node: any) => {
+    if (showFiterChips === true) {
+      return node.data.status !== "Not required";
+    }
+    return node.data.status === "Not required";
+  };
+
   const onCellEditRequest = useCallback(
     (event: CellEditRequestEvent) => {
       const { data } = event;
@@ -440,6 +451,7 @@ function SubmittalList() {
         oldItem.id === newItem.id ? newItem : oldItem
       );
       dispatch(setSubmittalList(immutableRowData));
+      gridRef.current!.api.onFilterChanged();
     },
     [immutableRowData]
   );
@@ -575,11 +587,11 @@ function SubmittalList() {
       const filter = {
         status: { filterType: "set", values: ["Not required"] }
       };
-      gridRef.current!.api.setFilterModel(filter);
       setShowFiterChips(false);
+      gridRef.current!.api.setFilterModel(filter);
     } else {
-      gridRef.current!.api.setFilterModel({});
       setShowFiterChips(true);
+      gridRef.current!.api.setFilterModel({});
     }
   };
   return (
@@ -620,6 +632,8 @@ function SubmittalList() {
           masterDetail
           detailRowAutoHeight
           detailCellRenderer={SubmittalSourceDetailRenderer}
+          isExternalFilterPresent={isExternalFilterPresent}
+          doesExternalFilterPass={doesExternalFilterPass}
         />
       </div>
       <SubmittalListBottomBar
