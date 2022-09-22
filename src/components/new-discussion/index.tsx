@@ -48,7 +48,7 @@ function NewDiscussionPopup({
         <>
           <div className="selected-topic-name">
             <div className="topic-title">
-              Discussio Name :
+              Discussion Name :
               <div className="topic-heading">
                 {selectedData[0].id}: {selectedData[0].submittal}
               </div>
