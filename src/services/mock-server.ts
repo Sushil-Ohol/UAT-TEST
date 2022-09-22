@@ -104,7 +104,7 @@ export function mockUpClient(client: AxiosInstance) {
       (data: any) => data.topicId === config.params.topicId
     );
     return [
-      200,
+      discussion === undefined ? 204 : 200,
       {
         success: true,
         response: discussion

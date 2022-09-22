@@ -51,7 +51,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
     if (discussionId !== "" && !documentsData[discussionId]) {
       loadDiscussionDetails();
     }
-  }, []);
+  }, [discussionId]);
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

@@ -69,9 +69,10 @@ const { Title } = Typography;
 let immutableRowData: any[];
 
 const dependsOnCellRenderer = (props: any) => {
+  const values = props.value.toString().split(",");
   return (
     <>
-      {props.value.map((val: any, index: any) => {
+      {values.map((val: any, index: any) => {
         return (
           <Tooltip
             title={<DependsOnToolTip value={val.submittalId} api={props.api} />}
@@ -464,9 +465,7 @@ function SubmittalList() {
             : newData[index].dueBy
       };
       newData[index] = newitem;
-      gridRef.current!.api.setRowData(
-        newData.filter((item) => item.status !== "Not required")
-      );
+      gridRef.current!.api.setRowData(newData);
     });
     immutableRowData = newData;
     message.success("Updated submittals sucessfully");
