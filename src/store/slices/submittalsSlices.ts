@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SubmittalListResponse, SubmittalLog } from "models/submittal-log";
 
 import * as api from "services/submittals-services";
+import { RootState } from ".";
 
 type SubmittalState = {
   projectId: string;
@@ -27,18 +28,23 @@ export const initialState: SubmittalState = {
     dueBy: "",
     governingDate: "",
     contractor: { name: "", email: "" },
-    dependsOn: "",
+    dependsOn: [],
     assigned: { assignedTo: "", destination: "" }
   }
 };
 
 export const getSubmittalList = createAsyncThunk(
   "submittal/list",
-  async (projectId: string) => {
-    const response = await api.GetSubmittals(projectId);
-    // if (response.remote === "success") {
-    const { data } = response;
-    return { ...data };
+  async (projectId: string, { getState }) => {
+    const { submittals, homeState } = getState() as RootState;
+    console.log(submittals.list);
+    if (submittals.list.length === 0 || homeState.projectId === "") {
+      const response = await api.GetSubmittals(projectId);
+      // if (response.remote === "success") {
+      const { data } = response;
+      return { ...data };
+    }
+    if (submittals.list.length > 0) return submittals.list;
   }
   // return rejectWithValue(response.error.errors);
   // }
@@ -56,6 +62,9 @@ const submittalSlice = createSlice({
       console.log(payload);
       const dataIndex = state.list.findIndex((data) => data.id === payload.id);
       state.list[dataIndex] = payload;
+          },
+    setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
+      state.list = payload;
     }
   },
   extraReducers: (builder) => {
@@ -66,7 +75,9 @@ const submittalSlice = createSlice({
       .addCase(
         getSubmittalList.fulfilled,
         (state, { payload }: PayloadAction<SubmittalListResponse>) => {
-          state.list = payload.response;
+          if (state.list.length === 0) {
+            state.list = payload.response;
+          }
         }
       );
   }
@@ -74,4 +85,5 @@ const submittalSlice = createSlice({
 
 export default submittalSlice.reducer;
 
-export const { reset, setLoading, updateSubmittal } = submittalSlice.actions;
+export const { reset, setLoading, updateSubmittal, setSubmittalList } =
+  submittalSlice.actions;
