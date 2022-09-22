@@ -364,7 +364,7 @@ function SubmittalList() {
     };
   }, []);
 
-  const loadList = async () => {
+  const loadSubmittals = async () => {
     const actionResult = await dispatch(getSubmittalList(projectId));
     if (isFulfilled(actionResult)) {
       const { payload } = actionResult;
@@ -375,8 +375,9 @@ function SubmittalList() {
   };
 
   React.useEffect(() => {
-    // todo - here we will fetch the actual project id from route params and we will load details
-    if (rowData.length === 0) loadList();
+    if (submittalState.list.length === 0) {
+      loadSubmittals();
+    }
   }, []);
 
   React.useEffect(() => {}, [immutableRowData]);

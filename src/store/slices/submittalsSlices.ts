@@ -102,12 +102,10 @@ const submittalSlice = createSlice({
       .addCase(
         getSubmittalList.fulfilled,
         (state, { payload }: PayloadAction<SubmittalListResponse>) => {
+          state.list = payload.response;
           DropDownData.ContractorOptions.forEach((element: any) => {
             state.assignees[element.name] = element.assignees;
           });
-          if (state.list.length === 0) {
-            state.list = payload.response;
-          }
         }
       );
   }
