@@ -18,6 +18,7 @@ type SubmittalState = {
   loading: boolean;
   contractors: Contractor[];
   assignees: ListWithDictionary<Assignee>;
+  selectedSubmittalLog: SubmittalLog;
 };
 
 export const initialState: SubmittalState = {
@@ -25,16 +26,36 @@ export const initialState: SubmittalState = {
   list: [],
   loading: false,
   contractors: DropDownData.ContractorOptions,
-  assignees: {}
+  assignees: {},
+  selectedSubmittalLog: {
+    id: "",
+    submittal: "",
+    description: "",
+    notification: 0,
+    comments: 0,
+    revision: 0,
+    status: "",
+    dueBy: "",
+    governingDate: "",
+    contractor: { name: "", email: "" },
+    dependsOn: [],
+    assigned: { assignedTo: "", destination: "" }
+  }
 };
 
 export const getSubmittalList = createAsyncThunk(
   "submittal/list",
   async (projectId: string) => {
+    // const { submittals, homeState } = getState() as RootState;
+    // console.log(submittals.list);
+    // if (submittals.list.length === 0 || homeState.projectId === "") {
     const response = await api.GetSubmittals(projectId);
+    // if (response.remote === "success") {
     const { data } = response;
     return { ...data };
   }
+  // if (submittals.list.length > 0) return submittals.list;
+  // }
 );
 
 const submittalSlice = createSlice({
@@ -45,7 +66,11 @@ const submittalSlice = createSlice({
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
     },
-    updateSubmittal: (state, { payload }: PayloadAction<any>) => {
+    updateSubmittal: (state, { payload }: PayloadAction<SubmittalLog>) => {
+      const dataIndex = state.list.findIndex((data) => data.id === payload.id);
+      state.list[dataIndex] = payload;
+    },
+    setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
       state.list = payload;
     },
     newContractor: (state, { payload }: PayloadAction<any>) => {
@@ -77,10 +102,10 @@ const submittalSlice = createSlice({
       .addCase(
         getSubmittalList.fulfilled,
         (state, { payload }: PayloadAction<SubmittalListResponse>) => {
+          state.list = payload.response;
           DropDownData.ContractorOptions.forEach((element: any) => {
             state.assignees[element.name] = element.assignees;
           });
-          state.list = payload.response;
         }
       );
   }
@@ -91,6 +116,7 @@ export default submittalSlice.reducer;
 export const {
   reset,
   setLoading,
+  setSubmittalList,
   updateSubmittal,
   updateContractorState,
   newContractor,

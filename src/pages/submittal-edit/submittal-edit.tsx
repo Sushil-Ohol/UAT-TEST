@@ -26,32 +26,53 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const submittalState = useAppSelector((state: RootState) => state.submittals);
 
+  const [contractorSelected, setContractorSelected] = useState<string>(
+    submittalState.contractors[0].name
+  );
+
   const [assigneeData, setAssigneeData] = useState<any>(
-    submittalState.assignees || []
+    submittalState.assignees[contractorSelected].list
   );
 
   const contractorData = submittalState.contractors;
+
+  // const onApplyButtonClick = () => {
+  //   form.validateFields().then((values) => {
+  //     const selectedContractor: any = contractorData.filter(
+  //       (contractor: any) => contractor.name === values.contractor
+  //     );
+  //     const assigned: any = selectedContractor[0].assignees.filter(
+  //       (contractor: any) => contractor.name === values.assigned
+  //     );
+
+  //     const data = {
+  //       contractor: selectedContractor[0],
+  //       status: values.status,
+  //       assigned: assigned[0],
+  //       dueBy: values.dueBy
+  //     };
+  //     onApplyClick(data);
+  //   });
+  // };
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
       const selectedContractor: any = contractorData.filter(
         (contractor: any) => contractor.name === values.contractor
       );
-      const assigned: any = selectedContractor[0].assignees.filter(
+      const assigned: any = selectedContractor[0]?.assignees.filter(
         (contractor: any) => contractor.name === values.assigned
       );
-
       const data = {
         contractor: selectedContractor[0],
         status: values.status,
-        assigned: assigned[0],
+        assigned: assigned ? assigned[0] : "",
         dueBy: values.dueBy
       };
+
       onApplyClick(data);
     });
   };
-
-  const [contractorSelected, setContractorSelected] = useState<string>("");
 
   const [optionArray, setOptionArray] = useState<any>([]);
 
@@ -81,9 +102,8 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       .reduce((obj, key) => {
         return submittalState.assignees[key];
       }, {});
-
-    setAssigneeData(Object.values(assignedData));
     setContractorSelected(contractor);
+    setAssigneeData(Object.values(assignedData));
   };
 
   const [isContractorModalOpen, setIsContractorModalOpen] =
@@ -101,6 +121,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const addNewAssignee = (data: any) => {
     const payload = { contractorName: contractorSelected, assignee: data };
     dispatch(newAssignee(payload));
+    onChangeContractor(contractorSelected);
     message.success("Assignee Added Successfully");
     setIsAssigneeModalOpen(false);
   };

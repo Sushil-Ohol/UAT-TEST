@@ -12,7 +12,6 @@
   display: flex;
   float: right;
   flex-wrap: wrap;
-  margin-right: 40px;
 }
 
 .reload {
@@ -66,7 +65,7 @@
 
 .HedingColor {
   font-weight: 500;
-  color: gray;
+  color: #00000080;
   font-size: 12px;
   opacity: 0.5;
 }
@@ -96,8 +95,13 @@
 }
 
 .TabsClass {
-  font-weight: 600;
+  font-weight: 500;
   color: black
+}
+
+.TabsClass .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: black;
+  font-weight: bold;
 }
 
 .subDetailsLabel {

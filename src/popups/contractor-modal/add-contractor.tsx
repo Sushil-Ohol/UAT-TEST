@@ -42,6 +42,7 @@ function AddContractorModal({
           ]
         };
         onOkClick(contractorData);
+        form.resetFields();
       } else {
         message.error("Contractor already exists");
       }

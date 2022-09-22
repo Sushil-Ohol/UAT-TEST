@@ -1,0 +1,397 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
+  //   ArrowRightOutlined,
+  ExclamationCircleOutlined
+  //   ReloadOutlined
+} from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  DatePicker,
+  Row,
+  Select,
+  Space
+} from "antd";
+import TextArea from "antd/lib/input/TextArea";
+// import React from "react";
+import "./submittal-details.css";
+import { DependsOn, SubmittalLog } from "models/submittal-log";
+import moment from "moment";
+import { useAppSelector } from "store";
+import { RootState } from "store/slices";
+import { ClearIcon, PlusIcon } from "components/svg-icons";
+import { DropDownData } from "../../constants";
+import SearchDropdown from "./search-dropdown";
+
+const { Option } = Select;
+
+function SubmitalDetails(props: {
+  submittalData: SubmittalLog;
+  onChangeSubmittalData: (data: SubmittalLog) => void;
+}) {
+  const { submittalData, onChangeSubmittalData } = props;
+  const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
+  const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
+  const submittalsList = useAppSelector(
+    (state: RootState) => state.submittals.list
+  );
+  const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
+    (data: SubmittalLog) => ({
+      submittalId: data.id,
+      submittal: data.submittal
+    })
+  );
+  const onSubmittalSearch = (id: any) => {
+    const selectedData = onlySubmittalsTitleId.find(
+      (data) => data.submittalId === id
+    );
+    setSelectedDepends(selectedData);
+  };
+
+  const addDependent = () => {
+    setUpdatedData((prev) => {
+      return selectedDepends
+        ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
+        : { ...prev };
+    });
+  };
+
+  const removeDependent = (id: string) => {
+    const updatedDependent = updatedData.dependsOn.filter(
+      (data) => data.submittalId !== id
+    );
+    setUpdatedData((prev) => {
+      return { ...prev, dependsOn: updatedDependent };
+    });
+  };
+
+  const onChangeContractor = (name: string) => {
+    const selectedContractor = DropDownData.ContractorOptions.find(
+      (data) => data.name === name
+    );
+
+    setUpdatedData((prev) => {
+      return {
+        ...prev,
+        contractor: selectedContractor || prev.contractor,
+        assigned: selectedContractor
+          ? { assignedTo: "", destination: "" }
+          : prev.assigned
+      };
+    });
+  };
+
+  const onChangeAssignee = (assignedTo: string) => {
+    const selectedAssignee = DropDownData.AssigneeOptions.find(
+      (data) => data.assignedTo === assignedTo
+    );
+
+    setUpdatedData((prev) => {
+      return {
+        ...prev,
+        assigned: selectedAssignee
+          ? {
+              assignedTo: selectedAssignee.assignedTo,
+              destination: selectedAssignee.destination
+            }
+          : prev.assigned
+      };
+    });
+  };
+
+  useEffect(() => {
+    onChangeSubmittalData(updatedData);
+  }, [updatedData]);
+  return (
+    <div style={{ height: "100%" }}>
+      <div
+        style={{
+          padding: "15px",
+          backgroundColor: "white",
+          position: "relative",
+          top: "0px"
+        }}
+      >
+        <Space direction="vertical" size="middle" style={{ display: "flex" }}>
+          <Row justify="space-between">
+            <Col span={4}>
+              <p className="HedingColor">STATUS</p>
+              <Select
+                className="selectStyle"
+                defaultValue={updatedData.status}
+                onChange={(data) =>
+                  setUpdatedData((prev) => {
+                    return { ...prev, status: data };
+                  })
+                }
+              >
+                {DropDownData.StatusOptions.map((data) => (
+                  <Option key={data}>{data}</Option>
+                ))}
+              </Select>
+            </Col>
+            <Col span={4}>
+              <div>
+                <p className="HedingColor" style={{ float: "left" }}>
+                  DUE BY
+                </p>
+                <p className="validationColor" style={{ float: "right" }}>
+                  {moment(updatedData.dueBy).fromNow()}
+                </p>
+              </div>
+
+              <DatePicker
+                style={{ width: "100%", backgroundColor: "#0000000D" }}
+                format="MM-DD-YYYY"
+                defaultValue={moment(updatedData.dueBy, "MM-DD-YYYY")}
+                onChange={(data) =>
+                  setUpdatedData((prev) => {
+                    return {
+                      ...prev,
+                      dueBy: data
+                        ? moment(data).format("MM-DD-YYYY")
+                        : prev.dueBy
+                    };
+                  })
+                }
+              />
+            </Col>
+            <Col span={4}>
+              <p className="HedingColor">CONTRACTOR</p>
+              <Select
+                className="selectStyle"
+                onChange={onChangeContractor}
+                showSearch
+                optionFilterProp="children"
+                defaultValue={updatedData.contractor.name}
+                filterOption={(input, option) =>
+                  (option!.children as unknown as string)
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+              >
+                {DropDownData.ContractorOptions.map((item: any) => (
+                  <Option key={item.name} value={item.name}>
+                    {item.name}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+            <Col span={4}>
+              <p className="HedingColor">ASSIGNED</p>
+              <Select
+                className="selectStyle"
+                onChange={onChangeAssignee}
+                showSearch
+                optionFilterProp="children"
+                value={updatedData.assigned.assignedTo}
+                filterOption={(input, option) =>
+                  (option!.children as unknown as string)
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+              >
+                {DropDownData.AssigneeOptions.filter(
+                  (data) => data.contractor === updatedData.contractor.name
+                ).map((item) => (
+                  <Option key={item.assignedTo} value={item.assignedTo}>
+                    {item.assignedTo}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+            <Col span={4}>
+              <div>
+                <p className="HedingColor" style={{ float: "left" }}>
+                  GOVERNING DATE
+                </p>
+                <p className="validationColor" style={{ float: "right" }}>
+                  {moment(updatedData.governingDate).fromNow()}
+                </p>
+              </div>
+
+              <DatePicker
+                style={{ width: "100%", backgroundColor: "#0000000D" }}
+                format="MM-DD-YYYY"
+                defaultValue={moment(updatedData.governingDate, "MM-DD-YYYY")}
+                onChange={(data) =>
+                  setUpdatedData((prev) => {
+                    return {
+                      ...prev,
+                      governingDate: data
+                        ? moment(data).format("MM-DD-YYYY")
+                        : prev.governingDate
+                    };
+                  })
+                }
+              />
+            </Col>
+          </Row>
+          <Row justify="space-between">
+            <Col span={14}>
+              <Row>
+                <Col span={24}>
+                  <p className="HedingColor">DISCRIPTION</p>
+                  <TextArea
+                    style={{ backgroundColor: "#0000000D" }}
+                    rows={3}
+                    placeholder="Fill the Discription"
+                    defaultValue={updatedData.description}
+                    maxLength={400}
+                    onChange={(data) =>
+                      setUpdatedData((prev) => {
+                        return { ...prev, description: data.target.value };
+                      })
+                    }
+                  />
+                </Col>
+                <Col span={24} style={{ marginTop: "15px" }}>
+                  <Row
+                    style={{
+                      margin: "10px 0",
+                      display: "flex",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Col span={4}>
+                      <p className="HedingColor">DEPENDS ON Block</p>
+                    </Col>
+                    <Col span={5} offset={14}>
+                      <SearchDropdown
+                        placeholder="Search"
+                        data={onlySubmittalsTitleId}
+                        onSelect={onSubmittalSearch}
+                      />
+                    </Col>
+                    <Col span={1}>
+                      <Button
+                        className="add-new-column-btn"
+                        onClick={addDependent}
+                      >
+                        <PlusIcon />
+                      </Button>
+                    </Col>
+                  </Row>
+                  <div
+                    style={{
+                      overflowY: "scroll",
+                      height: "250px",
+                      width: "100%"
+                    }}
+                  >
+                    {updatedData.dependsOn
+                      ? updatedData.dependsOn.map((data) => {
+                          return (
+                            <Row
+                              style={{
+                                padding: "4px 11px",
+                                border: "1px solid #00000033",
+                                margin: "10px 0"
+                              }}
+                            >
+                              <Col span={22} style={{ display: "flex" }}>
+                                <Space>
+                                  <span>{data.submittalId}</span>
+                                  <span>{data.submittal}</span>
+                                </Space>
+                              </Col>
+                              <Col
+                                span={1}
+                                offset={1}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "flex-end"
+                                }}
+                              >
+                                <Button
+                                  className="add-new-column-btn"
+                                  onClick={() =>
+                                    removeDependent(data.submittalId)
+                                  }
+                                >
+                                  <ClearIcon />
+                                </Button>
+                              </Col>
+                            </Row>
+                          );
+                        })
+                      : null}
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col span={9} offset={1}>
+              <div>
+                <p className="HedingColor" style={{ float: "left" }}>
+                  ATTACHMENTS{" "}
+                </p>
+                {/* <SearchableDropdown
+            placeholder="Search"
+            data={[{topicId:1001,topicName:"abc"}]}
+            onSelect={onSearchSelect}
+          /> */}
+              </div>
+              <div
+                style={{
+                  overflowY: "scroll",
+                  height: "100%",
+                  width: "100%"
+                }}
+              >
+                {/* <Input
+                  placeholder="Basic usage"
+                  style={{ border: "1px solid #00000033" }}
+                  defaultValue={updatedData.dependsOn}
+                  allowClear
+                /> */}
+              </div>
+            </Col>
+          </Row>
+        </Space>
+      </div>
+
+      {/* <div style={{ height: "60px" }} /> */}
+      <div
+        style={{
+          // padding: "10px",
+          // backgroundColor: "white",
+          position: "relative",
+          bottom: "0px"
+        }}
+      >
+        <Row
+          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+          className="rowActionItems"
+        />
+
+        <Card className="actionItemCard">
+          <section>
+            <ExclamationCircleOutlined className="SDExcCircleOutlined" />
+            &nbsp;
+            <span className="subDetailsAction">Action items</span>
+          </section>
+          <section>
+            <Checkbox className="actionItemsCheckBox">
+              You Recevied 2 new discussion
+            </Checkbox>
+            <br />
+            <Checkbox className="actionItemsCheckBox">
+              This Submittal Recived 3 New Submissions
+            </Checkbox>
+            <br />
+            <Checkbox className="actionItemsCheckBox">
+              This Submittal overdue by 20 days
+            </Checkbox>
+            <br />
+          </section>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+export default SubmitalDetails;

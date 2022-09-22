@@ -2,8 +2,13 @@ import { DatePicker, Select, Form, Input, Button } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
+import { RootState } from "store/slices";
+import { useAppSelector } from "store";
+import { useState } from "react";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-create.css";
+
+const { Option } = Select;
 
 export type NewSubmittalLog = {
   onApplyClick: any;
@@ -14,13 +19,20 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
   const { onApplyClick, onCancelClick } = props;
   const [form] = useForm();
 
+  const submittalState = useAppSelector((state: RootState) => state.submittals);
+
+  const [assigneeData, setAssigneeData] = useState<any>(
+    submittalState.assignees || []
+  );
+
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-      const selectedContractor = DropDownData.ContractorOptions.filter(
-        (contractor) => contractor.name === values.contractor
+      const selectedContractor: any = submittalState.contractors.filter(
+        (contractor: any) => contractor.name === values.contractor
       );
-      const assigned = DropDownData.AssigneeOptions.filter(
-        (assignee) => assignee.assignedTo === values.assignee
+
+      const assigned: any = selectedContractor[0].assignees.filter(
+        (assignee: any) => assignee.name === values.assignee
       );
 
       const data = {
@@ -37,6 +49,16 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
       };
       onApplyClick(data);
     });
+  };
+
+  const onChangeContractor = (contractor: string) => {
+    const assignedData = Object.keys(submittalState.assignees)
+      .filter((key) => key.includes(contractor))
+      .reduce((obj, key) => {
+        return submittalState.assignees[key];
+      }, {});
+
+    setAssigneeData(Object.values(assignedData));
   };
 
   return (
@@ -85,17 +107,18 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
 
       <Form.Item name="contractor" label="Contractor">
         <Select
+          onChange={onChangeContractor}
           className="select-box"
           bordered={false}
           placeholder="Select Contractor"
         >
-          {DropDownData.ContractorOptions.filter((x) => x.name !== "All").map(
-            (item) => (
+          {submittalState.contractors
+            .filter((x) => x.name !== "All")
+            .map((item) => (
               <Select.Option key={item.name} value={item.name}>
                 {item.name}
               </Select.Option>
-            )
-          )}
+            ))}
         </Select>
       </Form.Item>
 
@@ -105,11 +128,14 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
           bordered={false}
           placeholder="Select Assignee"
         >
-          {DropDownData.AssigneeOptions.map((item) => (
-            <Select.Option key={item.assignedTo} value={item.assignedTo}>
-              {item.assignedTo}
-            </Select.Option>
-          ))}
+          {assigneeData?.length > 0 &&
+            assigneeData
+              .filter((x: any) => x.assignedTo !== "All")
+              .map((item: any) => (
+                <Option key={item.name} value={item.name}>
+                  {item.name}
+                </Option>
+              ))}
         </Select>
       </Form.Item>
 
