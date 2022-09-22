@@ -26,13 +26,17 @@ function SubmittalDetailspage(props: any) {
   const { Paragraph } = Typography;
   const dispatch = useAppDispatch();
   const goToSubmittalPage = () => {
-    history.push(`/project/details/${location.state.projectId}/submittals`);
+    history.goBack();
   };
 
   useEffect(() => {
     console.log(updatedData);
     dispatch(updateSubmittal(updatedData));
   }, [updatedData]);
+
+  useEffect(() => {
+    setUpdatedData((prev) => ({ ...prev, submittal: customIconStr }));
+  }, [customIconStr]);
 
   const onChangeSubmittalData = (data: SubmittalLog) => {
     console.log(data);
@@ -72,7 +76,7 @@ function SubmittalDetailspage(props: any) {
                     editable={{
                       icon: <EditFilled color="black" />,
                       tooltip: "",
-                      onChange: setCustomIconStr
+                      onChange: (e) => setCustomIconStr(e)
                     }}
                   >
                     {customIconStr}
