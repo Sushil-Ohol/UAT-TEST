@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-param-reassign */
 
@@ -10,6 +11,7 @@ import {
   DiscussionDetailsResponse
 } from "models/discussion";
 import * as api from "services/staging-zone-service";
+import { RootState } from "./index";
 
 type StagingZoneState = {
   discussionList: Discussion[];
@@ -33,8 +35,21 @@ export const GetDiscussions = createAsyncThunk("discussion/list", async () => {
 
 export const GetDiscussionDetails = createAsyncThunk(
   "discussion/details",
-  async (topicId: string) => {
+  async (topicId: string, { getState }) => {
     const response = await api.GetDiscussionDetails(topicId);
+    const { stagingZone } = getState() as RootState;
+    if (response.status === 204) {
+      const newTopic = stagingZone.discussionList.find((item) => item.topicId);
+      const newTopiCOnj: Discussion = {
+        topicId,
+        topicName: newTopic ? newTopic.topicName : "",
+        chats: [],
+        docs: [],
+        unreadCount: 0,
+        documentCount: 0
+      };
+      return { response: newTopiCOnj };
+    }
     const { data } = response;
     return { ...data };
   }
@@ -72,27 +87,11 @@ const stagingZoneSlice = createSlice({
             state.discussions[payload.response.topicId] = {
               list: payload.response.chats ? payload.response.chats : []
             };
-          } else if (
-            payload.response.chats &&
-            payload.response.chats?.length > 0
-          ) {
-            state.discussions[payload.response.topicId].list = [
-              ...state.discussions[payload.response.topicId].list,
-              ...payload.response.chats
-            ];
           }
           if (!state.documents[payload.response.topicId]) {
             state.documents[payload.response.topicId] = {
               list: payload.response.docs ? payload.response.docs : []
             };
-          } else if (
-            payload.response.docs &&
-            payload.response.docs?.length > 0
-          ) {
-            state.documents[payload.response.topicId].list = [
-              ...state.documents[payload.response.topicId].list,
-              ...payload.response.docs
-            ];
           }
         }
       );

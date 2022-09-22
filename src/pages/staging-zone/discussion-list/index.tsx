@@ -24,12 +24,9 @@ export type DiscussionListProps = {
 function DiscussionList(props: DiscussionListProps) {
   const { className, onClick, selectedData } = props;
   const dispatch = useAppDispatch();
-  const rowId = selectedData[0]?.id.toString()
-    ? selectedData[0]?.id.toString()
-    : "1000";
+
   const bottomRef = useRef<any>();
   const [showNewConPopup, setShowNewConPopup] = useState<boolean>(false);
-  const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
   const loadList = async () => {
     await dispatch(GetDiscussions());
@@ -37,6 +34,11 @@ function DiscussionList(props: DiscussionListProps) {
   const data = useSelector(
     (state: RootState) => state.stagingZone.discussionList
   );
+  const rowId = selectedData[0]?.id.toString()
+    ? selectedData[0]?.id.toString()
+    : "1000";
+  const [selectedTopicId, setSelectedTopicId] = useState(rowId);
+
   React.useEffect(() => {
     loadList();
     onClick(rowId);
@@ -55,8 +57,7 @@ function DiscussionList(props: DiscussionListProps) {
   };
 
   const onSearchSelectClick = (id: string) => {
-    onClick(id);
-    setSelectedTopicId(id);
+    onDiscussionClick(id);
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -68,9 +69,9 @@ function DiscussionList(props: DiscussionListProps) {
     if (existDiscussion) {
       message.error("Topic name exists, please enter a unique name.");
     } else {
-      const newTopicId = data.length + 1;
+      const newTopicId = (data.length + 1000).toString();
       const newDiscussion = {
-        topicId: newTopicId.toString(),
+        topicId: newTopicId,
         topicName,
         unreadCount: 0,
         documentCount: 0,
@@ -79,8 +80,8 @@ function DiscussionList(props: DiscussionListProps) {
         recordId: selectedData.length === 1 ? selectedData[0].id : ""
       };
       dispatch(addNewDiscussion(newDiscussion));
-      onClick(+newDiscussion.topicId + 1000);
-      setSelectedTopicId(newDiscussion.topicId.toString());
+      setSelectedTopicId(newTopicId);
+      onDiscussionClick(newTopicId);
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -141,7 +142,6 @@ function DiscussionList(props: DiscussionListProps) {
             selectedData={selectedData}
             onAddHandle={onAddHandle}
             onCancelClickHandle={onCancelClickHandle}
-            linkType="Submittal"
           />
         }
         dataSource={data}

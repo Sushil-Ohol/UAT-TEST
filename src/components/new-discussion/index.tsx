@@ -10,7 +10,6 @@ export type NewDiscussionProps = {
   addBtnClick: any;
   onCancel: any;
   selectedData: any;
-  linkType: string;
 };
 
 function NewDiscussionPopup({
@@ -21,8 +20,7 @@ function NewDiscussionPopup({
   onCancel,
   title,
   addBtnText,
-  modelContent,
-  linkType
+  modelContent
 }: NewDiscussionProps) {
   const [form] = Form.useForm<{ topicName: string }>();
   form.resetFields();
@@ -50,7 +48,7 @@ function NewDiscussionPopup({
         <>
           <div className="selected-topic-name">
             <div className="topic-title">
-              {linkType} :{" "}
+              Discussio Name :
               <div className="topic-heading">
                 {selectedData[0].id}: {selectedData[0].submittal}
               </div>

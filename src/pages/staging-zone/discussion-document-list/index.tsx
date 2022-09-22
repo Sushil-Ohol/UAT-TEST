@@ -22,12 +22,10 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
   }
   useEffect(() => {
     setSelectedDoc(selectedDocument);
-  }, [selectedDocument]);
+  }, [selectedDocument, selectedDiscussion]);
   return (
     <>
       <h4>
-        {" "}
-        {selectedDoc}
         Document (
         {selectedDiscussion !== null &&
           documents[selectedDiscussion?.topicId]?.list.length}
