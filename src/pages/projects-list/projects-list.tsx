@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* Project List Page Component */
 
-import React, { useState } from "react";
+import React from "react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { Project } from "models/project";
@@ -19,7 +19,6 @@ function ProjectList() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const allProjects = useSelector((state: RootState) => state.projects.list);
-  const [projects, setProjects] = useState<Project[]>(allProjects);
   const loadList = async () => {
     await dispatch(getProjectList());
   };
@@ -30,15 +29,6 @@ function ProjectList() {
     }
   }, []);
 
-  React.useEffect(() => {
-    const newProject: Project = {
-      id: "0",
-      description: "New project",
-      name: " Create New Project"
-    };
-    setProjects([...allProjects, newProject]);
-  }, [allProjects]);
-
   return (
     <div style={{ height: "60vh" }}>
       <List
@@ -46,7 +36,7 @@ function ProjectList() {
           column: 3
         }}
         style={{ margin: "15px" }}
-        dataSource={projects}
+        dataSource={allProjects}
         renderItem={(item: Project) => (
           <List.Item style={{ margin: "15px" }}>
             <Card

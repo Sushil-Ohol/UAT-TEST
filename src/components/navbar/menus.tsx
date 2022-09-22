@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Menu, MenuProps } from "antd";
 import "./navbar.css";
-import { UserIcon } from "../svg-icons/index";
 
 function Menus(props: any) {
   const { projectId } = props;
@@ -58,8 +57,7 @@ function Menus(props: any) {
         </a>
       ),
       key: "5"
-    },
-    { label: <UserIcon />, key: "6" }
+    }
   ];
 
   const [current, setCurrent] = useState("");
