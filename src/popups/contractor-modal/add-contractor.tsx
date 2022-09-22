@@ -8,17 +8,13 @@ interface AddContractorModalProps {
   contractorOptions: any;
   show: boolean;
   onCancelClick: any;
-  saveAssignee: Function;
-  assigneeOptions: any;
 }
 
 function AddContractorModal({
   contractorOptions,
   onOkClick,
   show,
-  onCancelClick,
-  saveAssignee,
-  assigneeOptions
+  onCancelClick
 }: AddContractorModalProps) {
   const [form] = useForm();
 
@@ -35,21 +31,17 @@ function AddContractorModal({
   const handleContractorOk = () => {
     form.validateFields().then((values) => {
       if (!isContractorExists(values.companyName)) {
-        const newContractorData = [...contractorOptions];
         const contractorData = {
           name: values.companyName,
-          email: values.emailId
+          email: values.emailId,
+          assignees: [
+            {
+              name: values.userName,
+              role: "Project Manager"
+            }
+          ]
         };
-        newContractorData.push(contractorData);
-        onOkClick(newContractorData);
-        const newAssigneeData = [...assigneeOptions];
-        const assigneeData = {
-          assignedTo: values.userName,
-          destination: "",
-          contractor: values.companyName
-        };
-        newAssigneeData.push(assigneeData);
-        saveAssignee(newAssigneeData);
+        onOkClick(contractorData);
       } else {
         message.error("Contractor already exists");
       }

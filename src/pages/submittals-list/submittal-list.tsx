@@ -15,13 +15,17 @@ import {
   CellEditRequestEvent,
   ColDef,
   GetRowIdFunc,
-  GetRowIdParams
+  GetRowIdParams,
+  ICellEditorParams
 } from "ag-grid-community";
 import "./submittal-list.css";
 import moment from "moment";
 import { Buttons } from "components/widgets";
-import { useAppDispatch } from "store";
-import { getSubmittalList } from "store/slices/submittalsSlices";
+import { useAppDispatch, useAppSelector } from "store";
+import {
+  getSubmittalList,
+  updateSubmittal
+} from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create";
 import SubmittalLogCreateComponent from "pages/submittal-log-create";
 import { SubmittalLog } from "models/submittal-log";
@@ -44,8 +48,9 @@ import {
   assignedCellRenderer,
   assignedEditCellRenderer
 } from "components/cell-renders";
+import { RootState } from "store/slices";
 import DropdownOption from "components/cell-editor/SubmittalStatusDropdownCtrl";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
+import { DATE_FORMAT_MMDDYYY } from "../../constants";
 import {
   ChatIcon,
   DocAttachIcon,
@@ -100,11 +105,14 @@ function SubmittalList() {
     [showStagingZone]
   );
   const [isResizing, setIsResizing] = useState(false);
-  const [rowData, setRowData] = useState<SubmittalLog[]>();
+  // const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
   const [customDateFilter, setCustomDateFilter] = useState<any>({});
+
+  const submittalState = useAppSelector((state: RootState) => state.submittals);
+
   const [showFiterChips, setShowFiterChips] = useState<boolean>(true);
   const onNewColumnAddition = (object: any) => {
     const columnDefsCopy = columnDefs;
@@ -121,6 +129,19 @@ function SubmittalList() {
       setHeight(50);
     }
     setIsDocumentView(value);
+  };
+
+  const contractorEditorParams = (params: ICellEditorParams) => {
+    const { contractor } = params.data;
+    const assignee = submittalState.contractors
+      .map((item) => {
+        return item.name === contractor.name && item.assignees;
+      })
+      .filter(Boolean);
+    return {
+      cellRenderer: assignedEditCellRenderer,
+      values: assignee[0] || []
+    };
   };
 
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
@@ -243,7 +264,7 @@ function SubmittalList() {
       cellEditor: "agRichSelectCellEditor",
       cellEditorParams: {
         cellRenderer: contractorEditCellRenderer,
-        values: DropDownData.ContractorOptions,
+        values: submittalState.contractors,
         cellHeight: 20
       },
       cellRenderer: contractorCellRenderer,
@@ -276,11 +297,7 @@ function SubmittalList() {
       minWidth: 100,
       autoHeight: true,
       cellEditorPopup: true,
-      cellEditorParams: {
-        cellRenderer: assignedEditCellRenderer,
-        values: DropDownData.AssigneeOptions,
-        cellHeight: 20
-      },
+      cellEditorParams: contractorEditorParams,
       cellRenderer: assignedCellRenderer,
       keyCreator: (contractor) => {
         return contractor.value.assignedTo;
@@ -353,7 +370,6 @@ function SubmittalList() {
       const { payload } = actionResult;
       if (payload.success) {
         immutableRowData = payload.response;
-        setRowData(immutableRowData);
       }
     }
   };
@@ -415,11 +431,13 @@ function SubmittalList() {
       const { field } = event.colDef;
       const newItem = { ...data };
       newItem[field!] = event.newValue;
+      immutableRowData = immutableRowData.map((oldItem) =>
+        oldItem.id === newItem.id ? newItem : oldItem
+      );
       immutableRowData = immutableRowData
         .map((oldItem) => (oldItem.id === newItem.id ? newItem : oldItem))
         .filter((item) => item.status !== "Not required");
-      gridRef.current!.api.setRowData(immutableRowData);
-      gridRef.current!.api.refreshCells({ force: true });
+      dispatch(updateSubmittal(immutableRowData));
     },
     [immutableRowData]
   );
@@ -466,7 +484,7 @@ function SubmittalList() {
       revision: 0
     };
     newData.push(newItem);
-    setRowData(newData);
+    dispatch(updateSubmittal(newData));
     immutableRowData = newData;
     message.success("New submittals added successfully");
     setShowNewDrawer(false);
@@ -546,7 +564,7 @@ function SubmittalList() {
       revision: 0
     };
     newData.push(newItem);
-    setRowData(newData);
+    dispatch(updateSubmittal(newData));
     immutableRowData = newData;
     message.success("submittal log added successfully");
     setShowLogDrawer(false);
@@ -555,7 +573,7 @@ function SubmittalList() {
   const onRejectButtonClick = () => {
     if (showFiterChips) {
       const filter = {
-        status: { filterType: "set", values: ["Rejected"] }
+        status: { filterType: "set", values: ["Not Required"] }
       };
       gridRef.current!.api.setFilterModel(filter);
       setShowFiterChips(false);
@@ -580,7 +598,7 @@ function SubmittalList() {
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact<SubmittalLog>
           ref={gridRef}
-          rowData={rowData}
+          rowData={submittalState.list}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}

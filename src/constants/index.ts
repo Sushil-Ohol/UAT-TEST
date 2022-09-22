@@ -40,11 +40,46 @@ export const hexagoanStyleScreen2 = {
   errorStyleClass: "icon-style-wrong-screen-second"
 };
 const ContractorOptions = [
-  { name: "ABC Construction", email: "john@abcconstuct.com" },
-  { name: "A Construction", email: "john@aconstuct.com" },
-  { name: "B Construction", email: "john@bconstuct.com" },
-  { name: "C Construction", email: "john@cconstuct.com" },
-  { name: "Architect company", email: "john@cconstuct.com" }
+  {
+    name: "ABC Construction",
+    email: "john@abcconstuct.com",
+    assignees: [
+      { name: "Luke", role: "Architect" },
+      { name: "James", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "A Construction",
+    email: "john@aconstuct.com",
+    assignees: [
+      { name: "John", role: "Architect" },
+      { name: "Maria", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "B Construction",
+    email: "john@bconstuct.com",
+    assignees: [
+      { name: "Lionel", role: "Architect" },
+      { name: "Ronaldo", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "C Construction",
+    email: "john@cconstuct.com",
+    assignees: [
+      { name: "Mark", role: "Architect" },
+      { name: "Roger", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "Architect Company",
+    email: "john@cconstuct.com",
+    assignees: [
+      { name: "Mark", role: "Architect" },
+      { name: "Roger", role: "Project Manager" }
+    ]
+  }
 ];
 const DependsOnOptions = ["All", "1079", "2098"];
 const PastDueOptions = ["Past due date", "Due today", "Next 3 days", "Custom"];

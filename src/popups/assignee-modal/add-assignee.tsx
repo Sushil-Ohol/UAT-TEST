@@ -22,11 +22,13 @@ function AddAssigneeModal({
 
   const isAssigneeExists = (assigneeUserName: string): boolean => {
     const filteredAssigneeData = assigneeOptions.filter(
-      (contractor: any) => contractor.contractor === selectedContractor
+      (contractor: any) => contractor.name === selectedContractor
     );
-    const data = filteredAssigneeData.filter(
-      (assignee: any) => assignee.assignedTo === assigneeUserName
+
+    const data = filteredAssigneeData[0].assignees.filter(
+      (assignee: any) => assignee.name === assigneeUserName
     );
+
     if (Object.keys(data).length > 0) {
       return true;
     }
@@ -36,14 +38,11 @@ function AddAssigneeModal({
   const handleAssigneeOk = () => {
     form.validateFields().then((values) => {
       if (!isAssigneeExists(values.assigneeUserName)) {
-        const newAssigneeData = [...assigneeOptions];
         const data = {
-          assignedTo: values.assigneeUserName,
-          destination: values.assigneeEmailId,
-          contractor: selectedContractor
+          name: values.assigneeUserName,
+          role: "Project Manager"
         };
-        newAssigneeData.push(data);
-        onOkClick(newAssigneeData);
+        onOkClick(data);
       } else {
         message.error("Assignee already exists for selected contractor");
       }
