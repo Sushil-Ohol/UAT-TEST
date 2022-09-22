@@ -97,7 +97,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
   return (
     <div className={className}>
       <div className="discussionDocs">
-        <div style={{ padding: "2px 1.5%", float: "left" }}>
+        <div style={{ padding: "1.5% 1.5%", float: "left" }}>
           Documents({totalDocs})
         </div>
         <Button className="importBtn" disabled={discussionId === ""}>
@@ -108,7 +108,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       {discussionId !== "" &&
         uploadedDate &&
         uploadedDate.map((messageDay) => (
-          <div key={messageDay}>
+          <div key={messageDay} style={{ paddingBottom: "10%" }}>
             <Divider style={{ color: "#0000007F" }}>{messageDay}</Divider>
             {filterByDate &&
               filterByDate[messageDay].map((data: ConversationDoc) => {

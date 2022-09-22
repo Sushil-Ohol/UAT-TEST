@@ -40,7 +40,7 @@ export const GetDiscussionDetails = createAsyncThunk(
     const { stagingZone } = getState() as RootState;
     if (response.status === 204) {
       const newTopic = stagingZone.discussionList.find((item) => item.topicId);
-      const newTopiCOnj: Discussion = {
+      const newTopicObj: Discussion = {
         topicId,
         topicName: newTopic ? newTopic.topicName : "",
         chats: [],
@@ -48,7 +48,7 @@ export const GetDiscussionDetails = createAsyncThunk(
         unreadCount: 0,
         documentCount: 0
       };
-      return { response: newTopiCOnj };
+      return { response: newTopicObj };
     }
     const { data } = response;
     return { ...data };

@@ -12,7 +12,7 @@
   padding: 2px;
   float: right;
   margin-right: 13px;
-  margin-top: 0px;
+  margin-top: 2px;
 }
 
 .currentUserFile {
@@ -52,10 +52,11 @@
 }
 
 .uploadFileDiv {
-  position: sticky;
+  position: fixed;
   bottom: 0px;
   background-color: #f7f6f4;
   padding: 11px 1.5%;
+  width: 32%;
 }
 .downloadIcon {
   float: right;

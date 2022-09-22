@@ -16,7 +16,8 @@ import {
   ColDef,
   GetRowIdFunc,
   GetRowIdParams,
-  ICellEditorParams
+  ICellEditorParams,
+  RowNode
 } from "ag-grid-community";
 import "./submittal-list.css";
 import moment from "moment";
@@ -68,6 +69,8 @@ const { Title } = Typography;
 
 let immutableRowData: any[];
 
+let filterType = "All";
+
 const dependsOnCellRenderer = (props: any) => {
   const values = props.value.toString().split(",");
   return (
@@ -84,6 +87,22 @@ const dependsOnCellRenderer = (props: any) => {
       })}
     </>
   );
+};
+
+const isExternalFilterPresent = () => {
+  return true;
+};
+
+const doesExternalFilterPass = (node: RowNode) => {
+  if (filterType === "All") {
+    return node.data.status !== "Not required";
+  }
+
+  if (filterType === "Rejected") {
+    return node.data.status === "Not required";
+  }
+
+  return true;
 };
 
 function SubmittalList() {
@@ -373,6 +392,7 @@ function SubmittalList() {
         immutableRowData = payload.response;
       }
     }
+    gridRef.current!.api.onFilterChanged();
   };
 
   React.useEffect(() => {
@@ -440,6 +460,7 @@ function SubmittalList() {
         oldItem.id === newItem.id ? newItem : oldItem
       );
       dispatch(setSubmittalList(immutableRowData));
+      gridRef.current!.api.onFilterChanged();
     },
     [immutableRowData]
   );
@@ -572,15 +593,14 @@ function SubmittalList() {
 
   const onRejectButtonClick = () => {
     if (showFiterChips) {
-      const filter = {
-        status: { filterType: "set", values: ["Not required"] }
-      };
-      gridRef.current!.api.setFilterModel(filter);
-      setShowFiterChips(false);
+      filterType = "Rejected";
     } else {
-      gridRef.current!.api.setFilterModel({});
-      setShowFiterChips(true);
+      filterType = "All";
     }
+
+    setShowFiterChips(!showFiterChips);
+
+    gridRef.current!.api.onFilterChanged();
   };
   return (
     <div className="a">
@@ -620,6 +640,8 @@ function SubmittalList() {
           masterDetail
           detailRowAutoHeight
           detailCellRenderer={SubmittalSourceDetailRenderer}
+          isExternalFilterPresent={isExternalFilterPresent}
+          doesExternalFilterPass={doesExternalFilterPass}
         />
       </div>
       <SubmittalListBottomBar
