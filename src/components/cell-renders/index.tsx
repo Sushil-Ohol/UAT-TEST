@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export function IdLinkComponent(props: any) {
   const { value, link, data, projectId } = props;
   return (
- <Link
+    <Link
       to={{
         pathname: link,
         state: { data, projectId }
