@@ -64,7 +64,6 @@ export const assignedCellRenderer = (props: any) => {
   return (
     <>
       <p className="colFirstValue">{props.value.assignedTo}</p>
-
       <p className="colSecondValue">{props.value.destination}</p>
     </>
   );
