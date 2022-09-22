@@ -4,6 +4,7 @@ import { PageHeader } from "antd";
 import { useAppDispatch, useAppSelector } from "store";
 import { useHistory } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
+import { setSubmittalList } from "store/slices/submittalsSlices";
 import { AppLogoIcon } from "components/svg-icons";
 import { slugToText } from "utils/stringutil";
 import Menus from "./menus";
@@ -32,6 +33,7 @@ function Nav() {
           }
           onBack={() => {
             dispatch(setProjectId(""));
+            dispatch(setSubmittalList([]));
             history.push("/projects");
           }}
           title={slugToText(projectId)}

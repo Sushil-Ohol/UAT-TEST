@@ -24,7 +24,7 @@ import { Buttons } from "components/widgets";
 import { useAppDispatch, useAppSelector } from "store";
 import {
   getSubmittalList,
-  updateSubmittal
+  setSubmittalList
 } from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create";
 import SubmittalLogCreateComponent from "pages/submittal-log-create";
@@ -69,16 +69,15 @@ const { Title } = Typography;
 let immutableRowData: any[];
 
 const dependsOnCellRenderer = (props: any) => {
-  const values = props.value.toString().split(",");
   return (
     <>
-      {values.map((val: any, index: any) => {
+      {props.value.map((val: any, index: any) => {
         return (
           <Tooltip
-            title={<DependsOnToolTip value={val.trim()} api={props.api} />}
+            title={<DependsOnToolTip value={val.submittalId} api={props.api} />}
           >
-            <span>{val}</span>
-            {values[index + 1] ? "," : ""}
+            <span>{val.submittalId}</span>
+            {props.value[index + 1] ? " , " : ""}
           </Tooltip>
         );
       })}
@@ -157,7 +156,8 @@ function SubmittalList() {
       editable: false,
       cellRenderer: IdLinkComponent,
       cellRendererParams: {
-        link: "/submittals/details"
+        link: "/submittals/details",
+        projectId
       },
       cellClass(params) {
         return params.value === "" ? "idDefaultCellColor" : "idHoverColor";
@@ -364,7 +364,7 @@ function SubmittalList() {
     };
   }, []);
 
-  const loadList = async () => {
+  const loadSubmittals = async () => {
     const actionResult = await dispatch(getSubmittalList(projectId));
     if (isFulfilled(actionResult)) {
       const { payload } = actionResult;
@@ -375,8 +375,9 @@ function SubmittalList() {
   };
 
   React.useEffect(() => {
-    // todo - here we will fetch the actual project id from route params and we will load details
-    loadList();
+    if (submittalState.list.length === 0) {
+      loadSubmittals();
+    }
   }, []);
 
   React.useEffect(() => {}, [immutableRowData]);
@@ -437,7 +438,7 @@ function SubmittalList() {
       immutableRowData = immutableRowData.map((oldItem) =>
         oldItem.id === newItem.id ? newItem : oldItem
       );
-      dispatch(updateSubmittal(immutableRowData));
+      dispatch(setSubmittalList(immutableRowData));
     },
     [immutableRowData]
   );
@@ -484,7 +485,7 @@ function SubmittalList() {
       revision: ""
     };
     newData.push(newItem);
-    dispatch(updateSubmittal(newData));
+    dispatch(setSubmittalList(newData));
     immutableRowData = newData;
     message.success("New submittals added successfully");
     setShowNewDrawer(false);
@@ -564,7 +565,7 @@ function SubmittalList() {
       revision: ""
     };
     newData.push(newItem);
-    dispatch(updateSubmittal(newData));
+    dispatch(setSubmittalList(newData));
     immutableRowData = newData;
     message.success("submittal log added successfully");
     setShowLogDrawer(false);

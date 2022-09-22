@@ -665,9 +665,14 @@ function ProjectCreate() {
                           <Col span={12} offset={6}>
                             <Button
                               type="link"
-                              href={`/project/details/${textToSlug(
-                                defaultValue.projectName
-                              )}/submittals`}
+                              onClick={() =>
+                                history.push(
+                                  `/project/details/${textToSlug(
+                                    defaultValue.projectName
+                                  )}/submittals`
+                                )
+                              }
+                              href="#"
                               className="btn-submittals"
                             >
                               View Submittals <ArrowRightOutlined />

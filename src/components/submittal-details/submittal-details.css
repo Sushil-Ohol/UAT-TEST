@@ -1,0 +1,7 @@
+.selectStyle {
+  width: 100%;
+}
+
+.selectStyle .ant-select-selector {
+  background-color: #0000000d !important;
+}

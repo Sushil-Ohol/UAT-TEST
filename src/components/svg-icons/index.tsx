@@ -23,6 +23,7 @@ import ExpandIcon from "./expand-icon";
 import MessageIcon from "./message-icon";
 import CopyIcon from "./copy-icon";
 import DownloadIcon from "./download-icon";
+import ClearIcon from "./clear-icon";
 
 export {
   AppLogoIcon,
@@ -49,5 +50,6 @@ export {
   SearchIcon,
   MessageIcon,
   CopyIcon,
-  DownloadIcon
+  DownloadIcon,
+  ClearIcon
 };
