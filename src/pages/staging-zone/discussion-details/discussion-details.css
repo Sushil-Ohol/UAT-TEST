@@ -7,27 +7,12 @@
   z-index: 1;
   border-bottom: 1px solid darkgrey;
 }
-.discussion-details-document-view {
-  height: 61px;
-  position: sticky;
-  top: 0px;
-  background-color: #f7f6f4;
-  padding: 3% 0;
-  z-index: 1;
-  border-top: 1px solid darkgrey;
-}
 
 .chatMessageParent {
   display: table;
-  height: 73%;
+  height: auto;
+  overflow: hidden;
   width: 100%;
-}
-
-.chatMessages {
-  display: table-cell;
-  height: 100%;
-  width: 100%;
-  overflow: scroll;
 }
 
 
@@ -35,7 +20,7 @@
   padding: 2px;
   float: right;
   margin-right: 13px;
-  margin-top: 0px;
+  margin-top: 2px;
 }
 
 .currentUserChat {

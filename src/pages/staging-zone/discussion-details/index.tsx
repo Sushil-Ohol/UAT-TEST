@@ -111,14 +111,8 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
 
   return (
     <div ref={topRef} className={className}>
-      <div
-        className={
-          isDocumentView
-            ? "discussion-details-document-view"
-            : "discussionDetails"
-        }
-      >
-        <div style={{ padding: "2px 1.5%", float: "left" }}>
+      <div className="discussionDetails">
+        <div style={{ padding: "1.5% 1.5%", float: "left" }}>
           Discussion({totalChat})
         </div>
         {!isDocumentView && (
@@ -134,7 +128,6 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
             ref={bottomRef}
             style={{ overflowY: "scroll", height: `${height}px` }}
             id="chatSection"
-            className="chatMessages"
           >
             {msgDate &&
               msgDate.map((messageDay) => (
