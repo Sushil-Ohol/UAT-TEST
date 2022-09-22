@@ -59,6 +59,49 @@ function SubmitalDetails(props: {
     });
   };
 
+  const removeDependent = (id: string) => {
+    const updatedDependent = updatedData.dependsOn.filter(
+      (data) => data.submittalId !== id
+    );
+    setUpdatedData((prev) => {
+      return { ...prev, dependsOn: updatedDependent };
+    });
+  };
+
+  const onChangeContractor = (name: string) => {
+    const selectedContractor = DropDownData.ContractorOptions.find(
+      (data) => data.name === name
+    );
+
+    setUpdatedData((prev) => {
+      return {
+        ...prev,
+        contractor: selectedContractor || prev.contractor,
+        assigned: selectedContractor
+          ? { assignedTo: "", destination: "" }
+          : prev.assigned
+      };
+    });
+  };
+
+  const onChangeAssignee = (assignedTo: string) => {
+    const selectedAssignee = DropDownData.AssigneeOptions.find(
+      (data) => data.assignedTo === assignedTo
+    );
+
+    setUpdatedData((prev) => {
+      return {
+        ...prev,
+        assigned: selectedAssignee
+          ? {
+              assignedTo: selectedAssignee.assignedTo,
+              destination: selectedAssignee.destination
+            }
+          : prev.assigned
+      };
+    });
+  };
+
   useEffect(() => {
     onChangeSubmittalData(updatedData);
   }, [updatedData]);
@@ -119,34 +162,45 @@ function SubmitalDetails(props: {
             <Col span={4}>
               <p className="HedingColor">CONTRACTOR</p>
               <Select
+                className="selectStyle"
+                onChange={onChangeContractor}
                 showSearch
                 optionFilterProp="children"
-                // onChange={onChange}
-                // onSearch={onSearch}
+                defaultValue={updatedData.contractor.name}
                 filterOption={(input, option) =>
                   (option!.children as unknown as string)
                     .toLowerCase()
                     .includes(input.toLowerCase())
                 }
-                className="selectStyle"
-                defaultValue={updatedData.contractor.name}
               >
-                <option value="0">ABC Construction</option>
-                <option value="1">Birla Construction</option>
-                <option value="2">Acc Construction</option>
-                <option value="3">Ambuja Construction</option>
-                <option value="4">Tata Construction</option>
-                <option value="5">Other Construction</option>
+                {DropDownData.ContractorOptions.map((item: any) => (
+                  <Option key={item.name} value={item.name}>
+                    {item.name}
+                  </Option>
+                ))}
               </Select>
             </Col>
             <Col span={4}>
               <p className="HedingColor">ASSIGNED</p>
               <Select
                 className="selectStyle"
-                defaultValue={updatedData.assigned.assignedTo}
+                onChange={onChangeAssignee}
+                showSearch
+                optionFilterProp="children"
+                value={updatedData.assigned.assignedTo}
+                filterOption={(input, option) =>
+                  (option!.children as unknown as string)
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
               >
-                <option value="0">Luck Church</option>
-                <option value="1">Jone Doe</option>
+                {DropDownData.AssigneeOptions.filter(
+                  (data) => data.contractor === updatedData.contractor.name
+                ).map((item) => (
+                  <Option key={item.assignedTo} value={item.assignedTo}>
+                    {item.assignedTo}
+                  </Option>
+                ))}
               </Select>
             </Col>
             <Col span={4}>
@@ -238,7 +292,7 @@ function SubmitalDetails(props: {
                                 margin: "10px 0"
                               }}
                             >
-                              <Col span={22}>
+                              <Col span={22} style={{ display: "flex" }}>
                                 <Space>
                                   <span>{data.submittalId}</span>
                                   <span>{data.submittal}</span>
@@ -253,7 +307,14 @@ function SubmitalDetails(props: {
                                   justifyContent: "flex-end"
                                 }}
                               >
-                                <ClearIcon />
+                                <Button
+                                  className="add-new-column-btn"
+                                  onClick={() =>
+                                    removeDependent(data.submittalId)
+                                  }
+                                >
+                                  <ClearIcon />
+                                </Button>
                               </Col>
                             </Row>
                           );

@@ -69,7 +69,6 @@ const { Title } = Typography;
 let immutableRowData: any[];
 
 const dependsOnCellRenderer = (props: any) => {
-  // const values = props.value.toString().split(",");
   return (
     <>
       {props.value.map((val: any, index: any) => {
@@ -377,7 +376,7 @@ function SubmittalList() {
 
   React.useEffect(() => {
     // todo - here we will fetch the actual project id from route params and we will load details
-    loadList();
+    if (rowData.length === 0) loadList();
   }, []);
 
   React.useEffect(() => {}, [immutableRowData]);
