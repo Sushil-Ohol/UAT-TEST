@@ -30,7 +30,6 @@ function SubmittalDetailspage(props: any) {
   };
 
   useEffect(() => {
-    console.log(updatedData);
     dispatch(updateSubmittal(updatedData));
   }, [updatedData]);
 
@@ -39,7 +38,6 @@ function SubmittalDetailspage(props: any) {
   }, [customIconStr]);
 
   const onChangeSubmittalData = (data: SubmittalLog) => {
-    console.log(data);
     setUpdatedData(data);
   };
 
