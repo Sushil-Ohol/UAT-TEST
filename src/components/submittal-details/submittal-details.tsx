@@ -5,11 +5,11 @@ import {
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import {
+  Button,
   Card,
   Checkbox,
   Col,
   DatePicker,
-  Input,
   Row,
   Select,
   Space
@@ -17,9 +17,13 @@ import {
 import TextArea from "antd/lib/input/TextArea";
 // import React from "react";
 import "./submittal-details.css";
-import { SubmittalLog } from "models/submittal-log";
+import { DependsOn, SubmittalLog } from "models/submittal-log";
 import moment from "moment";
+import { useAppSelector } from "store";
+import { RootState } from "store/slices";
+import { ClearIcon, PlusIcon } from "components/svg-icons";
 import { DropDownData } from "../../constants";
+import SearchDropdown from "./search-dropdown";
 
 const { Option } = Select;
 
@@ -29,9 +33,32 @@ function SubmitalDetails(props: {
 }) {
   const { submittalData, onChangeSubmittalData } = props;
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
+  const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
+  const submittalsList = useAppSelector(
+    (state: RootState) => state.submittals.list
+  );
+  const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
+    (data: SubmittalLog) => ({
+      submittalId: data.id,
+      submittal: data.submittal
+    })
+  );
+  const onSubmittalSearch = (id: any) => {
+    const selectedData = onlySubmittalsTitleId.find(
+      (data) => data.submittalId === id
+    );
+    setSelectedDepends(selectedData);
+  };
+
+  const addDependent = () => {
+    setUpdatedData((prev) => {
+      return selectedDepends
+        ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
+        : { ...prev };
+    });
+  };
 
   useEffect(() => {
-    console.log(updatedData);
     onChangeSubmittalData(updatedData);
   }, [updatedData]);
   return (
@@ -80,7 +107,9 @@ function SubmitalDetails(props: {
                   setUpdatedData((prev) => {
                     return {
                       ...prev,
-                      dueBy: data ? data?.toString() : prev.dueBy
+                      dueBy: data
+                        ? moment(data).format("MM-DD-YYYY")
+                        : prev.dueBy
                     };
                   })
                 }
@@ -122,10 +151,10 @@ function SubmitalDetails(props: {
             <Col span={4}>
               <div>
                 <p className="HedingColor" style={{ float: "left" }}>
-                  DUE BY
+                  GOVERNING DATE
                 </p>
                 <p className="validationColor" style={{ float: "right" }}>
-                  {moment(updatedData.governingDate).fromNow()}{" "}
+                  {moment(updatedData.governingDate).fromNow()}
                 </p>
               </div>
 
@@ -138,7 +167,7 @@ function SubmitalDetails(props: {
                     return {
                       ...prev,
                       governingDate: data
-                        ? data?.toString()
+                        ? moment(data).format("MM-DD-YYYY")
                         : prev.governingDate
                     };
                   })
@@ -165,16 +194,32 @@ function SubmitalDetails(props: {
                   />
                 </Col>
                 <Col span={24} style={{ marginTop: "15px" }}>
-                  <div>
-                    <p className="HedingColor" style={{ float: "left" }}>
-                      DEPENDS ON Block
-                    </p>
-                    {/* <SearchableDropdown
-            placeholder="Search"
-            data={[{topicId:1001,topicName:"abc"}]}
-            onSelect={onSearchSelect}
-          /> */}
-                  </div>
+                  <Row
+                    style={{
+                      margin: "10px 0",
+                      display: "flex",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Col span={4}>
+                      <p className="HedingColor">DEPENDS ON Block</p>
+                    </Col>
+                    <Col span={5} offset={14}>
+                      <SearchDropdown
+                        placeholder="Search"
+                        data={onlySubmittalsTitleId}
+                        onSelect={onSubmittalSearch}
+                      />
+                    </Col>
+                    <Col span={1}>
+                      <Button
+                        className="add-new-column-btn"
+                        onClick={addDependent}
+                      >
+                        <PlusIcon />
+                      </Button>
+                    </Col>
+                  </Row>
                   <div
                     style={{
                       overflowY: "scroll",
@@ -182,27 +227,37 @@ function SubmitalDetails(props: {
                       width: "100%"
                     }}
                   >
-                    <Input
-                      placeholder="Basic usage"
-                      style={{ border: "1px solid #00000033" }}
-                      defaultValue={updatedData.dependsOn}
-                      allowClear
-                    />
-                    <Input
-                      placeholder="Basic usage"
-                      style={{
-                        border: "1px solid #00000033",
-                        margin: "10px 0px"
-                      }}
-                      defaultValue={updatedData.dependsOn}
-                      allowClear
-                    />
-                    <Input
-                      placeholder="Basic usage"
-                      style={{ border: "1px solid #00000033" }}
-                      defaultValue={updatedData.dependsOn}
-                      allowClear
-                    />
+                    {updatedData.dependsOn
+                      ? updatedData.dependsOn.map((data) => {
+                          return (
+                            <Row
+                              style={{
+                                padding: "4px 11px",
+                                border: "1px solid #00000033",
+                                margin: "10px 0"
+                              }}
+                            >
+                              <Col span={22}>
+                                <Space>
+                                  <span>{data.submittalId}</span>
+                                  <span>{data.submittal}</span>
+                                </Space>
+                              </Col>
+                              <Col
+                                span={1}
+                                offset={1}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "flex-end"
+                                }}
+                              >
+                                <ClearIcon />
+                              </Col>
+                            </Row>
+                          );
+                        })
+                      : null}
                   </div>
                 </Col>
               </Row>
@@ -221,7 +276,7 @@ function SubmitalDetails(props: {
               <div
                 style={{
                   overflowY: "scroll",
-                  height: "250px",
+                  height: "100%",
                   width: "100%"
                 }}
               >
