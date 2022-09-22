@@ -63,12 +63,12 @@ export const contractorEditCellRenderer = (params: any) => {
 export const assignedCellRenderer = (props: any) => {
   return (
     <>
-      <p className="colFirstValue">{props.value.name}</p>
-      <p className="colSecondValue">{props.value.role}</p>
+      <p className="colFirstValue">{props.value.assignedTo}</p>
+      <p className="colSecondValue">{props.value.destination}</p>
     </>
   );
 };
 
 export const assignedEditCellRenderer = (params: any) => {
-  return params?.value?.name || "";
+  return params?.value?.assignedTo || "";
 };
