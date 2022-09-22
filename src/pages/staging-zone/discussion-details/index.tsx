@@ -111,9 +111,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
 
   return (
     <div ref={topRef} className={className}>
-      <div
-        className= "discussionDetails"
-      >
+      <div className="discussionDetails">
         <div style={{ padding: "1.5% 1.5%", float: "left" }}>
           Discussion({totalChat})
         </div>
