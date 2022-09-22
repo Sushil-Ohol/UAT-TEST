@@ -22,3 +22,13 @@ export type SubmittalLog = {
 export type SubmittalListResponse = BaseResponse & {
   response: SubmittalLog[];
 };
+export type Assignee = {
+  name: string;
+  role: string;
+  email?: string;
+};
+export type Contractor = {
+  name: string;
+  email: string;
+  assignees?: Assignee[];
+};

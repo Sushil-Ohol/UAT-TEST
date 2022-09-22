@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ArrowLeftOutlined, EditFilled } from "@ant-design/icons";
 import { Col, Row, Tabs, Card, Button, Layout, Typography } from "antd";
 import SubmittalDetails from "components/submittal-details/submittal-details";
@@ -30,7 +31,6 @@ function SubmittalDetailspage(props: any) {
   };
 
   useEffect(() => {
-    console.log(updatedData);
     dispatch(updateSubmittal(updatedData));
   }, [updatedData]);
 
@@ -39,7 +39,6 @@ function SubmittalDetailspage(props: any) {
   }, [customIconStr]);
 
   const onChangeSubmittalData = (data: SubmittalLog) => {
-    console.log(data);
     setUpdatedData(data);
   };
 

@@ -455,13 +455,6 @@ p.project-name-hint {
 .ant-tooltip {
   background-color: transparent;
 }
-.ant-tooltip-inner {
-  background-color: #f7f6f4;
-  color: red;
-  font-size: 16px;
-  min-width: max-content;
-  box-shadow: none;
-}
 .ant-progress-status-success div .ant-progress-bg {
   background-color: #65d154;
 }
@@ -641,10 +634,6 @@ div .error-text-project-name-details {
     align-items: center;
     justify-content: space-evenly;
   }
-  /* .details-form {
-    height: 80%;
-    overflow-y: auto;
-  } */
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {

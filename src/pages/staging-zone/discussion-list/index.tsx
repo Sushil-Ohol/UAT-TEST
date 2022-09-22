@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { List, Badge, message } from "antd";
+import { List, Badge, message, Tooltip } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "store";
 import { useSelector } from "react-redux";
@@ -39,6 +39,8 @@ function DiscussionList(props: DiscussionListProps) {
   );
   React.useEffect(() => {
     loadList();
+    onClick(rowId);
+    setSelectedTopicId(rowId);
   }, []);
   React.useEffect(() => {
     if (selectedData.length <= 1) {
@@ -77,6 +79,7 @@ function DiscussionList(props: DiscussionListProps) {
         recordId: selectedData.length === 1 ? selectedData[0].id : ""
       };
       dispatch(addNewDiscussion(newDiscussion));
+      onClick(+newDiscussion.topicId + 1000);
       setSelectedTopicId(newDiscussion.topicId.toString());
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
@@ -120,7 +123,9 @@ function DiscussionList(props: DiscussionListProps) {
             : []
         }
       >
-        <div>{item.topicName}</div>
+        <Tooltip title={item.topicName}>
+          <div className="colFirstValue">{item.topicName}</div>
+        </Tooltip>
       </List.Item>
     );
   };

@@ -40,10 +40,46 @@ export const hexagoanStyleScreen2 = {
   errorStyleClass: "icon-style-wrong-screen-second"
 };
 const ContractorOptions = [
-  { name: "ABC Construction", email: "john@abcconstuct.com" },
-  { name: "A Construction", email: "john@aconstuct.com" },
-  { name: "B Construction", email: "john@bconstuct.com" },
-  { name: "C Construction", email: "john@cconstuct.com" }
+  {
+    name: "ABC Construction",
+    email: "john@abcconstuct.com",
+    assignees: [
+      { name: "Luke", role: "Architect" },
+      { name: "James", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "A Construction",
+    email: "john@aconstuct.com",
+    assignees: [
+      { name: "John", role: "Architect" },
+      { name: "Maria", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "B Construction",
+    email: "john@bconstuct.com",
+    assignees: [
+      { name: "Lionel", role: "Architect" },
+      { name: "Ronaldo", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "C Construction",
+    email: "john@cconstuct.com",
+    assignees: [
+      { name: "Mark", role: "Architect" },
+      { name: "Roger", role: "Project Manager" }
+    ]
+  },
+  {
+    name: "Architect Company",
+    email: "john@cconstuct.com",
+    assignees: [
+      { name: "Mark", role: "Architect" },
+      { name: "Roger", role: "Project Manager" }
+    ]
+  }
 ];
 const DependsOnOptions = ["All", "1079", "2098"];
 const PastDueOptions = ["Past due date", "Due today", "Next 3 days", "Custom"];
@@ -53,7 +89,13 @@ const StatusOptions = [
   "In Review",
   "Approved",
   "Approved with Comments",
-  "Rejected"
+  "Rejected",
+  "Confirmation required"
+];
+const StatusOptionsForArchitects = [
+  "Required",
+  "Not required",
+  "Confirmation required"
 ];
 const AssigneeOptions = [
   {
@@ -95,6 +137,16 @@ const AssigneeOptions = [
     assignedTo: "Ronaldo",
     destination: "Architect",
     contractor: "C Construction"
+  },
+  {
+    assignedTo: "Ronaldo",
+    destination: "Architect",
+    contractor: "Architect company"
+  },
+  {
+    assignedTo: "John",
+    destination: "Architect",
+    contractor: "Architect company"
   }
 ];
 
@@ -104,7 +156,7 @@ export const DATE_FORMAT_MMDDYYY = "MM-DD-YYYY";
 
 export const NewConversationContent = {
   General:
-    "This will be a general discussion. Please select a {linkType} prior to adding a new discussion if an association is desired",
+    "This will be a general discussion. Please select a Submittal prior to adding a new discussion if an association is desired",
   Submittal:
     "This discussion will be associated with the selected Submittal. Please unselect the Submittal, prior to adding a new discussion if an association is not desired."
 };
@@ -112,6 +164,7 @@ export const NewConversationContent = {
 export const DropDownData = {
   ContractorOptions,
   StatusOptions,
+  StatusOptionsForArchitects,
   AssigneeOptions,
   DependsOnOptions,
   PastDueOptions,

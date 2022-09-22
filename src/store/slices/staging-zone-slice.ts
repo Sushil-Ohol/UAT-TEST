@@ -46,7 +46,7 @@ const stagingZoneSlice = createSlice({
   reducers: {
     reset: () => initialState,
     addNewDiscussion: (state: any, { payload }: any) => {
-      state.discussionList = [...state.discussionList, payload];
+      state.discussionList = [payload, ...state.discussionList];
     },
     newMessage: (state, { payload }: PayloadAction<any>) => {
       const { discussionId, chatInfo } = payload;

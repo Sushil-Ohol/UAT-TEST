@@ -84,6 +84,17 @@
 }
 .discussion .ant-list-items .discussion-list {
   background-color: white;
+  text-overflow: ellipsis;
+}
+.discussion-list .colFirstValue {
+  width: 300px;
+}
+div .ant-tooltip-inner {
+  background-color: white;
+  color: black;
+  width: max-content;
+  margin-left: 0px;
+  box-shadow: 2px 3px 5px grey;
 }
 .discussion .ant-list-items .discussion-list-active {
   background-color: white;
@@ -206,6 +217,14 @@
   letter-spacing: 0px;
   opacity: 1;
   display: inline;
+}
+.add-new-discussion .selected-topic-name .topic-title .topic-heading {
+  text-align: left;
+  font: normal normal medium 18px/24px Inter;
+  letter-spacing: 0px;
+  opacity: 1;
+  display: inline;
+  font-weight: 600;
 }
 .add-new-discussion .pop-content {
   text-align: left;

@@ -1,30 +1,46 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-no-bind */
 import { Button, Form, Select, DatePicker, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddContractorModal, AddAssigneeModal } from "popups";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-edit.css";
+import { RootState } from "store/slices";
+import { useAppDispatch, useAppSelector } from "store";
+import { newContractor, newAssignee } from "store/slices/submittalsSlices";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 
 const { Option } = Select;
 
 export type EditSubmittalLogs = {
   onApplyClick: any;
   onCancelClick: any;
+  selectedRows: any;
 };
 
 function SubmittalEdit(props: EditSubmittalLogs) {
-  const { onApplyClick, onCancelClick } = props;
+  const { onApplyClick, onCancelClick, selectedRows } = props;
   const [form] = useForm();
+
+  const dispatch = useAppDispatch();
+
+  const submittalState = useAppSelector((state: RootState) => state.submittals);
+
+  const [assigneeData, setAssigneeData] = useState<any>(
+    submittalState.assignees || []
+  );
+
+  const contractorData = submittalState.contractors;
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-      const selectedContractor = DropDownData.ContractorOptions.filter(
-        (contractor) => contractor.name === values.contractor
+      const selectedContractor: any = contractorData.filter(
+        (contractor: any) => contractor.name === values.contractor
       );
-      const assigned = DropDownData.AssigneeOptions.filter(
-        (assignee) => assignee.assignedTo === values.assigned
+      const assigned: any = selectedContractor[0].assignees.filter(
+        (contractor: any) => contractor.name === values.assigned
       );
+
       const data = {
         contractor: selectedContractor[0],
         status: values.status,
@@ -35,21 +51,38 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     });
   };
 
-  const [assigneeData, setAssigneeData] = useState<any>(
-    DropDownData.AssigneeOptions
-  );
-
-  const [contractorData, setContractorData] = useState<any>(
-    DropDownData.ContractorOptions
-  );
-
   const [contractorSelected, setContractorSelected] = useState<string>("");
 
-  const onChangeContractor = (contractor: string) => {
-    const assignedData = DropDownData.AssigneeOptions.filter(
-      (x: any) => x.contractor === contractor
+  const [optionArray, setOptionArray] = useState<any>([]);
+
+  const onStatusDropDownChange = () => {
+    const confirmationRequired = selectedRows.filter(
+      (item: any) => item.status === "Confirmation required"
     );
-    setAssigneeData(assignedData);
+    const notRequired = selectedRows.filter(
+      (item: any) => item.status === "Not required"
+    );
+    if (confirmationRequired.length > 0) {
+      setOptionArray(DropDownData.StatusOptionsForArchitects);
+    } else if (notRequired.length > 0) {
+      setOptionArray(DropDownData.StatusOptionsForArchitects);
+    } else {
+      setOptionArray(DropDownData.StatusOptions);
+    }
+  };
+
+  useEffect(() => {
+    onStatusDropDownChange();
+  }, [selectedRows]);
+
+  const onChangeContractor = (contractor: string) => {
+    const assignedData = Object.keys(submittalState.assignees)
+      .filter((key) => key.includes(contractor))
+      .reduce((obj, key) => {
+        return submittalState.assignees[key];
+      }, {});
+
+    setAssigneeData(Object.values(assignedData));
     setContractorSelected(contractor);
   };
 
@@ -59,14 +92,15 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
     useState<boolean>(false);
 
-  const updateContractorData = (object: any) => {
-    setContractorData(object);
-    message.success("Contractor Added Successfully");
+  const addNewContractor = (data: any) => {
+    dispatch(newContractor(data));
+    message.success("Contractor & Assignee Added Successfully");
     setIsContractorModalOpen(false);
   };
 
-  const updateAssigneeData = (object: any) => {
-    setAssigneeData(object);
+  const addNewAssignee = (data: any) => {
+    const payload = { contractorName: contractorSelected, assignee: data };
+    dispatch(newAssignee(payload));
     message.success("Assignee Added Successfully");
     setIsAssigneeModalOpen(false);
   };
@@ -80,7 +114,11 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   const showAssigneeModal = () => {
-    if (contractorSelected !== "") setIsAssigneeModalOpen(true);
+    if (contractorSelected !== "") {
+      setIsAssigneeModalOpen(true);
+    } else {
+      message.info("Please select company first");
+    }
   };
 
   const handleAssigneeCancel = () => {
@@ -92,13 +130,11 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       <Form layout="vertical" preserve form={form}>
         <Form.Item name="status" label="Status">
           <Select className="statusSelect">
-            {DropDownData.StatusOptions.filter((x) => x !== "All").map(
-              (item) => (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              )
-            )}
+            {optionArray.map((item: any) => (
+              <Select.Option key={item} value={item}>
+                {item}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item name="dueBy" label="Due Date">
@@ -111,7 +147,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           name="contractor"
           label={
             <span>
-              Contractor{" "}
+              Company{" "}
               <Button
                 className="add-new-contractor-btn"
                 onClick={showContractorModal}
@@ -132,7 +168,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
                 .includes(input.toLowerCase())
             }
           >
-            {contractorData
+            {submittalState.contractors
               .filter((x: any) => x.name !== "All")
               .map((item: any) => (
                 <Option key={item.name} value={item.name}>
@@ -165,13 +201,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
                 .includes(input.toLowerCase())
             }
           >
-            {assigneeData
-              .filter((x: any) => x.assignedTo !== "All")
-              .map((item: any) => (
-                <Option key={item.assignedTo} value={item.assignedTo}>
-                  {item.assignedTo}
-                </Option>
-              ))}
+            {assigneeData?.length > 0 &&
+              assigneeData
+                .filter((x: any) => x.assignedTo !== "All")
+                .map((item: any) => (
+                  <Option key={item.name} value={item.name}>
+                    {item.name}
+                  </Option>
+                ))}
           </Select>
         </Form.Item>
 
@@ -196,15 +233,13 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       </Form>
       <AddContractorModal
         contractorOptions={contractorData}
-        onOkClick={updateContractorData}
+        onOkClick={addNewContractor}
         show={isContractorModalOpen}
         onCancelClick={handleContractorCancel}
-        assigneeOptions={assigneeData}
-        saveAssignee={updateAssigneeData}
       />
       <AddAssigneeModal
-        assigneeOptions={assigneeData}
-        onOkClick={updateAssigneeData}
+        assigneeOptions={contractorData}
+        onOkClick={addNewAssignee}
         show={isAssigneeModalOpen}
         onCancelClick={handleAssigneeCancel}
         selectedContractor={contractorSelected}
