@@ -52,7 +52,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
   }, [filterByDate]);
 
   useEffect(() => {
-    if (discussionId !== "" && !chatMessages[discussionId]) {
+    if (discussionId !== "") {
       loadList();
     }
   }, [discussionId]);
@@ -213,6 +213,12 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
             id="sendMsg"
             style={{
               background: "#0000000D 0% 0% no-repeat padding-box"
+            }}
+            onKeyDown={(event: any) => {
+              if (event.key === "Enter") {
+                setSendMessage(event.target.value);
+                onClickSendBtn();
+              }
             }}
             onChange={(e) => {
               setSendMessage(e.target.value);
