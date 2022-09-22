@@ -1,0 +1,19 @@
+.accMenuContainer {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0 1em;
+    margin-top: 4px;
+    color: white;
+  }
+  
+  .ant-dropdown .ant-dropdown-placement-bottomRight {
+    width: 200px;
+  }
+  
+  .sign-out {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
