@@ -294,3 +294,6 @@ div.ag-rich-select .ag-rich-select-list {
 .ant-badge-not-a-wrapper:not(.ant-badge-status) {
   vertical-align: initial;
 }
+.EditSubmittalbtn {
+  padding-right: 1%;
+}

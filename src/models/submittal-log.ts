@@ -6,6 +6,14 @@ export type DependsOn = {
   submittal: string;
 };
 
+export type Assignee = {
+  assignedTo: string;
+
+  destination: string;
+
+  email?: string;
+};
+
 export type SubmittalLog = {
   id: string;
   submittal: string;
@@ -18,17 +26,13 @@ export type SubmittalLog = {
   governingDate: string;
   contractor: { name: string; email: string };
   dependsOn: DependsOn[];
-  assigned: { assignedTo: string; destination: string };
+  assigned: Assignee;
   docs?: ConversationDoc[];
 };
 export type SubmittalListResponse = BaseResponse & {
   response: SubmittalLog[];
 };
-export type Assignee = {
-  name: string;
-  role: string;
-  email?: string;
-};
+
 export type Contractor = {
   name: string;
   email: string;

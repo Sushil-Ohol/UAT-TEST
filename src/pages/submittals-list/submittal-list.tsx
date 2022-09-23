@@ -141,7 +141,8 @@ function SubmittalList() {
 
   const viewDocument = (value: boolean) => {
     if (value) {
-      setHeight(920);
+      const viewDocHeight = document.body.offsetHeight - 46;
+      setHeight(viewDocHeight);
     } else {
       setHeight(505);
     }
@@ -405,10 +406,6 @@ function SubmittalList() {
     dispatch(setProjectId(projectId));
   }, [dispatch, projectId]);
 
-  const onNewClick = () => {
-    setShowNewDrawer(true);
-  };
-
   const onSelectionChanged = (grid: any) => {
     setSelectedRows(grid.api.getSelectedRows().length);
     setSelectedRowsData(grid.api.getSelectedRows());
@@ -604,7 +601,6 @@ function SubmittalList() {
     <div className="a">
       <SubmittalListFilterComponent
         gridRef={gridRef}
-        onNewClick={onNewClick}
         items={filters}
         customDateFilter={customDateFilter}
         setCustomDateFilter={setCustomDateFilter}

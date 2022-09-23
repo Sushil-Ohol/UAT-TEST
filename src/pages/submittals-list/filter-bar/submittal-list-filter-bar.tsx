@@ -7,7 +7,6 @@ import { FilterItem } from "models/types";
 
 export type FilterProps = {
   gridRef: any;
-  onNewClick: any;
   items: FilterItem[];
   setItems: any;
   customDateFilter: any;
@@ -20,7 +19,6 @@ export type FilterProps = {
 function SubmittalListFilterComponent(props: FilterProps) {
   const {
     gridRef,
-    onNewClick,
     items,
     setItems,
     customDateFilter,
@@ -75,28 +73,17 @@ function SubmittalListFilterComponent(props: FilterProps) {
 
       <div id="outer" className="EditSubmittalbtn">
         <span>
-          <div>
-            <div className="inner">
-              All <Switch onClick={onRejectButtonClick} /> Not required
-            </div>
-            <div className="inner">
-              <Button
-                onClick={onCreateLogClick}
-                size="middle"
-                className="newSubmittalBtn"
-              >
-                + Submittal Log
-              </Button>
-            </div>
-            <div className="inner">
-              <Button
-                onClick={onNewClick}
-                size="middle"
-                className="newSubmittalBtn"
-              >
-                + New Submittal
-              </Button>
-            </div>
+          <div className="inner">
+            All <Switch onClick={onRejectButtonClick} /> Not required
+          </div>
+          <div className="inner">
+            <Button
+              onClick={onCreateLogClick}
+              size="middle"
+              className="newSubmittalBtn"
+            >
+              + Submittal Log
+            </Button>
           </div>
         </span>
       </div>
