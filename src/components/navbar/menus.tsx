@@ -1,70 +1,41 @@
 /* Project List Page Component */
 import { useState } from "react";
 import { Menu, MenuProps } from "antd";
-import { Link } from "react-router-dom";
 import "./navbar.css";
+import { useHistory, useLocation } from "react-router-dom";
 
 function Menus(props: any) {
+  const history = useHistory();
+  const location = useLocation();
   const { projectId } = props;
   const items: MenuProps["items"] = [
     {
-      label: (
-        <Link to={`/project/details/${projectId}`} rel="noopener noreferrer">
-          Project
-        </Link>
-      ),
-      key: "1"
+      label: "Project",
+      key: `/project/details/${projectId}`
     },
     {
-      label: (
-        <Link
-          to={`/project/details/${projectId}/schedule`}
-          rel="noopener noreferrer"
-        >
-          Schedule
-        </Link>
-      ),
-      key: "2"
+      label: "Schedule",
+      key: `/project/details/${projectId}/schedule`
     },
     {
-      label: (
-        <Link
-          to={`/project/details/${projectId}/specification`}
-          rel="noopener noreferrer"
-        >
-          Specification
-        </Link>
-      ),
-      key: "3"
+      label: "Specification",
+      key: `/project/details/${projectId}/specification`
     },
     {
-      label: (
-        <Link
-          to={`/project/details/${projectId}/materials`}
-          rel="noopener noreferrer"
-        >
-          Materials
-        </Link>
-      ),
-      key: "4"
+      label: "Materials",
+      key: `/project/details/${projectId}/materials`
     },
     {
-      label: (
-        <Link
-          to={`/project/details/${projectId}/submittals`}
-          rel="noopener noreferrer"
-        >
-          Submittals
-        </Link>
-      ),
-      key: "5"
+      label: "Submittals",
+      key: `/project/details/${projectId}/submittals`
     }
   ];
 
-  const [current, setCurrent] = useState("");
+  const [current, setCurrent] = useState(location.pathname);
 
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
+    history.push(e.key);
   };
 
   return (
