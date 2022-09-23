@@ -209,12 +209,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           label={
             <span>
               Assignee{" "}
-              <Button
-                className="add-new-assignee-btn"
-                onClick={showAssigneeModal}
-              >
-                + New
-              </Button>
+              {form.getFieldValue("contractor") && (
+                <Button
+                  className="add-new-assignee-btn"
+                  onClick={showAssigneeModal}
+                >
+                  + New
+                </Button>
+              )}
             </span>
           }
         >
