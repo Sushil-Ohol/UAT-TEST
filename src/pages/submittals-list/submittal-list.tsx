@@ -72,20 +72,18 @@ let immutableRowData: any[];
 let filterType = "All";
 
 const dependsOnCellRenderer = (props: any) => {
-  const values = props.value.toString().split(",");
   return (
-    <>
-      {values.map((val: any, index: any) => {
-        return (
-          <Tooltip
-            title={<DependsOnToolTip value={val.submittalId} api={props.api} />}
-          >
-            <span>{val.submittalId}</span>
-            {props.value[index + 1] ? " , " : ""}
-          </Tooltip>
-        );
-      })}
-    </>
+    props.value &&
+    props.value.map((val: any, index: any) => {
+      return (
+        <Tooltip
+          title={<DependsOnToolTip value={val.submittalId} api={props.api} />}
+        >
+          <span>{val.submittalId}</span>
+          {props.value[index + 1] ? " , " : ""}
+        </Tooltip>
+      );
+    })
   );
 };
 
