@@ -40,7 +40,7 @@ export const initialState: SubmittalState = {
     contractor: { name: "", email: "" },
     dependsOn: [],
     assigned: { assignedTo: "", destination: "" },
-    docs: []  
+    docs: []
   }
 };
 
