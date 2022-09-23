@@ -87,7 +87,7 @@ function SubmitalDetails(props: {
 
   const removeDocs = (id: string) => {
     if (updatedData) {
-      const updatedDependent = updatedData.docs.filter(
+      const updatedDependent = updatedData.docs?.filter(
         (data) => data.id !== id
       );
       setUpdatedData((prev: SubmittalLog | null) => {

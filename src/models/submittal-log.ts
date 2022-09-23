@@ -19,7 +19,7 @@ export type SubmittalLog = {
   contractor: { name: string; email: string };
   dependsOn: DependsOn[];
   assigned: { assignedTo: string; destination: string };
-  docs: ConversationDoc[];
+  docs?: ConversationDoc[];
 };
 export type SubmittalListResponse = BaseResponse & {
   response: SubmittalLog[];
