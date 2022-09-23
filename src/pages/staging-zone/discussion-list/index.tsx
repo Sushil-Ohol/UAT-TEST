@@ -8,7 +8,7 @@ import {
   addNewDiscussion,
   GetDiscussions
 } from "store/slices/staging-zone-slice";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { IconText } from "components/widgets";
 import { Discussion } from "models/discussion";
 import { DocAttachIcon, MessageIcon } from "components/svg-icons";
@@ -25,7 +25,7 @@ function DiscussionList(props: DiscussionListProps) {
   const { className, onClick, selectedData } = props;
   const dispatch = useAppDispatch();
 
-  const bottomRef = useRef<any>();
+  const scrollerTop = document.querySelector("#scrollerTop");
   const [showNewConPopup, setShowNewConPopup] = useState<boolean>(false);
 
   const loadList = async () => {
@@ -57,8 +57,7 @@ function DiscussionList(props: DiscussionListProps) {
   };
 
   const onSearchSelectClick = (id: string) => {
-    onDiscussionClick(id);
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    onDiscussionClick(id || "1000");
   };
 
   const onAddHandle = (topicName: string) => {
@@ -82,7 +81,7 @@ function DiscussionList(props: DiscussionListProps) {
       dispatch(addNewDiscussion(newDiscussion));
       setSelectedTopicId(newTopicId);
       onDiscussionClick(newTopicId);
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      scrollerTop?.scrollTo(0, 0);
     }
   };
 
@@ -93,6 +92,7 @@ function DiscussionList(props: DiscussionListProps) {
   const discussionCard = (item: Discussion) => {
     return (
       <List.Item
+        id="scrollerView"
         onClick={() => onDiscussionClick(item.topicId)}
         className={
           selectedTopicId === item.topicId
@@ -132,7 +132,7 @@ function DiscussionList(props: DiscussionListProps) {
   };
 
   return (
-    <div className={className}>
+    <div className={className} id="scrollerTop">
       <List
         header={
           <DiscussionHeader
@@ -147,7 +147,6 @@ function DiscussionList(props: DiscussionListProps) {
         dataSource={data}
         renderItem={(item: any) => discussionCard(item)}
       />
-      <div ref={bottomRef} />
     </div>
   );
 }

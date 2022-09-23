@@ -112,16 +112,19 @@
 .five-columns .col {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  overflow-wrap: anywhere;
 }
 .five-columns .col-two {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  overflow-wrap: anywhere;
 }
 
 .discussion {
   border-right: 1px solid darkgrey;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .document-view-div-first {
   width: 100%;

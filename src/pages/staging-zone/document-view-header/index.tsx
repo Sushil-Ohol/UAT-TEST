@@ -27,8 +27,7 @@ function DocumentViewHeader({
       <Col span={14}>
         <h2 className="heading">{selectedDocument}</h2>
       </Col>
-      <Col span={2} offset={2}>
-        <Button className="back-button">Delete</Button>
+      <Col span={1} offset={3}>
         <Button className="back-button" onClick={onDocumentClose}>
           Close
         </Button>

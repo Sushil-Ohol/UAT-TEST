@@ -22,7 +22,6 @@ import {
   hexagoanStyleScreen1,
   hexagoanStyleScreen2
 } from "constants/index";
-import { addProject } from "store/slices/projectSlice";
 import { textToSlug } from "utils/stringutil";
 import { voidStartingSpaceInput } from "utils/inpututils";
 
@@ -159,16 +158,6 @@ function ProjectCreate() {
     }
     projectInputRef.current.focus();
   };
-  const finishClick = () => {
-    dispatch(
-      addProject({
-        id: "P0007",
-        name: defaultValue.projectName,
-        description: defaultValue.details
-      })
-    );
-    history.push("/projects");
-  };
 
   function prev() {
     if (current === 0) {
@@ -295,7 +284,6 @@ function ProjectCreate() {
                                       <Row align="middle">
                                         <div className="selected-file">
                                           <Col span={1}>
-                                            {/* <FileDoneOutlined className="document" /> */}
                                             <ViewDocumentIcon className="document" />
                                           </Col>
                                           <Col
@@ -662,22 +650,6 @@ function ProjectCreate() {
                               <ArrowIcon className="arrow-icon" />
                             </Col>
                           )}
-                          <Col span={12} offset={6}>
-                            <Button
-                              type="link"
-                              onClick={() =>
-                                history.push(
-                                  `/project/details/${textToSlug(
-                                    defaultValue.projectName
-                                  )}/submittals`
-                                )
-                              }
-                              href="#"
-                              className="btn-submittals"
-                            >
-                              View Submittals <ArrowRightOutlined />
-                            </Button>
-                          </Col>
                         </Row>
                       </Card>
                     </Col>
@@ -769,9 +741,15 @@ function ProjectCreate() {
                 <Button
                   className="stepper-done-btn"
                   type="primary"
-                  onClick={finishClick}
+                  onClick={() =>
+                    history.push(
+                      `/project/details/${textToSlug(
+                        defaultValue.projectName
+                      )}/submittals`
+                    )
+                  }
                 >
-                  View project
+                  Continue
                 </Button>
               )}
 

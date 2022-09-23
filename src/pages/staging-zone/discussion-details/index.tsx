@@ -49,7 +49,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
 
   useEffect(() => {
     bottomRef.current?.scrollTo(0, bottomRef.current?.scrollHeight);
-  }, [filterByDate]);
+  }, [filterByDate, isDocumentView]);
 
   useEffect(() => {
     if (discussionId !== "") {
@@ -107,7 +107,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
 
       setMsgDate(keys);
     }
-  }, [chatMessages[discussionId]?.list]);
+  }, [chatMessages[discussionId]?.list, isDocumentView]);
 
   return (
     <div ref={topRef} className={className}>
@@ -192,7 +192,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
         </div>
       )}
       {discussionId !== "" ? (
-        <div ref={inputdiv} className="sendMsgDiv">
+        <div className="sendMsgDiv">
           <Input
             placeholder="Type your message"
             value={sendMessage}
@@ -221,6 +221,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
       ) : (
         <h3> No Messages</h3>
       )}
+      <div ref={inputdiv} />
     </div>
   );
 }

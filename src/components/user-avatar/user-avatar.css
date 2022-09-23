@@ -1,51 +1,49 @@
 .users-container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
-  .name-email {
-    display: flex;
-    flex-direction: column;
-    margin-left: 15px;
-  }
+.name-email {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
 
-  p {
-    line-height: 1.2em;
-    padding: 0;
-    margin: 0;
-  }
+.users-container p {
+  padding: 0;
+  margin: 0;
+}
 
-  .name {
-    font-size: 1em;
-  }
+.name {
+  font-size: 1em;
+}
 
-  .email {
-    font-weight: normal;
-    font-size: 0.85em;
-    color: #888;
-  }
+.email {
+  font-weight: normal;
+  font-size: 0.85em;
+  color: #888;
+}
 
-  .avatar-with-badge {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+.avatar-with-badge {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.avator {
+  align-items: center;
+  border: 1px solid green;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  background-color: #f6f6f6;
+}
 
-  .avator {
-    align-items: center;
-    border: 1px solid green;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    background-color: #f6f6f6;
-  }
-
-  .avator img {
-    border-radius: 50%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
+.avator img {
+  border-radius: 50%;
+  object-fit: cover;
+  border-radius: 50%;
+}
