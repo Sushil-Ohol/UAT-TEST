@@ -117,14 +117,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const addNewContractor = (data: any) => {
     dispatch(newContractor(data));
-    message.success("Contractor & Assignee Added Successfully");
+    message.success("Invited contractor and assignee successfully");
     setIsContractorModalOpen(false);
   };
 
   const addNewAssignee = (data: any) => {
     const payload = { contractorName: contractorSelected, assignee: data };
     dispatch(newAssignee(payload));
-    message.success("Assignee Added Successfully");
+    message.success("Invited assignee successfully ");
     setIsAssigneeModalOpen(false);
   };
 

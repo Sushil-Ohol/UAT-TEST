@@ -48,12 +48,7 @@ export const dateCellRenderer = (props: any) => {
 };
 
 export const contractorCellRenderer = (props: any) => {
-  return (
-    <>
-      <p className="colFirstValue">{props.value.name}</p>
-      <p className="colSecondValue">{props.value.email}</p>
-    </>
-  );
+  return <p className="colFirstValue">{props.value.name}</p>;
 };
 
 export const contractorEditCellRenderer = (params: any) => {

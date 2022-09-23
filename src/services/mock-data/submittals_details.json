@@ -184,7 +184,7 @@
         "submittal": "ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"
       }
     ],
-    "assigned": { "assignedTo": "Luke", "destination": "Architect" }
+    "assigned": { "assignedTo": "Luke", "destination": "Engineer" }
   },
   {
     "id": 1007,
@@ -265,6 +265,6 @@
         "submittal": "ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"
       }
     ],
-    "assigned": { "assignedTo": "Luke", "destination": "Architect" }
+    "assigned": { "assignedTo": "Luke", "destination": "Engineer" }
   }
 ]

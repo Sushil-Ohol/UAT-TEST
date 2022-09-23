@@ -44,7 +44,7 @@ const ContractorOptions = [
     name: "ABC Construction",
     email: "contact@abcconstruct.com",
     assignees: [
-      { assignedTo: "Luke", destination: "Architect" },
+      { assignedTo: "Luke", destination: "Engineer" },
       { assignedTo: "James", destination: "Project Manager" }
     ]
   },
@@ -52,7 +52,7 @@ const ContractorOptions = [
     name: "A Construction",
     email: "contact@aconstruct.com",
     assignees: [
-      { assignedTo: "John", destination: "Architect" },
+      { assignedTo: "John", destination: "Engineer" },
       { assignedTo: "Maria", destination: "Project Manager" }
     ]
   },
@@ -60,7 +60,7 @@ const ContractorOptions = [
     name: "B Construction",
     email: "contact@bconstruct.com",
     assignees: [
-      { assignedTo: "Lionel", destination: "Architect" },
+      { assignedTo: "Lionel", destination: "Engineer" },
       { assignedTo: "Ronaldo", destination: "Project Manager" }
     ]
   },
@@ -68,16 +68,16 @@ const ContractorOptions = [
     name: "C Construction",
     email: "contact@cconstruct.com",
     assignees: [
-      { assignedTo: "Mark", destination: "Architect" },
+      { assignedTo: "Mark", destination: "Engineer" },
       { assignedTo: "Roger", destination: "Project Manager" }
     ]
   },
   {
     name: "Architect Company",
-    email: "contact@cconstruct.com",
+    email: "contact@architectconstruct.com",
     assignees: [
       { assignedTo: "Mark", destination: "Architect" },
-      { assignedTo: "Roger", destination: "Project Manager" }
+      { assignedTo: "Roger", destination: "Architect" }
     ]
   }
 ];
@@ -98,7 +98,7 @@ const StatusOptionsForArchitects = [
 const AssigneeOptions = [
   {
     assignedTo: "Luke",
-    destination: "Architect",
+    destination: "Engineer",
     contractor: "ABC Construction"
   },
   {
@@ -113,7 +113,7 @@ const AssigneeOptions = [
   },
   {
     assignedTo: "Maria",
-    destination: "Architect",
+    destination: "Engineer",
     contractor: "A Construction"
   },
   {
@@ -123,7 +123,7 @@ const AssigneeOptions = [
   },
   {
     assignedTo: "Mark",
-    destination: "Architect",
+    destination: "Engineer",
     contractor: "B Construction"
   },
   {
@@ -133,7 +133,7 @@ const AssigneeOptions = [
   },
   {
     assignedTo: "Ronaldo",
-    destination: "Architect",
+    destination: "Engineer",
     contractor: "C Construction"
   },
   {

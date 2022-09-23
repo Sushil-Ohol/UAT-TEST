@@ -62,7 +62,7 @@ function AddAssigneeModal({
       <Form layout="vertical" name="control-hooks" preserve form={form}>
         <Form.Item
           name="assigneeUserName"
-          label="User Name"
+          label="Contact Name"
           className="add-new-assignee-label"
           rules={[
             {

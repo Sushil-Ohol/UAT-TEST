@@ -79,7 +79,7 @@ function AddContractorModal({
 
         <Form.Item
           name="userName"
-          label="User Name"
+          label="Contact Name"
           className="add-new-contractor-label"
           rules={[
             {
