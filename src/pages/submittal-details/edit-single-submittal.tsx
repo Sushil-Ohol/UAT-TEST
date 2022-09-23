@@ -6,7 +6,8 @@ import { SubmittalLog } from "models/submittal-log";
 
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useAppDispatch } from "store";
+import { useAppDispatch, useAppSelector } from "store";
+import { RootState } from "store/slices";
 import { updateSubmittal } from "store/slices/submittalsSlices";
 import "./submittal-details.css";
 // import UploadFile from "./upload";
@@ -17,13 +18,10 @@ const { TabPane } = Tabs;
 function SubmittalDetailspage(props: any) {
   const { location } = props;
   const history = useHistory();
-
-  const [updatedData, setUpdatedData] = useState<SubmittalLog>(
-    location.state.data
+  const submittalList = useAppSelector(
+    (state: RootState) => state.submittals.list
   );
-  const [customIconStr, setCustomIconStr] = useState(
-    location.state.data.submittal
-  );
+  const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
   const { Paragraph } = Typography;
   const dispatch = useAppDispatch();
   const goToSubmittalPage = () => {
@@ -31,12 +29,27 @@ function SubmittalDetailspage(props: any) {
   };
 
   useEffect(() => {
-    dispatch(updateSubmittal(updatedData));
-  }, [updatedData]);
+    const selectedSubmittal = submittalList.find(
+      (data) => data.id === location.state.data.id
+    );
+    if (selectedSubmittal) setUpdatedData(selectedSubmittal);
+    console.log(selectedSubmittal);
+  }, []);
 
   useEffect(() => {
-    setUpdatedData((prev) => ({ ...prev, submittal: customIconStr }));
-  }, [customIconStr]);
+    if (updatedData) dispatch(updateSubmittal(updatedData));
+  }, [updatedData]);
+
+  const updateSubmittalTitle = (title: string) => {
+    setUpdatedData((prev: SubmittalLog | null) => {
+      return prev
+        ? {
+            ...prev,
+            submittal: title !== "" ? title : prev.submittal
+          }
+        : null;
+    });
+  };
 
   const onChangeSubmittalData = (data: SubmittalLog) => {
     setUpdatedData(data);
@@ -64,7 +77,7 @@ function SubmittalDetailspage(props: any) {
 
               <Col span={14}>
                 <div style={{ display: "inline-block" }}>
-                  {updatedData.id}
+                  {updatedData?.id}
                   <Paragraph
                     // className="SubDetailsParagraph"
                     style={{
@@ -75,10 +88,10 @@ function SubmittalDetailspage(props: any) {
                     editable={{
                       icon: <EditFilled color="black" />,
                       tooltip: "",
-                      onChange: (e) => setCustomIconStr(e)
+                      onChange: (e) => updateSubmittalTitle(e)
                     }}
                   >
-                    {customIconStr}
+                    {updatedData?.submittal}
                   </Paragraph>
                 </div>
               </Col>
