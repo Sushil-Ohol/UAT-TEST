@@ -39,8 +39,8 @@ function AddAssigneeModal({
     form.validateFields().then((values) => {
       if (!isAssigneeExists(values.assigneeUserName)) {
         const data = {
-          name: values.assigneeUserName,
-          role: "Project Manager"
+          assignedTo: values.assigneeUserName,
+          destination: "Project Manager"
         };
         onOkClick(data);
         form.resetFields();

@@ -36,8 +36,8 @@ function AddContractorModal({
           email: values.emailId,
           assignees: [
             {
-              name: values.userName,
-              role: "Project Manager"
+              assignedTo: values.userName,
+              destination: "Project Manager"
             }
           ]
         };
