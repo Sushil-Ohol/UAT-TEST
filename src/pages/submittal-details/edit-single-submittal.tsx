@@ -33,7 +33,6 @@ function SubmittalDetailspage(props: any) {
       (data) => data.id === location.state.data.id
     );
     if (selectedSubmittal) setUpdatedData(selectedSubmittal);
-    console.log(selectedSubmittal);
   }, []);
 
   useEffect(() => {
