@@ -1,14 +1,16 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ArrowLeftOutlined, EditFilled } from "@ant-design/icons";
-import { Col, Row, Tabs, Card, Button, Layout, Typography } from "antd";
+import { Col, Row, Tabs, Card, Button, Layout, Typography, Spin } from "antd";
 import SubmittalDetails from "components/submittal-details/submittal-details";
+import { ConversationDoc } from "models/discussion";
 import { SubmittalLog } from "models/submittal-log";
 
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
-import { updateSubmittal } from "store/slices/submittalsSlices";
+import { updateDocs, updateSubmittal } from "store/slices/submittalsSlices";
 import "./submittal-details.css";
 // import UploadFile from "./upload";
 
@@ -24,7 +26,12 @@ function SubmittalDetailspage(props: any) {
   const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
   const { Title } = Typography;
   const dispatch = useAppDispatch();
+
+  const [docs, setDocs] = useState<ConversationDoc[]>([]);
+
   const goToSubmittalPage = () => {
+    if (updatedData) dispatch(updateSubmittal(updatedData));
+    dispatch(updateDocs({ submittalId: location.state.data.id, docs }));
     history.goBack();
   };
 
@@ -32,12 +39,13 @@ function SubmittalDetailspage(props: any) {
     const selectedSubmittal = submittalList.find(
       (data) => data.id === location.state.data.id
     );
-    if (selectedSubmittal) setUpdatedData(selectedSubmittal);
-  }, []);
+    if (selectedSubmittal) {
+      setUpdatedData(selectedSubmittal);
+      setDocs(selectedSubmittal.docs ? selectedSubmittal.docs : []);
+    }
 
-  useEffect(() => {
-    if (updatedData) dispatch(updateSubmittal(updatedData));
-  }, [updatedData]);
+    return () => {};
+  }, []);
 
   const updateSubmittalTitle = (title: string) => {
     setUpdatedData((prev: SubmittalLog | null) => {
@@ -54,6 +62,39 @@ function SubmittalDetailspage(props: any) {
     setUpdatedData(data);
   };
 
+  const handleDocuments = (action: string, document: ConversationDoc) => {
+    switch (action) {
+      case "Add":
+        setDocs([...docs, document]);
+        break;
+      case "Remove":
+        setDocs(docs.filter((d: ConversationDoc) => d.id !== document.id));
+        break;
+      default:
+        setDocs(docs);
+        break;
+    }
+  };
+
+  function SubmittalTitle() {
+    return (
+      <Title
+        level={5}
+        style={{
+          width: "100%",
+          marginBottom: "0px"
+        }}
+        editable={{
+          icon: <EditFilled color="black" />,
+          tooltip: "",
+          onChange: (e) => updateSubmittalTitle(e)
+        }}
+      >
+        {updatedData?.submittal}
+      </Title>
+    );
+  }
+
   return (
     <div style={{ margin: "0 16px" }}>
       <section>
@@ -61,9 +102,6 @@ function SubmittalDetailspage(props: any) {
           <Card className="SubDetailsCard">
             <Row>
               <Col span={4}>
-                {/* <Link
-                  to=
-                > */}
                 <Button
                   icon={<ArrowLeftOutlined />}
                   className="SubDetailsCardBtn"
@@ -71,7 +109,6 @@ function SubmittalDetailspage(props: any) {
                 >
                   All submittals
                 </Button>
-                {/* </Link> */}
               </Col>
               <Col
                 span={1}
@@ -87,20 +124,7 @@ function SubmittalDetailspage(props: any) {
               </Col>
 
               <Col span={14} style={{ display: "flex", alignItems: "center" }}>
-                <Title
-                  level={5}
-                  style={{
-                    width: "100%",
-                    marginBottom: "0px"
-                  }}
-                  editable={{
-                    icon: <EditFilled color="black" />,
-                    tooltip: "",
-                    onChange: (e) => updateSubmittalTitle(e)
-                  }}
-                >
-                  {updatedData?.submittal}
-                </Title>
+                <SubmittalTitle />
               </Col>
 
               <Col span={5}>
@@ -117,10 +141,16 @@ function SubmittalDetailspage(props: any) {
       <div>
         <Tabs defaultActiveKey="1" className="TabsClass">
           <TabPane tab="Submittal Details" key="1" style={{ height: "100%" }}>
-            <SubmittalDetails
-              submittalData={updatedData}
-              onChangeSubmittalData={onChangeSubmittalData}
-            />
+            {updatedData ? (
+              <SubmittalDetails
+                submittalData={updatedData}
+                onChangeSubmittalData={onChangeSubmittalData}
+                docs={docs}
+                handleDocuments={handleDocuments}
+              />
+            ) : (
+              <Spin size="large" />
+            )}
           </TabPane>
           <TabPane tab="Attachments" key="2">
             Attachments

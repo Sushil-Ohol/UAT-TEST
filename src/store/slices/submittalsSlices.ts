@@ -11,6 +11,7 @@ import { DropDownData } from "constants/index";
 
 import * as api from "services/submittals-services";
 import { ListWithDictionary } from "models/base";
+import { ConversationDoc } from "models/discussion";
 
 type SubmittalState = {
   projectId: string;
@@ -71,6 +72,18 @@ const submittalSlice = createSlice({
       const dataIndex = state.list.findIndex((data) => data.id === payload.id);
       state.list[dataIndex] = payload;
     },
+    updateDocs: (
+      state,
+      {
+        payload
+      }: PayloadAction<{ submittalId: string; docs: ConversationDoc[] }>
+    ) => {
+      const dataIndex = state.list.findIndex(
+        (data) => data.id === payload.submittalId
+      );
+      state.list[dataIndex].revision = payload.docs.length;
+      state.list[dataIndex].docs = payload.docs;
+    },
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
       state.list = payload;
     },
@@ -121,5 +134,6 @@ export const {
   updateSubmittal,
   updateContractorState,
   newContractor,
-  newAssignee
+  newAssignee,
+  updateDocs
 } = submittalSlice.actions;

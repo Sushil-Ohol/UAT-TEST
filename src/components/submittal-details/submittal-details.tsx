@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   //   ArrowRightOutlined,
@@ -14,6 +15,7 @@ import {
   Row,
   Select,
   Space,
+  Spin,
   Upload
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
@@ -24,26 +26,30 @@ import moment from "moment";
 import { useAppSelector } from "store";
 import { RootState } from "store/slices";
 import { ClearIcon, PlusIcon } from "components/svg-icons";
+import { ConversationDoc } from "models/discussion";
+import { PostProjectFile } from "services/projects-service";
 import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 
 const { Option } = Select;
 
-function SubmitalDetails(props: {
-  submittalData: SubmittalLog | null;
+export type SubmittalDetailsProps = {
+  submittalData: SubmittalLog;
   onChangeSubmittalData: (data: SubmittalLog) => void;
-}) {
-  const { submittalData, onChangeSubmittalData } = props;
-  const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
+  docs: ConversationDoc[];
+  handleDocuments: any;
+};
+function SubmitalDetails(props: SubmittalDetailsProps) {
+  const { submittalData, onChangeSubmittalData, docs, handleDocuments } = props;
+
+  const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
+
+  const [fileLoading, setFileLoading] = useState<boolean>(false);
+
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
-
-  useEffect(() => {
-    // if(submittalData)
-    setUpdatedData(submittalData);
-  }, [submittalData]);
 
   const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
     (data: SubmittalLog) => ({
@@ -51,6 +57,7 @@ function SubmitalDetails(props: {
       submittal: data.submittal
     })
   );
+
   const onSubmittalSearch = (id: any) => {
     const selectedData = onlySubmittalsTitleId.find(
       (data) => data.submittalId === id
@@ -59,7 +66,7 @@ function SubmitalDetails(props: {
   };
 
   const addDependent = () => {
-    setUpdatedData((prev: SubmittalLog | null) => {
+    setUpdatedData((prev: SubmittalLog) => {
       return prev && selectedDepends
         ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
         : prev;
@@ -71,28 +78,21 @@ function SubmitalDetails(props: {
       const updatedDependent = updatedData.dependsOn.filter(
         (data) => data.submittalId !== id
       );
-      setUpdatedData((prev: SubmittalLog | null) => {
-        return prev ? { ...prev, dependsOn: updatedDependent } : null;
+      setUpdatedData((prev: SubmittalLog) => {
+        return prev ? { ...prev, dependsOn: updatedDependent } : prev;
       });
     }
   };
-
-  // const addDocs = () => {
-  //   setUpdatedData((prev: SubmittalLog | null) => {
-  //     return prev && selectedDepends
-  //       ? { ...prev, docs: [...prev.docs, selectedDepends] }
-  //       : prev;
-  //   });
-  // };
 
   const removeDocs = (id: string) => {
     if (updatedData) {
       const updatedDependent = updatedData.docs?.filter(
         (data) => data.id !== id
       );
-      setUpdatedData((prev: SubmittalLog | null) => {
-        return prev ? { ...prev, docs: updatedDependent } : null;
+      setUpdatedData((prev: SubmittalLog) => {
+        return prev ? { ...prev, docs: updatedDependent } : prev;
       });
+      handleDocuments("Remove", { id });
     }
   };
 
@@ -101,7 +101,7 @@ function SubmitalDetails(props: {
       (data) => data.name === name
     );
 
-    setUpdatedData((prev: SubmittalLog | null) => {
+    setUpdatedData((prev: SubmittalLog) => {
       return prev
         ? {
             ...prev,
@@ -110,7 +110,7 @@ function SubmitalDetails(props: {
               ? { assignedTo: "", destination: "" }
               : prev.assigned
           }
-        : null;
+        : prev;
     });
   };
 
@@ -119,7 +119,7 @@ function SubmitalDetails(props: {
       (data) => data.assignedTo === assignedTo
     );
 
-    setUpdatedData((prev: SubmittalLog | null) => {
+    setUpdatedData((prev: SubmittalLog) => {
       return prev
         ? {
             ...prev,
@@ -130,13 +130,137 @@ function SubmitalDetails(props: {
                 }
               : prev.assigned
           }
-        : null;
+        : prev;
     });
   };
 
   useEffect(() => {
     if (updatedData) onChangeSubmittalData(updatedData);
   }, [updatedData]);
+
+  function DependsOnSection() {
+    return (
+      <div
+        style={{
+          overflowY: "scroll",
+          height: "250px",
+          width: "100%"
+        }}
+      >
+        {updatedData?.dependsOn
+          ? updatedData.dependsOn.map((data) => {
+              return (
+                <Row
+                  style={{
+                    padding: "4px 11px",
+                    border: "1px solid #00000033",
+                    margin: "10px 0"
+                  }}
+                >
+                  <Col span={22} style={{ display: "flex" }}>
+                    <Space>
+                      <span>{data.submittalId}</span>
+                      <span>{data.submittal}</span>
+                    </Space>
+                  </Col>
+                  <Col
+                    span={1}
+                    offset={1}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end"
+                    }}
+                  >
+                    <Button
+                      className="add-new-column-btn"
+                      onClick={() => removeDependent(data.submittalId)}
+                    >
+                      <ClearIcon />
+                    </Button>
+                  </Col>
+                </Row>
+              );
+            })
+          : null}
+      </div>
+    );
+  }
+
+  function DocumentSection() {
+    return (
+      <div
+        style={{
+          overflowY: "scroll",
+          height: "250px",
+          width: "100%"
+        }}
+      >
+        {docs
+          ? docs.map((data: ConversationDoc) => {
+              return (
+                <Row
+                  style={{
+                    padding: "4px 11px",
+                    border: "1px solid #00000033",
+                    margin: "10px 0"
+                  }}
+                >
+                  <Col span={22} style={{ display: "flex" }}>
+                    <Space>
+                      <span>{data.fileName}</span>
+                    </Space>
+                  </Col>
+                  <Col
+                    span={1}
+                    offset={1}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end"
+                    }}
+                  >
+                    <Button
+                      className="add-new-column-btn"
+                      onClick={() => removeDocs(data.id)}
+                    >
+                      <ClearIcon />
+                    </Button>
+                  </Col>
+                </Row>
+              );
+            })
+          : null}
+      </div>
+    );
+  }
+
+  const fileUploadRequest = async ({ file, onSuccess }: any) => {
+    setFileLoading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("title", "title");
+    const result = await PostProjectFile(formData, null);
+    if ((await result.data).data.success) {
+      onSuccess("ok");
+    }
+  };
+
+  const addDocument = (info: any) => {
+    if (info.file.status === "done") {
+      setFileLoading(false);
+      const newdoc: ConversationDoc = {
+        fileName: info.file.name,
+        annotationCount: 3,
+        id: info.file.uid,
+        uploadDate: new Date(),
+        uploadedBy: "john",
+        url: "sd"
+      };
+      handleDocuments("Add", newdoc);
+    }
+  };
+
   return (
     <div style={{ height: "100%" }}>
       <div
@@ -155,8 +279,8 @@ function SubmitalDetails(props: {
                 className="selectStyle"
                 value={updatedData ? updatedData.status : undefined}
                 onChange={(data) =>
-                  setUpdatedData((prev: SubmittalLog | null) => {
-                    return prev ? { ...prev, status: data } : null;
+                  setUpdatedData((prev: SubmittalLog) => {
+                    return prev ? { ...prev, status: data } : prev;
                   })
                 }
               >
@@ -186,7 +310,7 @@ function SubmitalDetails(props: {
                     : undefined
                 }
                 onChange={(data) =>
-                  setUpdatedData((prev: SubmittalLog | null) => {
+                  setUpdatedData((prev: SubmittalLog) => {
                     return prev
                       ? {
                           ...prev,
@@ -194,7 +318,7 @@ function SubmitalDetails(props: {
                             ? moment(data).format("MM-DD-YYYY")
                             : prev.dueBy
                         }
-                      : null;
+                      : prev;
                   })
                 }
               />
@@ -264,7 +388,7 @@ function SubmitalDetails(props: {
                     : undefined
                 }
                 onChange={(data) =>
-                  setUpdatedData((prev: SubmittalLog | null) => {
+                  setUpdatedData((prev: SubmittalLog) => {
                     return prev
                       ? {
                           ...prev,
@@ -272,7 +396,7 @@ function SubmitalDetails(props: {
                             ? moment(data).format("MM-DD-YYYY")
                             : prev.governingDate
                         }
-                      : null;
+                      : prev;
                   })
                 }
               />
@@ -290,10 +414,10 @@ function SubmitalDetails(props: {
                     value={updatedData?.description}
                     maxLength={400}
                     onChange={(data) =>
-                      setUpdatedData((prev: SubmittalLog | null) => {
+                      setUpdatedData((prev: SubmittalLog) => {
                         return prev
                           ? { ...prev, description: data.target.value }
-                          : null;
+                          : prev;
                       })
                     }
                   />
@@ -325,52 +449,7 @@ function SubmitalDetails(props: {
                       </Button>
                     </Col>
                   </Row>
-                  <div
-                    style={{
-                      overflowY: "scroll",
-                      height: "250px",
-                      width: "100%"
-                    }}
-                  >
-                    {updatedData?.dependsOn
-                      ? updatedData.dependsOn.map((data) => {
-                          return (
-                            <Row
-                              style={{
-                                padding: "4px 11px",
-                                border: "1px solid #00000033",
-                                margin: "10px 0"
-                              }}
-                            >
-                              <Col span={22} style={{ display: "flex" }}>
-                                <Space>
-                                  <span>{data.submittalId}</span>
-                                  <span>{data.submittal}</span>
-                                </Space>
-                              </Col>
-                              <Col
-                                span={1}
-                                offset={1}
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "flex-end"
-                                }}
-                              >
-                                <Button
-                                  className="add-new-column-btn"
-                                  onClick={() =>
-                                    removeDependent(data.submittalId)
-                                  }
-                                >
-                                  <ClearIcon />
-                                </Button>
-                              </Col>
-                            </Row>
-                          );
-                        })
-                      : null}
-                  </div>
+                  <DependsOnSection />
                 </Col>
               </Row>
             </Col>
@@ -393,59 +472,18 @@ function SubmitalDetails(props: {
                   /> */}
                 </Col>
                 <Col span={2}>
-                  <Upload {...props}>
-                    <Button
-                      className="add-new-column-btn"
-                      // onClick={addDependent}
-                    >
-                      <PlusIcon />
-                    </Button>{" "}
+                  <Upload
+                    showUploadList={false}
+                    customRequest={fileUploadRequest}
+                    onChange={(info) => addDocument(info)}
+                  >
+                    <Button className="add-new-column-btn">
+                      {fileLoading ? <Spin size="small" /> : <PlusIcon />}
+                    </Button>
                   </Upload>
                 </Col>
               </Row>
-              <div
-                style={{
-                  overflowY: "scroll",
-                  height: "250px",
-                  width: "100%"
-                }}
-              >
-                {updatedData?.docs
-                  ? updatedData.docs.map((data) => {
-                      return (
-                        <Row
-                          style={{
-                            padding: "4px 11px",
-                            border: "1px solid #00000033",
-                            margin: "10px 0"
-                          }}
-                        >
-                          <Col span={22} style={{ display: "flex" }}>
-                            <Space>
-                              <span>{data.fileName}</span>
-                            </Space>
-                          </Col>
-                          <Col
-                            span={1}
-                            offset={1}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-end"
-                            }}
-                          >
-                            <Button
-                              className="add-new-column-btn"
-                              onClick={() => removeDocs(data.id)}
-                            >
-                              <ClearIcon />
-                            </Button>
-                          </Col>
-                        </Row>
-                      );
-                    })
-                  : null}
-              </div>
+              <DocumentSection />
             </Col>
           </Row>
         </Space>

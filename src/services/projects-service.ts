@@ -44,7 +44,7 @@ export const PostProjectFile = (data: any, setProgress: any) => {
         const progressCount = Math.ceil(
           (progressEvent.loaded / progressEvent.total) * 100
         );
-        setProgress(progressCount);
+        if (setProgress) setProgress(progressCount);
       }
     }
   );
