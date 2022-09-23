@@ -13,7 +13,13 @@
       "name": "ABC Construction",
       "email": "john@abcconstuct.com"
     },
-    "dependsOn": [{"submittalId":"1003","submittal":"PLACE CONCRETE"},{"submittalId":"1010","submittal":"STEEL FLOOR DECKING AND SHEAR STUDS"}],
+    "dependsOn": [
+      { "submittalId": "1003", "submittal": "PLACE CONCRETE" },
+      {
+        "submittalId": "1010",
+        "submittal": "STEEL FLOOR DECKING AND SHEAR STUDS"
+      }
+    ],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -27,7 +33,7 @@
     "dueBy": "09-05-2022",
     "governingDate": "10-24-2022",
     "contractor": { "name": "A Construction", "email": "john@aconstuct.com" },
-    "dependsOn": [{"submittalId":"1004","submittal":"TENSIONED CONCRETE"}],
+    "dependsOn": [{ "submittalId": "1004", "submittal": "TENSIONED CONCRETE" }],
     "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" }
   },
   {
@@ -41,7 +47,9 @@
     "dueBy": "08-31-2022",
     "governingDate": "04-13-2022",
     "contractor": { "name": "B Construction", "email": "john@bconstuct.com" },
-    "dependsOn": [{"submittalId":"1006","submittal":"HYDRAULIC CEMENT UNDERLAYMENT"}],
+    "dependsOn": [
+      { "submittalId": "1006", "submittal": "HYDRAULIC CEMENT UNDERLAYMENT" }
+    ],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -55,7 +63,7 @@
     "dueBy": "10-02-2022",
     "governingDate": "10-10-2023",
     "contractor": { "name": "C Construction", "email": "john@cconstuct.com" },
-    "dependsOn": [{"submittalId":"1007","submittal":"UNIT MASONRY"}],
+    "dependsOn": [{ "submittalId": "1007", "submittal": "UNIT MASONRY" }],
     "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" }
   },
   {
@@ -68,7 +76,9 @@
     "dueBy": "08-22-2022",
     "governingDate": "11-01-2022",
     "contractor": { "name": "C Construction", "email": "john@cconstuct.com" },
-    "dependsOn": [{"submittalId":"1008","submittal":"STRUCTURAL STEEL FRAMING"}],
+    "dependsOn": [
+      { "submittalId": "1008", "submittal": "STRUCTURAL STEEL FRAMING" }
+    ],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -81,7 +91,12 @@
     "dueBy": "08-23-2022",
     "governingDate": "09-10-2022",
     "contractor": { "name": "B Construction", "email": "john@bconstuct.com" },
-    "dependsOn": [{"submittalId":"1009","submittal":"ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"}],
+    "dependsOn": [
+      {
+        "submittalId": "1009",
+        "submittal": "ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"
+      }
+    ],
     "assigned": { "assignedTo": "Luke", "destination": "Architect" }
   },
   {
@@ -95,7 +110,12 @@
     "dueBy": "08-14-2022",
     "governingDate": "11-06-2022",
     "contractor": { "name": "A Construction", "email": "john@aconstuct.com" },
-    "dependsOn": [{"submittalId":"1010","submittal":"STEEL FLOOR DECKING AND SHEAR STUDS"}],
+    "dependsOn": [
+      {
+        "submittalId": "1010",
+        "submittal": "STEEL FLOOR DECKING AND SHEAR STUDS"
+      }
+    ],
     "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" }
   },
   {
@@ -108,7 +128,7 @@
     "dueBy": "11-04-2022",
     "governingDate": "09-23-2022",
     "contractor": { "name": "B Construction", "email": "john@bconstuct.com" },
-    "dependsOn": [{"submittalId":"1007","submittal":"UNIT MASONRY"}],
+    "dependsOn": [{ "submittalId": "1007", "submittal": "UNIT MASONRY" }],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -122,7 +142,12 @@
     "dueBy": "09-16-2022",
     "governingDate": "08-10-2021",
     "contractor": { "name": "C Construction", "email": "john@cconstuct.com" },
-    "dependsOn": [{"submittalId":"1010","submittal":"STEEL FLOOR DECKING AND SHEAR STUDS"}],
+    "dependsOn": [
+      {
+        "submittalId": "1010",
+        "submittal": "STEEL FLOOR DECKING AND SHEAR STUDS"
+      }
+    ],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -138,7 +163,12 @@
       "name": "ABC Construction",
       "email": "john@abcconstuct.com"
     },
-    "dependsOn": [{"submittalId":"1009","submittal":"ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"}],
+    "dependsOn": [
+      {
+        "submittalId": "1009",
+        "submittal": "ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"
+      }
+    ],
     "assigned": { "assignedTo": "Luke", "destination": "Architect" }
   }
 ]

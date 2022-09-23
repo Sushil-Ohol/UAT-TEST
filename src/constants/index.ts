@@ -89,13 +89,11 @@ const StatusOptions = [
   "In Review",
   "Approved",
   "Approved with Comments",
-  "Rejected",
-  "Confirmation required"
+  "Rejected"
 ];
 const StatusOptionsForArchitects = [
-  "Required",
-  "Not required",
-  "Confirmation required"
+  "Submittal required",
+  "Submittal not required"
 ];
 const AssigneeOptions = [
   {

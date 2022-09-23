@@ -95,11 +95,11 @@ const isExternalFilterPresent = () => {
 
 const doesExternalFilterPass = (node: RowNode) => {
   if (filterType === "All") {
-    return node.data.status !== "Not required";
+    return node.data.status !== "Submittal not required";
   }
 
   if (filterType === "Rejected") {
-    return node.data.status === "Not required";
+    return node.data.status === "Submittal not required";
   }
 
   return true;

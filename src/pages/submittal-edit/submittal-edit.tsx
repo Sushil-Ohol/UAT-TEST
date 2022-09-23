@@ -77,13 +77,13 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const [optionArray, setOptionArray] = useState<any>([]);
 
   const onStatusDropDownChange = () => {
-    const confirmationRequired = selectedRows.filter(
-      (item: any) => item.status === "Confirmation required"
+    const assignedRequired = selectedRows.filter(
+      (item: any) => item.assigned !== ""
     );
     const notRequired = selectedRows.filter(
       (item: any) => item.status === "Not required"
     );
-    if (confirmationRequired.length > 0) {
+    if (assignedRequired.length > 0) {
       setOptionArray(DropDownData.StatusOptionsForArchitects);
     } else if (notRequired.length > 0) {
       setOptionArray(DropDownData.StatusOptionsForArchitects);
