@@ -13,7 +13,8 @@ import {
   DatePicker,
   Row,
   Select,
-  Space
+  Space,
+  Upload
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 // import React from "react";
@@ -29,15 +30,21 @@ import SearchDropdown from "./search-dropdown";
 const { Option } = Select;
 
 function SubmitalDetails(props: {
-  submittalData: SubmittalLog;
+  submittalData: SubmittalLog | null;
   onChangeSubmittalData: (data: SubmittalLog) => void;
 }) {
   const { submittalData, onChangeSubmittalData } = props;
-  const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
+  const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
+
+  useEffect(() => {
+    // if(submittalData)
+    setUpdatedData(submittalData);
+  }, [submittalData]);
+
   const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
     (data: SubmittalLog) => ({
       submittalId: data.id,
@@ -52,20 +59,41 @@ function SubmitalDetails(props: {
   };
 
   const addDependent = () => {
-    setUpdatedData((prev) => {
-      return selectedDepends
+    setUpdatedData((prev: SubmittalLog | null) => {
+      return prev && selectedDepends
         ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
-        : { ...prev };
+        : prev;
     });
   };
 
   const removeDependent = (id: string) => {
-    const updatedDependent = updatedData.dependsOn.filter(
-      (data) => data.submittalId !== id
-    );
-    setUpdatedData((prev) => {
-      return { ...prev, dependsOn: updatedDependent };
-    });
+    if (updatedData) {
+      const updatedDependent = updatedData.dependsOn.filter(
+        (data) => data.submittalId !== id
+      );
+      setUpdatedData((prev: SubmittalLog | null) => {
+        return prev ? { ...prev, dependsOn: updatedDependent } : null;
+      });
+    }
+  };
+
+  // const addDocs = () => {
+  //   setUpdatedData((prev: SubmittalLog | null) => {
+  //     return prev && selectedDepends
+  //       ? { ...prev, docs: [...prev.docs, selectedDepends] }
+  //       : prev;
+  //   });
+  // };
+
+  const removeDocs = (id: string) => {
+    if (updatedData) {
+      const updatedDependent = updatedData.docs.filter(
+        (data) => data.id !== id
+      );
+      setUpdatedData((prev: SubmittalLog | null) => {
+        return prev ? { ...prev, docs: updatedDependent } : null;
+      });
+    }
   };
 
   const onChangeContractor = (name: string) => {
@@ -73,14 +101,16 @@ function SubmitalDetails(props: {
       (data) => data.name === name
     );
 
-    setUpdatedData((prev) => {
-      return {
-        ...prev,
-        contractor: selectedContractor || prev.contractor,
-        assigned: selectedContractor
-          ? { assignedTo: "", destination: "" }
-          : prev.assigned
-      };
+    setUpdatedData((prev: SubmittalLog | null) => {
+      return prev
+        ? {
+            ...prev,
+            contractor: selectedContractor || prev.contractor,
+            assigned: selectedContractor
+              ? { assignedTo: "", destination: "" }
+              : prev.assigned
+          }
+        : null;
     });
   };
 
@@ -89,21 +119,23 @@ function SubmitalDetails(props: {
       (data) => data.assignedTo === assignedTo
     );
 
-    setUpdatedData((prev) => {
-      return {
-        ...prev,
-        assigned: selectedAssignee
-          ? {
-              assignedTo: selectedAssignee.assignedTo,
-              destination: selectedAssignee.destination
-            }
-          : prev.assigned
-      };
+    setUpdatedData((prev: SubmittalLog | null) => {
+      return prev
+        ? {
+            ...prev,
+            assigned: selectedAssignee
+              ? {
+                  assignedTo: selectedAssignee.assignedTo,
+                  destination: selectedAssignee.destination
+                }
+              : prev.assigned
+          }
+        : null;
     });
   };
 
   useEffect(() => {
-    onChangeSubmittalData(updatedData);
+    if (updatedData) onChangeSubmittalData(updatedData);
   }, [updatedData]);
   return (
     <div style={{ height: "100%" }}>
@@ -121,10 +153,10 @@ function SubmitalDetails(props: {
               <p className="HedingColor">STATUS</p>
               <Select
                 className="selectStyle"
-                defaultValue={updatedData.status}
+                value={updatedData ? updatedData.status : undefined}
                 onChange={(data) =>
-                  setUpdatedData((prev) => {
-                    return { ...prev, status: data };
+                  setUpdatedData((prev: SubmittalLog | null) => {
+                    return prev ? { ...prev, status: data } : null;
                   })
                 }
               >
@@ -139,22 +171,30 @@ function SubmitalDetails(props: {
                   DUE BY
                 </p>
                 <p className="validationColor" style={{ float: "right" }}>
-                  {moment(updatedData.dueBy).fromNow()}
+                  {updatedData?.dueBy
+                    ? moment(updatedData.dueBy).fromNow()
+                    : null}
                 </p>
               </div>
 
               <DatePicker
                 style={{ width: "100%", backgroundColor: "#0000000D" }}
                 format="MM-DD-YYYY"
-                defaultValue={moment(updatedData.dueBy, "MM-DD-YYYY")}
+                value={
+                  updatedData?.dueBy
+                    ? moment(updatedData.dueBy, "MM-DD-YYYY")
+                    : undefined
+                }
                 onChange={(data) =>
-                  setUpdatedData((prev) => {
-                    return {
-                      ...prev,
-                      dueBy: data
-                        ? moment(data).format("MM-DD-YYYY")
-                        : prev.dueBy
-                    };
+                  setUpdatedData((prev: SubmittalLog | null) => {
+                    return prev
+                      ? {
+                          ...prev,
+                          dueBy: data
+                            ? moment(data).format("MM-DD-YYYY")
+                            : prev.dueBy
+                        }
+                      : null;
                   })
                 }
               />
@@ -166,7 +206,7 @@ function SubmitalDetails(props: {
                 onChange={onChangeContractor}
                 showSearch
                 optionFilterProp="children"
-                defaultValue={updatedData.contractor.name}
+                value={updatedData ? updatedData.contractor.name : null}
                 filterOption={(input, option) =>
                   (option!.children as unknown as string)
                     .toLowerCase()
@@ -187,7 +227,7 @@ function SubmitalDetails(props: {
                 onChange={onChangeAssignee}
                 showSearch
                 optionFilterProp="children"
-                value={updatedData.assigned.assignedTo}
+                value={updatedData ? updatedData.assigned.assignedTo : null}
                 filterOption={(input, option) =>
                   (option!.children as unknown as string)
                     .toLowerCase()
@@ -195,7 +235,7 @@ function SubmitalDetails(props: {
                 }
               >
                 {DropDownData.AssigneeOptions.filter(
-                  (data) => data.contractor === updatedData.contractor.name
+                  (data) => data.contractor === updatedData?.contractor.name
                 ).map((item) => (
                   <Option key={item.assignedTo} value={item.assignedTo}>
                     {item.assignedTo}
@@ -209,22 +249,30 @@ function SubmitalDetails(props: {
                   GOVERNING DATE
                 </p>
                 <p className="validationColor" style={{ float: "right" }}>
-                  {moment(updatedData.governingDate).fromNow()}
+                  {updatedData?.governingDate
+                    ? moment(updatedData?.governingDate).fromNow()
+                    : null}
                 </p>
               </div>
 
               <DatePicker
                 style={{ width: "100%", backgroundColor: "#0000000D" }}
                 format="MM-DD-YYYY"
-                defaultValue={moment(updatedData.governingDate, "MM-DD-YYYY")}
+                value={
+                  updatedData?.governingDate
+                    ? moment(updatedData?.governingDate, "MM-DD-YYYY")
+                    : undefined
+                }
                 onChange={(data) =>
-                  setUpdatedData((prev) => {
-                    return {
-                      ...prev,
-                      governingDate: data
-                        ? moment(data).format("MM-DD-YYYY")
-                        : prev.governingDate
-                    };
+                  setUpdatedData((prev: SubmittalLog | null) => {
+                    return prev
+                      ? {
+                          ...prev,
+                          governingDate: data
+                            ? moment(data).format("MM-DD-YYYY")
+                            : prev.governingDate
+                        }
+                      : null;
                   })
                 }
               />
@@ -239,11 +287,13 @@ function SubmitalDetails(props: {
                     style={{ backgroundColor: "#0000000D" }}
                     rows={3}
                     placeholder="Fill the Discription"
-                    defaultValue={updatedData.description}
+                    value={updatedData?.description}
                     maxLength={400}
                     onChange={(data) =>
-                      setUpdatedData((prev) => {
-                        return { ...prev, description: data.target.value };
+                      setUpdatedData((prev: SubmittalLog | null) => {
+                        return prev
+                          ? { ...prev, description: data.target.value }
+                          : null;
                       })
                     }
                   />
@@ -282,7 +332,7 @@ function SubmitalDetails(props: {
                       width: "100%"
                     }}
                   >
-                    {updatedData.dependsOn
+                    {updatedData?.dependsOn
                       ? updatedData.dependsOn.map((data) => {
                           return (
                             <Row
@@ -325,29 +375,76 @@ function SubmitalDetails(props: {
               </Row>
             </Col>
             <Col span={9} offset={1}>
-              <div>
-                <p className="HedingColor" style={{ float: "left" }}>
-                  ATTACHMENTS{" "}
-                </p>
-                {/* <SearchableDropdown
-            placeholder="Search"
-            data={[{topicId:1001,topicName:"abc"}]}
-            onSelect={onSearchSelect}
-          /> */}
-              </div>
+              <Row
+                style={{
+                  margin: "10px 0",
+                  display: "flex",
+                  alignItems: "center"
+                }}
+              >
+                <Col span={4}>
+                  <p className="HedingColor">ATTACHMENTS</p>
+                </Col>
+                <Col span={6} offset={12}>
+                  {/* <SearchDropdown
+                    placeholder="Search"
+                    data={onlySubmittalsTitleId}
+                    onSelect={onSubmittalSearch}
+                  /> */}
+                </Col>
+                <Col span={2}>
+                  <Upload {...props}>
+                    <Button
+                      className="add-new-column-btn"
+                      // onClick={addDependent}
+                    >
+                      <PlusIcon />
+                    </Button>{" "}
+                  </Upload>
+                </Col>
+              </Row>
               <div
                 style={{
                   overflowY: "scroll",
-                  height: "100%",
+                  height: "250px",
                   width: "100%"
                 }}
               >
-                {/* <Input
-                  placeholder="Basic usage"
-                  style={{ border: "1px solid #00000033" }}
-                  defaultValue={updatedData.dependsOn}
-                  allowClear
-                /> */}
+                {updatedData?.docs
+                  ? updatedData.docs.map((data) => {
+                      return (
+                        <Row
+                          style={{
+                            padding: "4px 11px",
+                            border: "1px solid #00000033",
+                            margin: "10px 0"
+                          }}
+                        >
+                          <Col span={22} style={{ display: "flex" }}>
+                            <Space>
+                              <span>{data.fileName}</span>
+                            </Space>
+                          </Col>
+                          <Col
+                            span={1}
+                            offset={1}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "flex-end"
+                            }}
+                          >
+                            <Button
+                              className="add-new-column-btn"
+                              onClick={() => removeDocs(data.id)}
+                            >
+                              <ClearIcon />
+                            </Button>
+                          </Col>
+                        </Row>
+                      );
+                    })
+                  : null}
               </div>
             </Col>
           </Row>
