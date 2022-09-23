@@ -111,7 +111,7 @@ function SubmittalList() {
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
   const [selectedRowsData, setSelectedRowsData] = useState([]);
-  const [height, setHeight] = useState(50);
+  const [height, setHeight] = useState(505);
   const [isDocumentView, setIsDocumentView] = useState(false);
   const gridStyle = useMemo(
     () => ({
@@ -141,9 +141,9 @@ function SubmittalList() {
 
   const viewDocument = (value: boolean) => {
     if (value) {
-      setHeight(100);
+      setHeight(920);
     } else {
-      setHeight(50);
+      setHeight(505);
     }
     setIsDocumentView(value);
   };
@@ -432,7 +432,7 @@ function SubmittalList() {
 
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
-    setHeight(50);
+    setHeight(505);
   };
 
   const onFirstDataRendered = useCallback(() => {
@@ -709,7 +709,7 @@ function SubmittalList() {
         visible={showStagingZone}
         mask={false}
         headerStyle={{ borderBottom: "none" }}
-        height={`${height}vh`}
+        height={height}
       >
         {showStagingZone && (
           <StagingZone
