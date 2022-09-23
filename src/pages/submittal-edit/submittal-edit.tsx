@@ -61,7 +61,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         (contractor: any) => contractor.name === values.contractor
       );
       const assigned: any = selectedContractor[0]?.assignees.filter(
-        (contractor: any) => contractor.name === values.assigned
+        (contractor: any) => contractor.assignedTo === values.assigned
       );
       const data = {
         contractor: selectedContractor[0],
@@ -106,6 +106,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       }, {});
     setContractorSelected(contractor);
     setAssigneeData(Object.values(assignedData));
+    form.setFieldValue("assigned", null);
   };
 
   const [isContractorModalOpen, setIsContractorModalOpen] =
@@ -123,7 +124,6 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const addNewAssignee = (data: any) => {
     const payload = { contractorName: contractorSelected, assignee: data };
     dispatch(newAssignee(payload));
-    onChangeContractor(contractorSelected);
     message.success("Assignee Added Successfully");
     setIsAssigneeModalOpen(false);
   };
@@ -147,6 +147,10 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const handleAssigneeCancel = () => {
     setIsAssigneeModalOpen(false);
   };
+
+  useEffect(() => {
+    setAssigneeData(submittalState.assignees[contractorSelected]);
+  }, [submittalState]);
 
   return (
     <>
@@ -228,8 +232,8 @@ function SubmittalEdit(props: EditSubmittalLogs) {
               assigneeData
                 .filter((x: any) => x.assignedTo !== "All")
                 .map((item: any) => (
-                  <Option key={item.name} value={item.name}>
-                    {item.name}
+                  <Option key={item.assignedTo} value={item.assignedTo}>
+                    {item.assignedTo}
                   </Option>
                 ))}
           </Select>
