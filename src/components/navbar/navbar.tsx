@@ -42,14 +42,14 @@ function Nav() {
           title={slugToText(projectId)}
         />
       )}
-      {projectId !== "" && (
-        <div className="navmenu">
-          <Menus projectId={projectId} />
-        </div>
-      )}
       {auth.currentUser && (
         <div style={{ float: "right" }}>
           <AccountMenu />
+        </div>
+      )}
+      {projectId !== "" && (
+        <div className="navmenu">
+          <Menus projectId={projectId} />
         </div>
       )}
       {location.pathname === "/projects" && (
