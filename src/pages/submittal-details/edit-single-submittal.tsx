@@ -22,7 +22,7 @@ function SubmittalDetailspage(props: any) {
     (state: RootState) => state.submittals.list
   );
   const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
-  const { Paragraph } = Typography;
+  const { Title } = Typography;
   const dispatch = useAppDispatch();
   const goToSubmittalPage = () => {
     history.goBack();
@@ -59,7 +59,7 @@ function SubmittalDetailspage(props: any) {
       <section>
         <Layout>
           <Card className="SubDetailsCard">
-            <Row gutter={30}>
+            <Row>
               <Col span={4}>
                 {/* <Link
                   to=
@@ -73,29 +73,37 @@ function SubmittalDetailspage(props: any) {
                 </Button>
                 {/* </Link> */}
               </Col>
-
-              <Col span={14}>
-                <div style={{ display: "inline-block" }}>
+              <Col
+                span={1}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Title level={5} style={{ marginBottom: "0px" }}>
                   {updatedData?.id}
-                  <Paragraph
-                    // className="SubDetailsParagraph"
-                    style={{
-                      marginTop: "8px",
-                      display: "inline-block",
-                      marginLeft: "5px"
-                    }}
-                    editable={{
-                      icon: <EditFilled color="black" />,
-                      tooltip: "",
-                      onChange: (e) => updateSubmittalTitle(e)
-                    }}
-                  >
-                    {updatedData?.submittal}
-                  </Paragraph>
-                </div>
+                </Title>
               </Col>
 
-              <Col span={6}>
+              <Col span={14} style={{ display: "flex", alignItems: "center" }}>
+                <Title
+                  level={5}
+                  style={{
+                    width: "100%",
+                    marginBottom: "0px"
+                  }}
+                  editable={{
+                    icon: <EditFilled color="black" />,
+                    tooltip: "",
+                    onChange: (e) => updateSubmittalTitle(e)
+                  }}
+                >
+                  {updatedData?.submittal}
+                </Title>
+              </Col>
+
+              <Col span={5}>
                 <div style={{ float: "right", marginTop: "8px" }}>
                   <Button className="SubDetailsSplitBtn">
                     Split Submittal
