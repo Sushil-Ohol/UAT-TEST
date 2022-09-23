@@ -284,7 +284,6 @@ function ProjectCreate() {
                                       <Row align="middle">
                                         <div className="selected-file">
                                           <Col span={1}>
-                                            {/* <FileDoneOutlined className="document" /> */}
                                             <ViewDocumentIcon className="document" />
                                           </Col>
                                           <Col
