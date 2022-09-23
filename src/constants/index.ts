@@ -42,42 +42,42 @@ export const hexagoanStyleScreen2 = {
 const ContractorOptions = [
   {
     name: "ABC Construction",
-    email: "john@abcconstuct.com",
+    email: "contact@abcconstruct.com",
     assignees: [
-      { name: "Luke", role: "Architect" },
-      { name: "James", role: "Project Manager" }
+      { assignedTo: "Luke", destination: "Architect" },
+      { assignedTo: "James", destination: "Project Manager" }
     ]
   },
   {
     name: "A Construction",
-    email: "john@aconstuct.com",
+    email: "contact@aconstruct.com",
     assignees: [
-      { name: "John", role: "Architect" },
-      { name: "Maria", role: "Project Manager" }
+      { assignedTo: "John", destination: "Architect" },
+      { assignedTo: "Maria", destination: "Project Manager" }
     ]
   },
   {
     name: "B Construction",
-    email: "john@bconstuct.com",
+    email: "contact@bconstruct.com",
     assignees: [
-      { name: "Lionel", role: "Architect" },
-      { name: "Ronaldo", role: "Project Manager" }
+      { assignedTo: "Lionel", destination: "Architect" },
+      { assignedTo: "Ronaldo", destination: "Project Manager" }
     ]
   },
   {
     name: "C Construction",
-    email: "john@cconstuct.com",
+    email: "contact@cconstruct.com",
     assignees: [
-      { name: "Mark", role: "Architect" },
-      { name: "Roger", role: "Project Manager" }
+      { assignedTo: "Mark", destination: "Architect" },
+      { assignedTo: "Roger", destination: "Project Manager" }
     ]
   },
   {
     name: "Architect Company",
-    email: "john@cconstuct.com",
+    email: "contact@cconstruct.com",
     assignees: [
-      { name: "Mark", role: "Architect" },
-      { name: "Roger", role: "Project Manager" }
+      { assignedTo: "Mark", destination: "Architect" },
+      { assignedTo: "Roger", destination: "Project Manager" }
     ]
   }
 ];
