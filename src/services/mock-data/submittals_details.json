@@ -11,16 +11,36 @@
     "governingDate": "09-04-2022",
     "contractor": {
       "name": "ABC Construction",
-      "email": "john@abcconstuct.com"
+      "email": "james@abcconstuct.com"
     },
-    "dependsOn": [
-      { "submittalId": "1003", "submittal": "PLACE CONCRETE" },
+    "dependsOn": [{"submittalId":"1003","submittal":"PLACE CONCRETE"},{"submittalId":"1010","submittal":"STEEL FLOOR DECKING AND SHEAR STUDS"}],
+    "assigned": { "assignedTo": "James", "destination": "Project Manager" },
+    "docs": [
       {
-        "submittalId": "1010",
-        "submittal": "STEEL FLOOR DECKING AND SHEAR STUDS"
+        "id": "1",
+        "fileName": "Piping-Package1.pdf",
+        "url": "Piping-Package1.pdf",
+        "uploadedBy": "John",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
+      },
+      {
+        "id": "2",
+        "fileName": "Piping-Package2.pdf",
+        "url": "Piping-Package2.pdf",
+        "uploadedBy": "James",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
+      },
+      {
+        "id": "3",
+        "fileName": "Piping-Package3.pdf",
+        "url": "Piping-Package3.pdf",
+        "uploadedBy": "John",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
       }
-    ],
-    "assigned": { "assignedTo": "James", "destination": "Project Manager" }
+    ]
   },
   {
     "id": 1002,
@@ -32,9 +52,27 @@
     "status": "In Review",
     "dueBy": "09-05-2022",
     "governingDate": "10-24-2022",
-    "contractor": { "name": "A Construction", "email": "john@aconstuct.com" },
-    "dependsOn": [{ "submittalId": "1004", "submittal": "TENSIONED CONCRETE" }],
-    "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" }
+    "contractor": { "name": "A Construction", "email": "luke@aconstuct.com" },
+    "dependsOn": [{"submittalId":"1004","submittal":"TENSIONED CONCRETE"}],
+    "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" },
+    "docs": [
+      {
+        "id": "1",
+        "fileName": "Piping-Package1.pdf",
+        "url": "Piping-Package1.pdf",
+        "uploadedBy": "John",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
+      },
+      {
+        "id": "3",
+        "fileName": "Piping-Package3.pdf",
+        "url": "Piping-Package3.pdf",
+        "uploadedBy": "John",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
+      }
+    ]
   },
   {
     "id": 1003,
@@ -46,11 +84,19 @@
     "status": "Rejected",
     "dueBy": "08-31-2022",
     "governingDate": "04-13-2022",
-    "contractor": { "name": "B Construction", "email": "john@bconstuct.com" },
-    "dependsOn": [
-      { "submittalId": "1006", "submittal": "HYDRAULIC CEMENT UNDERLAYMENT" }
-    ],
-    "assigned": { "assignedTo": "James", "destination": "Project Manager" }
+    "contractor": { "name": "B Construction", "email": "james@bconstuct.com" },
+    "dependsOn": [{"submittalId":"1006","submittal":"HYDRAULIC CEMENT UNDERLAYMENT"}],
+    "assigned": { "assignedTo": "James", "destination": "Project Manager" },
+    "docs": [
+      {
+        "id": "1",
+        "fileName": "Piping-Package1.pdf",
+        "url": "Piping-Package1.pdf",
+        "uploadedBy": "John",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
+      }
+    ]
   },
   {
     "id": 1004,
@@ -62,9 +108,27 @@
     "status": "Approved with Comments",
     "dueBy": "10-02-2022",
     "governingDate": "10-10-2023",
-    "contractor": { "name": "C Construction", "email": "john@cconstuct.com" },
-    "dependsOn": [{ "submittalId": "1007", "submittal": "UNIT MASONRY" }],
-    "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" }
+    "contractor": { "name": "C Construction", "email": "luke@cconstuct.com" },
+    "dependsOn": [{"submittalId":"1007","submittal":"UNIT MASONRY"}],
+    "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" },
+    "docs": [
+      {
+        "id": "1",
+        "fileName": "Piping-Package1.pdf",
+        "url": "Piping-Package1.pdf",
+        "uploadedBy": "John",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
+      },
+      {
+        "id": "2",
+        "fileName": "Piping-Package2.pdf",
+        "url": "Piping-Package2.pdf",
+        "uploadedBy": "James",
+        "uploadDate": "10-06-2022",
+        "annotationCount": 2
+      }
+    ]
   },
   {
     "id": 1005,
@@ -75,10 +139,8 @@
     "status": "In Review",
     "dueBy": "08-22-2022",
     "governingDate": "11-01-2022",
-    "contractor": { "name": "C Construction", "email": "john@cconstuct.com" },
-    "dependsOn": [
-      { "submittalId": "1008", "submittal": "STRUCTURAL STEEL FRAMING" }
-    ],
+    "contractor": { "name": "C Construction", "email": "james@cconstuct.com" },
+    "dependsOn": [{"submittalId":"1008","submittal":"STRUCTURAL STEEL FRAMING"}],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -90,13 +152,8 @@
     "status": "Approved",
     "dueBy": "08-23-2022",
     "governingDate": "09-10-2022",
-    "contractor": { "name": "B Construction", "email": "john@bconstuct.com" },
-    "dependsOn": [
-      {
-        "submittalId": "1009",
-        "submittal": "ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"
-      }
-    ],
+    "contractor": { "name": "B Construction", "email": "luke@bconstuct.com" },
+    "dependsOn": [{"submittalId":"1009","submittal":"ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"}],
     "assigned": { "assignedTo": "Luke", "destination": "Architect" }
   },
   {
@@ -109,13 +166,8 @@
     "status": "Rejected",
     "dueBy": "08-14-2022",
     "governingDate": "11-06-2022",
-    "contractor": { "name": "A Construction", "email": "john@aconstuct.com" },
-    "dependsOn": [
-      {
-        "submittalId": "1010",
-        "submittal": "STEEL FLOOR DECKING AND SHEAR STUDS"
-      }
-    ],
+    "contractor": { "name": "A Construction", "email": "luke@aconstuct.com" },
+    "dependsOn": [{"submittalId":"1010","submittal":"STEEL FLOOR DECKING AND SHEAR STUDS"}],
     "assigned": { "assignedTo": "Luke", "destination": "Chief Engineer" }
   },
   {
@@ -127,8 +179,8 @@
     "status": "Approved with Comments",
     "dueBy": "11-04-2022",
     "governingDate": "09-23-2022",
-    "contractor": { "name": "B Construction", "email": "john@bconstuct.com" },
-    "dependsOn": [{ "submittalId": "1007", "submittal": "UNIT MASONRY" }],
+    "contractor": { "name": "B Construction", "email": "james@bconstuct.com" },
+    "dependsOn": [{"submittalId":"1007","submittal":"UNIT MASONRY"}],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -141,13 +193,8 @@
     "status": "Approved",
     "dueBy": "09-16-2022",
     "governingDate": "08-10-2021",
-    "contractor": { "name": "C Construction", "email": "john@cconstuct.com" },
-    "dependsOn": [
-      {
-        "submittalId": "1010",
-        "submittal": "STEEL FLOOR DECKING AND SHEAR STUDS"
-      }
-    ],
+    "contractor": { "name": "C Construction", "email": "james@cconstuct.com" },
+    "dependsOn": [{"submittalId":"1010","submittal":"STEEL FLOOR DECKING AND SHEAR STUDS"}],
     "assigned": { "assignedTo": "James", "destination": "Project Manager" }
   },
   {
@@ -161,14 +208,9 @@
     "governingDate": "11-10-2029",
     "contractor": {
       "name": "ABC Construction",
-      "email": "john@abcconstuct.com"
+      "email": "luke@abcconstuct.com"
     },
-    "dependsOn": [
-      {
-        "submittalId": "1009",
-        "submittal": "ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"
-      }
-    ],
+    "dependsOn": [{"submittalId":"1009","submittal":"ARCHITECTURALLY EXPOSED STRUCTURAL STEEL FRAMING"}],
     "assigned": { "assignedTo": "Luke", "destination": "Architect" }
   }
 ]
