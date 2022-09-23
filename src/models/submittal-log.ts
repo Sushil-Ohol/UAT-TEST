@@ -1,4 +1,5 @@
 import { BaseResponse } from "./base";
+import { ConversationDoc } from "./discussion";
 
 export type DependsOn = {
   submittalId: string;
@@ -18,6 +19,7 @@ export type SubmittalLog = {
   contractor: { name: string; email: string };
   dependsOn: DependsOn[];
   assigned: { assignedTo: string; destination: string };
+  docs: ConversationDoc[];
 };
 export type SubmittalListResponse = BaseResponse & {
   response: SubmittalLog[];
