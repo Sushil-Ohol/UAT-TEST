@@ -63,7 +63,7 @@ import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import SubmittalTooltip from "./submittal-tooltip";
 import CustomDateFilters from "./custom-date-filter";
-import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
+// import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
 const { Title } = Typography;
 
@@ -72,20 +72,18 @@ let immutableRowData: any[];
 let filterType = "All";
 
 const dependsOnCellRenderer = (props: any) => {
-  const values = props.value.toString().split(",");
   return (
-    <>
-      {values.map((val: any, index: any) => {
-        return (
-          <Tooltip
-            title={<DependsOnToolTip value={val.submittalId} api={props.api} />}
-          >
-            <span>{val.submittalId}</span>
-            {props.value[index + 1] ? " , " : ""}
-          </Tooltip>
-        );
-      })}
-    </>
+    props.value &&
+    props.value.map((val: any, index: any) => {
+      return (
+        <Tooltip
+          title={<DependsOnToolTip value={val.submittalId} api={props.api} />}
+        >
+          <span>{val.submittalId}</span>
+          {props.value[index + 1] ? " , " : ""}
+        </Tooltip>
+      );
+    })
   );
 };
 
@@ -95,11 +93,11 @@ const isExternalFilterPresent = () => {
 
 const doesExternalFilterPass = (node: RowNode) => {
   if (filterType === "All") {
-    return node.data.status !== "Not required";
+    return node.data.status !== "Submittal not required";
   }
 
   if (filterType === "Rejected") {
-    return node.data.status === "Not required";
+    return node.data.status === "Submittal not required";
   }
 
   return true;
@@ -636,10 +634,6 @@ function SubmittalList() {
           tooltipShowDelay={0}
           tooltipHideDelay={2000}
           onFilterChanged={onFiltersApplied}
-          rowClass="table-row"
-          masterDetail
-          detailRowAutoHeight
-          detailCellRenderer={SubmittalSourceDetailRenderer}
           isExternalFilterPresent={isExternalFilterPresent}
           doesExternalFilterPass={doesExternalFilterPass}
         />

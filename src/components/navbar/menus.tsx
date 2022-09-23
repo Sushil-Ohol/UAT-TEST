@@ -1,6 +1,7 @@
 /* Project List Page Component */
 import { useState } from "react";
 import { Menu, MenuProps } from "antd";
+import { Link } from "react-router-dom";
 import "./navbar.css";
 
 function Menus(props: any) {
@@ -8,53 +9,53 @@ function Menus(props: any) {
   const items: MenuProps["items"] = [
     {
       label: (
-        <a href={`/project/details/${projectId}`} rel="noopener noreferrer">
+        <Link to={`/project/details/${projectId}`} rel="noopener noreferrer">
           Project
-        </a>
+        </Link>
       ),
       key: "1"
     },
     {
       label: (
-        <a
-          href={`/project/details/${projectId}/schedule`}
+        <Link
+          to={`/project/details/${projectId}/schedule`}
           rel="noopener noreferrer"
         >
           Schedule
-        </a>
+        </Link>
       ),
       key: "2"
     },
     {
       label: (
-        <a
-          href={`/project/details/${projectId}/specification`}
+        <Link
+          to={`/project/details/${projectId}/specification`}
           rel="noopener noreferrer"
         >
           Specification
-        </a>
+        </Link>
       ),
       key: "3"
     },
     {
       label: (
-        <a
-          href={`/project/details/${projectId}/materials`}
+        <Link
+          to={`/project/details/${projectId}/materials`}
           rel="noopener noreferrer"
         >
           Materials
-        </a>
+        </Link>
       ),
       key: "4"
     },
     {
       label: (
-        <a
-          href={`/project/details/${projectId}/submittals`}
+        <Link
+          to={`/project/details/${projectId}/submittals`}
           rel="noopener noreferrer"
         >
           Submittals
-        </a>
+        </Link>
       ),
       key: "5"
     }

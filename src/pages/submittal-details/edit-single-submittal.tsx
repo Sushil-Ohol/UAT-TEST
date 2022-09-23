@@ -6,7 +6,8 @@ import { SubmittalLog } from "models/submittal-log";
 
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useAppDispatch } from "store";
+import { useAppDispatch, useAppSelector } from "store";
+import { RootState } from "store/slices";
 import { updateSubmittal } from "store/slices/submittalsSlices";
 import "./submittal-details.css";
 // import UploadFile from "./upload";
@@ -17,26 +18,37 @@ const { TabPane } = Tabs;
 function SubmittalDetailspage(props: any) {
   const { location } = props;
   const history = useHistory();
-
-  const [updatedData, setUpdatedData] = useState<SubmittalLog>(
-    location.state.data
+  const submittalList = useAppSelector(
+    (state: RootState) => state.submittals.list
   );
-  const [customIconStr, setCustomIconStr] = useState(
-    location.state.data.submittal
-  );
-  const { Paragraph } = Typography;
+  const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
+  const { Title } = Typography;
   const dispatch = useAppDispatch();
   const goToSubmittalPage = () => {
     history.goBack();
   };
 
   useEffect(() => {
-    dispatch(updateSubmittal(updatedData));
-  }, [updatedData]);
+    const selectedSubmittal = submittalList.find(
+      (data) => data.id === location.state.data.id
+    );
+    if (selectedSubmittal) setUpdatedData(selectedSubmittal);
+  }, []);
 
   useEffect(() => {
-    setUpdatedData((prev) => ({ ...prev, submittal: customIconStr }));
-  }, [customIconStr]);
+    if (updatedData) dispatch(updateSubmittal(updatedData));
+  }, [updatedData]);
+
+  const updateSubmittalTitle = (title: string) => {
+    setUpdatedData((prev: SubmittalLog | null) => {
+      return prev
+        ? {
+            ...prev,
+            submittal: title !== "" ? title : prev.submittal
+          }
+        : null;
+    });
+  };
 
   const onChangeSubmittalData = (data: SubmittalLog) => {
     setUpdatedData(data);
@@ -47,7 +59,7 @@ function SubmittalDetailspage(props: any) {
       <section>
         <Layout>
           <Card className="SubDetailsCard">
-            <Row gutter={30}>
+            <Row>
               <Col span={4}>
                 {/* <Link
                   to=
@@ -61,29 +73,37 @@ function SubmittalDetailspage(props: any) {
                 </Button>
                 {/* </Link> */}
               </Col>
-
-              <Col span={14}>
-                <div style={{ display: "inline-block" }}>
-                  {updatedData.id}
-                  <Paragraph
-                    // className="SubDetailsParagraph"
-                    style={{
-                      marginTop: "8px",
-                      display: "inline-block",
-                      marginLeft: "5px"
-                    }}
-                    editable={{
-                      icon: <EditFilled color="black" />,
-                      tooltip: "",
-                      onChange: (e) => setCustomIconStr(e)
-                    }}
-                  >
-                    {customIconStr}
-                  </Paragraph>
-                </div>
+              <Col
+                span={1}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Title level={5} style={{ marginBottom: "0px" }}>
+                  {updatedData?.id}
+                </Title>
               </Col>
 
-              <Col span={6}>
+              <Col span={14} style={{ display: "flex", alignItems: "center" }}>
+                <Title
+                  level={5}
+                  style={{
+                    width: "100%",
+                    marginBottom: "0px"
+                  }}
+                  editable={{
+                    icon: <EditFilled color="black" />,
+                    tooltip: "",
+                    onChange: (e) => updateSubmittalTitle(e)
+                  }}
+                >
+                  {updatedData?.submittal}
+                </Title>
+              </Col>
+
+              <Col span={5}>
                 <div style={{ float: "right", marginTop: "8px" }}>
                   <Button className="SubDetailsSplitBtn">
                     Split Submittal
