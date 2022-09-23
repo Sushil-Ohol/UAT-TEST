@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Input, Button, Space } from "antd";
+import { Input, Button, Space, Switch } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import "../submittal-list.css";
 import { FilterChips } from "components";
@@ -77,13 +77,7 @@ function SubmittalListFilterComponent(props: FilterProps) {
         <span>
           <div>
             <div className="inner">
-              <Button
-                onClick={onRejectButtonClick}
-                size="middle"
-                className="newSubmittalBtn"
-              >
-                {showFiterChips ? "Not Required Submittals" : "All Submittals"}
-              </Button>
+              All <Switch onClick={onRejectButtonClick} /> Not required
             </div>
             <div className="inner">
               <Button

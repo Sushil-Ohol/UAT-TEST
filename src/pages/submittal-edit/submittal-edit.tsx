@@ -69,7 +69,6 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         assigned: assigned ? assigned[0] : "",
         dueBy: values.dueBy
       };
-
       onApplyClick(data);
     });
   };
@@ -77,16 +76,19 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   const [optionArray, setOptionArray] = useState<any>([]);
 
   const onStatusDropDownChange = () => {
-    const assignedRequired = selectedRows.filter(
-      (item: any) => item.assigned !== ""
-    );
-    const notRequired = selectedRows.filter(
-      (item: any) => item.status === "Not required"
-    );
+    const assignedRequired = selectedRows.filter((item: any) => {
+      return (
+        item.assigned !== "" &&
+        (item.status === "Submittal not required" || item.status === "")
+      );
+    });
+    const assignedStatusRequired = selectedRows.filter((item: any) => {
+      return item.status === "Submittal required";
+    });
     if (assignedRequired.length > 0) {
       setOptionArray(DropDownData.StatusOptionsForArchitects);
-    } else if (notRequired.length > 0) {
-      setOptionArray(DropDownData.StatusOptionsForArchitects);
+    } else if (assignedStatusRequired.length > 0) {
+      setOptionArray([...DropDownData.StatusOptions, "For approval"]);
     } else {
       setOptionArray(DropDownData.StatusOptions);
     }
