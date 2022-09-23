@@ -52,7 +52,9 @@ function StagingZone(props: StagingZoneProps) {
 
       <div
         className="five-columns group"
-        style={{ display: isDocumentView ? "inline-block" : "none" }}
+        style={{
+          display: isDocumentView ? "inline-block" : "none"
+        }}
       >
         <DocumentViewHeader
           prev={prev}
