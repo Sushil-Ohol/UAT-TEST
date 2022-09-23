@@ -63,7 +63,7 @@ import SubmittalListBottomBar from "./bottom-bar";
 import DependsOnToolTip from "./depends-on-tooltip";
 import SubmittalTooltip from "./submittal-tooltip";
 import CustomDateFilters from "./custom-date-filter";
-import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
+// import SubmittalSourceDetailRenderer from "./source-detail/source-detail";
 
 const { Title } = Typography;
 
@@ -636,10 +636,6 @@ function SubmittalList() {
           tooltipShowDelay={0}
           tooltipHideDelay={2000}
           onFilterChanged={onFiltersApplied}
-          rowClass="table-row"
-          masterDetail
-          detailRowAutoHeight
-          detailCellRenderer={SubmittalSourceDetailRenderer}
           isExternalFilterPresent={isExternalFilterPresent}
           doesExternalFilterPass={doesExternalFilterPass}
         />
