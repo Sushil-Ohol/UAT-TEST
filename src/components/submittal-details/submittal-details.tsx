@@ -45,11 +45,20 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
 
   const [fileLoading, setFileLoading] = useState<boolean>(false);
+  const [statusOptions, setStatusOptions] = useState<any>([]);
 
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
+
+  useEffect(() => {
+    const temp = [...DropDownData.StatusOptions];
+    if (updatedData!.status === "Submittal required") {
+      temp.push("For approval");
+    }
+    setStatusOptions(temp);
+  }, []);
 
   const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
     (data: SubmittalLog) => ({
@@ -284,9 +293,10 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                   })
                 }
               >
-                {DropDownData.StatusOptions.map((data) => (
-                  <Option key={data}>{data}</Option>
-                ))}
+                {statusOptions?.length > 0 &&
+                  statusOptions.map((data: any) => (
+                    <Option key={data}>{data}</Option>
+                  ))}
               </Select>
             </Col>
             <Col span={4}>

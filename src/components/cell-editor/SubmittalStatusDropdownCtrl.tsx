@@ -11,14 +11,17 @@ const SubmittalStatusDropdownCtrl = (params: ICellEditorParams) => {
       values: DropDownData.StatusOptionsForArchitects
     };
   }
-  if (params.data.status === "Submittal required") {
+  if (
+    params.data.status !== "" &&
+    params.data.status === "Submittal required"
+  ) {
     return {
       values: [...DropDownData.StatusOptions, "For approval"]
     };
   }
 
   return {
-    values: DropDownData.StatusOptions
+    values: [...DropDownData.StatusOptions]
   };
 };
 

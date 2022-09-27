@@ -25,7 +25,8 @@ import { Buttons } from "components/widgets";
 import { useAppDispatch, useAppSelector } from "store";
 import {
   getSubmittalList,
-  setSubmittalList
+  setSubmittalList,
+  updateSubmittal
 } from "store/slices/submittalsSlices";
 import SubmittalCreateComponent from "pages/submittal-create";
 import SubmittalLogCreateComponent from "pages/submittal-log-create";
@@ -340,6 +341,50 @@ function SubmittalList() {
       maxWidth: 70
     }
   ]);
+  useEffect(() => {
+    const temp = [...columnDefs];
+    const itemIndexContractor = columnDefs.findIndex(
+      (o) => o.field === "contractor"
+    );
+    if (itemIndexContractor > -1) {
+      temp[itemIndexContractor] = {
+        field: "contractor",
+        headerName: "COMPANY",
+        minWidth: 180,
+        autoHeight: true,
+        cellEditor: "agRichSelectCellEditor",
+        cellEditorParams: {
+          cellRenderer: contractorEditCellRenderer,
+          values: submittalState.contractors,
+          cellHeight: 20
+        },
+        cellRenderer: contractorCellRenderer,
+        cellEditorPopup: true,
+        keyCreator: (contractor) => {
+          return contractor.value.name;
+        }
+      };
+    }
+    const itemIndexassigned = columnDefs.findIndex(
+      (o) => o.field === "assigned"
+    );
+    if (itemIndexassigned > -1) {
+      temp[itemIndexassigned] = {
+        field: "assigned",
+        headerName: "ASSIGNED",
+        cellEditor: "agRichSelectCellEditor",
+        minWidth: 100,
+        autoHeight: true,
+        cellEditorPopup: true,
+        cellEditorParams: contractorEditorParams,
+        cellRenderer: assignedCellRenderer,
+        keyCreator: (contractor) => {
+          return contractor.value.assignedTo;
+        }
+      };
+    }
+    setColumnDefs(temp);
+  }, [submittalState.contractors]);
 
   const autoGroupColumnDef = useMemo(() => {
     return {
@@ -395,6 +440,7 @@ function SubmittalList() {
   };
 
   React.useEffect(() => {
+    filterType = "All";
     if (submittalState.list.length === 0) {
       loadSubmittals();
     }
@@ -448,6 +494,9 @@ function SubmittalList() {
       const { field } = event.colDef;
       const newItem = { ...data };
       newItem[field!] = event.newValue;
+      if (field === "contractor") {
+        newItem.assigned = {};
+      }
       immutableRowData = immutableRowData.map((oldItem) =>
         oldItem.id === newItem.id ? newItem : oldItem
       );
@@ -461,12 +510,12 @@ function SubmittalList() {
   );
 
   const onEditLogs = (data: any) => {
-    const newData = [...immutableRowData];
-    gridRef.current!.api.getSelectedRows().forEach((row: any) => {
+    const newData: any = [...immutableRowData];
+    gridRef.current!.api.getSelectedRows().forEach(async (row: any) => {
       const { id } = row;
-      const index = newData.findIndex((x) => x.id === id);
+      const index = newData.findIndex((x: any) => x.id === id);
 
-      const newitem = {
+      const newItem = {
         ...newData[index],
         status: data.status !== undefined ? data.status : newData[index].status,
         contractor:
@@ -480,7 +529,8 @@ function SubmittalList() {
             ? moment(data.dueBy).format(DATE_FORMAT_MMDDYYY)
             : newData[index].dueBy
       };
-      newData[index] = newitem;
+      await dispatch(updateSubmittal(newItem));
+      newData[index] = newItem;
       gridRef.current!.api.setRowData(newData);
     });
     immutableRowData = newData;

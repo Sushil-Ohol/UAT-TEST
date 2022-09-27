@@ -219,6 +219,16 @@ function SubmittalEdit(props: EditSubmittalLogs) {
               )}
             </span>
           }
+          rules={[
+            ({ getFieldValue }) => ({
+              validator(rule, value) {
+                if (getFieldValue("contractor") && !value) {
+                  return Promise.reject(new Error("Select assignee."));
+                }
+                return Promise.resolve();
+              }
+            })
+          ]}
         >
           <Select
             className="constructionSelect"
