@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { Button, Checkbox, Col, Row, Select, Space, Spin, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import Link from "antd/lib/typography/Link";
 // import React from "react";
 import "./submittal-details.css";
 import { DependsOn, SubmittalLog } from "models/submittal-log";
@@ -459,16 +460,25 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           <Checkbox className="actionItemsCheckBox">
             You Recevied 2 new discussion
           </Checkbox>
+          <Link href="#abc" className="respondLink">
+            Respond →
+          </Link>
         </Col>
         <Col span={24} style={{ marginBottom: "14px" }}>
           <Checkbox className="actionItemsCheckBox">
             This Submittal Recived 3 New Submissions
           </Checkbox>
+          <Link href="#abc" className="footerLink">
+            Review →
+          </Link>
         </Col>
         <Col span={24} style={{ marginBottom: "14px" }}>
           <Checkbox className="actionItemsCheckBox">
             This Submittal overdue by 20 days
           </Checkbox>
+          <Link href="#abc" className="footerLink">
+            Send an email
+          </Link>
         </Col>
       </Row>
     </div>
