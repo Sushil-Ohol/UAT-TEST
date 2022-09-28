@@ -6,18 +6,7 @@ import {
   //   ReloadOutlined
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Checkbox,
-  Col,
-  DatePicker,
-  Row,
-  Select,
-  Space,
-  Spin,
-  Upload
-} from "antd";
+import { Button, Checkbox, Col, Row, Select, Space, Spin, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 // import React from "react";
 import "./submittal-details.css";
@@ -30,6 +19,8 @@ import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
 import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
+import SelectField from "./select-field";
+import DateField from "./date-field";
 
 const { Option } = Select;
 
@@ -45,20 +36,11 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
 
   const [fileLoading, setFileLoading] = useState<boolean>(false);
-  const [statusOptions, setStatusOptions] = useState<any>([]);
 
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
-
-  useEffect(() => {
-    const temp = [...DropDownData.StatusOptions];
-    if (updatedData!.status === "Submittal required") {
-      temp.push("For approval");
-    }
-    setStatusOptions(temp);
-  }, []);
 
   const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
     (data: SubmittalLog) => ({
@@ -152,20 +134,14 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       <div
         style={{
           overflowY: "scroll",
-          height: "250px",
+          height: "169px",
           width: "100%"
         }}
       >
         {updatedData?.dependsOn
           ? updatedData.dependsOn.map((data) => {
               return (
-                <Row
-                  style={{
-                    padding: "4px 11px",
-                    border: "1px solid #00000033",
-                    margin: "10px 0"
-                  }}
-                >
+                <Row className="dependsOnRowData">
                   <Col span={22} style={{ display: "flex" }}>
                     <Space>
                       <span>{data.submittalId}</span>
@@ -201,7 +177,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       <div
         style={{
           overflowY: "scroll",
-          height: "250px",
+          height: "322px",
           width: "100%"
         }}
       >
@@ -271,54 +247,31 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   };
 
   return (
-    <div style={{ height: "100%" }}>
-      <div
-        style={{
-          padding: "15px",
-          backgroundColor: "white",
-          position: "relative",
-          top: "0px"
-        }}
-      >
+    <div style={{ height: "100%", position: "relative" }}>
+      <div className="detailsContent">
         <Space direction="vertical" size="middle" style={{ display: "flex" }}>
           <Row justify="space-between">
             <Col span={4}>
-              <p className="HedingColor">STATUS</p>
-              <Select
-                className="selectStyle"
+              <SelectField
+                title="STATUS"
                 value={updatedData ? updatedData.status : undefined}
                 onChange={(data) =>
                   setUpdatedData((prev: SubmittalLog) => {
                     return prev ? { ...prev, status: data } : prev;
                   })
                 }
+                showSearch={false}
+                filterOption
               >
-                {statusOptions?.length > 0 &&
-                  statusOptions.map((data: any) => (
-                    <Option key={data}>{data}</Option>
-                  ))}
-              </Select>
+                {DropDownData.StatusOptions.map((data) => (
+                  <Option key={data}>{data}</Option>
+                ))}
+              </SelectField>
             </Col>
             <Col span={4}>
-              <div>
-                <p className="HedingColor" style={{ float: "left" }}>
-                  DUE BY
-                </p>
-                <p className="validationColor" style={{ float: "right" }}>
-                  {updatedData?.dueBy
-                    ? moment(updatedData.dueBy).fromNow()
-                    : null}
-                </p>
-              </div>
-
-              <DatePicker
-                style={{ width: "100%", backgroundColor: "#0000000D" }}
-                format="MM-DD-YYYY"
-                value={
-                  updatedData?.dueBy
-                    ? moment(updatedData.dueBy, "MM-DD-YYYY")
-                    : undefined
-                }
+              <DateField
+                title="DUE BY"
+                value={updatedData?.dueBy}
                 onChange={(data) =>
                   setUpdatedData((prev: SubmittalLog) => {
                     return prev
@@ -334,13 +287,11 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
               />
             </Col>
             <Col span={4}>
-              <p className="HedingColor">CONTRACTOR</p>
-              <Select
-                className="selectStyle"
+              <SelectField
+                title="COMPANY"
+                value={updatedData ? updatedData.contractor.name : undefined}
                 onChange={onChangeContractor}
                 showSearch
-                optionFilterProp="children"
-                value={updatedData ? updatedData.contractor.name : null}
                 filterOption={(input, option) =>
                   (option!.children as unknown as string)
                     .toLowerCase()
@@ -352,16 +303,16 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     {item.name}
                   </Option>
                 ))}
-              </Select>
+              </SelectField>
             </Col>
             <Col span={4}>
-              <p className="HedingColor">ASSIGNED</p>
-              <Select
-                className="selectStyle"
+              <SelectField
+                title="ASSIGNED"
+                value={
+                  updatedData ? updatedData.assigned.assignedTo : undefined
+                }
                 onChange={onChangeAssignee}
                 showSearch
-                optionFilterProp="children"
-                value={updatedData ? updatedData.assigned.assignedTo : null}
                 filterOption={(input, option) =>
                   (option!.children as unknown as string)
                     .toLowerCase()
@@ -375,28 +326,12 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     {item.assignedTo}
                   </Option>
                 ))}
-              </Select>
+              </SelectField>
             </Col>
             <Col span={4}>
-              <div>
-                <p className="HedingColor" style={{ float: "left" }}>
-                  GOVERNING DATE
-                </p>
-                <p className="validationColor" style={{ float: "right" }}>
-                  {updatedData?.governingDate
-                    ? moment(updatedData?.governingDate).fromNow()
-                    : null}
-                </p>
-              </div>
-
-              <DatePicker
-                style={{ width: "100%", backgroundColor: "#0000000D" }}
-                format="MM-DD-YYYY"
-                value={
-                  updatedData?.governingDate
-                    ? moment(updatedData?.governingDate, "MM-DD-YYYY")
-                    : undefined
-                }
+              <DateField
+                title="GOVERNING DATE"
+                value={updatedData?.governingDate}
                 onChange={(data) =>
                   setUpdatedData((prev: SubmittalLog) => {
                     return prev
@@ -416,9 +351,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             <Col span={14}>
               <Row>
                 <Col span={24}>
-                  <p className="HedingColor">DISCRIPTION</p>
+                  <p className="heading">DISCRIPTION</p>
                   <TextArea
-                    style={{ backgroundColor: "#0000000D" }}
+                    className="description"
                     rows={3}
                     placeholder="Fill the Discription"
                     value={updatedData?.description}
@@ -440,10 +375,22 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                       alignItems: "center"
                     }}
                   >
-                    <Col span={4}>
-                      <p className="HedingColor">DEPENDS ON Block</p>
+                    <Col span={8}>
+                      <span className="heading">DEPENDS ON</span>
+                      <span
+                        style={{
+                          textAlign: "left",
+                          font: "normal normal normal 14px/17px Inter",
+                          letterSpacing: "0px",
+                          color: "#FF3535",
+                          opacity: 1,
+                          marginLeft: "14px"
+                        }}
+                      >
+                        Blocked
+                      </span>
                     </Col>
-                    <Col span={5} offset={14}>
+                    <Col span={5} offset={10}>
                       <SearchDropdown
                         placeholder="Search"
                         data={onlySubmittalsTitleId}
@@ -472,7 +419,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                 }}
               >
                 <Col span={4}>
-                  <p className="HedingColor">ATTACHMENTS</p>
+                  <p className="heading">ATTACHMENTS</p>
                 </Col>
                 <Col span={6} offset={12}>
                   {/* <SearchDropdown
@@ -499,42 +446,31 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         </Space>
       </div>
 
-      {/* <div style={{ height: "60px" }} /> */}
-      <div
-        style={{
-          // padding: "10px",
-          // backgroundColor: "white",
-          position: "relative",
-          bottom: "0px"
-        }}
+      <Row
+        gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+        className="actionItemCard"
       >
-        <Row
-          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-          className="rowActionItems"
-        />
-
-        <Card className="actionItemCard">
-          <section>
-            <ExclamationCircleOutlined className="SDExcCircleOutlined" />
-            &nbsp;
-            <span className="subDetailsAction">Action items</span>
-          </section>
-          <section>
-            <Checkbox className="actionItemsCheckBox">
-              You Recevied 2 new discussion
-            </Checkbox>
-            <br />
-            <Checkbox className="actionItemsCheckBox">
-              This Submittal Recived 3 New Submissions
-            </Checkbox>
-            <br />
-            <Checkbox className="actionItemsCheckBox">
-              This Submittal overdue by 20 days
-            </Checkbox>
-            <br />
-          </section>
-        </Card>
-      </div>
+        <Col span={24} style={{ marginBottom: "20px" }}>
+          <ExclamationCircleOutlined className="SDExcCircleOutlined" />
+          &nbsp;
+          <span className="subDetailsAction">Action items</span>
+        </Col>
+        <Col span={24} style={{ marginBottom: "14px" }}>
+          <Checkbox className="actionItemsCheckBox">
+            You Recevied 2 new discussion
+          </Checkbox>
+        </Col>
+        <Col span={24} style={{ marginBottom: "14px" }}>
+          <Checkbox className="actionItemsCheckBox">
+            This Submittal Recived 3 New Submissions
+          </Checkbox>
+        </Col>
+        <Col span={24} style={{ marginBottom: "14px" }}>
+          <Checkbox className="actionItemsCheckBox">
+            This Submittal overdue by 20 days
+          </Checkbox>
+        </Col>
+      </Row>
     </div>
   );
 }
