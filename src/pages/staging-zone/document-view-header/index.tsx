@@ -6,12 +6,14 @@ export type DocumentViewHeaderProps = {
   prev: any;
   onDocumentClose: any;
   selectedDocument: any;
+  onDeleteDocument: any;
 };
 
 function DocumentViewHeader({
   prev,
   onDocumentClose,
-  selectedDocument
+  selectedDocument,
+  onDeleteDocument
 }: DocumentViewHeaderProps) {
   return (
     <Row className="document-view-header">
@@ -30,6 +32,11 @@ function DocumentViewHeader({
       <Col span={1} offset={4}>
         <Button className="back-button" onClick={onDocumentClose}>
           Close
+        </Button>
+      </Col>
+      <Col span={1}>
+        <Button className="back-button" onClick={onDeleteDocument}>
+          Delete
         </Button>
       </Col>
     </Row>

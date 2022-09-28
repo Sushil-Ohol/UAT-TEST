@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { Col, Row } from "antd";
 import { DocumentView } from "components";
+import { deleteDocument } from "store/slices/staging-zone-slice";
+import { useDispatch } from "react-redux";
 import Discussions from "./discussion-list";
 import DiscussionDetails from "./discussion-details";
 import DiscussionDocs from "./discussion-docs";
@@ -23,7 +25,7 @@ function StagingZone(props: StagingZoneProps) {
     fileName: "",
     fileUrl: ""
   });
-  React.useEffect(() => {}, []);
+  const dispatch = useDispatch();
 
   const OnDiscussionSelected = (id: string) => {
     setDiscussionId(id);
@@ -35,6 +37,10 @@ function StagingZone(props: StagingZoneProps) {
     setSelectedDocument(fileName);
   };
   const onDocumentClose = () => {
+    setSelectedDocument({ fileName: "", fileUrl: "" });
+  };
+  const onDeleteDocument = () => {
+    dispatch(deleteDocument({ discussionId, ...selectedDocument }));
     setSelectedDocument({ fileName: "", fileUrl: "" });
   };
   return (
@@ -63,6 +69,7 @@ function StagingZone(props: StagingZoneProps) {
         <DocumentViewHeader
           prev={prev}
           onDocumentClose={onDocumentClose}
+          onDeleteDocument={onDeleteDocument}
           selectedDocument={selectedDocument}
         />
 

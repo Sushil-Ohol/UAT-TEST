@@ -41,10 +41,16 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
                 : "document-item"
             }
             onClick={() =>
-              onClickFile({ fileName: document.name, fileUrl: document.url })
+              onClickFile({
+                fileName: document.fileName,
+                fileUrl: document.url
+              })
             }
             onKeyDown={() =>
-              onClickFile({ fileName: document.name, fileUrl: document.url })
+              onClickFile({
+                fileName: document.fileName,
+                fileUrl: document.url
+              })
             }
             role="button"
             tabIndex={0}
