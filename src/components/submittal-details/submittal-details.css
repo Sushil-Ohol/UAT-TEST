@@ -83,3 +83,19 @@
   color: #000000;
   opacity: 1;
 }
+
+.respondLink {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #cccccc !important;
+  opacity: 1;
+}
+
+.footerLink {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #007aff !important;
+  opacity: 1;
+}
