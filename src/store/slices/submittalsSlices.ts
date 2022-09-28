@@ -81,7 +81,7 @@ const submittalSlice = createSlice({
       const dataIndex = state.list.findIndex(
         (data) => data.id === payload.submittalId
       );
-      state.list[dataIndex].revision = payload.docs.length;
+      state.list[dataIndex].revision = null;
       state.list[dataIndex].docs = payload.docs;
     },
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
