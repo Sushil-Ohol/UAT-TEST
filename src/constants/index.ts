@@ -89,7 +89,8 @@ const StatusOptions = [
   "In Review",
   "Approved",
   "Approved with Comments",
-  "Rejected"
+  "Rejected",
+  "For Approval"
 ];
 const StatusOptionsForArchitects = [
   "Submittal required",

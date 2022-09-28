@@ -10,6 +10,7 @@ import {
 } from "./cell-editor";
 import NewDiscussion from "./new-discussion";
 import AccountMenu from "./account-menu";
+import DocumentView from "./document-view";
 
 export {
   FileUpload,
@@ -21,5 +22,6 @@ export {
   CurrencyCellEditor,
   DateCellEditor,
   NewDiscussion,
-  AccountMenu
+  AccountMenu,
+  DocumentView
 };

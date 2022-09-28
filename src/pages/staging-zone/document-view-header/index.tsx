@@ -5,7 +5,7 @@ import React from "react";
 export type DocumentViewHeaderProps = {
   prev: any;
   onDocumentClose: any;
-  selectedDocument: string;
+  selectedDocument: any;
 };
 
 function DocumentViewHeader({
@@ -15,7 +15,7 @@ function DocumentViewHeader({
 }: DocumentViewHeaderProps) {
   return (
     <Row className="document-view-header">
-      <Col span={6}>
+      <Col span={5}>
         <Button
           onClick={prev}
           className="back-button"
@@ -25,9 +25,9 @@ function DocumentViewHeader({
         </Button>
       </Col>
       <Col span={14}>
-        <h2 className="heading">{selectedDocument}</h2>
+        <h2 className="heading">{selectedDocument.fileName}</h2>
       </Col>
-      <Col span={1} offset={3}>
+      <Col span={1} offset={4}>
         <Button className="back-button" onClick={onDocumentClose}>
           Close
         </Button>

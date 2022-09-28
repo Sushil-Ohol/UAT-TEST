@@ -52,25 +52,25 @@
       {
         "id": "1",
         "fileName": "Piping-Package1.pdf",
-        "url": "Piping-Package1.pdf",
+        "url": "https://www.africau.edu/images/default/sample.pdf",
         "uploadedBy": "John",
-        "uploadDate": "10-06-2022",
+        "uploadDate": "09-06-2022",
         "annotationCount": 2
       },
       {
         "id": "2",
         "fileName": "Piping-Package2.pdf",
-        "url": "Piping-Package2.pdf",
+        "url": "https://www.clickdimensions.com/links/TestPDFfile.pdf",
         "uploadedBy": "James",
-        "uploadDate": "10-06-2022",
+        "uploadDate": "09-06-2022",
         "annotationCount": 2
       },
       {
         "id": "3",
         "fileName": "Piping-Package3.pdf",
-        "url": "Piping-Package3.pdf",
+        "url": "https://s29.q4cdn.com/816090369/files/doc_downloads/test.pdf",
         "uploadedBy": "John",
-        "uploadDate": "10-06-2022",
+        "uploadDate": "09-06-2022",
         "annotationCount": 2
       }
     ]
@@ -134,7 +134,7 @@
       {
         "id": "1",
         "fileName": "test.pdf",
-        "url": "test.pdf",
+        "url": "https://www.africau.edu/images/default/sample.pdf",
         "uploadedBy": "John",
         "uploadDate": "2022-09-14 2:36 pm",
         "annotationCount": 2

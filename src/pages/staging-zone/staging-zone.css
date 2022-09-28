@@ -128,17 +128,18 @@
 }
 .document-view-div-first {
   width: 100%;
-  height: 35vh;
+  height: 30vh;
   background: #f7f6f4 0% 0% no-repeat padding-box;
   border-right: 1px solid grey;
   overflow-y: auto;
 }
 .document-view-div-second {
   width: 100%;
-  height: 55vh;
+  height: 60vh;
   background: #f7f6f4 0% 0% no-repeat padding-box;
   border-right: 1px solid grey;
   overflow-y: auto;
+  padding-bottom: 12%;
 }
 .discussion-document-view {
   width: 100%;
@@ -146,11 +147,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3%;
+  padding: 1%;
 }
 .ant-col .document-bg-color {
   background: #ffffff 0% 0% no-repeat padding-box;
   opacity: 1;
+  height: 100%;
 }
 .group .document-view-header {
   width: 100%;
@@ -168,11 +170,12 @@
   border: 0px;
   background-color: transparent;
   text-align: left;
-  font: normal normal normal 16px/21px Inter;
+  font: normal normal normal 16px/21px "Inter";
   letter-spacing: 0px;
   color: #000000fa;
   opacity: 1;
   font-size: 16px;
+  font-weight: 600;
 }
 .document-view-header .heading {
   text-align: left;
@@ -182,6 +185,7 @@
   letter-spacing: 0px;
   color: #000000fa;
   opacity: 1;
+  font-weight: 600;
   font-size: 16px;
 }
 .document-view-div-second ::-webkit-scrollbar {

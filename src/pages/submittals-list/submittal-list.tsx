@@ -52,6 +52,7 @@ import {
 } from "components/cell-renders";
 import { RootState } from "store/slices";
 import DropdownOption from "components/cell-editor/SubmittalStatusDropdownCtrl";
+import { FolderOutlined } from "@ant-design/icons";
 import { DATE_FORMAT_MMDDYYY } from "../../constants";
 import {
   ChatIcon,
@@ -745,6 +746,11 @@ function SubmittalList() {
             {!isDocumentView && (
               <Title level={5} onClick={onStagingZoneClose}>
                 <ExpandIcon className="expand-icon-right" />
+              </Title>
+            )}
+            {isDocumentView && (
+              <Title level={5} className="expand-icon-right-with-text">
+                <FolderOutlined /> Browse previous projects
               </Title>
             )}
           </Space>

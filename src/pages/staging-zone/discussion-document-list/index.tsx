@@ -4,7 +4,7 @@ import { RootState } from "store/slices";
 import "./document-list.css";
 
 export type DocumentListProps = {
-  selectedDocument: string;
+  selectedDocument: any;
   onSelect: any;
 };
 
@@ -16,16 +16,16 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
   const documents = useAppSelector(
     (state: RootState) => state.stagingZone.documents
   );
-  function onClickFile(fileName: string) {
-    setSelectedDoc(fileName);
-    onSelect(fileName);
+  function onClickFile(file: any) {
+    setSelectedDoc(file.fileUrl);
+    onSelect(file);
   }
   useEffect(() => {
-    setSelectedDoc(selectedDocument);
+    setSelectedDoc(selectedDocument.fileUrl);
   }, [selectedDocument, selectedDiscussion]);
   return (
     <>
-      <h4>
+      <h4 className="document-list-heading-h1">
         Document (
         {selectedDiscussion !== null &&
           documents[selectedDiscussion?.topicId]?.list.length}
@@ -34,22 +34,23 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
 
       {selectedDiscussion !== null &&
         documents[selectedDiscussion?.topicId]?.list.map((document: any) => (
-          <>
-            <div
-              className={
-                selectedDoc === document.fileName
-                  ? " document-item-active"
-                  : "document-item"
-              }
-              onClick={() => onClickFile(document.fileName)}
-              onKeyDown={() => onClickFile(document.fileName)}
-              role="button"
-              tabIndex={0}
-            >
-              {document.fileName}
-            </div>
-            <br />
-          </>
+          <div
+            className={
+              selectedDoc === document.url
+                ? " document-item-active"
+                : "document-item"
+            }
+            onClick={() =>
+              onClickFile({ fileName: document.name, fileUrl: document.url })
+            }
+            onKeyDown={() =>
+              onClickFile({ fileName: document.name, fileUrl: document.url })
+            }
+            role="button"
+            tabIndex={0}
+          >
+            {document.fileName}
+          </div>
         ))}
     </>
   );
