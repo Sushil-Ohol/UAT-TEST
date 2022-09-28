@@ -20,7 +20,7 @@ export type SubmittalLog = {
   description: string;
   notification: number;
   comments: number;
-  revision: number;
+  revision: number | null;
   status: string;
   dueBy: string;
   governingDate: string;
