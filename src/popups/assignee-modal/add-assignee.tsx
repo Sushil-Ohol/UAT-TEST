@@ -45,7 +45,7 @@ function AddAssigneeModal({
         onOkClick(data);
         form.resetFields();
       } else {
-        message.error("Assignee already exists for selected contractor");
+        message.error("Assignee already exists for selected company");
       }
     });
   };
@@ -86,14 +86,14 @@ function AddAssigneeModal({
             { type: "email", message: "Please enter a valid email" },
             {
               required: true,
-              message: "Please enter a email"
+              message: "Please enter an email"
             }
           ]}
         >
           <Input
             name="emailId"
             className="add-new-assignee-input"
-            placeholder="Enter email id"
+            placeholder="Enter an email id"
           />
         </Form.Item>
       </Form>

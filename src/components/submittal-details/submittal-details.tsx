@@ -416,11 +416,11 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             <Col span={14}>
               <Row>
                 <Col span={24}>
-                  <p className="HedingColor">DISCRIPTION</p>
+                  <p className="HedingColor">DESCRIPTION</p>
                   <TextArea
                     style={{ backgroundColor: "#0000000D" }}
                     rows={3}
-                    placeholder="Fill the Discription"
+                    placeholder="Fill the Description"
                     value={updatedData?.description}
                     maxLength={400}
                     onChange={(data) =>
@@ -441,7 +441,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     }}
                   >
                     <Col span={4}>
-                      <p className="HedingColor">DEPENDS ON Block</p>
+                      <p className="HedingColor">DEPENDS ON</p>
                     </Col>
                     <Col span={5} offset={14}>
                       <SearchDropdown

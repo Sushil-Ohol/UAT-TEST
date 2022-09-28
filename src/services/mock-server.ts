@@ -127,7 +127,7 @@ export function mockUpClient(client: AxiosInstance) {
         {
           success: true,
           response: user,
-          message: "Successfully Login"
+          message: "Successfully logged in"
         }
       ];
     }
@@ -136,7 +136,7 @@ export function mockUpClient(client: AxiosInstance) {
       {
         success: false,
         response: {},
-        message: "User Not Found"
+        message: "User not found"
       }
     ];
   });

@@ -225,7 +225,9 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           {data.fileName}{" "}
                         </div>
                         <span className="downloadIcon">
-                          <DownloadIcon />
+                          <a href={data.url} download={data.fileName}>
+                            <DownloadIcon />
+                          </a>
                         </span>
                         <span
                           title="You can copy this document to selected sumbittal"

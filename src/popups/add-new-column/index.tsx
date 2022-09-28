@@ -105,7 +105,7 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
             rules={[
               {
                 required: true,
-                message: "Please enter a name for the new column!"
+                message: "Please enter name for a new column!"
               }
             ]}
           >
@@ -122,7 +122,7 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
             rules={[
               {
                 required: true,
-                message: "Please select an input type for the new column!"
+                message: "Please select an input type for a new column!"
               }
             ]}
           >

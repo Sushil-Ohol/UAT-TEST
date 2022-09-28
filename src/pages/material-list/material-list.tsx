@@ -74,7 +74,7 @@ function Materials() {
     },
     {
       field: "contractor",
-      headerName: "CONTRACTOR"
+      headerName: "COMPANY"
     },
     {
       field: "procureBy",
