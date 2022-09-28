@@ -1,7 +1,85 @@
 .selectStyle {
   width: 100%;
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #000000fa;
+  opacity: 1;
 }
 
 .selectStyle .ant-select-selector {
   background-color: #0000000d !important;
+}
+
+.detailsContent {
+  padding: 15px;
+  background-color: white;
+  position: relative;
+  top: 0px;
+  height: 459px;
+}
+
+.heading {
+  text-align: left;
+  font: normal normal normal 14px/17px Inter;
+  letter-spacing: 0px;
+  color: #00000080;
+  opacity: 1;
+}
+
+.validationColor {
+  text-align: left;
+  font: normal normal normal 14px/17px Inter;
+  letter-spacing: 0px;
+  color: #ff3535bf;
+  opacity: 1;
+}
+
+.description {
+  background-color: #0000000d 0% 0% no-repeat padding-box;
+  text-align: left;
+  font: normal normal normal 16px/24px Inter;
+  letter-spacing: 0px;
+  color: #000000fa;
+  opacity: 1;
+}
+
+.dependsOnRowData {
+  padding: 9px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 10px 0px;
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.actionItemCard {
+  width: 100%;
+  margin: 0px !important;
+  margin-top: 57px;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+}
+
+.SDExcCircleOutlined {
+  margin-top: 12px;
+}
+
+.subDetailsAction {
+  text-align: left;
+  font: normal normal normal 18px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.actionItemsCheckBox {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
 }
