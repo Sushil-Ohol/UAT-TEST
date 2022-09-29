@@ -96,7 +96,9 @@ function StagingZone(props: StagingZoneProps) {
           <Col span={19}>
             <div className="col-two discussion-document-view document-bg-color">
               {selectedDocument.fileUrl ? (
-                <DocumentView file={selectedDocument.fileUrl} />
+                <DocumentView
+                  file={`${process.env.PUBLIC_URL}${selectedDocument.fileUrl}`}
+                />
               ) : (
                 <h1>Document View</h1>
               )}

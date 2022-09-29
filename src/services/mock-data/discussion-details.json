@@ -40,7 +40,7 @@
       {
         "id": "1",
         "fileName": "Piping-Package1.pdf",
-        "url": "https://www.africau.edu/images/default/sample.pdf",
+        "url": "/mock-files/Piping-Package1.pdf",
         "uploadedBy": "John",
         "uploadDate": "09-06-2022",
         "annotationCount": 2
@@ -48,7 +48,7 @@
       {
         "id": "2",
         "fileName": "Piping-Package2.pdf",
-        "url": "https://www.clickdimensions.com/links/TestPDFfile.pdf",
+        "url": "/mock-files/Piping-Package2.pdf",
         "uploadedBy": "James",
         "uploadDate": "09-06-2022",
         "annotationCount": 2
@@ -56,7 +56,7 @@
       {
         "id": "3",
         "fileName": "Piping-Package3.pdf",
-        "url": "https://s29.q4cdn.com/816090369/files/doc_downloads/test.pdf",
+        "url": "/mock-files/Piping-Package3.pdf",
         "uploadedBy": "John",
         "uploadDate": "09-06-2022",
         "annotationCount": 2
@@ -92,7 +92,7 @@
       {
         "id": "1",
         "fileName": "test.pdf",
-        "url": "https://www.africau.edu/images/default/sample.pdf",
+        "url": "/mock-files/concrete1.pdf",
         "uploadedBy": "John",
         "uploadDate": "2022-09-14 2:36 pm",
         "annotationCount": 2
@@ -100,7 +100,7 @@
       {
         "id": "2",
         "fileName": "test2.pdf",
-        "url": "test2.pdf",
+        "url": "/mock-files/concrete2.pdf",
         "uploadedBy": "James",
         "uploadDate": "2022-09-15 3:40 pm",
         "annotationCount": 2
@@ -108,7 +108,7 @@
       {
         "id": "3",
         "fileName": "test3.pdf",
-        "url": "test3.pdf",
+        "url": "/mock-files/concrete3.pdf",
         "uploadedBy": "John",
         "uploadDate": "2022-09-16 3:40 pm",
         "annotationCount": 2
