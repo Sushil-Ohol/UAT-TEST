@@ -45,8 +45,8 @@
   display: inline-block;
 }
 
-.ant-upload-list-text .ant-upload-span > *,
-.ant-upload-list-picture .ant-upload-span > * {
+.ant-upload-list-text .ant-upload-span>*,
+.ant-upload-list-picture .ant-upload-span>* {
   flex: none;
   border: 1px solid black;
   height: 34px;
@@ -162,6 +162,7 @@
   background: none;
   margin-bottom: 20px;
 }
+
 .subDetailsBlockedIcon {
   border: none;
   padding: 0;
@@ -218,7 +219,7 @@
   opacity: 1;
 }
 
-.ant-tabs-top > .ant-tabs-nav {
+.ant-tabs-top>.ant-tabs-nav {
   margin: 15px 0 20px 0;
 }
 

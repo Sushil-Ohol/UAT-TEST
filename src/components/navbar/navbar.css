@@ -83,3 +83,18 @@
   align-items: center;
   justify-content: center;
 }
+.ant-menu-title-content {
+  text-align: left;
+  font: normal normal normal 18px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.ant-menu-item-selected span {
+  text-align: left;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  font-weight: bold;
+}

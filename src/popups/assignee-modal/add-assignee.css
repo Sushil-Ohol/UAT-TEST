@@ -86,3 +86,23 @@
   border-radius: 2px 2px 0 0;
   opacity: 1 !important;
 }
+
+.add-new-assignee .ant-modal-title {
+  font-weight: bold;
+}
+
+.add-new-assignee .ant-btn-default {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #007aff;
+  opacity: 1;
+}
+
+.add-new-assignee .ant-btn-primary {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
