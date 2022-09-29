@@ -342,6 +342,7 @@ function SubmittalList() {
       maxWidth: 70
     }
   ]);
+
   useEffect(() => {
     const temp = [...columnDefs];
     const itemIndexContractor = columnDefs.findIndex(
@@ -404,7 +405,16 @@ function SubmittalList() {
       sortable: true,
       editable: true,
       filter: true,
-      resizable: true
+      resizable: true,
+      getQuickFilterText(params: any) {
+        if (params.colDef.field === "assigned") {
+          return params.value.assignedTo;
+        }
+        if (params.colDef.field === "contractor") {
+          return params.value.name;
+        }
+        return params.value;
+      }
     };
   }, []);
 
