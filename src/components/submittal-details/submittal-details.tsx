@@ -144,7 +144,6 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   useEffect(() => {
     if (updatedData) onChangeSubmittalData(updatedData);
     onStatusDropDownChange();
-    console.log(updatedData);
   }, [updatedData]);
 
   function DependsOnSection() {
