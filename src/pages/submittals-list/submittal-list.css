@@ -285,6 +285,16 @@ div.ag-rich-select .ag-rich-select-list {
   top: 1%;
   right: 1.7%;
 }
+.expand-icon-right-with-text {
+  position: absolute;
+  top: 2%;
+  right: 1.7%;
+  text-align: right;
+  font: normal normal normal 14px/17px "Inter";
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
 .expand-icon-right:hover {
   cursor: pointer;
 }

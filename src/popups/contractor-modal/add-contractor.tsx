@@ -44,14 +44,14 @@ function AddContractorModal({
         onOkClick(contractorData);
         form.resetFields();
       } else {
-        message.error("Contractor already exists");
+        message.error("Company already exists");
       }
     });
   };
 
   return (
     <Modal
-      title="New Contractor"
+      title="New Company"
       visible={show}
       onOk={handleContractorOk}
       onCancel={onCancelClick}
@@ -103,14 +103,14 @@ function AddContractorModal({
             { type: "email", message: "Please enter a valid email" },
             {
               required: true,
-              message: "Please enter a email"
+              message: "Please enter an email"
             }
           ]}
         >
           <Input
             name="emailId"
             className="add-new-contractor-input"
-            placeholder="Enter email id"
+            placeholder="Enter an email id"
           />
         </Form.Item>
       </Form>

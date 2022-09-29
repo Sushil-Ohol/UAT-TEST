@@ -1,15 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Divider } from "antd";
-import Dragger from "antd/lib/upload/Dragger";
+import { Button, Divider, message, Spin } from "antd";
 import { ConversationDoc } from "models/discussion";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
-import { GetDiscussionDetails } from "store/slices/staging-zone-slice";
+import type { UploadProps } from "antd";
+import {
+  GetDiscussionDetails,
+  newDocument
+} from "store/slices/staging-zone-slice";
 import "./discussion-docs.css";
 import { DownloadIcon, CopyIcon } from "components/svg-icons";
+import { PostProjectFile } from "services/projects-service";
+import Dragger from "antd/lib/upload/Dragger";
 
 export type DiscussionDocsProps = {
   className: string;
@@ -19,15 +24,19 @@ export type DiscussionDocsProps = {
 };
 
 function DiscussionDocs(props: DiscussionDocsProps) {
+  const [fileUpload, setFileUpload] = useState(false);
+  const [dragFile, setDragFile] = useState(false);
   const { className, discussionId, documentView, onDocumentSelect } = props;
   const [filterByDate, setFilterByDate] = useState<any>();
   const [uploadedDate, setUploadDate] = useState<string[]>();
-
+  const importFile = useRef<any>();
   const dispatch = useAppDispatch();
   const bottomRef = useRef<any>(null);
   const documentsData = useAppSelector(
     (state: RootState) => state.stagingZone.documents
   );
+  // dummy user for testing
+  const currentUser = "John";
 
   // get Total doc count
   const totalDocs =
@@ -35,14 +44,11 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       ? documentsData[discussionId].list?.length
       : 0;
 
-  // dummy user for testing
-  const currentUser = "John";
-
   const loadDiscussionDetails = async () => {
     await dispatch(GetDiscussionDetails(discussionId));
   };
 
-  const onDocumentClick = (value: boolean, selectedDoc: string) => {
+  const onDocumentClick = (value: boolean, selectedDoc: object) => {
     documentView(value);
     onDocumentSelect(selectedDoc);
   };
@@ -92,18 +98,70 @@ function DiscussionDocs(props: DiscussionDocsProps) {
 
       setUploadDate(keys);
     }
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [documentsData[discussionId], documentsData[discussionId]?.list]);
 
+  const handleOpenFileInput = () => {
+    importFile.current.click();
+  };
+
+  const addNewFile = async (file: any, isLoding: any) => {
+    isLoding(true);
+    const result = await PostProjectFile(file, null);
+    if ((await result.data).data.success) {
+      const newFile: any = {
+        id: documentsData[discussionId].list.length + 1,
+        fileName: file.name,
+        url: URL.createObjectURL(file),
+        uploadedBy: currentUser,
+        uploadDate: moment(new Date()).format("MM-DD-YYYY"),
+        annotationCount: 1
+      };
+      dispatch(newDocument({ discussionId, newFile }));
+      isLoding(false);
+    } else {
+      message.error("File not uploaded");
+      isLoding(false);
+    }
+  };
+
+  const draggerProps: UploadProps = {
+    showUploadList: false,
+    disabled: dragFile,
+    name: "file",
+    multiple: true,
+    customRequest: async ({ file }: any) => {
+      addNewFile(file, setDragFile);
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    addNewFile(e.target.files && e.target.files[0], setFileUpload);
+  };
   return (
     <div className={className}>
       <div className="discussionDocs">
-        <div style={{ padding: "1.5% 1.5%", float: "left" }}>
-          Documents({totalDocs})
-        </div>
-        <Button className="importBtn" disabled={discussionId === ""}>
-          <DownloadOutlined />
-          Import a file
-        </Button>
+        <div className="document-count">Documents({totalDocs})</div>
+
+        {fileUpload ? (
+          <Spin size="small" className="importBtn" />
+        ) : (
+          <Button
+            className="importBtn"
+            disabled={discussionId === ""}
+            onClick={handleOpenFileInput}
+          >
+            <DownloadOutlined />
+            Import a file
+          </Button>
+        )}
+        <input
+          ref={importFile}
+          style={{ display: "none" }}
+          multiple
+          type="file"
+          onChange={handleFileUpload}
+        />
       </div>
       {discussionId !== "" &&
         uploadedDate &&
@@ -148,10 +206,16 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                       >
                         <div
                           onClick={() => {
-                            onDocumentClick(true, data.fileName);
+                            onDocumentClick(true, {
+                              fileName: data.fileName,
+                              fileUrl: data.url
+                            });
                           }}
                           onKeyDown={() => {
-                            onDocumentClick(true, data.fileName);
+                            onDocumentClick(true, {
+                              fileName: data.fileName,
+                              fileUrl: data.url
+                            });
                           }}
                           role="button"
                           tabIndex={0}
@@ -161,7 +225,9 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           {data.fileName}{" "}
                         </div>
                         <span className="downloadIcon">
-                          <DownloadIcon />
+                          <a href={data.url} download={data.fileName}>
+                            <DownloadIcon />
+                          </a>
                         </span>
                         <span
                           title="You can copy this document to selected sumbittal"
@@ -184,8 +250,12 @@ function DiscussionDocs(props: DiscussionDocsProps) {
 
       {discussionId !== "" ? (
         <div className="uploadFileDiv">
-          <Dragger>
-            <p className="ant-upload-text">Drag a file to upload</p>
+          <Dragger {...draggerProps}>
+            {dragFile ? (
+              <Spin size="small" className="ant-upload-text " />
+            ) : (
+              <p className="ant-upload-text">Drag a file to upload</p>
+            )}
           </Dragger>
         </div>
       ) : (

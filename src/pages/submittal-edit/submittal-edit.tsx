@@ -82,13 +82,9 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         (item.status === "Submittal not required" || item.status === "")
       );
     });
-    const assignedStatusRequired = selectedRows.filter((item: any) => {
-      return item.status === "Submittal required";
-    });
+
     if (assignedRequired.length > 0) {
       setOptionArray(DropDownData.StatusOptionsForArchitects);
-    } else if (assignedStatusRequired.length > 0) {
-      setOptionArray([...DropDownData.StatusOptions, "For approval"]);
     } else {
       setOptionArray(DropDownData.StatusOptions);
     }
@@ -117,7 +113,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const addNewContractor = (data: any) => {
     dispatch(newContractor(data));
-    message.success("Invited contractor and assignee successfully");
+    message.success("Invited company and assignee successfully");
     setIsContractorModalOpen(false);
   };
 

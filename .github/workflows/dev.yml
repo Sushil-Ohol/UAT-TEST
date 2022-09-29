@@ -38,3 +38,4 @@ jobs:
         with:
           name: production-files
           path: ./build
+          retention-days: 5

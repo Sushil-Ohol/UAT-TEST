@@ -55,7 +55,7 @@
   position: fixed;
   bottom: 0px;
   background-color: #f7f6f4;
-  padding: 11px 1.5%;
+  padding: 11px 1%;
   width: 32%;
 }
 .downloadIcon {
@@ -77,4 +77,21 @@
   color: #007aff;
   display: inline;
   cursor: pointer;
+}
+.document-count {
+  font-weight: 600;
+  padding: 1.5% 1.5%;
+  float: left;
+}
+.darg-file {
+  border: 1px dashed #0000004d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.darg-file-active {
+  border: 1px dashed #007aff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

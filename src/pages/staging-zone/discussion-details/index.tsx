@@ -49,7 +49,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
 
   useEffect(() => {
     bottomRef.current?.scrollTo(0, bottomRef.current?.scrollHeight);
-  }, [filterByDate, isDocumentView]);
+  }, [filterByDate]);
 
   useEffect(() => {
     if (discussionId !== "") {
@@ -111,10 +111,12 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
 
   return (
     <div ref={topRef} className={className}>
-      <div className="discussionDetails">
-        <div style={{ padding: "1.5% 1.5%", float: "left" }}>
-          Discussion({totalChat})
-        </div>
+      <div
+        className={
+          isDocumentView ? "discussionDetails-top" : "discussionDetails"
+        }
+      >
+        <div className="discussion-count">Discussion({totalChat})</div>
         {!isDocumentView && (
           <Button className="archieveBtn" disabled={discussionId === ""}>
             Archieve...

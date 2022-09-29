@@ -69,6 +69,17 @@ const stagingZoneSlice = createSlice({
         state.selectedDiscussion.chats?.push(chatInfo);
       }
       state.discussions[discussionId].list.push(chatInfo);
+    },
+    newDocument: (state, { payload }: PayloadAction<any>) => {
+      state.documents[payload.discussionId].list = [
+        ...state.documents[payload.discussionId].list,
+        payload.newFile
+      ];
+    },
+    deleteDocument: (state, { payload }: PayloadAction<any>) => {
+      state.documents[payload.discussionId].list = state.documents[
+        payload.discussionId
+      ].list.filter((item) => item.fileName !== payload.fileName);
     }
   },
   extraReducers: (builder) => {
@@ -100,4 +111,10 @@ const stagingZoneSlice = createSlice({
 
 export default stagingZoneSlice.reducer;
 
-export const { reset, newMessage, addNewDiscussion } = stagingZoneSlice.actions;
+export const {
+  reset,
+  newMessage,
+  addNewDiscussion,
+  newDocument,
+  deleteDocument
+} = stagingZoneSlice.actions;

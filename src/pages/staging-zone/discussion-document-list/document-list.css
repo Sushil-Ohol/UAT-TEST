@@ -11,6 +11,7 @@
   color: #000000;
   opacity: 1;
   padding-left: 5%;
+  margin-bottom: 2.3%;
 }
 .document-item-active {
   height: 43px;
@@ -26,4 +27,8 @@
   padding-left: 5%;
   border-left: 4px solid #000000;
   opacity: 1;
+  margin-bottom: 2.3%;
+}
+.document-list-heading-h1 {
+  font-weight: 600;
 }

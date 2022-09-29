@@ -1,12 +1,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from "react";
 import { Col, Row } from "antd";
+import { DocumentView } from "components";
+import { deleteDocument } from "store/slices/staging-zone-slice";
+import { useDispatch } from "react-redux";
 import Discussions from "./discussion-list";
 import DiscussionDetails from "./discussion-details";
 import DiscussionDocs from "./discussion-docs";
 import "./staging-zone.css";
-import DocumentViewHeader from "./document-view-header";
 import DocumentList from "./discussion-document-list";
+import DocumentViewHeader from "./document-view-header";
 
 export type StagingZoneProps = {
   onMouseDown: any;
@@ -18,8 +21,11 @@ export type StagingZoneProps = {
 function StagingZone(props: StagingZoneProps) {
   const { onMouseDown, selectedData, documentView, isDocumentView } = props;
   const [discussionId, setDiscussionId] = useState("");
-  const [selectedDocument, setSelectedDocument] = useState("");
-  React.useEffect(() => {}, []);
+  const [selectedDocument, setSelectedDocument] = useState({
+    fileName: "",
+    fileUrl: ""
+  });
+  const dispatch = useDispatch();
 
   const OnDiscussionSelected = (id: string) => {
     setDiscussionId(id);
@@ -27,11 +33,15 @@ function StagingZone(props: StagingZoneProps) {
   const prev = () => {
     documentView(false);
   };
-  const onDocumentSelect = (fileName: string) => {
+  const onDocumentSelect = (fileName: any) => {
     setSelectedDocument(fileName);
   };
   const onDocumentClose = () => {
-    setSelectedDocument("");
+    setSelectedDocument({ fileName: "", fileUrl: "" });
+  };
+  const onDeleteDocument = () => {
+    dispatch(deleteDocument({ discussionId, ...selectedDocument }));
+    setSelectedDocument({ fileName: "", fileUrl: "" });
   };
   return (
     <div id="page-wrap">
@@ -59,6 +69,7 @@ function StagingZone(props: StagingZoneProps) {
         <DocumentViewHeader
           prev={prev}
           onDocumentClose={onDocumentClose}
+          onDeleteDocument={onDeleteDocument}
           selectedDocument={selectedDocument}
         />
 
@@ -84,7 +95,11 @@ function StagingZone(props: StagingZoneProps) {
           </Col>
           <Col span={19}>
             <div className="col-two discussion-document-view document-bg-color">
-              <h2> {selectedDocument || "Document"}</h2>
+              {selectedDocument.fileUrl ? (
+                <DocumentView file={selectedDocument.fileUrl} />
+              ) : (
+                <h1>Document View</h1>
+              )}
             </div>
           </Col>
         </Row>

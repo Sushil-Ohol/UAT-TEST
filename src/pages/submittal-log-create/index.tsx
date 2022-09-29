@@ -76,7 +76,7 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
         <TextArea
           className="discriptionArea"
           rows={3}
-          placeholder="Fill the Discription"
+          placeholder="Fill the Description"
           maxLength={150}
         />
       </Form.Item>

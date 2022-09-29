@@ -12,65 +12,53 @@
         "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
       },
       {
-        "id": "4",
+        "id": "2",
         "messageBy": "roman",
         "messageDate": "2022-08-26 3:40 pm",
         "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
       },
       {
-        "id": "6",
+        "id": "3",
         "messageBy": "kevin",
         "messageDate": "2022-08-27 2:38 pm",
-        "message": "what are you doing now?"
+        "message": "The specs for this is the same as Trade Centre. Let's propose the same"
+      },
+      {
+        "id": "4",
+        "messageBy": "john",
+        "messageDate": "2022-08-28 4:36 pm",
+        "message": "Ensure all the latest certifications are attached"
       },
       {
         "id": "5",
-        "messageBy": "john",
-        "messageDate": "2022-08-28 4:36 pm",
-        "message": "hi"
-      },
-      {
-        "id": "2",
         "messageBy": "roman",
-        "messageDate": "2022-08-26 2:38 pm",
-        "message": "hello"
-      },
-      {
-        "id": "3",
-        "messageBy": "john",
-        "messageDate": "2022-08-26 2:40 pm",
-        "message": "how are you?"
-      },
-      {
-        "id": "7",
-        "messageBy": "kevin",
-        "messageDate": "2022-08-27 2:39 pm",
-        "message": "nothing"
+        "messageDate": "2022-08-29 2:38 pm",
+        "message": "Certifications and test results of latest samples attached"
       }
     ],
     "docs": [
       {
         "id": "1",
         "fileName": "Piping-Package1.pdf",
-        "url": "Piping-Package1.pdf",
+        "url": "https://www.africau.edu/images/default/sample.pdf",
         "uploadedBy": "John",
-        "uploadDate": "10-06-2022",
+        "uploadDate": "09-06-2022",
         "annotationCount": 2
       },
       {
         "id": "2",
         "fileName": "Piping-Package2.pdf",
-        "url": "Piping-Package2.pdf",
+        "url": "https://www.clickdimensions.com/links/TestPDFfile.pdf",
         "uploadedBy": "James",
-        "uploadDate": "10-06-2022",
+        "uploadDate": "09-06-2022",
         "annotationCount": 2
       },
       {
         "id": "3",
         "fileName": "Piping-Package3.pdf",
-        "url": "Piping-Package3.pdf",
+        "url": "https://s29.q4cdn.com/816090369/files/doc_downloads/test.pdf",
         "uploadedBy": "John",
-        "uploadDate": "10-06-2022",
+        "uploadDate": "09-06-2022",
         "annotationCount": 2
       }
     ]
@@ -88,53 +76,23 @@
         "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
       },
       {
-        "id": "4",
+        "id": "2",
         "messageBy": "john",
         "messageDate": "2022-05-26 3:40 pm",
         "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
       },
       {
-        "id": "6",
+        "id": "3",
         "messageBy": "james",
         "messageDate": "2022-05-27 2:38 pm",
-        "message": "what are you doing now?"
-      },
-      {
-        "id": "5",
-        "messageBy": "john",
-        "messageDate": "2022-05-27 4:36 pm",
-        "message": "hi"
-      },
-      {
-        "id": "2",
-        "messageBy": "john",
-        "messageDate": "2022-05-26 2:38 pm",
-        "message": "hello"
-      },
-      {
-        "id": "3",
-        "messageBy": "roman",
-        "messageDate": "2022-05-26 2:40 pm",
-        "message": "how are you?"
-      },
-      {
-        "id": "7",
-        "messageBy": "kevin",
-        "messageDate": "2022-05-27 2:39 pm",
-        "message": "nothing"
-      },
-      {
-        "id": "8",
-        "messageBy": "john",
-        "messageDate": "2022-05-28 2:39 am",
-        "message": "bye"
+        "message": "The specs for this is the same as Trade Centre. Let's propose the same"
       }
     ],
     "docs": [
       {
         "id": "1",
         "fileName": "test.pdf",
-        "url": "test.pdf",
+        "url": "https://www.africau.edu/images/default/sample.pdf",
         "uploadedBy": "John",
         "uploadDate": "2022-09-14 2:36 pm",
         "annotationCount": 2
