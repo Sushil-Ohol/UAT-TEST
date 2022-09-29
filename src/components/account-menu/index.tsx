@@ -6,7 +6,6 @@ import { UserAvatarWithDetails } from "components/user-avatar";
 import { useSelector } from "react-redux";
 import { LogoutOutlined } from "@ant-design/icons";
 import { RootState } from "store/slices";
-import { useHistory } from "react-router-dom";
 import { useAppDispatch } from "store";
 import { logOut } from "store/slices/signIn";
 import { UserIcon } from "../svg-icons/index";
@@ -14,11 +13,10 @@ import { UserIcon } from "../svg-icons/index";
 function AccountMenu() {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
-  const history = useHistory();
 
   const onSignOut = () => {
     dispatch(logOut());
-    history.replace("/");
+    window.location.href = process.env.PUBLIC_URL;
   };
 
   const menu = (
