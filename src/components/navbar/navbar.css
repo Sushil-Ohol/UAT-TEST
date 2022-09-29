@@ -1,20 +1,17 @@
 .App .navbar {
   width: 100%;
-  height: 46px;
+  height: 60px;
   overflow: hidden;
   color: black;
   background-color: white;
 }
 
 .brand-name {
-  float: left;
-  height: 46px;
-  line-height: 0;
-  padding: 12px 16px 16px 12px;
+  margin-left: 15px;
 }
 
 .brand-name svg {
-  height: 18px;
+  height: 29px;
   width: auto;
 }
 
@@ -23,26 +20,23 @@
   padding: 3px 0px;
 }
 
-.ant-page-header-heading-left {
-  padding-left: 16px;
-  border-left: 1px solid rgba(128, 128, 128, 0.184);
-}
-
-.ant-page-header-back {
-  font-size: 10px;
-}
-
 .ant-page-header-back .back-button-label {
-  font-size: 14px;
-  font-weight: 300;
+  text-align: left;
+  font: normal normal normal 18px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
   margin: 0px;
   padding: 0px;
   padding-left: 6px;
 }
 
 .ant-page-header-heading-title {
-  font-size: 14px;
-  font-weight: 300;
+  text-align: left;
+  font: normal normal normal 18px/21px Inter;
+  letter-spacing: 0px;
+  color: #0000007f;
+  opacity: 1;
   margin: 0px;
   padding-left: 16px;
   border-left: 1px solid rgba(128, 128, 128, 0.184);
@@ -52,6 +46,23 @@
 .menus {
   border-bottom: 1px solid #ffffff;
   justify-content: end;
+  text-align: left;
+  font: normal normal normal 18px/46px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected {
+  text-align: left;
+  letter-spacing: 0px;
+  color: #000000 !important;
+  opacity: 1;
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected::after {
+  border-bottom: 2px solid #000000 !important;
 }
 
 .ant-menu-item span a {
@@ -67,6 +78,11 @@
   opacity: 1;
 }
 
+.navbarCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .ant-menu-title-content {
   text-align: left;
   font: normal normal normal 18px/21px Inter;

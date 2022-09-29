@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowLeftOutlined, EditFilled } from "@ant-design/icons";
-import { Col, Row, Tabs, Card, Button, Layout, Typography, Spin } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Col, Row, Tabs, Button, Typography, Spin, Divider } from "antd";
 import SubmittalDetails from "components/submittal-details/submittal-details";
+import { EditIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { SubmittalLog } from "models/submittal-log";
 
@@ -80,12 +81,9 @@ function SubmittalDetailspage(props: any) {
     return (
       <Title
         level={5}
-        style={{
-          width: "100%",
-          marginBottom: "0px"
-        }}
+        className="submittalTitle"
         editable={{
-          icon: <EditFilled color="black" />,
+          icon: <EditIcon style={{ marginLeft: "16px" }} />,
           tooltip: "",
           onChange: (e) => updateSubmittalTitle(e)
         }}
@@ -96,51 +94,43 @@ function SubmittalDetailspage(props: any) {
   }
 
   return (
-    <div style={{ margin: "0 16px" }}>
-      <section>
-        <Layout>
-          <Card className="SubDetailsCard">
-            <Row>
-              <Col span={4}>
-                <Button
-                  icon={<ArrowLeftOutlined />}
-                  className="SubDetailsCardBtn"
-                  onClick={goToSubmittalPage}
-                >
-                  All submittals
-                </Button>
-              </Col>
-              <Col
-                span={1}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <Title level={5} style={{ marginBottom: "0px" }}>
-                  {updatedData?.id}
-                </Title>
-              </Col>
+    <div style={{ margin: "0 20px" }}>
+      <Row className="subDetailsNavbar">
+        <Col span={3} className="allSubmittalBtnCol">
+          <Button
+            icon={<ArrowLeftOutlined />}
+            className="subDetailsCardBtn"
+            onClick={goToSubmittalPage}
+          >
+            All submittals
+          </Button>
+        </Col>
+        <Divider type="vertical" style={{ height: "auto" }} />
+        <Col span={1} className="submittalDetailsPageIdCol">
+          <Title level={5} className="submittalDetailsPageId">
+            {updatedData?.id}
+          </Title>
+        </Col>
 
-              <Col span={14} style={{ display: "flex", alignItems: "center" }}>
-                <SubmittalTitle />
-              </Col>
+        <Col span={14} className="submittalTitleCol">
+          <SubmittalTitle />
+        </Col>
 
-              <Col span={5}>
-                <div style={{ float: "right", marginTop: "8px" }}>
-                  <Button className="SubDetailsSplitBtn">
-                    Split Submittal
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </Card>
-        </Layout>
-      </section>
+        <Col span={4} offset={1} className="splitBtnCol">
+          <Button className="subDetailsSplitBtn">Split Submittal</Button>
+        </Col>
+      </Row>
       <div>
-        <Tabs defaultActiveKey="1" className="TabsClass">
-          <TabPane tab="Submittal Details" key="1" style={{ height: "100%" }}>
+        <Tabs
+          defaultActiveKey="1"
+          className="TabsClass"
+          style={{ height: "100%" }}
+        >
+          <TabPane
+            tab="Submittal Details"
+            key="1"
+            style={{ minHeight: "80vh" }}
+          >
             {updatedData ? (
               <SubmittalDetails
                 submittalData={updatedData}

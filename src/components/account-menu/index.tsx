@@ -42,6 +42,7 @@ function AccountMenu() {
 
   return (
     <Dropdown
+      placement="bottomLeft"
       overlay={auth.currentUser ? menu : <div>No data</div>}
       trigger={["click"]}
     >
