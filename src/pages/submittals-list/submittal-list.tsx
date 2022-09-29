@@ -525,7 +525,6 @@ function SubmittalList() {
     gridRef.current!.api.getSelectedRows().forEach(async (row: any) => {
       const { id } = row;
       const index = newData.findIndex((x: any) => x.id === id);
-
       const newItem = {
         ...newData[index],
         status: data.status !== undefined ? data.status : newData[index].status,
@@ -534,7 +533,7 @@ function SubmittalList() {
             ? data.contractor
             : newData[index].contractor,
         assigned:
-          data.assigned !== undefined ? data.assigned : newData[index].assigned,
+          data.assigned !== "" ? data.assigned : newData[index].assigned,
         dueBy:
           data.dueBy !== undefined
             ? moment(data.dueBy).format(DATE_FORMAT_MMDDYYY)

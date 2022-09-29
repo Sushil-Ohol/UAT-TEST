@@ -50,6 +50,21 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     })
   );
 
+  const [optionArray, setOptionArray] = useState<any>([]);
+  const onStatusDropDownChange = () => {
+    if (
+      Object.keys(updatedData.assigned).length > 0 &&
+      (updatedData.status === "Submittal not required" ||
+        updatedData.status === "")
+    ) {
+      setOptionArray(DropDownData.StatusOptionsForArchitects);
+    } else if (updatedData.status === "Submittal not required") {
+      setOptionArray(DropDownData.StatusOptionsForArchitects);
+    } else {
+      setOptionArray(DropDownData.StatusOptions);
+    }
+  };
+
   const onSubmittalSearch = (id: any) => {
     const selectedData = onlySubmittalsTitleId.find(
       (data) => data.submittalId === id
@@ -128,6 +143,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
 
   useEffect(() => {
     if (updatedData) onChangeSubmittalData(updatedData);
+    onStatusDropDownChange();
+    console.log(updatedData);
   }, [updatedData]);
 
   function DependsOnSection() {
@@ -264,7 +281,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                 showSearch={false}
                 filterOption
               >
-                {DropDownData.StatusOptions.map((data) => (
+                {optionArray.map((data: any) => (
                   <Option key={data}>{data}</Option>
                 ))}
               </SelectField>

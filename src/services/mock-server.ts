@@ -119,6 +119,7 @@ export function mockUpClient(client: AxiosInstance) {
         data.email === config.params.email &&
         data.password === config.params.password
     );
+    console.log(config.params, user);
 
     if (user) {
       delete user.password;
