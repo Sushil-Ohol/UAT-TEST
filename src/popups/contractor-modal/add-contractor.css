@@ -5,7 +5,7 @@
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  margin-left:190px;
+  margin-left: 190px;
 }
 
 .add-new-contractor-btn :hover {
@@ -91,4 +91,24 @@
   background: #0000000d 0% 0% no-repeat padding-box !important;
   border-color: #ff4d4f;
   border: 1px solid #ff4d4f;
+}
+
+.add-new-contractor .ant-modal-title {
+  font-weight: bold;
+}
+
+.add-new-contractor .ant-btn-default {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #007aff;
+  opacity: 1;
+}
+
+.add-new-contractor .ant-btn-primary {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
 }

@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 .site-card-wrapper {
   padding: 15px;
@@ -47,21 +47,19 @@
 
 .child {
   /* border: 1px solid indigo; */
-  padding: 1rem
+  padding: 1rem;
 }
 
 .inline-block-child {
   display: inline-block;
 }
 
-.ant-upload-list-text .ant-upload-span>*,
-.ant-upload-list-picture .ant-upload-span>* {
+.ant-upload-list-text .ant-upload-span > *,
+.ant-upload-list-picture .ant-upload-span > * {
   flex: none;
   border: 1px solid black;
   height: 34px;
 }
-
-
 
 .HedingColor {
   font-weight: 500;
@@ -72,7 +70,7 @@
 
 .SubDetailsCard {
   width: auto;
-  background: rgb(248 222 255 / 0.28)
+  background: rgb(248 222 255 / 0.28);
 }
 
 .SubDetailsCardBtn {
@@ -82,26 +80,29 @@
   padding: 0;
   background: none;
   font-size: 14px;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
 
 .SubDetailsParagraph {
   display: flex;
-  margin-top: 1.8px
+  margin-top: 1.8px;
 }
 
 .SubDetailsSplitBtn {
-  border: 1 px solid black
+  border: 1 px solid black;
 }
 
 .TabsClass {
   font-weight: 500;
-  color: black
+  color: black;
 }
 
 .TabsClass .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: black;
-  font-weight: bold;
+  text-align: left;
+  font: normal normal medium 18px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
 }
 
 .subDetailsLabel {
@@ -115,15 +116,15 @@
 
 .firstRow {
   margin-left: 25px;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 .subDetailsAssigned {
-  width: 200px !important
+  width: 200px !important;
 }
 
 .subDetailsContractor {
-  width: 200px !important
+  width: 200px !important;
 }
 
 .subDetailsArrowOutlined {
@@ -138,78 +139,85 @@
 
 .SubDetailsSecondRow {
   margin-left: 14px;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .subDetialsDiscription {
   margin-left: 15px !important;
-  margin-top: 20px !important
+  margin-top: 20px !important;
 }
 
 .subDetialsDisArea {
   margin-left: 15px !important;
   max-width: 94% !important;
-
 }
 
 .subDetailsAttachments {
-  margin-left: -32px !important
+  margin-left: -32px !important;
 }
 
 .subDetailsDatePicker {
-  width: 200px !important
+  width: 200px !important;
 }
 
 .subDetailsAttachements {
   border: none;
   padding: 0;
   background: none;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 
 .subDetailsAttachIcon {
   border: none;
   padding: 0;
   background: none;
-  margin-left: 90px
+  margin-left: 90px;
 }
 
 .subDetialsThirdRow {
   margin-left: 0px;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .SDExcCircleOutlined {
-  margin-top: 12px
+  margin-top: 12px;
 }
 
 .subDetailsAction {
   color: black;
   font-weight: bold;
   margin-top: 12px;
-  font-size: 15px
+  font-size: 15px;
 }
 
 .subDetailsBlockedBtn {
   border: none;
   padding: 0;
   background: none;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
-.subDetailsBlockedIcon{
+.subDetailsBlockedIcon {
   border: none;
   padding: 0;
   background: none;
-  margin-left: 90px
+  margin-left: 90px;
 }
-.actionItemCard{
+.actionItemCard {
   width: 100%;
-   margin-top: 40px
+  margin-top: 40px;
 }
-.actionItemsCheckBox{
-  font-weight: 600; 
-  font-size: 13px
+.actionItemsCheckBox {
+  font-weight: 600;
+  font-size: 13px;
 }
-.rowActionItems{
-  margin-top: 20px
+.rowActionItems {
+  margin-top: 20px;
+}
+
+.ant-tabs-tab-btn {
+  text-align: left;
+  font: normal normal normal 18px/21px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
 }

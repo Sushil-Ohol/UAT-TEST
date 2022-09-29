@@ -96,3 +96,19 @@
   border-color: #ff4d4f;
   border: 1px solid #ff4d4f;
 }
+
+.SubEditCancelBtn {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #007aff;
+  opacity: 1;
+}
+
+.SubEditApplyBtn {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
