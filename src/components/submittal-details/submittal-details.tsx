@@ -376,8 +376,20 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                       alignItems: "center"
                     }}
                   >
-                    <Col span={4}>
-                      <p className="HedingColor">DEPENDS ON</p>
+                    <Col span={8}>
+                      <span className="heading">DEPENDS ON</span>
+                      <span
+                        style={{
+                          textAlign: "left",
+                          font: "normal normal normal 14px/17px Inter",
+                          letterSpacing: "0px",
+                          color: "#FF3535",
+                          opacity: 1,
+                          marginLeft: "14px"
+                        }}
+                      >
+                        Blocked
+                      </span>
                     </Col>
                     <Col span={5} offset={10}>
                       <SearchDropdown
