@@ -39,7 +39,7 @@ export const hexagoanStyleScreen2 = {
   hexagoanSize: 60,
   errorStyleClass: "icon-style-wrong-screen-second"
 };
-const ContractorOptions = [
+const CompanyOptions = [
   {
     name: "ABC Construction",
     email: "contact@abcconstruct.com",
@@ -100,52 +100,52 @@ const AssigneeOptions = [
   {
     assignedTo: "Luke",
     destination: "Engineer",
-    contractor: "ABC Construction"
+    company: "ABC Construction"
   },
   {
     assignedTo: "James",
     destination: "Project Manager",
-    contractor: "ABC Construction"
+    company: "ABC Construction"
   },
   {
     assignedTo: "John",
     destination: "Project Manager",
-    contractor: "A Construction"
+    company: "A Construction"
   },
   {
     assignedTo: "Maria",
     destination: "Engineer",
-    contractor: "A Construction"
+    company: "A Construction"
   },
   {
     assignedTo: "Roger",
     destination: "Project Manager",
-    contractor: "B Construction"
+    company: "B Construction"
   },
   {
     assignedTo: "Mark",
     destination: "Engineer",
-    contractor: "B Construction"
+    company: "B Construction"
   },
   {
     assignedTo: "Lionel",
     destination: "Project Manager",
-    contractor: "C Construction"
+    company: "C Construction"
   },
   {
     assignedTo: "Ronaldo",
     destination: "Engineer",
-    contractor: "C Construction"
+    company: "C Construction"
   },
   {
     assignedTo: "Ronaldo",
     destination: "Architect",
-    contractor: "Architect Company"
+    company: "Architect Company"
   },
   {
     assignedTo: "John",
     destination: "Architect",
-    contractor: "Architect Company"
+    company: "Architect Company"
   }
 ];
 
@@ -161,7 +161,7 @@ export const NewConversationContent = {
 };
 
 export const DropDownData = {
-  ContractorOptions,
+  CompanyOptions,
   StatusOptions,
   StatusOptionsForArchitects,
   AssigneeOptions,

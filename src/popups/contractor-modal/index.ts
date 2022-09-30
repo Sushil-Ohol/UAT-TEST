@@ -1,3 +1,3 @@
-import AddContractorModal from "./add-contractor";
+import AddCompanyModal from "./add-company";
 
-export default AddContractorModal;
+export default AddCompanyModal;

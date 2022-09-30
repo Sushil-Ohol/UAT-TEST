@@ -19,7 +19,7 @@ interface MaterialGrid {
   material: any;
   status: string;
   assigned: number;
-  contractor: string;
+  company: string;
   procureBy: number;
   diliverBy: string;
   dependsOn: string;
@@ -73,7 +73,7 @@ function Materials() {
       headerName: "ASSIGNED"
     },
     {
-      field: "contractor",
+      field: "company",
       headerName: "COMPANY"
     },
     {

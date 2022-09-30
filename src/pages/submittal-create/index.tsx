@@ -27,11 +27,11 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-      const selectedContractor: any = submittalState.contractors.filter(
-        (contractor: any) => contractor.name === values.contractor
+      const selectedCompany: any = submittalState.companys.filter(
+        (company: any) => company.name === values.company
       );
 
-      const assigned: any = selectedContractor[0].assignees.filter(
+      const assigned: any = selectedCompany[0].assignees.filter(
         (assignee: any) => assignee.name === values.assignee
       );
 
@@ -41,7 +41,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
         dueBy: values.dueDate
           ? moment(values.dueDate).format(DATE_FORMAT_MMDDYYY)
           : "",
-        contractor: selectedContractor[0] || "",
+        company: selectedCompany[0] || "",
         assigned: assigned[0] || "",
         package: values.package || "",
         dependsOn: values.dependsOn || "",
@@ -51,9 +51,9 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
     });
   };
 
-  const onChangeContractor = (contractor: string) => {
+  const onChangeCompany = (company: string) => {
     const assignedData = Object.keys(submittalState.assignees)
-      .filter((key) => key.includes(contractor))
+      .filter((key) => key.includes(company))
       .reduce((obj, key) => {
         return submittalState.assignees[key];
       }, {});
@@ -105,14 +105,14 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
         <DatePicker format={DATE_FORMAT_MMDDYYY} className="drawerDatePicker" />
       </Form.Item>
 
-      <Form.Item name="contractor" label="Contractor">
+      <Form.Item name="company" label="Company">
         <Select
-          onChange={onChangeContractor}
+          onChange={onChangeCompany}
           className="select-box"
           bordered={false}
-          placeholder="Select Contractor"
+          placeholder="Select Company"
         >
-          {submittalState.contractors
+          {submittalState.companys
             .filter((x) => x.name !== "All")
             .map((item) => (
               <Select.Option key={item.name} value={item.name}>

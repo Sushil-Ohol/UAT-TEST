@@ -1,4 +1,4 @@
-.add-new-contractor-btn {
+.add-new-company-btn {
   background-color: transparent !important;
   background-repeat: no-repeat;
   border: none;
@@ -8,12 +8,12 @@
   margin-left: 190px;
 }
 
-.add-new-contractor-btn :hover {
+.add-new-company-btn :hover {
   text-decoration: underline;
   text-decoration-style: dashed;
 }
 
-.add-new-contractor .ant-modal-body {
+.add-new-company .ant-modal-body {
   padding: 24px;
   font-size: 14px;
   line-height: 1.5715;
@@ -21,14 +21,14 @@
   width: 600px;
 }
 
-.add-new-contractor .ant-modal-footer {
+.add-new-company .ant-modal-footer {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: auto;
 }
 
-.add-new-contractor {
+.add-new-company {
   margin-top: 70px;
   height: max-content;
   width: 572px !important;
@@ -37,12 +37,12 @@
   background-color: #f7f6f4 0% 0% no-repeat padding-box;
 }
 
-.add-new-contractor-input {
+.add-new-company-input {
   height: 40px;
   background: #0000000d 0% 0% no-repeat padding-box !important;
 }
 
-.add-new-contractor-input-type {
+.add-new-company-input-type {
   border: 1px solid lightgray !important;
   background: #0000000d 0% 0% no-repeat padding-box !important;
 }
@@ -62,11 +62,11 @@
   background: #0000000d 0% 0% no-repeat padding-box !important;
 }
 
-.add-new-contractor-container {
+.add-new-company-container {
   background-color: #f7f6f4 0% 0% no-repeat padding-box;
   opacity: 1;
 }
-.add-new-contractor .ant-modal-content {
+.add-new-company .ant-modal-content {
   position: relative;
   background: #f7f6f4 0% 0% no-repeat padding-box;
   background-clip: padding-box;
@@ -77,7 +77,7 @@
   pointer-events: auto;
   opacity: 1 !important;
 }
-.add-new-contractor .ant-modal-header {
+.add-new-company .ant-modal-header {
   padding: 16px 24px;
   color: rgba(0, 0, 0, 0.85);
   background: #f7f6f4 0% 0% no-repeat padding-box;
@@ -93,11 +93,11 @@
   border: 1px solid #ff4d4f;
 }
 
-.add-new-contractor .ant-modal-title {
+.add-new-company .ant-modal-title {
   font-weight: bold;
 }
 
-.add-new-contractor .ant-btn-default {
+.add-new-company .ant-btn-default {
   text-align: left;
   font: normal normal normal 16px/20px Inter;
   letter-spacing: 0px;
@@ -105,7 +105,7 @@
   opacity: 1;
 }
 
-.add-new-contractor .ant-btn-primary {
+.add-new-company .ant-btn-primary {
   text-align: left;
   font: normal normal normal 16px/20px Inter;
   letter-spacing: 0px;

@@ -3,11 +3,11 @@
 import { Button, Form, Select, DatePicker, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
-import { AddContractorModal, AddAssigneeModal } from "popups";
+import { AddCompanyModal, AddAssigneeModal } from "popups";
 import "./submittal-edit.css";
 import { RootState } from "store/slices";
 import { useAppDispatch, useAppSelector } from "store";
-import { newContractor, newAssignee } from "store/slices/submittalsSlices";
+import { newCompany, newAssignee } from "store/slices/submittalsSlices";
 import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
 
 const { Option } = Select;
@@ -26,27 +26,27 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const submittalState = useAppSelector((state: RootState) => state.submittals);
 
-  const [contractorSelected, setContractorSelected] = useState<any>(null);
+  const [companySelected, setCompanySelected] = useState<any>(null);
 
   const [assigneeData, setAssigneeData] = useState<any>(
-    contractorSelected === null
+    companySelected === null
       ? []
-      : submittalState.assignees[contractorSelected].list
+      : submittalState.assignees[companySelected].list
   );
 
-  const contractorData = submittalState.contractors;
+  const companyData = submittalState.companys;
 
   // const onApplyButtonClick = () => {
   //   form.validateFields().then((values) => {
-  //     const selectedContractor: any = contractorData.filter(
-  //       (contractor: any) => contractor.name === values.contractor
+  //     const selectedCompany: any = companyData.filter(
+  //       (company: any) => company.name === values.company
   //     );
-  //     const assigned: any = selectedContractor[0].assignees.filter(
-  //       (contractor: any) => contractor.name === values.assigned
+  //     const assigned: any = selectedCompany[0].assignees.filter(
+  //       (company: any) => company.name === values.assigned
   //     );
 
   //     const data = {
-  //       contractor: selectedContractor[0],
+  //       company: selectedCompany[0],
   //       status: values.status,
   //       assigned: assigned[0],
   //       dueBy: values.dueBy
@@ -57,15 +57,15 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-      const selectedContractor: any = contractorData.filter(
-        (contractor: any) => contractor.name === values.contractor
+      const selectedCompany: any = companyData.filter(
+        (company: any) => company.name === values.company
       );
-      const assigned: any = selectedContractor[0]?.assignees.filter(
-        (contractor: any) => contractor.assignedTo === values.assigned
+      const assigned: any = selectedCompany[0]?.assignees.filter(
+        (company: any) => company.assignedTo === values.assigned
       );
 
       const data = {
-        contractor: selectedContractor[0],
+        company: selectedCompany[0],
         status: values.status,
         assigned: assigned ? assigned[0] : "",
         dueBy: values.dueBy
@@ -95,46 +95,46 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     onStatusDropDownChange();
   }, [selectedRows]);
 
-  const onChangeContractor = (contractor: string) => {
+  const onChangeCompany = (company: string) => {
     const assignedData = Object.keys(submittalState.assignees)
-      .filter((key) => key.includes(contractor))
+      .filter((key) => key.includes(company))
       .reduce((obj, key) => {
         return submittalState.assignees[key];
       }, {});
-    setContractorSelected(contractor);
+    setCompanySelected(company);
     setAssigneeData(Object.values(assignedData));
     form.setFieldValue("assigned", null);
   };
 
-  const [isContractorModalOpen, setIsContractorModalOpen] =
+  const [isCompanyModalOpen, setIsCompanyModalOpen] =
     useState<boolean>(false);
 
   const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
     useState<boolean>(false);
 
-  const addNewContractor = (data: any) => {
-    dispatch(newContractor(data));
+  const addNewCompany = (data: any) => {
+    dispatch(newCompany(data));
     message.success("Invited company and assignee successfully");
-    setIsContractorModalOpen(false);
+    setIsCompanyModalOpen(false);
   };
 
   const addNewAssignee = (data: any) => {
-    const payload = { contractorName: contractorSelected, assignee: data };
+    const payload = { companyName: companySelected, assignee: data };
     dispatch(newAssignee(payload));
     message.success("Invited assignee successfully ");
     setIsAssigneeModalOpen(false);
   };
 
-  const showContractorModal = () => {
-    setIsContractorModalOpen(true);
+  const showCompanyModal = () => {
+    setIsCompanyModalOpen(true);
   };
 
-  const handleContractorCancel = () => {
-    setIsContractorModalOpen(false);
+  const handleCompanyCancel = () => {
+    setIsCompanyModalOpen(false);
   };
 
   const showAssigneeModal = () => {
-    if (contractorSelected !== "") {
+    if (companySelected !== "") {
       setIsAssigneeModalOpen(true);
     } else {
       message.info("Please select company first");
@@ -146,7 +146,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   useEffect(() => {
-    setAssigneeData(submittalState.assignees[contractorSelected]);
+    setAssigneeData(submittalState.assignees[companySelected]);
   }, [submittalState]);
 
   return (
@@ -168,13 +168,13 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           />
         </Form.Item>
         <Form.Item
-          name="contractor"
+          name="company"
           label={
             <span>
               Company{" "}
               <Button
-                className="add-new-contractor-btn"
-                onClick={showContractorModal}
+                className="add-new-company-btn"
+                onClick={showCompanyModal}
               >
                 + New
               </Button>
@@ -182,7 +182,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           }
         >
           <Select
-            onChange={onChangeContractor}
+            onChange={onChangeCompany}
             showSearch
             optionFilterProp="children"
             className="constructionSelect"
@@ -192,7 +192,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
                 .includes(input.toLowerCase())
             }
           >
-            {submittalState.contractors
+            {submittalState.companys
               .filter((x: any) => x.name !== "All")
               .map((item: any) => (
                 <Option key={item.name} value={item.name}>
@@ -206,7 +206,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           label={
             <span>
               Assignee{" "}
-              {form.getFieldValue("contractor") && (
+              {form.getFieldValue("company") && (
                 <Button
                   className="add-new-assignee-btn"
                   onClick={showAssigneeModal}
@@ -219,7 +219,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           rules={[
             ({ getFieldValue }) => ({
               validator(rule, value) {
-                if (getFieldValue("contractor") && !value) {
+                if (getFieldValue("company") && !value) {
                   return Promise.reject(new Error("Select assignee."));
                 }
                 return Promise.resolve();
@@ -267,18 +267,18 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           </div>
         </section>
       </Form>
-      <AddContractorModal
-        contractorOptions={contractorData}
-        onOkClick={addNewContractor}
-        show={isContractorModalOpen}
-        onCancelClick={handleContractorCancel}
+      <AddCompanyModal
+        companyOptions={companyData}
+        onOkClick={addNewCompany}
+        show={isCompanyModalOpen}
+        onCancelClick={handleCompanyCancel}
       />
       <AddAssigneeModal
-        assigneeOptions={contractorData}
+        assigneeOptions={companyData}
         onOkClick={addNewAssignee}
         show={isAssigneeModalOpen}
         onCancelClick={handleAssigneeCancel}
-        selectedContractor={contractorSelected}
+        selectedCompany={companySelected}
       />
     </>
   );

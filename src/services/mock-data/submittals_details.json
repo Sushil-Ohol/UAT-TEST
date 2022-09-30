@@ -9,7 +9,7 @@
     "status": "Approved",
     "dueBy": "09-03-2022",
     "governingDate": "09-04-2022",
-    "contractor": {
+    "company": {
       "name": "ABC Construction",
       "email": "contact@abcconstruct.com"
     },
@@ -58,7 +58,7 @@
     "status": "In Review",
     "dueBy": "09-05-2022",
     "governingDate": "10-24-2022",
-    "contractor": {
+    "company": {
       "name": "A Construction",
       "email": "contact@aconstruct.com"
     },
@@ -93,7 +93,7 @@
     "status": "Rejected",
     "dueBy": "08-31-2022",
     "governingDate": "04-13-2022",
-    "contractor": {
+    "company": {
       "name": "B Construction",
       "email": "contact@bconstruct.com"
     },
@@ -122,7 +122,7 @@
     "status": "Approved with Comments",
     "dueBy": "10-02-2022",
     "governingDate": "10-10-2023",
-    "contractor": {
+    "company": {
       "name": "C Construction",
       "email": "contact@cconstruct.com"
     },
@@ -156,7 +156,7 @@
     "status": "In Review",
     "dueBy": "08-22-2022",
     "governingDate": "11-01-2022",
-    "contractor": {
+    "company": {
       "name": "C Construction",
       "email": "contact@cconstruct.com"
     },
@@ -174,7 +174,7 @@
     "status": "Approved",
     "dueBy": "08-23-2022",
     "governingDate": "09-10-2022",
-    "contractor": {
+    "company": {
       "name": "B Construction",
       "email": "contact@bconstruct.com"
     },
@@ -196,7 +196,7 @@
     "status": "Rejected",
     "dueBy": "08-14-2022",
     "governingDate": "11-06-2022",
-    "contractor": {
+    "company": {
       "name": "A Construction",
       "email": "contact@aconstruct.com"
     },
@@ -217,7 +217,7 @@
     "status": "Approved with Comments",
     "dueBy": "11-04-2022",
     "governingDate": "09-23-2022",
-    "contractor": {
+    "company": {
       "name": "B Construction",
       "email": "contact@bconstruct.com"
     },
@@ -234,7 +234,7 @@
     "status": "Approved",
     "dueBy": "09-16-2022",
     "governingDate": "08-10-2021",
-    "contractor": {
+    "company": {
       "name": "C Construction",
       "email": "contact@cconstruct.com"
     },
@@ -255,7 +255,7 @@
     "status": "In Review",
     "dueBy": "08-03-2022",
     "governingDate": "11-10-2029",
-    "contractor": {
+    "company": {
       "name": "ABC Construction",
       "email": "contact@abcconstruct.com"
     },

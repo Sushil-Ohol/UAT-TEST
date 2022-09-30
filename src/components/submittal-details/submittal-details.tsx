@@ -103,8 +103,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     }
   };
 
-  const onChangeContractor = (name: string) => {
-    const selectedContractor = DropDownData.ContractorOptions.find(
+  const onChangeCompany = (name: string) => {
+    const selectedCompany = DropDownData.CompanyOptions.find(
       (data) => data.name === name
     );
 
@@ -112,8 +112,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       return prev
         ? {
             ...prev,
-            contractor: selectedContractor || prev.contractor,
-            assigned: selectedContractor
+            company: selectedCompany || prev.company,
+            assigned: selectedCompany
               ? { assignedTo: "", destination: "" }
               : prev.assigned
           }
@@ -306,8 +306,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             <Col span={4}>
               <SelectField
                 title="COMPANY"
-                value={updatedData ? updatedData.contractor.name : undefined}
-                onChange={onChangeContractor}
+                value={updatedData ? updatedData.company.name : undefined}
+                onChange={onChangeCompany}
                 showSearch
                 filterOption={(input, option) =>
                   (option!.children as unknown as string)
@@ -315,7 +315,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     .includes(input.toLowerCase())
                 }
               >
-                {DropDownData.ContractorOptions.map((item: any) => (
+                {DropDownData.CompanyOptions.map((item: any) => (
                   <Option key={item.name} value={item.name}>
                     {item.name}
                   </Option>
@@ -337,7 +337,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                 }
               >
                 {DropDownData.AssigneeOptions.filter(
-                  (data) => data.contractor === updatedData?.contractor.name
+                  (data) => data.company === updatedData?.company.name
                 ).map((item) => (
                   <Option key={item.assignedTo} value={item.assignedTo}>
                     {item.assignedTo}
