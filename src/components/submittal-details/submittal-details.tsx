@@ -37,7 +37,10 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
 
   const [fileLoading, setFileLoading] = useState<boolean>(false);
-
+  const companyOptions = useAppSelector((state) => state.submittals.companys);
+  const assignedOption: any = useAppSelector(
+    (state) => state.submittals.assignees
+  );
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
@@ -104,9 +107,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   };
 
   const onChangeCompany = (name: string) => {
-    const selectedCompany = DropDownData.CompanyOptions.find(
-      (data) => data.name === name
-    );
+    const selectedCompany = companyOptions.find((data) => data.name === name);
 
     setUpdatedData((prev: SubmittalLog) => {
       return prev
@@ -122,9 +123,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   };
 
   const onChangeAssignee = (assignedTo: string) => {
-    const selectedAssignee = DropDownData.AssigneeOptions.find(
-      (data) => data.assignedTo === assignedTo
-    );
+    const selectedAssignee = assignedOption[
+      updatedData && updatedData.company.name
+    ].find((data: any) => data.assignedTo === assignedTo);
 
     setUpdatedData((prev: SubmittalLog) => {
       return prev
@@ -315,7 +316,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     .includes(input.toLowerCase())
                 }
               >
-                {DropDownData.CompanyOptions.map((item: any) => (
+                {companyOptions.map((item: any) => (
                   <Option key={item.name} value={item.name}>
                     {item.name}
                   </Option>
@@ -336,13 +337,12 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     .includes(input.toLowerCase())
                 }
               >
-                {DropDownData.AssigneeOptions.filter(
-                  (data) => data.company === updatedData?.company.name
-                ).map((item) => (
-                  <Option key={item.assignedTo} value={item.assignedTo}>
-                    {item.assignedTo}
-                  </Option>
-                ))}
+                {updatedData?.company.name in assignedOption &&
+                  assignedOption[updatedData?.company.name].map((item: any) => (
+                    <Option key={item.assignedTo} value={item.assignedTo}>
+                      {item.assignedTo}
+                    </Option>
+                  ))}
               </SelectField>
             </Col>
             <Col span={4}>
