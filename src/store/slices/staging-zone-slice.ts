@@ -79,7 +79,7 @@ const stagingZoneSlice = createSlice({
     deleteDocument: (state, { payload }: PayloadAction<any>) => {
       state.documents[payload.discussionId].list = state.documents[
         payload.discussionId
-      ].list.filter((item) => item.fileName !== payload.fileName);
+      ].list.filter((item) => item.id !== payload.id);
     }
   },
   extraReducers: (builder) => {

@@ -208,13 +208,15 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           onClick={() => {
                             onDocumentClick(true, {
                               fileName: data.fileName,
-                              fileUrl: data.url
+                              fileUrl: data.url,
+                              id: data.id
                             });
                           }}
                           onKeyDown={() => {
                             onDocumentClick(true, {
                               fileName: data.fileName,
-                              fileUrl: data.url
+                              fileUrl: data.url,
+                              id: data.id
                             });
                           }}
                           role="button"
