@@ -33,7 +33,7 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
           dueBy: values.dueDate
             ? moment(values.dueDate).format(DATE_FORMAT_MMDDYYY)
             : "",
-          contractor: "",
+          company: "",
           assigned: "",
           package: values.package || "",
           dependsOn: values.dependsOn || "",

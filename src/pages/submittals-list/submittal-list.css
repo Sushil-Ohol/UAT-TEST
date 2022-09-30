@@ -48,7 +48,7 @@
   font-weight: 700 !important;
 }
 
-.ContractorInput {
+.CompanyInput {
   width: 55% !important;
   height: 30px !important;
   color: black !important;
@@ -57,7 +57,7 @@
   font-weight: 400 !important;
 }
 
-.ContractorInputInputSelect {
+.CompanyInputInputSelect {
   font-weight: 600;
   width: 70px !important;
   height: 30px !important;

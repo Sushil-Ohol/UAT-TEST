@@ -3,7 +3,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   Assignee,
-  Contractor,
+  Company,
   SubmittalListResponse,
   SubmittalLog
 } from "models/submittal-log";
@@ -17,7 +17,7 @@ type SubmittalState = {
   projectId: string;
   list: SubmittalLog[];
   loading: boolean;
-  contractors: Contractor[];
+  companys: Company[];
   assignees: ListWithDictionary<Assignee>;
   selectedSubmittalLog: SubmittalLog;
 };
@@ -26,7 +26,7 @@ export const initialState: SubmittalState = {
   projectId: "",
   list: [],
   loading: false,
-  contractors: DropDownData.ContractorOptions,
+  companys: DropDownData.CompanyOptions,
   assignees: {},
   selectedSubmittalLog: {
     id: "",
@@ -38,7 +38,7 @@ export const initialState: SubmittalState = {
     status: "",
     dueBy: "",
     governingDate: "",
-    contractor: { name: "", email: "" },
+    company: { name: "", email: "" },
     dependsOn: [],
     assigned: { assignedTo: "", destination: "" },
     docs: []
@@ -87,22 +87,22 @@ const submittalSlice = createSlice({
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
       state.list = payload;
     },
-    newContractor: (state, { payload }: PayloadAction<any>) => {
-      state.contractors.push(payload);
+    newCompany: (state, { payload }: PayloadAction<any>) => {
+      state.companys.push(payload);
       state.assignees[payload.name] = payload.assignees;
     },
     newAssignee: (state, { payload }: PayloadAction<any>) => {
-      const index = state.contractors.findIndex(
-        (item) => item.name === payload.contractorName
+      const index = state.companys.findIndex(
+        (item) => item.name === payload.companyName
       );
       if (index > -1) {
-        state.contractors[index].assignees?.push(payload.assignee);
+        state.companys[index].assignees?.push(payload.assignee);
       }
-      const temp: any = state.assignees[payload.contractorName] || [];
+      const temp: any = state.assignees[payload.companyName] || [];
       temp.push(payload.assignee);
-      state.assignees[payload.contractorName] = temp;
+      state.assignees[payload.companyName] = temp;
     },
-    updateContractorState: (state, { payload }: PayloadAction<any>) => {
+    updateCompanyState: (state, { payload }: PayloadAction<any>) => {
       payload.forEach((element: any) => {
         state.assignees[element.name] = element.assignees;
       });
@@ -117,7 +117,7 @@ const submittalSlice = createSlice({
         getSubmittalList.fulfilled,
         (state, { payload }: PayloadAction<SubmittalListResponse>) => {
           state.list = payload.response;
-          DropDownData.ContractorOptions.forEach((element: any) => {
+          DropDownData.CompanyOptions.forEach((element: any) => {
             state.assignees[element.name] = element.assignees;
           });
         }
@@ -132,8 +132,8 @@ export const {
   setLoading,
   setSubmittalList,
   updateSubmittal,
-  updateContractorState,
-  newContractor,
+  updateCompanyState,
+  newCompany,
   newAssignee,
   updateDocs
 } = submittalSlice.actions;
