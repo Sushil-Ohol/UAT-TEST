@@ -24,7 +24,7 @@ export type SubmittalLog = {
   status: string;
   dueBy: string;
   governingDate: string;
-  contractor: { name: string; email: string };
+  company: { name: string; email: string };
   dependsOn: DependsOn[];
   assigned: Assignee;
   docs?: ConversationDoc[];
@@ -33,7 +33,7 @@ export type SubmittalListResponse = BaseResponse & {
   response: SubmittalLog[];
 };
 
-export type Contractor = {
+export type Company = {
   name: string;
   email: string;
   assignees?: Assignee[];

@@ -45,8 +45,8 @@ import {
   notificationCellRenderer,
   submittalCellRenderer,
   dateCellRenderer,
-  contractorCellRenderer,
-  contractorEditCellRenderer,
+  companyCellRenderer,
+  companyEditCellRenderer,
   assignedCellRenderer,
   assignedEditCellRenderer
 } from "components/cell-renders";
@@ -151,11 +151,11 @@ function SubmittalList() {
     setIsDocumentView(value);
   };
 
-  const contractorEditorParams = (params: ICellEditorParams) => {
-    const { contractor } = params.data;
-    const assignee = submittalState.contractors
+  const companyEditorParams = (params: ICellEditorParams) => {
+    const { company } = params.data;
+    const assignee = submittalState.companys
       .map((item) => {
-        return item.name === contractor.name && item.assignees;
+        return item.name === company.name && item.assignees;
       })
       .filter(Boolean);
     return {
@@ -278,20 +278,20 @@ function SubmittalList() {
       }
     },
     {
-      field: "contractor",
+      field: "company",
       headerName: "COMPANY",
       minWidth: 180,
       autoHeight: true,
       cellEditor: "agRichSelectCellEditor",
       cellEditorParams: {
-        cellRenderer: contractorEditCellRenderer,
-        values: submittalState.contractors,
+        cellRenderer: companyEditCellRenderer,
+        values: submittalState.companys,
         cellHeight: 20
       },
-      cellRenderer: contractorCellRenderer,
+      cellRenderer: companyCellRenderer,
       cellEditorPopup: true,
-      keyCreator: (contractor) => {
-        return contractor.value.name;
+      keyCreator: (company) => {
+        return company.value.name;
       }
     },
     {
@@ -318,10 +318,10 @@ function SubmittalList() {
       minWidth: 100,
       autoHeight: true,
       cellEditorPopup: true,
-      cellEditorParams: contractorEditorParams,
+      cellEditorParams: companyEditorParams,
       cellRenderer: assignedCellRenderer,
-      keyCreator: (contractor) => {
-        return contractor.value.assignedTo;
+      keyCreator: (company) => {
+        return company.value.assignedTo;
       }
     },
     {
@@ -345,25 +345,23 @@ function SubmittalList() {
 
   useEffect(() => {
     const temp = [...columnDefs];
-    const itemIndexContractor = columnDefs.findIndex(
-      (o) => o.field === "contractor"
-    );
-    if (itemIndexContractor > -1) {
-      temp[itemIndexContractor] = {
-        field: "contractor",
+    const itemIndexCompany = columnDefs.findIndex((o) => o.field === "company");
+    if (itemIndexCompany > -1) {
+      temp[itemIndexCompany] = {
+        field: "company",
         headerName: "COMPANY",
         minWidth: 180,
         autoHeight: true,
         cellEditor: "agRichSelectCellEditor",
         cellEditorParams: {
-          cellRenderer: contractorEditCellRenderer,
-          values: submittalState.contractors,
+          cellRenderer: companyEditCellRenderer,
+          values: submittalState.companys,
           cellHeight: 20
         },
-        cellRenderer: contractorCellRenderer,
+        cellRenderer: companyCellRenderer,
         cellEditorPopup: true,
-        keyCreator: (contractor) => {
-          return contractor.value.name;
+        keyCreator: (company) => {
+          return company.value.name;
         }
       };
     }
@@ -378,15 +376,15 @@ function SubmittalList() {
         minWidth: 100,
         autoHeight: true,
         cellEditorPopup: true,
-        cellEditorParams: contractorEditorParams,
+        cellEditorParams: companyEditorParams,
         cellRenderer: assignedCellRenderer,
-        keyCreator: (contractor) => {
-          return contractor.value.assignedTo;
+        keyCreator: (company) => {
+          return company.value.assignedTo;
         }
       };
     }
     setColumnDefs(temp);
-  }, [submittalState.contractors]);
+  }, [submittalState.companys]);
 
   const autoGroupColumnDef = useMemo(() => {
     return {
@@ -410,7 +408,7 @@ function SubmittalList() {
         if (params.colDef.field === "assigned") {
           return params.value.assignedTo;
         }
-        if (params.colDef.field === "contractor") {
+        if (params.colDef.field === "company") {
           return params.value.name;
         }
         return params.value;
@@ -505,7 +503,7 @@ function SubmittalList() {
       const { field } = event.colDef;
       const newItem = { ...data };
       newItem[field!] = event.newValue;
-      if (field === "contractor") {
+      if (field === "company") {
         newItem.assigned = {};
       }
       immutableRowData = immutableRowData.map((oldItem) =>
@@ -528,10 +526,8 @@ function SubmittalList() {
       const newItem = {
         ...newData[index],
         status: data.status !== undefined ? data.status : newData[index].status,
-        contractor:
-          data.contractor !== undefined
-            ? data.contractor
-            : newData[index].contractor,
+        company:
+          data.company !== undefined ? data.company : newData[index].company,
         assigned:
           data.assigned !== "" ? data.assigned : newData[index].assigned,
         dueBy:

@@ -8,7 +8,7 @@ interface AddAssigneeModalProps {
   assigneeOptions: any;
   show: boolean;
   onCancelClick: any;
-  selectedContractor: string;
+  selectedCompany: string;
 }
 
 function AddAssigneeModal({
@@ -16,13 +16,13 @@ function AddAssigneeModal({
   onOkClick,
   show,
   onCancelClick,
-  selectedContractor
+  selectedCompany
 }: AddAssigneeModalProps) {
   const [form] = useForm();
 
   const isAssigneeExists = (assigneeUserName: string): boolean => {
     const filteredAssigneeData = assigneeOptions.filter(
-      (contractor: any) => contractor.name === selectedContractor
+      (company: any) => company.name === selectedCompany
     );
 
     const data = filteredAssigneeData[0].assignees.filter(

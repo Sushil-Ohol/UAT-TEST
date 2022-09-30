@@ -47,11 +47,11 @@ export const dateCellRenderer = (props: any) => {
   );
 };
 
-export const contractorCellRenderer = (props: any) => {
+export const companyCellRenderer = (props: any) => {
   return <p className="colFirstValue">{props.value.name}</p>;
 };
 
-export const contractorEditCellRenderer = (params: any) => {
+export const companyEditCellRenderer = (params: any) => {
   return params?.value?.name || "";
 };
 

@@ -1,26 +1,26 @@
 // react/jsx-no-bind
 import { Form, Modal, Input, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import "./add-contractor.css";
+import "./add-company.css";
 
-interface AddContractorModalProps {
+interface AddCompanyModalProps {
   onOkClick: Function;
-  contractorOptions: any;
+  companyOptions: any;
   show: boolean;
   onCancelClick: any;
 }
 
-function AddContractorModal({
-  contractorOptions,
+function AddCompanyModal({
+  companyOptions,
   onOkClick,
   show,
   onCancelClick
-}: AddContractorModalProps) {
+}: AddCompanyModalProps) {
   const [form] = useForm();
 
-  const isContractorExists = (companyName: string): boolean => {
-    const data = contractorOptions.filter(
-      (contractor: any) => contractor.name === companyName
+  const isCompanyExists = (companyName: string): boolean => {
+    const data = companyOptions.filter(
+      (company: any) => company.name === companyName
     );
     if (Object.keys(data).length > 0) {
       return true;
@@ -28,10 +28,10 @@ function AddContractorModal({
     return false;
   };
 
-  const handleContractorOk = () => {
+  const handleCompanyOk = () => {
     form.validateFields().then((values) => {
-      if (!isContractorExists(values.companyName)) {
-        const contractorData = {
+      if (!isCompanyExists(values.companyName)) {
+        const companyData = {
           name: values.companyName,
           email: values.emailId,
           assignees: [
@@ -41,7 +41,7 @@ function AddContractorModal({
             }
           ]
         };
-        onOkClick(contractorData);
+        onOkClick(companyData);
         form.resetFields();
       } else {
         message.error("Company already exists");
@@ -53,16 +53,16 @@ function AddContractorModal({
     <Modal
       title="New Company"
       visible={show}
-      onOk={handleContractorOk}
+      onOk={handleCompanyOk}
       onCancel={onCancelClick}
       okText="Invite"
-      className="add-new-contractor"
+      className="add-new-company"
     >
       <Form layout="vertical" name="control-hooks" preserve form={form}>
         <Form.Item
           name="companyName"
           label="Company Name"
-          className="add-new-contractor-label"
+          className="add-new-company-label"
           rules={[
             {
               required: true,
@@ -72,7 +72,7 @@ function AddContractorModal({
         >
           <Input
             name="companyName"
-            className="add-new-contractor-input"
+            className="add-new-company-input"
             placeholder="Enter company name"
           />
         </Form.Item>
@@ -80,7 +80,7 @@ function AddContractorModal({
         <Form.Item
           name="userName"
           label="Contact Name"
-          className="add-new-contractor-label"
+          className="add-new-company-label"
           rules={[
             {
               required: true,
@@ -90,7 +90,7 @@ function AddContractorModal({
         >
           <Input
             name="userName"
-            className="add-new-contractor-input"
+            className="add-new-company-input"
             placeholder="Enter user name"
           />
         </Form.Item>
@@ -98,7 +98,7 @@ function AddContractorModal({
         <Form.Item
           name="emailId"
           label="Email ID"
-          className="add-new-contractor-label"
+          className="add-new-company-label"
           rules={[
             { type: "email", message: "Please enter a valid email" },
             {
@@ -109,7 +109,7 @@ function AddContractorModal({
         >
           <Input
             name="emailId"
-            className="add-new-contractor-input"
+            className="add-new-company-input"
             placeholder="Enter an email id"
           />
         </Form.Item>
@@ -118,4 +118,4 @@ function AddContractorModal({
   );
 }
 
-export default AddContractorModal;
+export default AddCompanyModal;
