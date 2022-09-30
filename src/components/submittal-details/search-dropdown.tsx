@@ -4,11 +4,13 @@ import { SearchIcon } from "components/svg-icons";
 function SearchDropdown({
   placeholder,
   data,
-  onSelect
+  onSelect,
+  submittalValue
 }: {
   placeholder: string;
   data: any;
   onSelect: Function;
+  submittalValue: any;
 }) {
   const { Option } = Select;
   const onChange = (value: string) => {
@@ -31,6 +33,7 @@ function SearchDropdown({
         <Select
           style={{ width: "100%" }}
           bordered={false}
+          value={submittalValue}
           showSearch
           allowClear
           placeholder={placeholder}
