@@ -106,8 +106,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     form.setFieldValue("assigned", null);
   };
 
-  const [isCompanyModalOpen, setIsCompanyModalOpen] =
-    useState<boolean>(false);
+  const [isCompanyModalOpen, setIsCompanyModalOpen] = useState<boolean>(false);
 
   const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
     useState<boolean>(false);

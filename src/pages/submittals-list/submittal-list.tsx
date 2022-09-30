@@ -345,9 +345,7 @@ function SubmittalList() {
 
   useEffect(() => {
     const temp = [...columnDefs];
-    const itemIndexCompany = columnDefs.findIndex(
-      (o) => o.field === "company"
-    );
+    const itemIndexCompany = columnDefs.findIndex((o) => o.field === "company");
     if (itemIndexCompany > -1) {
       temp[itemIndexCompany] = {
         field: "company",
@@ -529,9 +527,7 @@ function SubmittalList() {
         ...newData[index],
         status: data.status !== undefined ? data.status : newData[index].status,
         company:
-          data.company !== undefined
-            ? data.company
-            : newData[index].company,
+          data.company !== undefined ? data.company : newData[index].company,
         assigned:
           data.assigned !== "" ? data.assigned : newData[index].assigned,
         dueBy:
