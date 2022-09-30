@@ -38,7 +38,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
 
   const [fileLoading, setFileLoading] = useState<boolean>(false);
   const companyOptions = useAppSelector((state) => state.submittals.companys);
-  const assignedOption: any = useAppSelector(
+  const assigneeOption: any = useAppSelector(
     (state) => state.submittals.assignees
   );
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
@@ -123,7 +123,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   };
 
   const onChangeAssignee = (assignedTo: string) => {
-    const selectedAssignee = assignedOption[
+    const selectedAssignee = assigneeOption[
       updatedData && updatedData.company.name
     ].find((data: any) => data.assignedTo === assignedTo);
 
@@ -337,8 +337,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     .includes(input.toLowerCase())
                 }
               >
-                {updatedData?.company.name in assignedOption &&
-                  assignedOption[updatedData?.company.name].map((item: any) => (
+                {updatedData?.company.name in assigneeOption &&
+                  assigneeOption[updatedData?.company.name].map((item: any) => (
                     <Option key={item.assignedTo} value={item.assignedTo}>
                       {item.assignedTo}
                     </Option>
