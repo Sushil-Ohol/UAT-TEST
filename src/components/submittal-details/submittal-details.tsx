@@ -6,7 +6,17 @@ import {
   //   ReloadOutlined
 } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { Button, Checkbox, Col, Row, Select, Space, Spin, Upload } from "antd";
+import {
+  Button,
+  Checkbox,
+  Col,
+  message,
+  Row,
+  Select,
+  Space,
+  Spin,
+  Upload
+} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Link from "antd/lib/typography/Link";
 // import React from "react";
@@ -42,13 +52,16 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     (state) => state.submittals.assignees
   );
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
+
+  const [submittalValue, setSubmittalValue] = useState<any>("");
+
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
 
   const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
     (data: SubmittalLog) => ({
-      submittalId: data.id,
+      submittalId: data.id.toString(),
       submittal: data.submittal
     })
   );
@@ -73,13 +86,30 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       (data) => data.submittalId === id
     );
     setSelectedDepends(selectedData);
+    setSubmittalValue(selectedData?.submittal);
   };
 
   const addDependent = () => {
     setUpdatedData((prev: SubmittalLog) => {
-      return prev && selectedDepends
-        ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
-        : prev;
+      if (prev.dependsOn.length > 0) {
+        const result = prev.dependsOn.some(
+          (value: DependsOn) =>
+            value.submittalId === selectedDepends?.submittalId.toString()
+        );
+        if (result) {
+          message.error("Submittal already exist");
+        } else {
+          return prev && selectedDepends
+            ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
+            : prev;
+        }
+      } else {
+        return prev && selectedDepends
+          ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
+          : prev;
+      }
+      setSubmittalValue("");
+      return prev;
     });
   };
 
@@ -394,24 +424,13 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                   >
                     <Col span={8}>
                       <span className="heading">DEPENDS ON</span>
-                      <span
-                        style={{
-                          textAlign: "left",
-                          font: "normal normal normal 14px/17px Inter",
-                          letterSpacing: "0px",
-                          color: "#FF3535",
-                          opacity: 1,
-                          marginLeft: "14px"
-                        }}
-                      >
-                        Blocked
-                      </span>
                     </Col>
                     <Col span={5} offset={10}>
                       <SearchDropdown
                         placeholder="Search"
                         data={onlySubmittalsTitleId}
                         onSelect={onSubmittalSearch}
+                        submittalValue={submittalValue}
                       />
                     </Col>
                     <Col span={1}>
