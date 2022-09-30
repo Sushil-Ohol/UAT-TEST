@@ -140,12 +140,12 @@ const AssigneeOptions = [
   {
     assignedTo: "Ronaldo",
     destination: "Architect",
-    contractor: "Architect company"
+    contractor: "Architect Company"
   },
   {
     assignedTo: "John",
     destination: "Architect",
-    contractor: "Architect company"
+    contractor: "Architect Company"
   }
 ];
 

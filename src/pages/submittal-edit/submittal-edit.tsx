@@ -26,12 +26,12 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const submittalState = useAppSelector((state: RootState) => state.submittals);
 
-  const [contractorSelected, setContractorSelected] = useState<string>(
-    submittalState.contractors[0].name
-  );
+  const [contractorSelected, setContractorSelected] = useState<any>(null);
 
   const [assigneeData, setAssigneeData] = useState<any>(
-    submittalState.assignees[contractorSelected].list
+    contractorSelected === null
+      ? []
+      : submittalState.assignees[contractorSelected].list
   );
 
   const contractorData = submittalState.contractors;
@@ -63,6 +63,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       const assigned: any = selectedContractor[0]?.assignees.filter(
         (contractor: any) => contractor.assignedTo === values.assigned
       );
+
       const data = {
         contractor: selectedContractor[0],
         status: values.status,

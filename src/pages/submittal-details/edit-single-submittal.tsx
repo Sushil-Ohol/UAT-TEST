@@ -4,6 +4,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Col, Row, Tabs, Button, Typography, Spin, Divider } from "antd";
 import SubmittalDetails from "components/submittal-details/submittal-details";
 import { EditIcon } from "components/svg-icons";
+
 import { ConversationDoc } from "models/discussion";
 import { SubmittalLog } from "models/submittal-log";
 
@@ -27,7 +28,6 @@ function SubmittalDetailspage(props: any) {
   const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
   const { Title } = Typography;
   const dispatch = useAppDispatch();
-
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
 
   const goToSubmittalPage = () => {
