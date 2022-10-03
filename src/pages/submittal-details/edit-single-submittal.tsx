@@ -1,12 +1,24 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Col, Row, Tabs, Button, Typography, Spin, Divider } from "antd";
+import { ArrowLeftOutlined, FolderOutlined } from "@ant-design/icons";
+import {
+  Col,
+  Row,
+  Tabs,
+  Button,
+  Typography,
+  Spin,
+  Divider,
+  Drawer,
+  Space,
+  message
+} from "antd";
 import SubmittalDetails from "components/submittal-details/submittal-details";
-import { EditIcon } from "components/svg-icons";
+import { EditIcon, ExpandIcon } from "components/svg-icons";
 
 import { ConversationDoc } from "models/discussion";
 import { SubmittalLog } from "models/submittal-log";
+import StagingZone from "pages/staging-zone";
 
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -29,7 +41,10 @@ function SubmittalDetailspage(props: any) {
   const { Title } = Typography;
   const dispatch = useAppDispatch();
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
-
+  const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
+  const [height, setHeight] = useState(505);
+  const [isResizing, setIsResizing] = useState(false);
+  const [isDocumentView, setIsDocumentView] = useState(false);
   const goToSubmittalPage = () => {
     if (updatedData) dispatch(updateSubmittal(updatedData));
     dispatch(updateDocs({ submittalId: location.state.data.id, docs }));
@@ -65,9 +80,16 @@ function SubmittalDetailspage(props: any) {
 
   const handleDocuments = (action: string, document: ConversationDoc) => {
     switch (action) {
-      case "Add":
-        setDocs([...docs, document]);
+      case "Add": {
+        const tempDocs = [...docs];
+        const index = tempDocs.findIndex((item) => item.id === document.id);
+        if (index > -1) {
+          message.error("Document already exist");
+        } else {
+          setDocs([...docs, document]);
+        }
         break;
+      }
       case "Remove":
         setDocs(docs.filter((d: ConversationDoc) => d.id !== document.id));
         break;
@@ -92,6 +114,52 @@ function SubmittalDetailspage(props: any) {
       </Title>
     );
   }
+  
+  const onStagingZoneClose = () => {
+    setShowStagingZone(false);
+    setHeight(505);
+  };
+
+  const onMouseDown = () => {
+    setIsResizing(true);
+  };
+
+  const viewDocument = (value: boolean) => {
+    if (value) {
+      const viewDocHeight = document.body.offsetHeight - 46;
+      setHeight(viewDocHeight);
+    } else {
+      setHeight(505);
+    }
+    setIsDocumentView(value);
+  };
+
+  const onMouseUp = () => {
+    setIsResizing(false);
+  };
+
+  const onMouseMove = (e: { clientY: number }) => {
+    if (isResizing) {
+      const offsetBottom =
+        document.body.offsetHeight - (e.clientY - document.body.offsetTop);
+      const minHeight = 50;
+      const maxHeight = document.body.offsetHeight;
+      if (offsetBottom > minHeight && offsetBottom < maxHeight) {
+        setHeight(offsetBottom);
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+  });
+
 
   return (
     <div style={{ margin: "0 20px" }}>
@@ -156,6 +224,58 @@ function SubmittalDetailspage(props: any) {
           </TabPane>
         </Tabs>
       </div>
+      <Row className="subDetailsNavbar">
+        <Col style={{ padding: "10px", width: "100%" }}>
+          <Button
+            onClick={() => setShowStagingZone(!showStagingZone)}
+            size="large"
+            className="staging-zone-btn"
+          >
+            Staging Zone <ExpandIcon />
+          </Button>
+        </Col>
+      </Row>
+
+      <Drawer
+        title={
+          <Space>
+            <Title level={5}>Staging Zone</Title>
+            <Title level={5} className="private-org">
+              Private within org
+            </Title>
+            <Title level={5}>
+              Use this space to discuss within your team mates, share documents.
+              All content are private within your org.
+            </Title>
+            {!isDocumentView && (
+              <Title level={5} onClick={onStagingZoneClose}>
+                <ExpandIcon className="expand-icon-right" />
+              </Title>
+            )}
+            {isDocumentView && (
+              <Title level={5} className="expand-icon-right-with-text">
+                <FolderOutlined /> Browse previous projects
+              </Title>
+            )}
+          </Space>
+        }
+        placement="bottom"
+        className="stagingZoneDrawer"
+        onClose={onStagingZoneClose}
+        visible={showStagingZone}
+        mask={false}
+        headerStyle={{ borderBottom: "none" }}
+        height={height}
+      >
+        {showStagingZone && (
+          <StagingZone
+            onMouseDown={onMouseDown}
+            documentView={viewDocument}
+            isDocumentView={isDocumentView}
+            selectedData={[]}
+          />
+        )}
+      </Drawer>
     </div>
   );
 }
