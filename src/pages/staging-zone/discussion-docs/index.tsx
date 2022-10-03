@@ -138,6 +138,11 @@ function DiscussionDocs(props: DiscussionDocsProps) {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     addNewFile(e.target.files && e.target.files[0], setFileUpload);
   };
+  
+  const dragStart = (data: any, event: any) => {
+    event.dataTransfer.setData("application/json", JSON.stringify(data));
+  };
+  
   return (
     <div className={className}>
       <div className="discussionDocs">
@@ -171,7 +176,11 @@ function DiscussionDocs(props: DiscussionDocsProps) {
             {filterByDate &&
               filterByDate[messageDay].map((data: ConversationDoc) => {
                 return (
-                  <div key={data.id}>
+                  <div
+                    key={data.id}
+                    draggable
+                    onDragStart={(e) => dragStart(data, e)}
+                  >
                     <div
                       className={
                         currentUser === data.uploadedBy
