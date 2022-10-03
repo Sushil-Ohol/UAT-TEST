@@ -113,17 +113,20 @@ function SubmittalList() {
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState(0);
   const [selectedRowsData, setSelectedRowsData] = useState([]);
-  const [height, setHeight] = useState(505);
+  const [height, setHeight] = useState(490);
+
   const [isDocumentView, setIsDocumentView] = useState(false);
+  const [isResizing, setIsResizing] = useState(false);
+
   const gridStyle = useMemo(
     () => ({
-      height: showStagingZone ? "300px" : "780px",
+      height: showStagingZone ? `${780 - height}px` : "780px",
       width: "100%",
       transition: "all 0.3s"
     }),
-    [showStagingZone]
+    [showStagingZone, height]
   );
-  const [isResizing, setIsResizing] = useState(false);
+
   // const [rowData, setRowData] = useState<SubmittalLog[]>();
   const dispatch = useAppDispatch();
   const { projectId } = useParams() as any;
@@ -146,7 +149,7 @@ function SubmittalList() {
       const viewDocHeight = document.body.offsetHeight - 46;
       setHeight(viewDocHeight);
     } else {
-      setHeight(505);
+      setHeight(490);
     }
     setIsDocumentView(value);
   };
@@ -487,7 +490,7 @@ function SubmittalList() {
 
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
-    setHeight(505);
+    setHeight(490);
   };
 
   const onFirstDataRendered = useCallback(() => {
