@@ -44,14 +44,16 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
               onClickFile({
                 fileName: document.fileName,
                 fileUrl: document.url,
-                id: document.id
+                id: document.id,
+                uploadDocument: document.uploadDocument
               })
             }
             onKeyDown={() =>
               onClickFile({
                 fileName: document.fileName,
                 fileUrl: document.url,
-                id: document.id
+                id: document.id,
+                uploadDocument: document.uploadDocument
               })
             }
             role="button"
