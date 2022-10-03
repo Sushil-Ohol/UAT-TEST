@@ -87,26 +87,30 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   };
 
   const addDependent = () => {
-    setUpdatedData((prev: SubmittalLog) => {
-      if (prev.dependsOn.length > 0) {
-        const result = prev.dependsOn.some(
-          (value: DependsOn) =>
-            value.submittalId === selectedDepends?.submittalId.toString()
-        );
-        if (result) {
-          message.error("Submittal already exist");
+    if (selectedDepends?.submittal === "") {
+      message.error("Please select depend on");
+    } else {
+      setUpdatedData((prev: SubmittalLog) => {
+        if (prev.dependsOn.length > 0) {
+          const result = prev.dependsOn.some(
+            (value: DependsOn) =>
+              value.submittalId === selectedDepends?.submittalId.toString()
+          );
+          if (result) {
+            message.error("Submittal already exist");
+          } else {
+            return prev && selectedDepends
+              ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
+              : prev;
+          }
         } else {
           return prev && selectedDepends
             ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
             : prev;
         }
-      } else {
-        return prev && selectedDepends
-          ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
-          : prev;
-      }
-      return prev;
-    });
+        return prev;
+      });
+    }
     setSelectedDepends({ submittalId: "", submittal: "" });
   };
 
