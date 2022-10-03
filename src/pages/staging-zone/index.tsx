@@ -23,7 +23,8 @@ function StagingZone(props: StagingZoneProps) {
   const [discussionId, setDiscussionId] = useState("");
   const [selectedDocument, setSelectedDocument] = useState({
     fileName: "",
-    fileUrl: ""
+    fileUrl: "",
+    id: ""
   });
   const dispatch = useDispatch();
 
@@ -37,11 +38,11 @@ function StagingZone(props: StagingZoneProps) {
     setSelectedDocument(fileName);
   };
   const onDocumentClose = () => {
-    setSelectedDocument({ fileName: "", fileUrl: "" });
+    setSelectedDocument({ fileName: "", fileUrl: "", id: "" });
   };
   const onDeleteDocument = () => {
     dispatch(deleteDocument({ discussionId, ...selectedDocument }));
-    setSelectedDocument({ fileName: "", fileUrl: "" });
+    setSelectedDocument({ fileName: "", fileUrl: "", id: "" });
   };
   return (
     <div id="page-wrap">

@@ -21,7 +21,7 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
     onSelect(file);
   }
   useEffect(() => {
-    setSelectedDoc(selectedDocument.fileUrl);
+    setSelectedDoc(selectedDocument.id);
   }, [selectedDocument, selectedDiscussion]);
   return (
     <>
@@ -36,20 +36,22 @@ function DocumentList({ selectedDocument, onSelect }: DocumentListProps) {
         documents[selectedDiscussion?.topicId]?.list.map((document: any) => (
           <div
             className={
-              selectedDoc === document.url
+              selectedDoc === document.id
                 ? " document-item-active"
                 : "document-item"
             }
             onClick={() =>
               onClickFile({
                 fileName: document.fileName,
-                fileUrl: document.url
+                fileUrl: document.url,
+                id: document.id
               })
             }
             onKeyDown={() =>
               onClickFile({
                 fileName: document.fileName,
-                fileUrl: document.url
+                fileUrl: document.url,
+                id: document.id
               })
             }
             role="button"
