@@ -220,7 +220,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       </div>
     );
   }
-  
+
   const getDroppedDocument = (event: any) => {
     event.preventDefault();
     const jsonData = event.dataTransfer.getData("application/json");
@@ -311,7 +311,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       handleDocuments("Add", newdoc);
     }
   };
-  
+
   const attachDocument = () => {
     if (selectedDocument) {
       const newdoc: ConversationDoc = {
