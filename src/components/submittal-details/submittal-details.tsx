@@ -28,6 +28,7 @@ import { RootState } from "store/slices";
 import { ClearIcon, PlusIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
+import { ConfirmAttachModal } from "components/submittal-details";
 import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
@@ -52,6 +53,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     (state) => state.submittals.assignees
   );
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
+  const [showAttachDocConfirmModal, setShowAttachDocConfirmModal] =
+    useState<boolean>(false);
+  const [selectedDocument, setSelectedDocument] = useState<any>();
 
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
@@ -216,6 +220,21 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       </div>
     );
   }
+  
+  const getDroppedDocument = (event: any) => {
+    event.preventDefault();
+    const jsonData = event.dataTransfer.getData("application/json");
+    const data = JSON.parse(jsonData);
+
+    if (data) {
+      setSelectedDocument(data);
+      setShowAttachDocConfirmModal(true);
+    }
+  };
+
+  const onDragOver = (event: any) => {
+    event.preventDefault();
+  };
 
   function DocumentSection() {
     return (
@@ -225,6 +244,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           height: "322px",
           width: "100%"
         }}
+        onDrop={(e) => getDroppedDocument(e)}
+        onDragOver={onDragOver}
       >
         {docs
           ? docs.map((data: ConversationDoc) => {
@@ -288,6 +309,21 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         url: "sd"
       };
       handleDocuments("Add", newdoc);
+    }
+  };
+  
+  const attachDocument = () => {
+    if (selectedDocument) {
+      const newdoc: ConversationDoc = {
+        fileName: selectedDocument.fileName,
+        annotationCount: selectedDocument.annotationCount,
+        id: selectedDocument.id,
+        uploadDate: selectedDocument.uploadDate,
+        uploadedBy: selectedDocument.uploadedBy,
+        url: selectedDocument.url
+      };
+      handleDocuments("Add", newdoc);
+      setShowAttachDocConfirmModal(false);
     }
   };
 
@@ -513,6 +549,11 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           </Link>
         </Col>
       </Row>
+      <ConfirmAttachModal
+        isModalOpen={showAttachDocConfirmModal}
+        setIsModalOpen={setShowAttachDocConfirmModal}
+        handleOk={attachDocument}
+      />
     </div>
   );
 }
