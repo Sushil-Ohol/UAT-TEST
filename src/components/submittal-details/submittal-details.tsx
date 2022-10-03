@@ -53,8 +53,6 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   );
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
 
-  const [submittalValue, setSubmittalValue] = useState<any>("");
-
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
@@ -86,7 +84,6 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       (data) => data.submittalId === id
     );
     setSelectedDepends(selectedData);
-    setSubmittalValue(selectedData?.submittal);
   };
 
   const addDependent = () => {
@@ -108,9 +105,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
           : prev;
       }
-      setSubmittalValue("");
       return prev;
     });
+    setSelectedDepends({ submittalId: "", submittal: "" });
   };
 
   const removeDependent = (id: string) => {
@@ -430,7 +427,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                         placeholder="Search"
                         data={onlySubmittalsTitleId}
                         onSelect={onSubmittalSearch}
-                        submittalValue={submittalValue}
+                        selectedValue={selectedDepends?.submittalId || ""}
                       />
                     </Col>
                     <Col span={1}>

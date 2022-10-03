@@ -174,6 +174,7 @@ function SubmittalList() {
       minWidth: 20,
       maxWidth: 125,
       filter: false,
+      menuTabs: [],
       editable: false,
       cellRenderer: IdLinkComponent,
       cellRendererParams: {
@@ -193,6 +194,7 @@ function SubmittalList() {
       field: "submittal",
       headerName: "SUBMITTAL",
       filter: false,
+      menuTabs: [],
       minWidth: 350,
       maxWidth: 250,
       autoHeight: true,
@@ -404,6 +406,7 @@ function SubmittalList() {
       editable: true,
       filter: true,
       resizable: true,
+      menuTabs: ["filterMenuTab"],
       getQuickFilterText(params: any) {
         if (params.colDef.field === "assigned") {
           return params.value.assignedTo;

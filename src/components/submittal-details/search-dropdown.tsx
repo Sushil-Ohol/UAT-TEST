@@ -5,12 +5,12 @@ function SearchDropdown({
   placeholder,
   data,
   onSelect,
-  submittalValue
+  selectedValue = ""
 }: {
   placeholder: string;
   data: any;
   onSelect: Function;
-  submittalValue: any;
+  selectedValue: string;
 }) {
   const { Option } = Select;
   const onChange = (value: string) => {
@@ -33,7 +33,7 @@ function SearchDropdown({
         <Select
           style={{ width: "100%" }}
           bordered={false}
-          value={submittalValue}
+          value={selectedValue || null}
           showSearch
           allowClear
           placeholder={placeholder}

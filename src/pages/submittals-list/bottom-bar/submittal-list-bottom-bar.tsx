@@ -10,7 +10,10 @@ function SubmittalListBottomBar(props: any) {
     showStagingZone
   } = props;
   return (
-    <section className="blue-grid" style={{ marginTop: "15px" }}>
+    <section
+      className="blue-grid"
+      style={{ marginTop: "15px", position: "sticky", bottom: "0px" }}
+    >
       <Card
         bordered={false}
         className="CardDetails"
