@@ -138,11 +138,11 @@ function DiscussionDocs(props: DiscussionDocsProps) {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     addNewFile(e.target.files && e.target.files[0], setFileUpload);
   };
-  
+
   const dragStart = (data: any, event: any) => {
     event.dataTransfer.setData("application/json", JSON.stringify(data));
   };
-  
+
   return (
     <div className={className}>
       <div className="discussionDocs">

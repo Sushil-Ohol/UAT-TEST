@@ -114,7 +114,7 @@ function SubmittalDetailspage(props: any) {
       </Title>
     );
   }
-  
+
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
     setHeight(505);
@@ -159,7 +159,6 @@ function SubmittalDetailspage(props: any) {
       document.removeEventListener("mouseup", onMouseUp);
     };
   });
-
 
   return (
     <div style={{ margin: "0 20px" }}>
