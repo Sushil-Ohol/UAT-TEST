@@ -91,26 +91,30 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   };
 
   const addDependent = () => {
-    setUpdatedData((prev: SubmittalLog) => {
-      if (prev.dependsOn.length > 0) {
-        const result = prev.dependsOn.some(
-          (value: DependsOn) =>
-            value.submittalId === selectedDepends?.submittalId.toString()
-        );
-        if (result) {
-          message.error("Submittal already exist");
+    if (selectedDepends?.submittal === "") {
+      message.error("Please select depend on");
+    } else {
+      setUpdatedData((prev: SubmittalLog) => {
+        if (prev.dependsOn.length > 0) {
+          const result = prev.dependsOn.some(
+            (value: DependsOn) =>
+              value.submittalId === selectedDepends?.submittalId.toString()
+          );
+          if (result) {
+            message.error("Submittal already exist");
+          } else {
+            return prev && selectedDepends
+              ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
+              : prev;
+          }
         } else {
           return prev && selectedDepends
             ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
             : prev;
         }
-      } else {
-        return prev && selectedDepends
-          ? { ...prev, dependsOn: [...prev.dependsOn, selectedDepends] }
-          : prev;
-      }
-      return prev;
-    });
+        return prev;
+      });
+    }
     setSelectedDepends({ submittalId: "", submittal: "" });
   };
 
@@ -285,7 +289,18 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       </div>
     );
   }
-
+  const addDocument = (info: any) => {
+    const newdoc: ConversationDoc = {
+      fileName: info.name,
+      annotationCount: 3,
+      id: info.uid,
+      uploadDate: new Date(),
+      uploadedBy: "john",
+      uploadDocument: true,
+      url: URL.createObjectURL(info)
+    };
+    handleDocuments("Add", newdoc);
+  };
   const fileUploadRequest = async ({ file, onSuccess }: any) => {
     setFileLoading(true);
     const formData = new FormData();
@@ -294,21 +309,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     const result = await PostProjectFile(formData, null);
     if ((await result.data).data.success) {
       onSuccess("ok");
-    }
-  };
-
-  const addDocument = (info: any) => {
-    if (info.file.status === "done") {
+      addDocument(file);
       setFileLoading(false);
-      const newdoc: ConversationDoc = {
-        fileName: info.file.name,
-        annotationCount: 3,
-        id: info.file.uid,
-        uploadDate: new Date(),
-        uploadedBy: "john",
-        url: "sd"
-      };
-      handleDocuments("Add", newdoc);
     }
   };
 
@@ -501,7 +503,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                   <Upload
                     showUploadList={false}
                     customRequest={fileUploadRequest}
-                    onChange={(info) => addDocument(info)}
+                    // onChange={(info) => addDocument(info)}
                   >
                     <Button className="add-new-column-btn">
                       {fileLoading ? <Spin size="small" /> : <PlusIcon />}

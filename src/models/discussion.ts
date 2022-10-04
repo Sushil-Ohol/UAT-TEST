@@ -14,6 +14,7 @@ export type ConversationDoc = {
   uploadedBy: string;
   uploadDate: Date;
   annotationCount: number;
+  uploadDocument: boolean;
 };
 
 export type Discussion = {

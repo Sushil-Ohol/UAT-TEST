@@ -115,7 +115,8 @@ function DiscussionDocs(props: DiscussionDocsProps) {
         url: URL.createObjectURL(file),
         uploadedBy: currentUser,
         uploadDate: moment(new Date()).format("MM-DD-YYYY"),
-        annotationCount: 1
+        annotationCount: 1,
+        uploadDocument: true
       };
       dispatch(newDocument({ discussionId, newFile }));
       isLoding(false);
@@ -218,14 +219,16 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                             onDocumentClick(true, {
                               fileName: data.fileName,
                               fileUrl: data.url,
-                              id: data.id
+                              id: data.id,
+                              uploadDocument: data.uploadDocument
                             });
                           }}
                           onKeyDown={() => {
                             onDocumentClick(true, {
                               fileName: data.fileName,
                               fileUrl: data.url,
-                              id: data.id
+                              id: data.id,
+                              uploadDocument: data.uploadDocument
                             });
                           }}
                           role="button"

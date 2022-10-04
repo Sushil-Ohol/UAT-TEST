@@ -24,7 +24,8 @@ function StagingZone(props: StagingZoneProps) {
   const [selectedDocument, setSelectedDocument] = useState({
     fileName: "",
     fileUrl: "",
-    id: ""
+    id: "",
+    uploadDocument: false
   });
   const dispatch = useDispatch();
 
@@ -38,11 +39,21 @@ function StagingZone(props: StagingZoneProps) {
     setSelectedDocument(fileName);
   };
   const onDocumentClose = () => {
-    setSelectedDocument({ fileName: "", fileUrl: "", id: "" });
+    setSelectedDocument({
+      fileName: "",
+      fileUrl: "",
+      id: "",
+      uploadDocument: false
+    });
   };
   const onDeleteDocument = () => {
     dispatch(deleteDocument({ discussionId, ...selectedDocument }));
-    setSelectedDocument({ fileName: "", fileUrl: "", id: "" });
+    setSelectedDocument({
+      fileName: "",
+      fileUrl: "",
+      id: "",
+      uploadDocument: false
+    });
   };
   return (
     <div id="page-wrap">
@@ -98,7 +109,11 @@ function StagingZone(props: StagingZoneProps) {
             <div className="col-two discussion-document-view document-bg-color">
               {selectedDocument.fileUrl ? (
                 <DocumentView
-                  file={`${process.env.PUBLIC_URL}${selectedDocument.fileUrl}`}
+                  file={
+                    selectedDocument.uploadDocument
+                      ? `${selectedDocument.fileUrl}`
+                      : `${window.location.origin}${selectedDocument.fileUrl}`
+                  }
                 />
               ) : (
                 <h1>Document View</h1>
