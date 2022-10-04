@@ -18,16 +18,9 @@ export const ErrorMessages = {
 };
 
 export const AttachmentConfirmationMessages: any = {
-  submittalDetail: {
-    heading: "Do you want to attach this document into this submittal details?",
-    subHeading:
-      "This will give access to everyone in this submittal including external users outside of your org."
-  },
-  material: {
-    heading: "Do you want to attach this document into this material?",
-    subHeading:
-      "This will give access to everyone in this material including external users outside of your org."
-  }
+  heading: "Do you want to attach this document into this {type}?",
+  subHeading:
+    "This will give access to everyone in this {type} including external users outside of your org."
 };
 
 export const steps = [
