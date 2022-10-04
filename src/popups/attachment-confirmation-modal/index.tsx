@@ -5,7 +5,7 @@ import "./attachment-confirmation.css";
 interface AttachmentConfirmationModalProps {
   isModalOpen: boolean;
   setIsModalOpen: Function;
-  handleOk: any;
+  handleOk: Function;
   type: string;
 }
 
