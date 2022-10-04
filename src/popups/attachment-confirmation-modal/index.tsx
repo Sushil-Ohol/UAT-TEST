@@ -12,7 +12,6 @@ interface AttachmentConfirmationModalProps {
 function AttachmentConfirmationModal(props: AttachmentConfirmationModalProps) {
   const { type, isModalOpen, setIsModalOpen, handleOk } = props;
   const onOkClick = () => {
-    console.log("okk");
     handleOk();
   };
   return (
