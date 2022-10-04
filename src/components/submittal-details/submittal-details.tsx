@@ -552,7 +552,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           </Link>
         </Col>
       </Row>
-     <AttachmentConfirmationModal
+      <AttachmentConfirmationModal
         isModalOpen={showAttachDocConfirmModal}
         setIsModalOpen={setShowAttachDocConfirmModal}
         handleOk={attachDocument}
