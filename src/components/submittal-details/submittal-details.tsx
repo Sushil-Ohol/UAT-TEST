@@ -316,7 +316,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
 
   const attachDocument = () => {
     if (selectedDocument) {
-      const newdoc: ConversationDoc = {
+      const newDoc: ConversationDoc = {
         fileName: selectedDocument.fileName,
         annotationCount: selectedDocument.annotationCount,
         id: selectedDocument.id,
@@ -325,7 +325,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         url: selectedDocument.url,
         uploadDocument: true
       };
-      handleDocuments("Add", newdoc);
+      handleDocuments("Add", newDoc);
       setShowAttachDocConfirmModal(false);
     }
   };
@@ -529,7 +529,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         </Col>
         <Col span={24} style={{ marginBottom: "14px" }}>
           <Checkbox className="actionItemsCheckBox">
-            You Recevied 2 new discussion
+            You received 2 new discussion
           </Checkbox>
           <Link href="#abc" className="respondLink">
             Respond →
@@ -537,7 +537,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         </Col>
         <Col span={24} style={{ marginBottom: "14px" }}>
           <Checkbox className="actionItemsCheckBox">
-            This Submittal Recived 3 New Submissions
+            This Submittal Received 3 New Submissions
           </Checkbox>
           <Link href="#abc" className="footerLink">
             Review →
@@ -556,6 +556,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         isModalOpen={showAttachDocConfirmModal}
         setIsModalOpen={setShowAttachDocConfirmModal}
         handleOk={attachDocument}
+        page="submittalDetail"
       />
     </div>
   );
