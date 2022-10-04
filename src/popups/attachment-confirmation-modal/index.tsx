@@ -1,5 +1,5 @@
 import { Input, Modal } from "antd";
-import "./submittal-details.css";
+import "./attachment-confirmation.css";
 
 function ConfirmAttachModal(props: any) {
   const { isModalOpen, setIsModalOpen, handleOk } = props;

@@ -28,7 +28,7 @@ import { RootState } from "store/slices";
 import { ClearIcon, PlusIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
-import { ConfirmAttachModal } from "components/submittal-details";
+import { AttachmentConfirmationModal } from "popups";
 import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
@@ -322,7 +322,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         id: selectedDocument.id,
         uploadDate: selectedDocument.uploadDate,
         uploadedBy: selectedDocument.uploadedBy,
-        url: selectedDocument.url
+        url: selectedDocument.url,
+        uploadDocument: true
       };
       handleDocuments("Add", newdoc);
       setShowAttachDocConfirmModal(false);
@@ -551,7 +552,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           </Link>
         </Col>
       </Row>
-      <ConfirmAttachModal
+      <AttachmentConfirmationModal
         isModalOpen={showAttachDocConfirmModal}
         setIsModalOpen={setShowAttachDocConfirmModal}
         handleOk={attachDocument}
