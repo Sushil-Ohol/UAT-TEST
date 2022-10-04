@@ -99,21 +99,3 @@
   color: #007aff !important;
   opacity: 1;
 }
-
-.attach-document .ant-modal-content {
-  width: 575px
-}
-
-.attach-document .ant-modal-content,
-.attach-document .ant-modal-header {
-  background: #f7f6f4 0% 0% no-repeat padding-box !important;
-}
-
-.attach-document .ant-modal-title {
-  text-align: left;
-  font: 18px/21px Inter;
-  letter-spacing: 0px;
-  color: #000000fa;
-  opacity: 1;
-  font-weight: 600;
-}
