@@ -160,7 +160,7 @@ function SubmittalDetailspage(props: any) {
   return (
     <div style={{ margin: "0px  1.39vw", marginBottom: "1.95vh" }}>
       <Row className="subDetailsNavbar">
-        <Col flex="12.57vw" className="allSubmittalBtnCol">
+        <Col flex="14.57%" className="allSubmittalBtnCol">
           <Button
             icon={<ArrowLeftOutlined />}
             className="subDetailsCardBtn"
@@ -170,7 +170,7 @@ function SubmittalDetailspage(props: any) {
           </Button>
         </Col>
         <Col
-          flex="84.65vw"
+          flex="84.95%"
           style={{
             display: "flex",
             alignItems: "center",

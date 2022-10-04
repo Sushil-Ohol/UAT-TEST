@@ -26,7 +26,7 @@ function Nav() {
         </a>
       </Col>
       <Col
-        flex="84.65vw"
+        flex="84.65%"
         style={{
           display: "flex",
           alignItems: "center",

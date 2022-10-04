@@ -68,7 +68,7 @@
   align-items: center;
   justify-content: flex-start;
   height: inherit;
-  border-right: 2px solid #0000000d;
+/*   border-right: 2px solid #0000000d; */
 }
 
 .splitBtnCol {
