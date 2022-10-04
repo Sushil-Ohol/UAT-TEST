@@ -17,6 +17,12 @@ export const ErrorMessages = {
   PasswordRequired: "Please Enter Password"
 };
 
+export const AttachmentConfirmationMessages: any = {
+  heading: "Do you want to attach this document into this {type}?",
+  subHeading:
+    "This will give access to everyone in this {type} including external users outside of your org."
+};
+
 export const steps = [
   {
     title: "Details",

@@ -28,6 +28,7 @@ import { RootState } from "store/slices";
 import { ClearIcon, PlusIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
+import { AttachmentConfirmationModal } from "popups";
 import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
@@ -52,6 +53,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     (state) => state.submittals.assignees
   );
   const [selectedDepends, setSelectedDepends] = useState<DependsOn>();
+  const [showAttachDocConfirmModal, setShowAttachDocConfirmModal] =
+    useState<boolean>(false);
+  const [selectedDocument, setSelectedDocument] = useState<any>();
 
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
@@ -221,6 +225,21 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     );
   }
 
+  const getDroppedDocument = (event: any) => {
+    event.preventDefault();
+    const jsonData = event.dataTransfer.getData("application/json");
+    const data = JSON.parse(jsonData);
+
+    if (data) {
+      setSelectedDocument(data);
+      setShowAttachDocConfirmModal(true);
+    }
+  };
+
+  const onDragOver = (event: any) => {
+    event.preventDefault();
+  };
+
   function DocumentSection() {
     return (
       <div
@@ -229,6 +248,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           height: "322px",
           width: "100%"
         }}
+        onDrop={(e) => getDroppedDocument(e)}
+        onDragOver={onDragOver}
       >
         {docs
           ? docs.map((data: ConversationDoc) => {
@@ -290,6 +311,22 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       onSuccess("ok");
       addDocument(file);
       setFileLoading(false);
+    }
+  };
+
+  const attachDocument = () => {
+    if (selectedDocument) {
+      const newDoc: ConversationDoc = {
+        fileName: selectedDocument.fileName,
+        annotationCount: selectedDocument.annotationCount,
+        id: selectedDocument.id,
+        uploadDate: selectedDocument.uploadDate,
+        uploadedBy: selectedDocument.uploadedBy,
+        url: selectedDocument.url,
+        uploadDocument: true
+      };
+      handleDocuments("Add", newDoc);
+      setShowAttachDocConfirmModal(false);
     }
   };
 
@@ -492,7 +529,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         </Col>
         <Col span={24} style={{ marginBottom: "14px" }}>
           <Checkbox className="actionItemsCheckBox">
-            You Recevied 2 new discussion
+            You received 2 new discussion
           </Checkbox>
           <Link href="#abc" className="respondLink">
             Respond →
@@ -500,7 +537,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         </Col>
         <Col span={24} style={{ marginBottom: "14px" }}>
           <Checkbox className="actionItemsCheckBox">
-            This Submittal Recived 3 New Submissions
+            This Submittal Received 3 New Submissions
           </Checkbox>
           <Link href="#abc" className="footerLink">
             Review →
@@ -515,6 +552,12 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           </Link>
         </Col>
       </Row>
+      <AttachmentConfirmationModal
+        isModalOpen={showAttachDocConfirmModal}
+        setIsModalOpen={setShowAttachDocConfirmModal}
+        handleOk={attachDocument}
+        type="Submittal details"
+      />
     </div>
   );
 }

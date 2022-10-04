@@ -2,5 +2,11 @@
 import AddAssigneeModal from "./assignee-modal";
 import AddCompanyModal from "./company-modal";
 import AddNewColumn from "./add-new-column";
+import AttachmentConfirmationModal from "./attachment-confirmation-modal";
 
-export { AddAssigneeModal, AddCompanyModal, AddNewColumn };
+export {
+  AddAssigneeModal,
+  AddCompanyModal,
+  AddNewColumn,
+  AttachmentConfirmationModal
+};
