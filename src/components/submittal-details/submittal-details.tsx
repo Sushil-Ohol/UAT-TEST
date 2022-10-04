@@ -1,10 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  //   ArrowRightOutlined,
-  ExclamationCircleOutlined
-  //   ReloadOutlined
-} from "@ant-design/icons";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -186,8 +182,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     return (
       <div
         style={{
-          overflowY: "scroll",
-          height: "169px",
+          overflowY: "auto",
+          height: "12.28vh",
           width: "100%"
         }}
       >
@@ -244,8 +240,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     return (
       <div
         style={{
-          overflowY: "scroll",
-          height: "322px",
+          overflowY: "auto",
+          height: "27.34vh",
           width: "100%"
         }}
         onDrop={(e) => getDroppedDocument(e)}
@@ -254,13 +250,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         {docs
           ? docs.map((data: ConversationDoc) => {
               return (
-                <Row
-                  style={{
-                    padding: "4px 11px",
-                    border: "1px solid #00000033",
-                    margin: "10px 0"
-                  }}
-                >
+                <Row className="dependsOnRowData">
                   <Col span={22} style={{ display: "flex" }}>
                     <Space>
                       <span>{data.fileName}</span>
@@ -333,7 +323,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   return (
     <div style={{ height: "100%", position: "relative" }}>
       <div className="detailsContent">
-        <Space direction="vertical" size="middle" style={{ display: "flex" }}>
+        <Space direction="vertical" size={30} style={{ display: "flex" }}>
           <Row justify="space-between">
             <Col span={4}>
               <SelectField
@@ -440,7 +430,6 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     rows={3}
                     placeholder="Fill the Description"
                     value={updatedData?.description}
-                    maxLength={400}
                     onChange={(data) =>
                       setUpdatedData((prev: SubmittalLog) => {
                         return prev
@@ -450,10 +439,12 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     }
                   />
                 </Col>
-                <Col span={24} style={{ marginTop: "15px" }}>
+                <Col
+                  span={24}
+                  style={{ marginTop: "2.93vh", height: "16.31vh" }}
+                >
                   <Row
                     style={{
-                      margin: "10px 0",
                       display: "flex",
                       alignItems: "center"
                     }}
@@ -485,7 +476,6 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             <Col span={9} offset={1}>
               <Row
                 style={{
-                  margin: "10px 0",
                   display: "flex",
                   alignItems: "center"
                 }}
@@ -522,12 +512,26 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
         className="actionItemCard"
       >
-        <Col span={24} style={{ marginBottom: "20px" }}>
-          <ExclamationCircleOutlined className="SDExcCircleOutlined" />
+        <Col
+          span={24}
+          style={{
+            marginBottom: "1.95vh",
+            height: "2.05vh",
+            padding: "0px"
+          }}
+        >
+          <ExclamationCircleOutlined />
           &nbsp;
           <span className="subDetailsAction">Action items</span>
         </Col>
-        <Col span={24} style={{ marginBottom: "14px" }}>
+        <Col
+          span={24}
+          style={{
+            marginBottom: "1.37vh",
+            height: "1.95vh",
+            padding: "0px"
+          }}
+        >
           <Checkbox className="actionItemsCheckBox">
             You received 2 new discussion
           </Checkbox>
@@ -535,7 +539,14 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             Respond →
           </Link>
         </Col>
-        <Col span={24} style={{ marginBottom: "14px" }}>
+        <Col
+          span={24}
+          style={{
+            marginBottom: "1.37vh",
+            height: "1.95vh",
+            padding: "0px"
+          }}
+        >
           <Checkbox className="actionItemsCheckBox">
             This Submittal Received 3 New Submissions
           </Checkbox>
@@ -543,7 +554,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             Review →
           </Link>
         </Col>
-        <Col span={24} style={{ marginBottom: "14px" }}>
+        <Col span={24} style={{ height: "1.95vh", padding: "0px" }}>
           <Checkbox className="actionItemsCheckBox">
             This Submittal overdue by 20 days
           </Checkbox>

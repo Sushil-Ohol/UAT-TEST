@@ -22,7 +22,12 @@ function DateField(props: Props) {
 
       <DatePicker
         className="selectStyle"
-        style={{ width: "100%", backgroundColor: "#0000000D" }}
+        style={{
+          width: "100%",
+          backgroundColor: "#0000000D",
+          height: "32px",
+          font: "normal normal normal 1.56vh/1.95vh Inter"
+        }}
         format="MM-DD-YYYY"
         value={value ? moment(value, "MM-DD-YYYY") : undefined}
         onChange={onChange}

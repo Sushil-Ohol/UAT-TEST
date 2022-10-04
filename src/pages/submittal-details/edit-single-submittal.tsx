@@ -8,7 +8,6 @@ import {
   Button,
   Typography,
   Spin,
-  Divider,
   Drawer,
   Space,
   message
@@ -26,10 +25,8 @@ import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
 import { updateDocs, updateSubmittal } from "store/slices/submittalsSlices";
 import "./submittal-details.css";
-// import UploadFile from "./upload";
 
 const { TabPane } = Tabs;
-// const { TextArea } = Input;
 
 function SubmittalDetailspage(props: any) {
   const { location } = props;
@@ -105,7 +102,7 @@ function SubmittalDetailspage(props: any) {
         level={5}
         className="submittalTitle"
         editable={{
-          icon: <EditIcon style={{ marginLeft: "16px" }} />,
+          icon: <EditIcon style={{ marginLeft: "1.56vh" }} />,
           tooltip: "",
           onChange: (e) => updateSubmittalTitle(e)
         }}
@@ -161,9 +158,9 @@ function SubmittalDetailspage(props: any) {
   });
 
   return (
-    <div style={{ margin: "0 20px" }}>
+    <div style={{ margin: "0px  1.39vw", marginBottom: "1.95vh" }}>
       <Row className="subDetailsNavbar">
-        <Col span={3} className="allSubmittalBtnCol">
+        <Col flex="12.57vw" className="allSubmittalBtnCol">
           <Button
             icon={<ArrowLeftOutlined />}
             className="subDetailsCardBtn"
@@ -172,19 +169,23 @@ function SubmittalDetailspage(props: any) {
             All submittals
           </Button>
         </Col>
-        <Divider type="vertical" style={{ height: "auto" }} />
-        <Col span={1} className="submittalDetailsPageIdCol">
-          <Title level={5} className="submittalDetailsPageId">
-            {updatedData?.id}
-          </Title>
-        </Col>
-
-        <Col span={14} className="submittalTitleCol">
-          <SubmittalTitle />
-        </Col>
-
-        <Col span={4} offset={1} className="splitBtnCol">
-          <Button className="subDetailsSplitBtn">Split Submittal</Button>
+        <Col
+          flex="84.65vw"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}
+        >
+          <Space style={{ marginLeft: "1.80vw" }}>
+            <Title level={5} className="submittalDetailsPageId">
+              {updatedData?.id}
+            </Title>
+            <SubmittalTitle />
+          </Space>
+          <div>
+            <Button className="subDetailsSplitBtn">Split Submittal</Button>
+          </div>
         </Col>
       </Row>
       <div>
@@ -212,13 +213,16 @@ function SubmittalDetailspage(props: any) {
           <TabPane tab="Attachments" key="2">
             Attachments
           </TabPane>
-          <TabPane tab="Discussion" key="3">
+          <TabPane tab="Materials" key="3">
+            Materials
+          </TabPane>
+          <TabPane tab="Discussion" key="4">
             Discussion
           </TabPane>
-          <TabPane tab="Submission" key="4">
+          <TabPane tab="Submission" key="5">
             Submission
           </TabPane>
-          <TabPane tab="Activity" key="5">
+          <TabPane tab="Activity" key="6">
             Activity
           </TabPane>
         </Tabs>
