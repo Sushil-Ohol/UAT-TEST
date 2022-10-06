@@ -79,12 +79,12 @@ function DiscussionDocs(props: DiscussionDocsProps) {
         (result: any, currentValue: any) => {
           const newArray = result;
           (newArray[
-            moment(currentValue.uploadDate)
+            moment(currentValue.uploadDate, "YYYY-MM-DD")
               .format("dddd, DD MMM YYYY ")
               .toString()
           ] =
             result[
-              moment(currentValue.uploadDate)
+              moment(currentValue.uploadDate, "YYYY-MM-DD")
                 .format("dddd, DD MMM YYYY ")
                 .toString()
             ] || []).push(currentValue);
@@ -114,7 +114,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
         fileName: file.name,
         url: URL.createObjectURL(file),
         uploadedBy: currentUser,
-        uploadDate: moment(new Date()).format("MM-DD-YYYY"),
+        uploadDate: moment(new Date(), "YYYY-MM-DD").format("MM-DD-YYYY"),
         annotationCount: 1,
         uploadDocument: true
       };
@@ -204,7 +204,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           &bull;
                         </span>
                         <span style={{ marginLeft: "5px", color: "#0000007F" }}>
-                          {moment(data.uploadDate).format("h:mm a")}
+                          {moment(data.uploadDate, "h:mm a").format("h:mm a")}
                         </span>
                       </div>
                       <p
