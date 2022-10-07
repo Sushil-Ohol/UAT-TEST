@@ -156,7 +156,7 @@ function SubmittalList() {
 
   const companyEditorParams = (params: ICellEditorParams) => {
     const { company } = params.data;
-    const assignee = submittalState.companys
+    const assignee = submittalState.companies
       .map((item) => {
         return item.name === company.name && item.assignees;
       })
@@ -290,7 +290,7 @@ function SubmittalList() {
       cellEditor: "agRichSelectCellEditor",
       cellEditorParams: {
         cellRenderer: companyEditCellRenderer,
-        values: submittalState.companys,
+        values: submittalState.companies,
         cellHeight: 20
       },
       cellRenderer: companyCellRenderer,
@@ -360,7 +360,7 @@ function SubmittalList() {
         cellEditor: "agRichSelectCellEditor",
         cellEditorParams: {
           cellRenderer: companyEditCellRenderer,
-          values: submittalState.companys,
+          values: submittalState.companies,
           cellHeight: 20
         },
         cellRenderer: companyCellRenderer,
@@ -389,7 +389,7 @@ function SubmittalList() {
       };
     }
     setColumnDefs(temp);
-  }, [submittalState.companys]);
+  }, [submittalState.companies]);
 
   const autoGroupColumnDef = useMemo(() => {
     return {
