@@ -27,6 +27,8 @@ import ClearIcon from "./clear-icon";
 import EditIcon from "./edit-icon";
 import ProfileDottedIcon from "./profile-dotted";
 import FolderDottedIcon from "./folder-dotted";
+import SubmittalIcon from "./submittal-icon";
+import MaskGroupIcon from "./mask-group-icon";
 
 export {
   AppLogoIcon,
@@ -57,5 +59,7 @@ export {
   ClearIcon,
   EditIcon,
   ProfileDottedIcon,
-  FolderDottedIcon
+  FolderDottedIcon,
+  SubmittalIcon,
+  MaskGroupIcon
 };

@@ -1,5 +1,10 @@
 import { Button, Form, Select } from "antd";
-import { FolderDottedIcon, ProfileDottedIcon } from "components/svg-icons";
+import {
+  FolderDottedIcon,
+  ProfileDottedIcon,
+  SubmittalIcon,
+  MaskGroupIcon
+} from "components/svg-icons";
 import { assigneesStatus } from "constants/index";
 import "./assignee-dropdown.css";
 
@@ -10,9 +15,11 @@ export function SelectOption({ item }: any) {
         marginBottom: "3%"
       }}
     >
+      {assigneesStatus.account !== item.status && <MaskGroupIcon />}
       {assigneesStatus.account === item.status && <ProfileDottedIcon />}
       &nbsp;
       {assigneesStatus.project === item.status && <FolderDottedIcon />}
+      {assigneesStatus.submittal === item.status && <SubmittalIcon />}
       &nbsp;{" "}
       <span className="assignee-dropdown-heading">{item.assignedTo}</span>
       <br />{" "}

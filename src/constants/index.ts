@@ -100,7 +100,7 @@ const CompanyOptions = [
         assignedTo: "Ronaldo",
         destination: "Project Manager",
         email: "ronaldo@cconstruct.com",
-        status: "Submittal invite not accepted"
+        status: "Project invite not accepted"
       }
     ]
   },
@@ -118,7 +118,7 @@ const CompanyOptions = [
         assignedTo: "Roger",
         destination: "Project Manager",
         email: "roger@cconstruct.com",
-        status: "Account Created in ConstructiveIQ"
+        status: "Submittal invite not accepted"
       }
     ]
   },
@@ -136,7 +136,7 @@ const CompanyOptions = [
         assignedTo: "Roger",
         destination: "Architect",
         email: "roger@cconstruct.com",
-        status: "Submittal invite not accepted"
+        status: ""
       }
     ]
   }
