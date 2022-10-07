@@ -166,6 +166,11 @@ export const NewConversationContent = {
     "This discussion will be associated with the selected Submittal. Please unselect the Submittal, prior to adding a new discussion if an association is not desired."
 };
 
+export const CopyDocumentModalContent = {
+  Confirm: "Do you want to copy this document to ",
+  General: "This will be associated with the selected Submittal."
+};
+
 export const DropDownData = {
   CompanyOptions,
   StatusOptions,

@@ -16,11 +16,26 @@ export type StagingZoneProps = {
   selectedData: any[];
   documentView: Function;
   isDocumentView: boolean;
+  submittalDetailsId: any;
+  setSubmittalDetailsId: any;
+  handleDocuments: any;
+  updatedData: any;
 };
 
 function StagingZone(props: StagingZoneProps) {
-  const { onMouseDown, selectedData, documentView, isDocumentView } = props;
+  const {
+    onMouseDown,
+    selectedData,
+    documentView,
+    isDocumentView,
+    submittalDetailsId,
+    setSubmittalDetailsId,
+    handleDocuments,
+    updatedData
+  } = props;
+
   const [discussionId, setDiscussionId] = useState("");
+
   const [selectedDocument, setSelectedDocument] = useState({
     fileName: "",
     fileUrl: "",
@@ -31,6 +46,7 @@ function StagingZone(props: StagingZoneProps) {
 
   const OnDiscussionSelected = (id: string) => {
     setDiscussionId(id);
+    setSubmittalDetailsId(id);
   };
   const prev = () => {
     documentView(false);
@@ -130,6 +146,7 @@ function StagingZone(props: StagingZoneProps) {
           className="col discussion"
           onClick={OnDiscussionSelected}
           selectedData={selectedData}
+          ID={submittalDetailsId}
         />
         <DiscussionDetails
           className="col discussion"
@@ -141,6 +158,10 @@ function StagingZone(props: StagingZoneProps) {
           className="col discussion"
           discussionId={discussionId}
           onDocumentSelect={setSelectedDocument}
+          selectedData={selectedData}
+          submittalDetailsId={submittalDetailsId}
+          updatedData={updatedData}
+          handleDocuments={handleDocuments}
         />
       </div>
     </div>

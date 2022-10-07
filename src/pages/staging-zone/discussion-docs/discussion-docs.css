@@ -95,3 +95,45 @@
   align-items: center;
   justify-content: center;
 }
+.disucssion-doc-modal .ant-modal-body {
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
+  padding: 15px 20px;
+  line-height: 20px;
+}
+.disucssion-doc-modal {
+  width: 600px;
+}
+.disucssion-doc-modal .ant-modal-footer {
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+.disucssion-doc-modal .ant-modal-header {
+  background: #f7f6f4 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+.disucssion-doc-modal .ant-modal-header .ant-modal-title {
+  font-weight: 600;
+}
+.disucssion-doc-modal .heading {
+  display: inline-block;
+  text-align: left;
+  font: normal normal medium 18px/21px "Inter";
+  letter-spacing: 0px;
+  opacity: 1;
+  font-size: 18px;
+  color: #707070;
+}
+.disucssion-doc-modal .content {
+  display: inline-block;
+  text-align: left;
+  font: normal normal normal 14px/21px Inter;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+  font-size: 14px;
+}
+.disucssion-doc-modal .ant-btn-default {
+  color: #007aff;
+  border: 1px solid #007aff;
+}

@@ -15,18 +15,36 @@ import "./discussion-docs.css";
 import { DownloadIcon, CopyIcon } from "components/svg-icons";
 import { PostProjectFile } from "services/projects-service";
 import Dragger from "antd/lib/upload/Dragger";
+import { CopyDocumentModal } from "popups";
+import { updateDocs } from "store/slices/submittalsSlices";
 
 export type DiscussionDocsProps = {
   className: string;
   discussionId: string;
   documentView: any;
   onDocumentSelect: any;
+  selectedData: any[];
+  submittalDetailsId: string;
+  handleDocuments: any;
+  updatedData: any;
 };
 
 function DiscussionDocs(props: DiscussionDocsProps) {
+  const [isCopyDocumentModalOpen, setIsCopyDocumentModalOpen] = useState(false);
+  const [copiedDocument, setCopiedDocument] = useState<any>({});
+  const [submittalDocs, setSubmittalDocs] = useState<ConversationDoc[]>([]);
   const [fileUpload, setFileUpload] = useState(false);
   const [dragFile, setDragFile] = useState(false);
-  const { className, discussionId, documentView, onDocumentSelect } = props;
+  const {
+    className,
+    discussionId,
+    documentView,
+    onDocumentSelect,
+    selectedData,
+    submittalDetailsId,
+    updatedData,
+    handleDocuments
+  } = props;
   const [filterByDate, setFilterByDate] = useState<any>();
   const [uploadedDate, setUploadDate] = useState<string[]>();
   const importFile = useRef<any>();
@@ -35,6 +53,47 @@ function DiscussionDocs(props: DiscussionDocsProps) {
   const documentsData = useAppSelector(
     (state: RootState) => state.stagingZone.documents
   );
+
+  const submittalList = useAppSelector(
+    (state: RootState) => state.submittals.list
+  );
+
+  const showCopyDocumentModal = (data: any) => {
+    setCopiedDocument(data);
+    setIsCopyDocumentModalOpen(true);
+  };
+
+  const handleOk = () => {
+    if (updatedData.id !== undefined) {
+      handleDocuments("Add", copiedDocument);
+      setIsCopyDocumentModalOpen(false);
+    } else {
+      const newDoc =
+        documentsData[selectedData[0].id].list[copiedDocument.id - 1];
+
+      const index = submittalDocs.filter((item) => item.id === newDoc.id);
+
+      if (index.length === 1) {
+        message.error("Document already exist");
+        setIsCopyDocumentModalOpen(false);
+      } else {
+        setSubmittalDocs([...submittalDocs, newDoc]);
+        dispatch(
+          updateDocs({
+            submittalId: selectedData[0].id,
+            docs: [...submittalDocs, newDoc]
+          })
+        );
+        message.success("Document Added successfully");
+        setIsCopyDocumentModalOpen(false);
+      }
+    }
+  };
+
+  const handleCancel = () => {
+    setIsCopyDocumentModalOpen(false);
+  };
+
   // dummy user for testing
   const currentUser = "John";
 
@@ -58,6 +117,13 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       loadDiscussionDetails();
     }
   }, [discussionId]);
+
+  useEffect(() => {
+    const selectedSubmittal = submittalList.find(
+      (data) => data.id === (selectedData.length === 1 && selectedData[0].id)
+    );
+    setSubmittalDocs(selectedSubmittal?.docs ? selectedSubmittal.docs : []);
+  }, [selectedData]);
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -247,7 +313,28 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           title="You can copy this document to selected sumbittal"
                           className="copyIcon"
                         >
-                          <CopyIcon />
+                          {(selectedData.length === 1 ||
+                            submittalDetailsId) && (
+                            <div
+                              onClick={() => showCopyDocumentModal(data)}
+                              onKeyDown={showCopyDocumentModal}
+                              role="button"
+                              tabIndex={0}
+                            >
+                              <CopyIcon />
+                            </div>
+                          )}
+                          <CopyDocumentModal
+                            isCopyDocumentModalOpen={isCopyDocumentModalOpen}
+                            handleCancel={handleCancel}
+                            handleOk={handleOk}
+                            isCopyDocumentModalTitle="Confirm"
+                            selectedData={
+                              updatedData.id === undefined
+                                ? selectedData
+                                : [{ ...updatedData }]
+                            }
+                          />
                         </span>
                       </p>
                     </div>
