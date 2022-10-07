@@ -204,16 +204,19 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         >
           <Select
             notFoundContent={
-              <span>
-                No Data Found, Please click + New button to create new assignee
-                <Button
-                  type="primary"
-                  className="NewBtnForOpenMOdal"
-                  onClick={showAssigneeModal}
-                >
-                  + New
-                </Button>
-              </span>
+              form.getFieldValue("company") && (
+                <span>
+                  No Data Found, Please click + New button to create new
+                  assignee
+                  <Button
+                    type="primary"
+                    className="NewBtnForOpenMOdal"
+                    onClick={showAssigneeModal}
+                  >
+                    + New
+                  </Button>
+                </span>
+              )
             }
             onChange={onChangeAssign}
             className="constructionSelect"
