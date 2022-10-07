@@ -26,34 +26,15 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const submittalState = useAppSelector((state: RootState) => state.submittals);
 
-  const [companySelected, setCompanySelected] = useState<any>(null);
+  const [companieselected, setcompanieselected] = useState<any>(null);
 
   const [assigneeData, setAssigneeData] = useState<any>(
-    companySelected === null
+    companieselected === null
       ? []
-      : submittalState.assignees[companySelected].list
+      : submittalState.assignees[companieselected].list
   );
 
-  const companyData = submittalState.companys;
-
-  // const onApplyButtonClick = () => {
-  //   form.validateFields().then((values) => {
-  //     const selectedCompany: any = companyData.filter(
-  //       (company: any) => company.name === values.company
-  //     );
-  //     const assigned: any = selectedCompany[0].assignees.filter(
-  //       (company: any) => company.name === values.assigned
-  //     );
-
-  //     const data = {
-  //       company: selectedCompany[0],
-  //       status: values.status,
-  //       assigned: assigned[0],
-  //       dueBy: values.dueBy
-  //     };
-  //     onApplyClick(data);
-  //   });
-  // };
+  const companyData = submittalState.companies;
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
@@ -91,6 +72,18 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     }
   };
 
+  const [isCompanyModalOpen, setIsCompanyModalOpen] = useState<boolean>(false);
+
+  const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
+    useState<boolean>(false);
+
+  const onChangeAssign = (assignee: string) => {
+    if (assignee === "New") {
+      setIsAssigneeModalOpen(true);
+      form.setFieldValue("assigned", null);
+    }
+  };
+
   useEffect(() => {
     onStatusDropDownChange();
   }, [selectedRows]);
@@ -101,26 +94,22 @@ function SubmittalEdit(props: EditSubmittalLogs) {
       .reduce((obj, key) => {
         return submittalState.assignees[key];
       }, {});
-    setCompanySelected(company);
+    setcompanieselected(company);
     setAssigneeData(Object.values(assignedData));
     form.setFieldValue("assigned", null);
   };
-
-  const [isCompanyModalOpen, setIsCompanyModalOpen] = useState<boolean>(false);
-
-  const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
-    useState<boolean>(false);
 
   const addNewCompany = (data: any) => {
     dispatch(newCompany(data));
     message.success("Invited company and assignee successfully");
     setIsCompanyModalOpen(false);
+    // to do set the newly added companies first assignee to the form field
   };
 
   const addNewAssignee = (data: any) => {
-    const payload = { companyName: companySelected, assignee: data };
+    const payload = { companyName: companieselected, assignee: data };
     dispatch(newAssignee(payload));
-    message.success("Invited assignee successfully ");
+    message.success("Invitation sent to assignee successfully ");
     setIsAssigneeModalOpen(false);
   };
 
@@ -133,7 +122,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   const showAssigneeModal = () => {
-    if (companySelected !== "") {
+    if (companieselected !== "") {
       setIsAssigneeModalOpen(true);
     } else {
       message.info("Please select company first");
@@ -145,7 +134,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   useEffect(() => {
-    setAssigneeData(submittalState.assignees[companySelected]);
+    setAssigneeData(submittalState.assignees[companieselected]);
   }, [submittalState]);
 
   return (
@@ -166,21 +155,20 @@ function SubmittalEdit(props: EditSubmittalLogs) {
             className="drawerDatePicker"
           />
         </Form.Item>
-        <Form.Item
-          name="company"
-          label={
-            <span>
-              Company{" "}
-              <Button
-                className="add-new-company-btn"
-                onClick={showCompanyModal}
-              >
-                + New
-              </Button>
-            </span>
-          }
-        >
+        <Form.Item name="company" label="Company">
           <Select
+            notFoundContent={
+              <span>
+                No Data Found, Please click + New button to create new company
+                <Button
+                  type="primary"
+                  className="NewBtnForOpenMOdal"
+                  onClick={showCompanyModal}
+                >
+                  + New
+                </Button>
+              </span>
+            }
             onChange={onChangeCompany}
             showSearch
             optionFilterProp="children"
@@ -191,7 +179,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
                 .includes(input.toLowerCase())
             }
           >
-            {submittalState.companys
+            {submittalState.companies
               .filter((x: any) => x.name !== "All")
               .map((item: any) => (
                 <Option key={item.name} value={item.name}>
@@ -202,24 +190,12 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         </Form.Item>
         <Form.Item
           name="assigned"
-          label={
-            <span>
-              Assignee{" "}
-              {form.getFieldValue("company") && (
-                <Button
-                  className="add-new-assignee-btn"
-                  onClick={showAssigneeModal}
-                >
-                  + New
-                </Button>
-              )}
-            </span>
-          }
+          label="Assignee"
           rules={[
             ({ getFieldValue }) => ({
               validator(rule, value) {
                 if (getFieldValue("company") && !value) {
-                  return Promise.reject(new Error("Select assignee."));
+                  return Promise.reject(new Error("Select Assignee."));
                 }
                 return Promise.resolve();
               }
@@ -227,6 +203,19 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           ]}
         >
           <Select
+            notFoundContent={
+              <span>
+                No Data Found, Please click + New button to create new assignee
+                <Button
+                  type="primary"
+                  className="NewBtnForOpenMOdal"
+                  onClick={showAssigneeModal}
+                >
+                  + New
+                </Button>
+              </span>
+            }
+            onChange={onChangeAssign}
             className="constructionSelect"
             showSearch
             optionFilterProp="children"
@@ -277,7 +266,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         onOkClick={addNewAssignee}
         show={isAssigneeModalOpen}
         onCancelClick={handleAssigneeCancel}
-        selectedCompany={companySelected}
+        selectedCompany={companieselected}
       />
     </>
   );

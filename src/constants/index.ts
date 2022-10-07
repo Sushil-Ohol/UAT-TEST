@@ -14,7 +14,11 @@ export const colorCode = {
 export const ErrorMessages = {
   EmailRequired: "Please Enter Email-id",
   EmailInvalid: "Please Enter valid Email-id",
-  PasswordRequired: "Please Enter Password"
+  PasswordRequired: "Please Enter Password",
+  AssigneeRole: "Please Select Assignee Role",
+  AssigneeEmail: "Please enter an Assignee Email",
+  AssigneeEmailRequired: "Please enter a valid email",
+  AssigneeName: "Please enter an Assignee Name"
 };
 
 export const AttachmentConfirmationMessages: any = {
@@ -165,6 +169,13 @@ export const NewConversationContent = {
   Submittal:
     "This discussion will be associated with the selected Submittal. Please unselect the Submittal, prior to adding a new discussion if an association is not desired."
 };
+const RoleOptions = [
+  "Architect",
+  "Project Engineer",
+  "Project Manager",
+  "Electrical Designer",
+  "Mechanical Designer"
+];
 
 export const DropDownData = {
   CompanyOptions,
@@ -175,5 +186,6 @@ export const DropDownData = {
   PastDueOptions,
   PackageOptions,
   ProcureByOptions,
-  ProcureBySecondValues
+  ProcureBySecondValues,
+  RoleOptions
 };

@@ -17,7 +17,7 @@ type SubmittalState = {
   projectId: string;
   list: SubmittalLog[];
   loading: boolean;
-  companys: Company[];
+  companies: Company[];
   assignees: ListWithDictionary<Assignee>;
   selectedSubmittalLog: SubmittalLog;
 };
@@ -26,7 +26,7 @@ export const initialState: SubmittalState = {
   projectId: "",
   list: [],
   loading: false,
-  companys: DropDownData.CompanyOptions,
+  companies: DropDownData.CompanyOptions,
   assignees: {},
   selectedSubmittalLog: {
     id: "",
@@ -89,21 +89,21 @@ const submittalSlice = createSlice({
       state.list = payload;
     },
     newCompany: (state, { payload }: PayloadAction<any>) => {
-      state.companys.push(payload);
+      state.companies.push(payload);
       state.assignees[payload.name] = payload.assignees;
     },
     newAssignee: (state, { payload }: PayloadAction<any>) => {
-      const index = state.companys.findIndex(
+      const index = state.companies.findIndex(
         (item) => item.name === payload.companyName
       );
       if (index > -1) {
-        state.companys[index].assignees?.push(payload.assignee);
+        state.companies[index].assignees?.push(payload.assignee);
       }
       const temp: any = state.assignees[payload.companyName] || [];
       temp.push(payload.assignee);
       state.assignees[payload.companyName] = temp;
     },
-    updateCompanyState: (state, { payload }: PayloadAction<any>) => {
+    updatecompaniestate: (state, { payload }: PayloadAction<any>) => {
       payload.forEach((element: any) => {
         state.assignees[element.name] = element.assignees;
       });
@@ -133,7 +133,7 @@ export const {
   setLoading,
   setSubmittalList,
   updateSubmittal,
-  updateCompanyState,
+  updatecompaniestate,
   newCompany,
   newAssignee,
   updateDocs

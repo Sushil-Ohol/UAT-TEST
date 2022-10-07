@@ -44,7 +44,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
 
   const [fileLoading, setFileLoading] = useState<boolean>(false);
-  const companyOptions = useAppSelector((state) => state.submittals.companys);
+  const companyOptions = useAppSelector((state) => state.submittals.companies);
   const assigneeOption: any = useAppSelector(
     (state) => state.submittals.assignees
   );

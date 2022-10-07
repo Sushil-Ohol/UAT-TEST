@@ -27,7 +27,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
 
   const onApplyButtonClick = () => {
     form.validateFields().then((values) => {
-      const selectedCompany: any = submittalState.companys.filter(
+      const selectedCompany: any = submittalState.companies.filter(
         (company: any) => company.name === values.company
       );
 
@@ -112,7 +112,7 @@ function SubmittalCreateComponent(props: NewSubmittalLog) {
           bordered={false}
           placeholder="Select Company"
         >
-          {submittalState.companys
+          {submittalState.companies
             .filter((x) => x.name !== "All")
             .map((item) => (
               <Select.Option key={item.name} value={item.name}>
