@@ -25,6 +25,7 @@ import CopyIcon from "./copy-icon";
 import DownloadIcon from "./download-icon";
 import ClearIcon from "./clear-icon";
 import EditIcon from "./edit-icon";
+import LockIcon from "./lock-icon";
 
 export {
   AppLogoIcon,
@@ -53,5 +54,6 @@ export {
   CopyIcon,
   DownloadIcon,
   ClearIcon,
-  EditIcon
+  EditIcon,
+  LockIcon
 };
