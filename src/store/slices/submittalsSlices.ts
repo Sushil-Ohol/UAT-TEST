@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   Assignee,
   Company,
+  DependsOn,
   SubmittalListResponse,
   SubmittalLog
 } from "models/submittal-log";
@@ -85,6 +86,26 @@ const submittalSlice = createSlice({
         payload.docs.length > 0 ? payload.docs.length : null;
       state.list[dataIndex].docs = payload.docs;
     },
+    updateDependent: (
+      state,
+      {
+        payload
+      }: PayloadAction<{ submittalId: string; dependsOn: DependsOn[] }>
+    ) => {
+      const dataIndex = state.list.findIndex(
+        (data) => data.id === payload.submittalId
+      );
+      state.list[dataIndex].dependsOn = payload.dependsOn;
+    },
+    updateTitle: (
+      state,
+      { payload }: PayloadAction<{ submittalId: string; title: string }>
+    ) => {
+      const dataIndex = state.list.findIndex(
+        (data) => data.id === payload.submittalId
+      );
+      state.list[dataIndex].submittal = payload.title;
+    },
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
       state.list = payload;
     },
@@ -136,5 +157,7 @@ export const {
   updatecompaniestate,
   newCompany,
   newAssignee,
-  updateDocs
+  updateDocs,
+  updateDependent,
+  updateTitle
 } = submittalSlice.actions;
