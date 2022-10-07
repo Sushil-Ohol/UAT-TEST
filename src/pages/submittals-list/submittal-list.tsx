@@ -132,7 +132,7 @@ function SubmittalList() {
   const { projectId } = useParams() as any;
   const [filters, setFilters] = useState<FilterItem[]>([]);
   const [customDateFilter, setCustomDateFilter] = useState<any>({});
-
+  // const [submittalDetailsId] = useState("");
   const submittalState = useAppSelector((state: RootState) => state.submittals);
 
   const [showFiterChips, setShowFiterChips] = useState<boolean>(true);
@@ -776,10 +776,14 @@ function SubmittalList() {
       >
         {showStagingZone && (
           <StagingZone
+            setSubmittalDetailsId={() => null}
+            submittalDetailsId=""
             onMouseDown={onMouseDown}
             selectedData={selectedRowsData}
             documentView={viewDocument}
             isDocumentView={isDocumentView}
+            handleDocuments={() => null}
+            updatedData={{}}
           />
         )}
       </Drawer>

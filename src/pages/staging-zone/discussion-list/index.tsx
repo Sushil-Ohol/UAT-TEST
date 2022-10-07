@@ -19,10 +19,11 @@ export type DiscussionListProps = {
   className: string;
   onClick: Function;
   selectedData: any[];
+  submittalDetailsId: string;
 };
 
 function DiscussionList(props: DiscussionListProps) {
-  const { className, onClick, selectedData } = props;
+  const { className, onClick, selectedData, submittalDetailsId } = props;
   const dispatch = useAppDispatch();
 
   const scrollerTop = document.querySelector("#scrollerTop");
@@ -34,9 +35,12 @@ function DiscussionList(props: DiscussionListProps) {
   const data = useSelector(
     (state: RootState) => state.stagingZone.discussionList
   );
-  const rowId = selectedData[0]?.id.toString()
-    ? selectedData[0]?.id.toString()
-    : "1000";
+
+  const rowId =
+    selectedData.length === 1
+      ? selectedData[0]?.id.toString()
+      : submittalDetailsId || "1000";
+
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
   React.useEffect(() => {
@@ -57,7 +61,7 @@ function DiscussionList(props: DiscussionListProps) {
   };
 
   const onSearchSelectClick = (id: string) => {
-    onDiscussionClick(id || "1000");
+    onDiscussionClick(id || submittalDetailsId);
   };
 
   const onAddHandle = (topicName: string) => {

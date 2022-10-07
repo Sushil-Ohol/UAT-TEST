@@ -3,10 +3,12 @@ import AddAssigneeModal from "./assignee-modal";
 import AddCompanyModal from "./company-modal";
 import AddNewColumn from "./add-new-column";
 import AttachmentConfirmationModal from "./attachment-confirmation-modal";
+import CopyDocumentModal from "./copy-document-modal";
 
 export {
   AddAssigneeModal,
   AddCompanyModal,
   AddNewColumn,
-  AttachmentConfirmationModal
+  AttachmentConfirmationModal,
+  CopyDocumentModal
 };

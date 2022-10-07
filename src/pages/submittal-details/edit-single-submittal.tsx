@@ -34,7 +34,9 @@ function SubmittalDetailspage(props: any) {
   const submittalList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
+
   const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
+  const [submittalDetailsId, setSubmittalDetailsId] = useState<any>();
   const { Title } = Typography;
   const dispatch = useAppDispatch();
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
@@ -76,6 +78,7 @@ function SubmittalDetailspage(props: any) {
   };
 
   const handleDocuments = (action: string, document: ConversationDoc) => {
+    // console.log(action, document);
     switch (action) {
       case "Add": {
         const tempDocs = [...docs];
@@ -84,6 +87,7 @@ function SubmittalDetailspage(props: any) {
           message.error("Document already exist");
         } else {
           setDocs([...docs, document]);
+          message.success("Document Added successfully");
         }
         break;
       }
@@ -157,6 +161,9 @@ function SubmittalDetailspage(props: any) {
     };
   });
 
+  useEffect(() => {
+    setSubmittalDetailsId(location.state.data.id.toString());
+  }, [showStagingZone]);
   return (
     <div style={{ margin: "0px  1.39vw", marginBottom: "1.95vh" }}>
       <Row className="subDetailsNavbar">
@@ -275,7 +282,11 @@ function SubmittalDetailspage(props: any) {
             onMouseDown={onMouseDown}
             documentView={viewDocument}
             isDocumentView={isDocumentView}
+            submittalDetailsId={submittalDetailsId}
+            setSubmittalDetailsId={setSubmittalDetailsId}
             selectedData={[]}
+            handleDocuments={handleDocuments}
+            updatedData={updatedData}
           />
         )}
       </Drawer>
