@@ -125,6 +125,7 @@
   color: #707070;
 }
 .disucssion-doc-modal .content {
+  margin-top: 2%;
   display: inline-block;
   text-align: left;
   font: normal normal normal 14px/21px Inter;

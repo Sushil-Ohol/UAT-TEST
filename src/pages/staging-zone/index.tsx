@@ -16,9 +16,9 @@ export type StagingZoneProps = {
   selectedData: any[];
   documentView: Function;
   isDocumentView: boolean;
-  submittalDetailsId: any;
-  setSubmittalDetailsId: any;
-  handleDocuments: any;
+  submittalDetailsId: string;
+  setSubmittalDetailsId: Function;
+  handleDocuments: Function;
   updatedData: any;
 };
 
@@ -146,7 +146,7 @@ function StagingZone(props: StagingZoneProps) {
           className="col discussion"
           onClick={OnDiscussionSelected}
           selectedData={selectedData}
-          ID={submittalDetailsId}
+          submittalDetailsId={submittalDetailsId}
         />
         <DiscussionDetails
           className="col discussion"

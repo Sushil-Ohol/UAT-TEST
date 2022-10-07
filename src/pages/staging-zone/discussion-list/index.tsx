@@ -19,11 +19,11 @@ export type DiscussionListProps = {
   className: string;
   onClick: Function;
   selectedData: any[];
-  ID: any;
+  submittalDetailsId: string;
 };
 
 function DiscussionList(props: DiscussionListProps) {
-  const { className, onClick, selectedData, ID } = props;
+  const { className, onClick, selectedData, submittalDetailsId } = props;
   const dispatch = useAppDispatch();
 
   const scrollerTop = document.querySelector("#scrollerTop");
@@ -37,7 +37,9 @@ function DiscussionList(props: DiscussionListProps) {
   );
 
   const rowId =
-    selectedData.length === 1 ? selectedData[0]?.id.toString() : ID || "1000";
+    selectedData.length === 1
+      ? selectedData[0]?.id.toString()
+      : submittalDetailsId || "1000";
 
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
@@ -59,7 +61,7 @@ function DiscussionList(props: DiscussionListProps) {
   };
 
   const onSearchSelectClick = (id: string) => {
-    onDiscussionClick(id || ID);
+    onDiscussionClick(id || submittalDetailsId);
   };
 
   const onAddHandle = (topicName: string) => {

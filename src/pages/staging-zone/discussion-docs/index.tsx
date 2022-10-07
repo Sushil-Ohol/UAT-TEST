@@ -22,10 +22,10 @@ export type DiscussionDocsProps = {
   className: string;
   discussionId: string;
   documentView: any;
-  onDocumentSelect: any;
+  onDocumentSelect: Function;
   selectedData: any[];
   submittalDetailsId: string;
-  handleDocuments: any;
+  handleDocuments: Function;
   updatedData: any;
 };
 
