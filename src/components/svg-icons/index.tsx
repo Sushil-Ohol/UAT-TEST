@@ -25,6 +25,8 @@ import CopyIcon from "./copy-icon";
 import DownloadIcon from "./download-icon";
 import ClearIcon from "./clear-icon";
 import EditIcon from "./edit-icon";
+import ProfileDottedIcon from "./profile-dotted";
+import FolderDottedIcon from "./folder-dotted";
 
 export {
   AppLogoIcon,
@@ -53,5 +55,7 @@ export {
   CopyIcon,
   DownloadIcon,
   ClearIcon,
-  EditIcon
+  EditIcon,
+  ProfileDottedIcon,
+  FolderDottedIcon
 };

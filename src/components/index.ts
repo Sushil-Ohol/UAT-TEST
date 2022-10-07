@@ -12,6 +12,8 @@ import NewDiscussion from "./new-discussion";
 import AccountMenu from "./account-menu";
 import DocumentView from "./document-view";
 
+import AssigneeDropdown, { SelectOption } from "./assignee-dropdown";
+
 export {
   FileUpload,
   Header,
@@ -23,5 +25,7 @@ export {
   DateCellEditor,
   NewDiscussion,
   AccountMenu,
-  DocumentView
+  DocumentView,
+  AssigneeDropdown,
+  SelectOption
 };

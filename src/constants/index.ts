@@ -54,40 +54,90 @@ const CompanyOptions = [
     name: "ABC Construction",
     email: "contact@abcconstruct.com",
     assignees: [
-      { assignedTo: "Luke", destination: "Engineer" },
-      { assignedTo: "James", destination: "Project Manager" }
+      {
+        assignedTo: "Luke",
+        destination: "Engineer",
+        email: "luke@cconstruct.com",
+        status: "Account Created in ConstructiveIQ"
+      },
+      {
+        assignedTo: "James",
+        destination: "Project Manager",
+        email: "james@cconstruct.com",
+        status: "Project invite not accepted"
+      }
     ]
   },
   {
     name: "A Construction",
     email: "contact@aconstruct.com",
     assignees: [
-      { assignedTo: "John", destination: "Engineer" },
-      { assignedTo: "Maria", destination: "Project Manager" }
+      {
+        assignedTo: "John",
+        destination: "Engineer",
+        email: "john@cconstruct.com",
+        status: "Project invite not accepted"
+      },
+      {
+        assignedTo: "Maria",
+        destination: "Project Manager",
+        email: "maria@cconstruct.com",
+        status: "Submittal invite not accepted"
+      }
     ]
   },
   {
     name: "B Construction",
     email: "contact@bconstruct.com",
     assignees: [
-      { assignedTo: "Lionel", destination: "Engineer" },
-      { assignedTo: "Ronaldo", destination: "Project Manager" }
+      {
+        assignedTo: "Lionel",
+        destination: "Engineer",
+        email: "lionel@cconstruct.com",
+        status: "Submittal invite not accepted"
+      },
+      {
+        assignedTo: "Ronaldo",
+        destination: "Project Manager",
+        email: "ronaldo@cconstruct.com",
+        status: "Submittal invite not accepted"
+      }
     ]
   },
   {
     name: "C Construction",
     email: "contact@cconstruct.com",
     assignees: [
-      { assignedTo: "Mark", destination: "Engineer" },
-      { assignedTo: "Roger", destination: "Project Manager" }
+      {
+        assignedTo: "Mark",
+        destination: "Engineer",
+        email: "mark@cconstruct.com",
+        status: "Account Created in ConstructiveIQ"
+      },
+      {
+        assignedTo: "Roger",
+        destination: "Project Manager",
+        email: "roger@cconstruct.com",
+        status: "Account Created in ConstructiveIQ"
+      }
     ]
   },
   {
     name: "Architect Company",
     email: "contact@architectconstruct.com",
     assignees: [
-      { assignedTo: "Mark", destination: "Architect" },
-      { assignedTo: "Roger", destination: "Architect" }
+      {
+        assignedTo: "Mark",
+        destination: "Architect",
+        email: "mark@cconstruct.com",
+        status: "Submittal invite not accepted"
+      },
+      {
+        assignedTo: "Roger",
+        destination: "Architect",
+        email: "roger@cconstruct.com",
+        status: "Submittal invite not accepted"
+      }
     ]
   }
 ];
@@ -106,6 +156,12 @@ const StatusOptionsForArchitects = [
   "Submittal required",
   "Submittal not required"
 ];
+export const assigneesStatus = {
+  account: "Account Created in ConstructiveIQ",
+  project: "Project invite not accepted",
+  submittal: "Submittal invite not accepted",
+  newAssignee: "Project invite not accepted"
+};
 const AssigneeOptions = [
   {
     assignedTo: "Luke",
@@ -192,5 +248,6 @@ export const DropDownData = {
   PackageOptions,
   ProcureByOptions,
   ProcureBySecondValues,
-  RoleOptions
+  RoleOptions,
+  assigneesStatus
 };

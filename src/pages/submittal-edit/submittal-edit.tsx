@@ -8,7 +8,8 @@ import "./submittal-edit.css";
 import { RootState } from "store/slices";
 import { useAppDispatch, useAppSelector } from "store";
 import { newCompany, newAssignee } from "store/slices/submittalsSlices";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "../../constants";
+import { AssigneeDropdown } from "components";
+import { DropDownData, DATE_FORMAT_MMDDYYY } from "constants/index";
 
 const { Option } = Select;
 
@@ -76,13 +77,6 @@ function SubmittalEdit(props: EditSubmittalLogs) {
 
   const [isAssigneeModalOpen, setIsAssigneeModalOpen] =
     useState<boolean>(false);
-
-  const onChangeAssign = (assignee: string) => {
-    if (assignee === "New") {
-      setIsAssigneeModalOpen(true);
-      form.setFieldValue("assigned", null);
-    }
-  };
 
   useEffect(() => {
     onStatusDropDownChange();
@@ -174,9 +168,9 @@ function SubmittalEdit(props: EditSubmittalLogs) {
             optionFilterProp="children"
             className="constructionSelect"
             filterOption={(input, option) =>
-              (option!.children as unknown as string)
+              (option!.key as unknown as string)
                 .toLowerCase()
-                .includes(input.toLowerCase())
+                .includes(input.toString().toLowerCase())
             }
           >
             {submittalState.companies
@@ -188,56 +182,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
               ))}
           </Select>
         </Form.Item>
-        <Form.Item
+        <AssigneeDropdown
           name="assigned"
-          label="Assignee"
-          rules={[
-            ({ getFieldValue }) => ({
-              validator(rule, value) {
-                if (getFieldValue("company") && !value) {
-                  return Promise.reject(new Error("Select Assignee."));
-                }
-                return Promise.resolve();
-              }
-            })
-          ]}
-        >
-          <Select
-            notFoundContent={
-              form.getFieldValue("company") && (
-                <span>
-                  No Data Found, Please click + New button to create new
-                  assignee
-                  <Button
-                    type="primary"
-                    className="NewBtnForOpenMOdal"
-                    onClick={showAssigneeModal}
-                  >
-                    + New
-                  </Button>
-                </span>
-              )
-            }
-            onChange={onChangeAssign}
-            className="constructionSelect"
-            showSearch
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option!.children as unknown as string)
-                .toLowerCase()
-                .includes(input.toLowerCase())
-            }
-          >
-            {assigneeData?.length > 0 &&
-              assigneeData
-                .filter((x: any) => x.assignedTo !== "All")
-                .map((item: any) => (
-                  <Option key={item.assignedTo} value={item.assignedTo}>
-                    {item.assignedTo}
-                  </Option>
-                ))}
-          </Select>
-        </Form.Item>
+          title="Assignee"
+          showNewButton
+          form={form}
+          data={assigneeData}
+          showModal={showAssigneeModal}
+        />
 
         <section className="mt-2">
           <div id="outerBox">
