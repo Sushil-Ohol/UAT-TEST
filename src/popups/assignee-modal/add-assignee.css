@@ -106,3 +106,7 @@
   color: #ffffff;
   opacity: 1;
 }
+
+.roleSelect .ant-select-selector {
+  background-color: #0000000d !important;
+}
