@@ -61,10 +61,11 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
     const chatInfo = {
       id: Math.floor(Math.random() * 11000),
       messageBy: currentUser,
-      messageDate: moment().toString(),
+      messageDate: moment(new Date(), "YYYY-MM-DD HH:MM A")
+        .format("YYYY-MM-DD HH:MM A")
+        .toString(),
       message: sendMessage
     };
-
     await dispatch(newMessage({ discussionId, chatInfo }));
     setSendMessage("");
   };
@@ -88,12 +89,12 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
         (result: any, currentValue: any) => {
           const newArray = result;
           (newArray[
-            moment(currentValue.messageDate)
+            moment(currentValue.messageDate, "YYYY-MM-DD")
               .format("dddd, DD MMM YYYY ")
               .toString()
           ] =
             newArray[
-              moment(currentValue.messageDate)
+              moment(currentValue.messageDate, "YYYY-MM-DD")
                 .format("dddd, DD MMM YYYY ")
                 .toString()
             ] || []).push(currentValue);
@@ -168,7 +169,9 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
                                   color: "#0000007F"
                                 }}
                               >
-                                {moment(data.messageDate).format("h:mm a")}
+                                {moment(data.messageDate, "h:mm a").format(
+                                  "h:mm a"
+                                )}
                               </span>
                             </div>
                             <p
