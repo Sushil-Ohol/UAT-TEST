@@ -94,7 +94,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     setSelectedDepends(selectedData);
   };
 
-    useEffect(() => {
+  useEffect(() => {
     dispatch(
       updateDependent({
         submittalId: updatedData.id,
@@ -168,7 +168,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           }
         : prev;
     });
-    setIsCompanyAssigneeChange(true);    
+    setIsCompanyAssigneeChange(true);
   };
 
   const onChangeAssignee = (assignedTo: string) => {
@@ -196,7 +196,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     onStatusDropDownChange();
   }, [updatedData]);
 
-    const handleCancel = () => {
+  const handleCancel = () => {
     setShowModal(false);
   };
 
