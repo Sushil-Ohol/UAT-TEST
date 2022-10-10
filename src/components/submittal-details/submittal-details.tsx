@@ -27,11 +27,11 @@ import { PostProjectFile } from "services/projects-service";
 import { AttachmentConfirmationModal } from "popups";
 import { updateField, updateSubmittal } from "store/slices/submittalsSlices";
 import { SelectOption } from "components";
-import { DropDownData } from "../../constants";
+import ConfirmationModal from "popups/submittal-details-confirmation-modal";
+import { DropDownData } from "constants/index";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
 import DateField from "./date-field";
-import ConfirmationModal from "../../popups/submittal-details-confirmation-modal";
 
 const { Option } = Select;
 
