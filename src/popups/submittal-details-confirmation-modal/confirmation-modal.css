@@ -1,0 +1,59 @@
+.confirmationModal {
+  height: 268px;
+  width: 572px;
+}
+.confirmationModal .ant-modal-content .ant-modal-footer {
+  padding-top: 0px !important;
+  border-top: none !important;
+}
+
+.confirmationModal .ant-modal-content .ant-modal-body p:first-child {
+  text-align: left;
+  font: normal normal 600 18px/27px Inter !important;
+  letter-spacing: 0px;
+  color: #000000fa;
+  opacity: 1;
+}
+
+.confirmationModal .ant-modal-content .ant-modal-body p {
+  text-align: left;
+  font: normal normal normal 16px/24px Inter;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.confirmationModal .ant-modal-content .ant-modal-body p span {
+  font: normal normal bold 16px/24px Inter !important;
+}
+
+.confirmationModal .ant-modal-content .ant-modal-header .ant-modal-title {
+  text-align: left;
+  font: normal normal 600 18px/21px Inter !important;
+  letter-spacing: 0px;
+  color: #000000fa;
+  opacity: 1;
+}
+.confirmationModal .ant-modal-footer .ant-btn {
+  margin-top: 0px;
+  color: #ffffff;
+  background: #007aff 0% 0% no-repeat padding-box;
+  border: 1px solid #007aff;
+}
+
+.confirmationModal .ant-modal-footer .ant-btn-default {
+  color: #007aff;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #007aff;
+}
+
+.confirmationModal .ant-modal-footer .ant-btn-default:hover {
+  color: #ffffff;
+  background: #007aff 0% 0% no-repeat padding-box;
+  border: 1px solid #007aff;
+}
+
+.confirmationModal .ant-modal-close {
+  margin-top: 0px;
+  color: black !important;
+}
