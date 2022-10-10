@@ -2,7 +2,7 @@
 import { Form, Modal, Input, message, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import "./add-assignee.css";
-import { DropDownData, ErrorMessages } from "constants/index";
+import { assigneesStatus, DropDownData, ErrorMessages } from "constants/index";
 
 const { Option } = Select;
 
@@ -43,7 +43,9 @@ function AddAssigneeModal({
       if (!isAssigneeExists(values.assigneeUserName)) {
         const data = {
           assignedTo: values.assigneeUserName,
-          destination: values.assigneeRole
+          destination: values.assigneeRole,
+          email: values.assigneeEmailId,
+          status: assigneesStatus.newAssignee
         };
         onOkClick(data);
         form.resetFields();
