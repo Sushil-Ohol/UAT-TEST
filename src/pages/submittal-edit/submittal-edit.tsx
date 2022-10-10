@@ -153,7 +153,8 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           <Select
             notFoundContent={
               <span>
-                No company found, click Add to invite new company
+                No company found, click Add to invite a new company
+                <br />
                 <Button
                   type="primary"
                   className="NewBtnForOpenMOdal"
