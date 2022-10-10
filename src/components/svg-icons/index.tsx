@@ -25,6 +25,7 @@ import CopyIcon from "./copy-icon";
 import DownloadIcon from "./download-icon";
 import ClearIcon from "./clear-icon";
 import EditIcon from "./edit-icon";
+import LockIcon from "./lock-icon";
 import ProfileDottedIcon from "./profile-dotted";
 import FolderDottedIcon from "./folder-dotted";
 import SubmittalIcon from "./submittal-icon";
@@ -58,6 +59,7 @@ export {
   DownloadIcon,
   ClearIcon,
   EditIcon,
+  LockIcon,
   ProfileDottedIcon,
   FolderDottedIcon,
   SubmittalIcon,
