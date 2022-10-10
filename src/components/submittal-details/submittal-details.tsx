@@ -30,7 +30,7 @@ import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
 import DateField from "./date-field";
-import ConfirmationModal from "../../popups/confirmation-modal";
+import ConfirmationModal from "../../popups/submittal-details-confirmation-modal";
 
 const { Option } = Select;
 
