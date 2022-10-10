@@ -56,7 +56,7 @@ function AssigneeDropdown(props: any) {
           showNewButton &&
           form.getFieldValue("company") && (
             <span>
-              Assignee not found, please add
+              No user found, click Add to invite a new user
               <Button
                 type="primary"
                 className="NewBtnForOpenMOdal"
