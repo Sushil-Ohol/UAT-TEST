@@ -68,8 +68,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       handleDocuments("Add", copiedDocument);
       setIsCopyDocumentModalOpen(false);
     } else {
-      const newDoc =
-        documentsData[selectedData[0].id].list[copiedDocument.id - 1];
+      const newDoc = documentsData[discussionId].list[copiedDocument.id - 1];
 
       const index = submittalDocs.filter((item) => item.id === newDoc.id);
 
