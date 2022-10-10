@@ -39,17 +39,7 @@ function AssigneeDropdown(props: any) {
   return (
     <Form.Item
       name={name}
-      label={
-        <span>
-          {title}
-
-          {showNewButton && form.getFieldValue("company") && (
-            <Button className="add-new-assignee-btn" onClick={showModal}>
-              + New
-            </Button>
-          )}
-        </span>
-      }
+      label={<span>{title}</span>}
       rules={[
         ({ getFieldValue }) => ({
           validator(rule, value) {
@@ -62,6 +52,21 @@ function AssigneeDropdown(props: any) {
       ]}
     >
       <Select
+        notFoundContent={
+          showNewButton &&
+          form.getFieldValue("company") && (
+            <span>
+              Assignee not found, please add
+              <Button
+                type="primary"
+                className="NewBtnForOpenMOdal"
+                onClick={showModal}
+              >
+                Add
+              </Button>
+            </span>
+          )
+        }
         className="constructionSelect"
         showSearch
         optionFilterProp="children"
