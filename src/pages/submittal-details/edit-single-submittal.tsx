@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
-import { updateDocs, updateSubmittal } from "store/slices/submittalsSlices";
+import { updateDocs, updateField } from "store/slices/submittalsSlices";
 import "./submittal-details.css";
 
 const { TabPane } = Tabs;
@@ -34,18 +34,17 @@ function SubmittalDetailspage(props: any) {
   const submittalList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
-
   const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
   const [submittalDetailsId, setSubmittalDetailsId] = useState<any>();
   const { Title } = Typography;
   const dispatch = useAppDispatch();
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
+  const [submittalTitle, setSubmittalTitle] = useState<string>("");
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [height, setHeight] = useState(505);
   const [isResizing, setIsResizing] = useState(false);
   const [isDocumentView, setIsDocumentView] = useState(false);
   const goToSubmittalPage = () => {
-    if (updatedData) dispatch(updateSubmittal(updatedData));
     dispatch(updateDocs({ submittalId: location.state.data.id, docs }));
     history.goBack();
   };
@@ -73,9 +72,18 @@ function SubmittalDetailspage(props: any) {
     });
   };
 
-  const onChangeSubmittalData = (data: SubmittalLog) => {
-    setUpdatedData(data);
-  };
+  useEffect(() => {
+    if (updatedData) {
+      dispatch(
+        updateField({
+          submittalId: updatedData.id,
+          field: "submittal",
+          value: updatedData.submittal
+        })
+      );
+      setSubmittalTitle(updatedData?.submittal);
+    }
+  }, [updatedData?.submittal]);
 
   const handleDocuments = (action: string, document: ConversationDoc) => {
     // console.log(action, document);
@@ -209,8 +217,8 @@ function SubmittalDetailspage(props: any) {
             {updatedData ? (
               <SubmittalDetails
                 submittalData={updatedData}
-                onChangeSubmittalData={onChangeSubmittalData}
                 docs={docs}
+                submittalTitle={submittalTitle}
                 handleDocuments={handleDocuments}
               />
             ) : (
