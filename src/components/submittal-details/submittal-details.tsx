@@ -30,17 +30,18 @@ import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
 import DateField from "./date-field";
-import ComfirmationModal from "./comfirmation-modal";
+import ConfirmationModal from "../../popups/confirmation-modal";
 
 const { Option } = Select;
 
 export type SubmittalDetailsProps = {
   submittalData: SubmittalLog;
   docs: ConversationDoc[];
+  submittalTitle: string;
   handleDocuments: any;
 };
 function SubmitalDetails(props: SubmittalDetailsProps) {
-  const { submittalData, docs, handleDocuments } = props;
+  const { submittalData, docs, submittalTitle, handleDocuments } = props;
 
   const dispatch = useAppDispatch();
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
@@ -57,7 +58,8 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const [isCompanyAssigneeChange, setIsCompanyAssigneeChange] =
     useState<boolean>(false);
   const [isAllFieldsChange, setIsAllFieldsChange] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showConfirmationModal, setShowConfirmationModal] =
+    useState<boolean>(false);
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
@@ -100,6 +102,17 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       })
     );
   }, [updatedData.dependsOn]);
+
+  useEffect(() => {
+    setUpdatedData((prev: SubmittalLog) => {
+      return prev
+        ? {
+            ...prev,
+            submittal: submittalTitle !== "" ? submittalTitle : prev.submittal
+          }
+        : prev;
+    });
+  }, [submittalTitle]);
 
   const addDependent = () => {
     if (selectedDepends?.submittal === "") {
@@ -195,13 +208,13 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   }, [updatedData]);
 
   const handleCancel = () => {
-    setShowModal(false);
+    setShowConfirmationModal(false);
   };
 
   const onCompanyAssigneeChange = () => {
     dispatch(updateSubmittal(updatedData));
     message.success("Data successfully updated");
-    setShowModal(false);
+    setShowConfirmationModal(false);
     setIsOnlyStatusChange(false);
     setIsCompanyAssigneeChange(false);
   };
@@ -209,18 +222,18 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const onStatusChange = () => {
     dispatch(updateSubmittal(updatedData));
     message.success("Status updated successfully");
-    setShowModal(false);
+    setShowConfirmationModal(false);
     setIsOnlyStatusChange(false);
   };
 
   const saveSubmittal = () => {
     if (isOnlyStatusChange && !isCompanyAssigneeChange && !isAllFieldsChange) {
-      setShowModal(true);
+      setShowConfirmationModal(true);
     } else if (
       (isOnlyStatusChange || isCompanyAssigneeChange) &&
       !isAllFieldsChange
     ) {
-      setShowModal(true);
+      setShowConfirmationModal(true);
     } else if (
       !isOnlyStatusChange &&
       !isCompanyAssigneeChange &&
@@ -569,11 +582,10 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           </Row>
         </Space>
       </div>
-      <ComfirmationModal
+      <ConfirmationModal
         onClick={saveSubmittal}
-        isOnlyStatusChange={isOnlyStatusChange}
         isCompanyAssigneeChange={isCompanyAssigneeChange}
-        showModal={showModal}
+        showConfirmationModal={showConfirmationModal}
         onStatusChange={onStatusChange}
         onCompanyAssigneeChange={onCompanyAssigneeChange}
         onCancel={handleCancel}
