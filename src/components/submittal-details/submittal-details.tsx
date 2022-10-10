@@ -25,10 +25,7 @@ import { ClearIcon, PlusIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
 import { AttachmentConfirmationModal } from "popups";
-import {
-  updateDependent,
-  updateSubmittal
-} from "store/slices/submittalsSlices";
+import { updateField, updateSubmittal } from "store/slices/submittalsSlices";
 import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
@@ -96,9 +93,10 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
 
   useEffect(() => {
     dispatch(
-      updateDependent({
+      updateField({
         submittalId: updatedData.id,
-        dependsOn: updatedData.dependsOn
+        field: "dependsOn",
+        value: updatedData.dependsOn
       })
     );
   }, [updatedData.dependsOn]);
