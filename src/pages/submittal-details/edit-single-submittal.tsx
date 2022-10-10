@@ -39,6 +39,7 @@ function SubmittalDetailspage(props: any) {
   const { Title } = Typography;
   const dispatch = useAppDispatch();
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
+  const [submittalTitle, setSubmittalTitle] = useState<string>("");
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [height, setHeight] = useState(505);
   const [isResizing, setIsResizing] = useState(false);
@@ -72,7 +73,7 @@ function SubmittalDetailspage(props: any) {
   };
 
   useEffect(() => {
-    if (updatedData)
+    if (updatedData) {
       dispatch(
         updateField({
           submittalId: updatedData.id,
@@ -80,6 +81,8 @@ function SubmittalDetailspage(props: any) {
           value: updatedData.submittal
         })
       );
+      setSubmittalTitle(updatedData?.submittal);
+    }
   }, [updatedData?.submittal]);
 
   const handleDocuments = (action: string, document: ConversationDoc) => {
@@ -215,6 +218,7 @@ function SubmittalDetailspage(props: any) {
               <SubmittalDetails
                 submittalData={updatedData}
                 docs={docs}
+                submittalTitle={submittalTitle}
                 handleDocuments={handleDocuments}
               />
             ) : (
