@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
-import { updateDocs, updateTitle } from "store/slices/submittalsSlices";
+import { updateDocs, updateField } from "store/slices/submittalsSlices";
 import "./submittal-details.css";
 
 const { TabPane } = Tabs;
@@ -74,9 +74,10 @@ function SubmittalDetailspage(props: any) {
   useEffect(() => {
     if (updatedData)
       dispatch(
-        updateTitle({
+        updateField({
           submittalId: updatedData.id,
-          title: updatedData.submittal
+          field: "submittal",
+          value: updatedData.submittal
         })
       );
   }, [updatedData?.submittal]);
