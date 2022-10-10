@@ -26,6 +26,10 @@ import DownloadIcon from "./download-icon";
 import ClearIcon from "./clear-icon";
 import EditIcon from "./edit-icon";
 import LockIcon from "./lock-icon";
+import ProfileDottedIcon from "./profile-dotted";
+import FolderDottedIcon from "./folder-dotted";
+import SubmittalIcon from "./submittal-icon";
+import MaskGroupIcon from "./mask-group-icon";
 
 export {
   AppLogoIcon,
@@ -55,5 +59,9 @@ export {
   DownloadIcon,
   ClearIcon,
   EditIcon,
-  LockIcon
+  LockIcon,
+  ProfileDottedIcon,
+  FolderDottedIcon,
+  SubmittalIcon,
+  MaskGroupIcon
 };

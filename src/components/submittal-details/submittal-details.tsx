@@ -26,6 +26,7 @@ import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
 import { AttachmentConfirmationModal } from "popups";
 import { updateField, updateSubmittal } from "store/slices/submittalsSlices";
+import { SelectOption } from "components";
 import { DropDownData } from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
@@ -424,15 +425,16 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                 onChange={onChangeAssignee}
                 showSearch
                 filterOption={(input, option) =>
-                  (option!.children as unknown as string)
+                  (option!.key as unknown as string)
                     .toLowerCase()
-                    .includes(input.toLowerCase())
+                    .includes(input.toString().toLowerCase())
                 }
               >
                 {updatedData?.company.name in assigneeOption &&
                   assigneeOption[updatedData?.company.name].map((item: any) => (
                     <Option key={item.assignedTo} value={item.assignedTo}>
-                      {item.assignedTo}
+                      {/* {item.assignedTo} */}
+                      <SelectOption item={item} />
                     </Option>
                   ))}
               </SelectField>

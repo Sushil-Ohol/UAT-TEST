@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Divider, message, Spin } from "antd";
+import { Divider, message, Spin } from "antd";
 import { ConversationDoc } from "models/discussion";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
@@ -33,7 +32,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
   const [isCopyDocumentModalOpen, setIsCopyDocumentModalOpen] = useState(false);
   const [copiedDocument, setCopiedDocument] = useState<any>({});
   const [submittalDocs, setSubmittalDocs] = useState<ConversationDoc[]>([]);
-  const [fileUpload, setFileUpload] = useState(false);
   const [dragFile, setDragFile] = useState(false);
   const {
     className,
@@ -47,7 +45,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
   } = props;
   const [filterByDate, setFilterByDate] = useState<any>();
   const [uploadedDate, setUploadDate] = useState<string[]>();
-  const importFile = useRef<any>();
   const dispatch = useAppDispatch();
   const bottomRef = useRef<any>(null);
   const documentsData = useAppSelector(
@@ -68,8 +65,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       handleDocuments("Add", copiedDocument);
       setIsCopyDocumentModalOpen(false);
     } else {
-      const newDoc =
-        documentsData[selectedData[0].id].list[copiedDocument.id - 1];
+      const newDoc = documentsData[discussionId].list[copiedDocument.id - 1];
 
       const index = submittalDocs.filter((item) => item.id === newDoc.id);
 
@@ -167,10 +163,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [documentsData[discussionId], documentsData[discussionId]?.list]);
 
-  const handleOpenFileInput = () => {
-    importFile.current.click();
-  };
-
   const addNewFile = async (file: any, isLoding: any) => {
     isLoding(true);
     const result = await PostProjectFile(file, null);
@@ -201,11 +193,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       addNewFile(file, setDragFile);
     }
   };
-
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    addNewFile(e.target.files && e.target.files[0], setFileUpload);
-  };
-
   const dragStart = (data: any, event: any) => {
     event.dataTransfer.setData("application/json", JSON.stringify(data));
   };
@@ -214,26 +201,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
     <div className={className}>
       <div className="discussionDocs">
         <div className="document-count">Documents({totalDocs})</div>
-
-        {fileUpload ? (
-          <Spin size="small" className="importBtn" />
-        ) : (
-          <Button
-            className="importBtn"
-            disabled={discussionId === ""}
-            onClick={handleOpenFileInput}
-          >
-            <DownloadOutlined />
-            Import a file
-          </Button>
-        )}
-        <input
-          ref={importFile}
-          style={{ display: "none" }}
-          multiple
-          type="file"
-          onChange={handleFileUpload}
-        />
       </div>
       {discussionId !== "" &&
         uploadedDate &&
@@ -355,7 +322,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
             {dragFile ? (
               <Spin size="small" className="ant-upload-text " />
             ) : (
-              <p className="ant-upload-text">Drag a file to upload</p>
+              <p className="ant-upload-text">Drag and drop a file to upload</p>
             )}
           </Dragger>
         </div>

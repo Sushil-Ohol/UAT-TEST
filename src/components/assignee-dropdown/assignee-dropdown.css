@@ -1,0 +1,21 @@
+.assignee-dropdown-heading {
+  font: normal normal normal 16px/20px Inter;
+  color: #000000;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+.assignee-dropdown-sub-heading {
+  font: normal normal normal 12px/15px Inter;
+  color: #0000007f;
+  letter-spacing: 0;
+}
+
+.assignee-dropdown-sub-heading-red {
+  font: normal normal normal 12px/15px Inter;
+  color: #ff3535 !important;
+  letter-spacing: 0;
+}
+.folder-dotted-icon {
+  margin-top: 1%;
+}
