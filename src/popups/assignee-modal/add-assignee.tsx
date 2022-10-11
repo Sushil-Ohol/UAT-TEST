@@ -57,6 +57,7 @@ function AddAssigneeModal({
 
   return (
     <Modal
+      destroyOnClose
       title="New Assignee"
       visible={show}
       onOk={handleAssigneeOk}
@@ -64,7 +65,7 @@ function AddAssigneeModal({
       okText="Send Invite"
       className="add-new-assignee"
     >
-      <Form layout="vertical" name="control-hooks" preserve form={form}>
+      <Form layout="vertical" name="control-hooks" preserve={false} form={form}>
         <Form.Item
           name="assigneeUserName"
           label="Assignee Name"

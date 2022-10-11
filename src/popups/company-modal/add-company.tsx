@@ -54,6 +54,7 @@ function AddCompanyModal({
 
   return (
     <Modal
+      destroyOnClose
       title="New Company"
       visible={show}
       onOk={handleCompanyOk}
@@ -61,7 +62,7 @@ function AddCompanyModal({
       okText="Send Invite"
       className="add-new-company"
     >
-      <Form layout="vertical" name="control-hooks" preserve form={form}>
+      <Form layout="vertical" name="control-hooks" preserve={false} form={form}>
         <Form.Item
           name="companyName"
           label="Company Name"
