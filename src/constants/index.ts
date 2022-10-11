@@ -246,7 +246,8 @@ export const assigneesStatus = {
   account: "Account Created in ConstructiveIQ",
   project: "Project invite not accepted",
   submittal: "Submittal invite not accepted",
-  newAssignee: "Project invite not accepted"
+  newAssignee: "Project invite not accepted",
+  present: "Present in ConstructiveIQ"
 };
 const AssigneeOptions = [
   {

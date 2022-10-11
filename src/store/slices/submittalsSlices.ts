@@ -101,6 +101,7 @@ const submittalSlice = createSlice({
       state.list[dataIndex][payload.field] = payload.value;
     },
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
+      // console.log(payload);
       state.list = payload;
     },
     newCompany: (state, { payload }: PayloadAction<any>) => {

@@ -12,22 +12,15 @@ const DropdownOptionCellEditor = forwardRef((props: any, ref) => {
   useImperativeHandle(ref, () => {
     return {
       getValue() {
-        return data.filter((item: any) => item.assignedTo === value)[0];
+        return data?.filter((item: any) => item.assignedTo === value)[0];
       }
     };
   });
   return (
     <Select
       value={value}
-      style={{ width: "200px" }}
+      style={{ width: "240px" }}
       onChange={(event: any) => setValue(event)}
-      //   title="STATUS"
-      //   value={updatedData ? updatedData.status : undefined}
-      //   onChange={(data) =>
-      // setUpdatedData((prev: SubmittalLog) => {
-      //   return prev ? { ...prev, status: data } : prev;
-      // })
-      //   }
       showSearch
       filterOption
     >

@@ -32,7 +32,7 @@ import SubmittalCreateComponent from "pages/submittal-create";
 import SubmittalLogCreateComponent from "pages/submittal-log-create";
 import { SubmittalLog } from "models/submittal-log";
 import { isFulfilled } from "@reduxjs/toolkit";
-import { useParams } from "react-router-dom";
+import { useParams, withRouter } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import StagingZone from "pages/staging-zone";
@@ -464,6 +464,8 @@ function SubmittalList() {
     filterType = "All";
     if (submittalState.list.length === 0) {
       loadSubmittals();
+    } else {
+      immutableRowData = submittalState.list;
     }
   }, []);
 
@@ -523,9 +525,9 @@ function SubmittalList() {
         };
       }
 
-      immutableRowData = immutableRowData.map((oldItem) =>
-        oldItem.id === newItem.id ? newItem : oldItem
-      );
+      immutableRowData = immutableRowData.map((oldItem) => {
+        return oldItem.id === newItem.id ? newItem : oldItem;
+      });
       immutableRowData = immutableRowData.map((oldItem) =>
         oldItem.id === newItem.id ? newItem : oldItem
       );
@@ -802,4 +804,4 @@ function SubmittalList() {
   );
 }
 
-export default SubmittalList;
+export default withRouter(SubmittalList);
