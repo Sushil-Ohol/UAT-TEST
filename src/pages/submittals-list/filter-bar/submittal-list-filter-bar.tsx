@@ -74,7 +74,7 @@ function SubmittalListFilterComponent(props: FilterProps) {
       <div id="outer" className="EditSubmittalbtn">
         <span>
           <div className="inner">
-            All <Switch onClick={onRejectButtonClick} /> Not required
+            All <Switch onChange={onRejectButtonClick} /> Not required
           </div>
           <div className="inner">
             <Button
