@@ -39,6 +39,7 @@ import StagingZone from "pages/staging-zone";
 import { FilterItem } from "models/types";
 import { DateCellEditor } from "components";
 import { AddNewColumn } from "popups";
+import { DateFilter } from "utils/dateutils";
 
 import {
   IdLinkComponent,
@@ -263,7 +264,8 @@ function SubmittalList() {
           header: "DUE BY"
         },
         setCustomDateFilter
-      }
+      },
+      comparator: DateFilter.comparator
     },
     {
       field: "governingDate",
@@ -281,7 +283,8 @@ function SubmittalList() {
           header: "GOVERNING DATE"
         },
         setCustomDateFilter
-      }
+      },
+      comparator: DateFilter.comparator
     },
     {
       field: "company",

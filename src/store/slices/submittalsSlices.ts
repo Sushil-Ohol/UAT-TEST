@@ -85,6 +85,21 @@ const submittalSlice = createSlice({
         payload.docs.length > 0 ? payload.docs.length : null;
       state.list[dataIndex].docs = payload.docs;
     },
+    updateField: <K extends keyof SubmittalLog>(
+      state: SubmittalState,
+      {
+        payload
+      }: PayloadAction<{
+        submittalId: string;
+        field: K;
+        value: SubmittalLog[K];
+      }>
+    ) => {
+      const dataIndex = state.list.findIndex(
+        (data) => data.id === payload.submittalId
+      );
+      state.list[dataIndex][payload.field] = payload.value;
+    },
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
       state.list = payload;
     },
@@ -136,5 +151,6 @@ export const {
   updatecompaniestate,
   newCompany,
   newAssignee,
-  updateDocs
+  updateDocs,
+  updateField
 } = submittalSlice.actions;

@@ -19,18 +19,20 @@ import Link from "antd/lib/typography/Link";
 import "./submittal-details.css";
 import { DependsOn, SubmittalLog } from "models/submittal-log";
 import moment from "moment";
-import { useAppSelector } from "store";
+import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
 import { ClearIcon, PlusIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
 import { AttachmentConfirmationModal } from "popups";
+import { updateField, updateSubmittal } from "store/slices/submittalsSlices";
 import { SelectOption } from "components";
+import ConfirmationModal from "popups/submittal-details-confirmation-modal";
 import {
   assigneesMessage,
   assigneesStatus,
   DropDownData
-} from "../../constants";
+} from "constants/index";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
 import DateField from "./date-field";
@@ -39,15 +41,15 @@ const { Option } = Select;
 
 export type SubmittalDetailsProps = {
   submittalData: SubmittalLog;
-  onChangeSubmittalData: (data: SubmittalLog) => void;
   docs: ConversationDoc[];
+  submittalTitle: string;
   handleDocuments: any;
 };
 function SubmitalDetails(props: SubmittalDetailsProps) {
-  const { submittalData, onChangeSubmittalData, docs, handleDocuments } = props;
+  const { submittalData, docs, submittalTitle, handleDocuments } = props;
 
+  const dispatch = useAppDispatch();
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
-
   const [fileLoading, setFileLoading] = useState<boolean>(false);
   const companyOptions = useAppSelector((state) => state.submittals.companies);
   const assigneeOption: any = useAppSelector(
@@ -57,7 +59,12 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const [showAttachDocConfirmModal, setShowAttachDocConfirmModal] =
     useState<boolean>(false);
   const [selectedDocument, setSelectedDocument] = useState<any>();
-
+  const [isOnlyStatusChange, setIsOnlyStatusChange] = useState<boolean>(false);
+  const [isCompanyAssigneeChange, setIsCompanyAssigneeChange] =
+    useState<boolean>(false);
+  const [isAllFieldsChange, setIsAllFieldsChange] = useState<boolean>(false);
+  const [showConfirmationModal, setShowConfirmationModal] =
+    useState<boolean>(false);
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
@@ -90,6 +97,27 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     );
     setSelectedDepends(selectedData);
   };
+
+  useEffect(() => {
+    dispatch(
+      updateField({
+        submittalId: updatedData.id,
+        field: "dependsOn",
+        value: updatedData.dependsOn
+      })
+    );
+  }, [updatedData.dependsOn]);
+
+  useEffect(() => {
+    setUpdatedData((prev: SubmittalLog) => {
+      return prev
+        ? {
+            ...prev,
+            submittal: submittalTitle !== "" ? submittalTitle : prev.submittal
+          }
+        : prev;
+    });
+  }, [submittalTitle]);
 
   const addDependent = () => {
     if (selectedDepends?.submittal === "") {
@@ -171,6 +199,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           }
         : prev;
     });
+    setIsCompanyAssigneeChange(true);
   };
 
   const onChangeAssignee = (assignedTo: string) => {
@@ -193,12 +222,54 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           }
         : prev;
     });
+    setIsCompanyAssigneeChange(true);
   };
 
   useEffect(() => {
-    if (updatedData) onChangeSubmittalData(updatedData);
     onStatusDropDownChange();
   }, [updatedData]);
+
+  const handleCancel = () => {
+    setShowConfirmationModal(false);
+  };
+
+  const onCompanyAssigneeChange = () => {
+    dispatch(updateSubmittal(updatedData));
+    message.success("Data successfully updated");
+    setShowConfirmationModal(false);
+    setIsOnlyStatusChange(false);
+    setIsCompanyAssigneeChange(false);
+  };
+
+  const onStatusChange = () => {
+    dispatch(updateSubmittal(updatedData));
+    message.success("Status updated successfully");
+    setShowConfirmationModal(false);
+    setIsOnlyStatusChange(false);
+  };
+
+  const saveSubmittal = () => {
+    if (isOnlyStatusChange && !isCompanyAssigneeChange && !isAllFieldsChange) {
+      setShowConfirmationModal(true);
+    } else if (
+      (isOnlyStatusChange || isCompanyAssigneeChange) &&
+      !isAllFieldsChange
+    ) {
+      setShowConfirmationModal(true);
+    } else if (
+      !isOnlyStatusChange &&
+      !isCompanyAssigneeChange &&
+      !isAllFieldsChange
+    ) {
+      message.warning("Please change any data first to update");
+    } else {
+      dispatch(updateSubmittal(updatedData));
+      message.success("Data successfully updated");
+      setIsCompanyAssigneeChange(false);
+      setIsOnlyStatusChange(false);
+      setIsAllFieldsChange(false);
+    }
+  };
 
   function DependsOnSection() {
     return (
@@ -374,41 +445,6 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           <Row justify="space-between">
             <Col span={4}>
               <SelectField
-                title="STATUS"
-                value={updatedData ? updatedData.status : undefined}
-                onChange={(data) =>
-                  setUpdatedData((prev: SubmittalLog) => {
-                    return prev ? { ...prev, status: data } : prev;
-                  })
-                }
-                showSearch={false}
-                filterOption
-              >
-                {statusOptions.map((data: any) => (
-                  <Option key={data}>{data}</Option>
-                ))}
-              </SelectField>
-            </Col>
-            <Col span={4}>
-              <DateField
-                title="DUE BY"
-                value={updatedData?.dueBy}
-                onChange={(data) =>
-                  setUpdatedData((prev: SubmittalLog) => {
-                    return prev
-                      ? {
-                          ...prev,
-                          dueBy: data
-                            ? moment(data).format("MM-DD-YYYY")
-                            : prev.dueBy
-                        }
-                      : prev;
-                  })
-                }
-              />
-            </Col>
-            <Col span={4}>
-              <SelectField
                 title="COMPANY"
                 value={updatedData ? updatedData.company.name : undefined}
                 onChange={onChangeCompany}
@@ -450,10 +486,47 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
               </SelectField>
             </Col>
             <Col span={4}>
+              <SelectField
+                title="STATUS"
+                value={updatedData ? updatedData.status : undefined}
+                onChange={(data) => {
+                  setUpdatedData((prev: SubmittalLog) => {
+                    return prev ? { ...prev, status: data } : prev;
+                  });
+                  setIsOnlyStatusChange(true);
+                }}
+                showSearch={false}
+                filterOption
+              >
+                {statusOptions.map((data: any) => (
+                  <Option key={data}>{data}</Option>
+                ))}
+              </SelectField>
+            </Col>
+            <Col span={4}>
+              <DateField
+                title="DUE BY"
+                value={updatedData?.dueBy}
+                onChange={(data) => {
+                  setUpdatedData((prev: SubmittalLog) => {
+                    return prev
+                      ? {
+                          ...prev,
+                          dueBy: data
+                            ? moment(data).format("MM-DD-YYYY")
+                            : prev.dueBy
+                        }
+                      : prev;
+                  });
+                  setIsAllFieldsChange(true);
+                }}
+              />
+            </Col>
+            <Col span={4}>
               <DateField
                 title="GOVERNING DATE"
                 value={updatedData?.governingDate}
-                onChange={(data) =>
+                onChange={(data) => {
                   setUpdatedData((prev: SubmittalLog) => {
                     return prev
                       ? {
@@ -463,8 +536,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                             : prev.governingDate
                         }
                       : prev;
-                  })
-                }
+                  });
+                  setIsAllFieldsChange(true);
+                }}
               />
             </Col>
           </Row>
@@ -478,13 +552,14 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     rows={3}
                     placeholder="Fill the Description"
                     value={updatedData?.description}
-                    onChange={(data) =>
+                    onChange={(data) => {
                       setUpdatedData((prev: SubmittalLog) => {
                         return prev
                           ? { ...prev, description: data.target.value }
                           : prev;
-                      })
-                    }
+                      });
+                      setIsAllFieldsChange(true);
+                    }}
                   />
                 </Col>
                 <Col
@@ -555,7 +630,15 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           </Row>
         </Space>
       </div>
-
+      <ConfirmationModal
+        onClick={saveSubmittal}
+        isCompanyAssigneeChange={isCompanyAssigneeChange}
+        showConfirmationModal={showConfirmationModal}
+        onStatusChange={onStatusChange}
+        onCompanyAssigneeChange={onCompanyAssigneeChange}
+        onCancel={handleCancel}
+        updatedData={updatedData}
+      />
       <Row
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
         className="actionItemCard"
