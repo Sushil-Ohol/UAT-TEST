@@ -38,7 +38,10 @@ function DiscussionList(props: DiscussionListProps) {
 
   const rowId =
     selectedData.length === 1
-      ? selectedData[0]?.id.toString()
+      ? (data.filter((item) => item.topicId === selectedData[0]?.id.toString())
+          .length > 0 &&
+          selectedData[0]?.id.toString()) ||
+        ""
       : submittalDetailsId || "1000";
 
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);

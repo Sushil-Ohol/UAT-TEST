@@ -38,7 +38,7 @@ function CopyDocumentModal(props: CopyDocumentModalProps) {
       okText="Confirm"
     >
       <div className="heading"> {CopyDocumentModalContent.Confirm} </div>
-      <b>{text}</b>
+      <b>{text}?</b>
       <br />
       <div className="content"> {CopyDocumentModalContent.General}</div>
     </Modal>
