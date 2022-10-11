@@ -1,7 +1,7 @@
 // react/jsx-no-bind
 import { Form, Modal, Input, message, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { DropDownData, ErrorMessages } from "constants/index";
+import { assigneesStatus, DropDownData, ErrorMessages } from "constants/index";
 import "./add-company.css";
 
 const { Option } = Select;
@@ -40,7 +40,10 @@ function AddCompanyModal({
           assignees: [
             {
               assignedTo: values.assigneeUserName,
-              destination: values.assigneeRole
+              destination: values.assigneeRole,
+              email: values.assigneeEmailId,
+              status: assigneesStatus.newAssignee,
+              default: true
             }
           ]
         };

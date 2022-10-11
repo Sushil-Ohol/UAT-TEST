@@ -49,6 +49,12 @@ export const hexagoanStyleScreen2 = {
   hexagoanSize: 60,
   errorStyleClass: "icon-style-wrong-screen-second"
 };
+export const assigneesMessage = {
+  project: "Not in Project",
+  account: "Not in ConstructiveIQ",
+  submittal: "Not in Submittal"
+};
+
 const CompanyOptions = [
   {
     name: "ABC Construction",
@@ -58,13 +64,29 @@ const CompanyOptions = [
         assignedTo: "Luke",
         destination: "Engineer",
         email: "luke@cconstruct.com",
-        status: "Account Created in ConstructiveIQ"
+        status: "Account Created in ConstructiveIQ",
+        default: false
       },
       {
         assignedTo: "James",
         destination: "Project Manager",
         email: "james@cconstruct.com",
-        status: "Project invite not accepted"
+        status: "Project invite not accepted",
+        default: false
+      },
+      {
+        assignedTo: "Jack",
+        destination: "Project Manager",
+        email: "jack@cconstruct.com",
+        status: "",
+        default: false
+      },
+      {
+        assignedTo: "John",
+        destination: "Project Manager",
+        email: "john@cconstruct.com",
+        status: "Submittal invite not accepted",
+        default: true
       }
     ]
   },
@@ -76,13 +98,29 @@ const CompanyOptions = [
         assignedTo: "John",
         destination: "Engineer",
         email: "john@cconstruct.com",
-        status: "Project invite not accepted"
+        status: "Project invite not accepted",
+        default: false
       },
       {
         assignedTo: "Maria",
         destination: "Project Manager",
         email: "maria@cconstruct.com",
-        status: "Submittal invite not accepted"
+        status: "Submittal invite not accepted",
+        default: true
+      },
+      {
+        assignedTo: "Luke",
+        destination: "Engineer",
+        email: "luke@cconstruct.com",
+        status: "",
+        default: false
+      },
+      {
+        assignedTo: "Mira",
+        destination: "Engineer",
+        email: "mira@cconstruct.com",
+        status: "Account Created in ConstructiveIQ",
+        default: false
       }
     ]
   },
@@ -94,13 +132,29 @@ const CompanyOptions = [
         assignedTo: "Lionel",
         destination: "Engineer",
         email: "lionel@cconstruct.com",
-        status: "Submittal invite not accepted"
+        status: "Submittal invite not accepted",
+        default: false
       },
       {
         assignedTo: "Ronaldo",
         destination: "Project Manager",
         email: "ronaldo@cconstruct.com",
-        status: "Project invite not accepted"
+        status: "Project invite not accepted",
+        default: false
+      },
+      {
+        assignedTo: "Luke",
+        destination: "Engineer",
+        email: "luke@cconstruct.com",
+        status: "Account Created in ConstructiveIQ",
+        default: true
+      },
+      {
+        assignedTo: "Jack",
+        destination: "Engineer",
+        email: "jack@cconstruct.com",
+        status: "",
+        default: false
       }
     ]
   },
@@ -112,13 +166,29 @@ const CompanyOptions = [
         assignedTo: "Mark",
         destination: "Engineer",
         email: "mark@cconstruct.com",
-        status: "Account Created in ConstructiveIQ"
+        status: "Account Created in ConstructiveIQ",
+        default: false
       },
       {
         assignedTo: "Roger",
         destination: "Project Manager",
         email: "roger@cconstruct.com",
-        status: "Submittal invite not accepted"
+        status: "Submittal invite not accepted",
+        default: true
+      },
+      {
+        assignedTo: "Luke",
+        destination: "Engineer",
+        email: "luke@cconstruct.com",
+        status: "Project invite not accepted",
+        default: false
+      },
+      {
+        assignedTo: "John",
+        destination: "Engineer",
+        email: "john@cconstruct.com",
+        status: "",
+        default: false
       }
     ]
   },
@@ -130,13 +200,29 @@ const CompanyOptions = [
         assignedTo: "Mark",
         destination: "Architect",
         email: "mark@cconstruct.com",
-        status: "Submittal invite not accepted"
+        status: "Submittal invite not accepted",
+        default: false
+      },
+      {
+        assignedTo: "Jack",
+        destination: "Architect",
+        email: "jack@cconstruct.com",
+        status: "Account Created in ConstructiveIQ",
+        default: false
+      },
+      {
+        assignedTo: "Mack",
+        destination: "Architect",
+        email: "mack@cconstruct.com",
+        status: "Project invite not accepted",
+        default: true
       },
       {
         assignedTo: "Roger",
         destination: "Architect",
         email: "roger@cconstruct.com",
-        status: ""
+        status: "",
+        default: false
       }
     ]
   }

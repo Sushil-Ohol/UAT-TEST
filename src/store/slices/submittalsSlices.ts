@@ -40,7 +40,7 @@ export const initialState: SubmittalState = {
     governingDate: "",
     company: { name: "", email: "" },
     dependsOn: [],
-    assigned: { assignedTo: "", destination: "" },
+    assigned: { assignedTo: "", destination: "", email: "", status: "" },
     docs: []
   }
 };

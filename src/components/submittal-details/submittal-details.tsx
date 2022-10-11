@@ -26,7 +26,11 @@ import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
 import { AttachmentConfirmationModal } from "popups";
 import { SelectOption } from "components";
-import { DropDownData } from "../../constants";
+import {
+  assigneesMessage,
+  assigneesStatus,
+  DropDownData
+} from "../../constants";
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
 import DateField from "./date-field";
@@ -137,6 +141,21 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       handleDocuments("Remove", { id });
     }
   };
+  useEffect(() => {
+    const assignedData =
+      updatedData?.company.name in assigneeOption &&
+      assigneeOption[updatedData?.company.name].filter(
+        (item: any) => item.default === true
+      )[0];
+    if (updatedData.assigned.assignedTo === "") {
+      setUpdatedData((prev) => {
+        return {
+          ...prev,
+          assigned: assignedData
+        };
+      });
+    }
+  }, [updatedData]);
 
   const onChangeCompany = (name: string) => {
     const selectedCompany = companyOptions.find((data) => data.name === name);
@@ -147,7 +166,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             ...prev,
             company: selectedCompany || prev.company,
             assigned: selectedCompany
-              ? { assignedTo: "", destination: "" }
+              ? { assignedTo: "", destination: "", email: "", status: "" }
               : prev.assigned
           }
         : prev;
@@ -166,7 +185,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             assigned: selectedAssignee
               ? {
                   assignedTo: selectedAssignee.assignedTo,
-                  destination: selectedAssignee.destination
+                  destination: selectedAssignee.destination,
+                  email: selectedAssignee.email,
+                  status: selectedAssignee.status
                 }
               : prev.assigned
           }
@@ -320,6 +341,31 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       setShowAttachDocConfirmModal(false);
     }
   };
+  const shortMessage: any = () => {
+    if (updatedData.assigned.status === assigneesStatus.account) {
+      return (
+        <p>
+          ASSIGNED <span className="text-red">{assigneesMessage.account}</span>
+        </p>
+      );
+    }
+    if (updatedData.assigned.status === assigneesStatus.project) {
+      return (
+        <p>
+          ASSIGNED <span className="text-red">{assigneesMessage.project}</span>
+        </p>
+      );
+    }
+    if (updatedData.assigned.status === assigneesStatus.submittal) {
+      return (
+        <p>
+          ASSIGNED{" "}
+          <span className="text-red">{assigneesMessage.submittal}</span>
+        </p>
+      );
+    }
+    return "ASSIGNED";
+  };
 
   return (
     <div style={{ height: "100%", position: "relative" }}>
@@ -382,7 +428,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
             </Col>
             <Col span={4}>
               <SelectField
-                title="ASSIGNED"
+                title={shortMessage()}
                 value={
                   updatedData ? updatedData.assigned.assignedTo : undefined
                 }
