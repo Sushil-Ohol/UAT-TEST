@@ -32,7 +32,7 @@ import SubmittalCreateComponent from "pages/submittal-create";
 import SubmittalLogCreateComponent from "pages/submittal-log-create";
 import { SubmittalLog } from "models/submittal-log";
 import { isFulfilled } from "@reduxjs/toolkit";
-import { useParams } from "react-router-dom";
+import { useParams, withRouter } from "react-router-dom";
 import { setProjectId } from "store/slices/homeSlice";
 import SubmittalEdit from "pages/submittal-edit/submittal-edit";
 import StagingZone from "pages/staging-zone";
@@ -54,6 +54,7 @@ import {
 import { RootState } from "store/slices";
 import DropdownOption from "components/cell-editor/SubmittalStatusDropdownCtrl";
 import { FolderOutlined } from "@ant-design/icons";
+import { DropdownOptionCellEditor } from "components/cell-editor";
 import { DATE_FORMAT_MMDDYYY } from "../../constants";
 import {
   ChatIcon,
@@ -164,7 +165,7 @@ function SubmittalList() {
       .filter(Boolean);
     return {
       cellRenderer: assignedEditCellRenderer,
-      values: assignee[0] || []
+      values: assignee[0]
     };
   };
 
@@ -322,12 +323,14 @@ function SubmittalList() {
     {
       field: "assigned",
       headerName: "ASSIGNED",
-      cellEditor: "agRichSelectCellEditor",
-      minWidth: 100,
+      flex: 1,
       autoHeight: true,
       cellEditorPopup: true,
+      cellEditor: DropdownOptionCellEditor,
       cellEditorParams: companyEditorParams,
+      tooltipField: "assigned",
       cellRenderer: assignedCellRenderer,
+
       keyCreator: (company) => {
         return company.value.assignedTo;
       }
@@ -380,7 +383,7 @@ function SubmittalList() {
       temp[itemIndexassigned] = {
         field: "assigned",
         headerName: "ASSIGNED",
-        cellEditor: "agRichSelectCellEditor",
+        cellEditor: DropdownOptionCellEditor,
         minWidth: 100,
         autoHeight: true,
         cellEditorPopup: true,
@@ -461,10 +464,10 @@ function SubmittalList() {
     filterType = "All";
     if (submittalState.list.length === 0) {
       loadSubmittals();
+    } else {
+      immutableRowData = submittalState.list;
     }
   }, []);
-
-  React.useEffect(() => {}, [immutableRowData]);
 
   React.useEffect(() => {
     dispatch(setProjectId(projectId));
@@ -510,14 +513,21 @@ function SubmittalList() {
     (event: CellEditRequestEvent) => {
       const { data } = event;
       const { field } = event.colDef;
+
       const newItem = { ...data };
       newItem[field!] = event.newValue;
+
       if (field === "company") {
-        newItem.assigned = {};
+        newItem.assigned = {
+          ...newItem.company.assignees.filter(
+            (item: any) => item.default === true
+          )[0]
+        };
       }
-      immutableRowData = immutableRowData.map((oldItem) =>
-        oldItem.id === newItem.id ? newItem : oldItem
-      );
+
+      immutableRowData = immutableRowData.map((oldItem) => {
+        return oldItem.id === newItem.id ? newItem : oldItem;
+      });
       immutableRowData = immutableRowData.map((oldItem) =>
         oldItem.id === newItem.id ? newItem : oldItem
       );
@@ -794,4 +804,4 @@ function SubmittalList() {
   );
 }
 
-export default SubmittalList;
+export default withRouter(SubmittalList);

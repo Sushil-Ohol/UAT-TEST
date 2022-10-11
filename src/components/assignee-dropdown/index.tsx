@@ -1,4 +1,4 @@
-import { Button, Form, Select } from "antd";
+import { Button, Form, Select, Tooltip } from "antd";
 import {
   FolderDottedIcon,
   ProfileDottedIcon,
@@ -6,20 +6,38 @@ import {
   MaskGroupIcon
 } from "components/svg-icons";
 import { assigneesStatus } from "constants/index";
+// import { useEffect } from "react";
 import "./assignee-dropdown.css";
 
 export function SelectOption({ item }: any) {
   return (
     <p
       style={{
-        marginBottom: "3%"
+        marginBottom: "3%",
+        width: "100%"
       }}
     >
-      {assigneesStatus.account !== item.status && <MaskGroupIcon />}
-      {assigneesStatus.account === item.status && <ProfileDottedIcon />}
+      {assigneesStatus.account !== item.status && (
+        <Tooltip title={assigneesStatus.present} placement="topLeft">
+          <MaskGroupIcon /> <span style={{ display: "none" }}>text</span>
+        </Tooltip>
+      )}
+      {assigneesStatus.account === item.status && (
+        <Tooltip title={assigneesStatus.account} placement="topLeft">
+          <ProfileDottedIcon /> <span style={{ display: "none" }}>text</span>
+        </Tooltip>
+      )}
       &nbsp;
-      {assigneesStatus.project === item.status && <FolderDottedIcon />}
-      {assigneesStatus.submittal === item.status && <SubmittalIcon />}
+      {assigneesStatus.project === item.status && (
+        <Tooltip title={assigneesStatus.project} placement="topLeft">
+          <FolderDottedIcon /> <span style={{ display: "none" }}>text</span>
+        </Tooltip>
+      )}
+      {assigneesStatus.submittal === item.status && (
+        <Tooltip title={assigneesStatus.submittal} placement="topLeft">
+          <SubmittalIcon /> <span style={{ display: "none" }}>text</span>
+        </Tooltip>
+      )}
       &nbsp;{" "}
       <span className="assignee-dropdown-heading">{item.assignedTo}</span>
       <br />{" "}
@@ -33,22 +51,29 @@ export function SelectOption({ item }: any) {
 }
 
 function AssigneeDropdown(props: any) {
-  const { name, title, showNewButton, form, data, showModal } = props;
+  const {
+    name,
+    title,
+    showNewButton,
+    form,
+    data,
+    showModal,
+    setChangeAssignee
+  } = props;
   const { Option } = Select;
 
   return (
     <Form.Item
       name={name}
       label={
-        <span>
-          {title}
-
+        <div style={{ display: "flex", alignContent: "center" }}>
+          {title()}
           {showNewButton && form.getFieldValue("company") && (
             <Button className="add-new-assignee-btn" onClick={showModal}>
               + New
             </Button>
           )}
-        </span>
+        </div>
       }
       rules={[
         ({ getFieldValue }) => ({
@@ -62,6 +87,9 @@ function AssigneeDropdown(props: any) {
       ]}
     >
       <Select
+        onChange={(value) => {
+          setChangeAssignee(value);
+        }}
         className="constructionSelect"
         showSearch
         optionFilterProp="children"

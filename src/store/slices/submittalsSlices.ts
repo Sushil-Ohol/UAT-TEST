@@ -40,7 +40,7 @@ export const initialState: SubmittalState = {
     governingDate: "",
     company: { name: "", email: "" },
     dependsOn: [],
-    assigned: { assignedTo: "", destination: "" },
+    assigned: { assignedTo: "", destination: "", email: "", status: "" },
     docs: []
   }
 };
@@ -101,6 +101,7 @@ const submittalSlice = createSlice({
       state.list[dataIndex][payload.field] = payload.value;
     },
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
+      // console.log(payload);
       state.list = payload;
     },
     newCompany: (state, { payload }: PayloadAction<any>) => {

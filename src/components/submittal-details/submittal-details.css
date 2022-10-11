@@ -106,3 +106,7 @@
   color: #007aff !important;
   opacity: 1;
 }
+.text-red {
+  color: red;
+  padding-left: 2%;
+}
