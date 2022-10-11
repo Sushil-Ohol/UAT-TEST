@@ -57,6 +57,7 @@ function AddCompanyModal({
 
   return (
     <Modal
+      destroyOnClose
       title="New Company"
       visible={show}
       onOk={handleCompanyOk}
@@ -64,7 +65,7 @@ function AddCompanyModal({
       okText="Send Invite"
       className="add-new-company"
     >
-      <Form layout="vertical" name="control-hooks" preserve form={form}>
+      <Form layout="vertical" name="control-hooks" preserve={false} form={form}>
         <Form.Item
           name="companyName"
           label="Company Name"
@@ -141,7 +142,7 @@ function AddCompanyModal({
       <p>
         <b>
           Note : Send Invite Button click will send an email with instructions
-          to join the project.Once they join, they will have access to all the
+          to join the project. Once they join, they will have access to all the
           details of this project.
         </b>
       </p>

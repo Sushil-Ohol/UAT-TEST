@@ -208,13 +208,14 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           <Select
             notFoundContent={
               <span>
-                No Data Found, Please click + New button to create new company
+                No company found, click Add to invite a new company
+                <br />
                 <Button
                   type="primary"
                   className="NewBtnForOpenMOdal"
                   onClick={showCompanyModal}
                 >
-                  + New
+                  Add
                 </Button>
               </span>
             }

@@ -66,14 +66,7 @@ function AssigneeDropdown(props: any) {
     <Form.Item
       name={name}
       label={
-        <div style={{ display: "flex", alignContent: "center" }}>
-          {title()}
-          {showNewButton && form.getFieldValue("company") && (
-            <Button className="add-new-assignee-btn" onClick={showModal}>
-              + New
-            </Button>
-          )}
-        </div>
+        <div style={{ display: "flex", alignContent: "center" }}>{title()}</div>
       }
       rules={[
         ({ getFieldValue }) => ({
@@ -87,6 +80,21 @@ function AssigneeDropdown(props: any) {
       ]}
     >
       <Select
+        notFoundContent={
+          showNewButton &&
+          form.getFieldValue("company") && (
+            <span>
+              No user found, click Add to invite a new user
+              <Button
+                type="primary"
+                className="NewBtnForOpenMOdal"
+                onClick={showModal}
+              >
+                Add
+              </Button>
+            </span>
+          )
+        }
         onChange={(value) => {
           setChangeAssignee(value);
         }}
