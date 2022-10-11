@@ -9,7 +9,14 @@ import { RootState } from "store/slices";
 import { useAppDispatch, useAppSelector } from "store";
 import { newCompany, newAssignee } from "store/slices/submittalsSlices";
 import { AssigneeDropdown } from "components";
-import { DropDownData, DATE_FORMAT_MMDDYYY } from "constants/index";
+import {
+  DropDownData,
+  DATE_FORMAT_MMDDYYY,
+  assigneesStatus,
+  assigneesMessage
+  // assigneesStatus,
+  // assigneesMessage
+} from "constants/index";
 
 const { Option } = Select;
 
@@ -57,6 +64,8 @@ function SubmittalEdit(props: EditSubmittalLogs) {
   };
 
   const [optionArray, setOptionArray] = useState<any>([]);
+  const [messageShort, setMessageShort] = useState<any>({});
+  const [changeAssignee, setChangeAssignee] = useState<any>("");
 
   const onStatusDropDownChange = () => {
     const assignedRequired = selectedRows.filter((item: any) => {
@@ -99,7 +108,53 @@ function SubmittalEdit(props: EditSubmittalLogs) {
     setIsCompanyModalOpen(false);
     // to do set the newly added companies first assignee to the form field
   };
+  useEffect(() => {
+    form.setFieldValue(
+      "assigned",
+      assigneeData?.length > 0 &&
+        assigneeData?.filter((item: any) => item.default === true)[0].assignedTo
+    );
+    setMessageShort(
+      assigneeData?.filter(
+        (item: any) => item.assignedTo === form.getFieldsValue().assigned
+      )[0]
+    );
+  }, [companieselected]);
 
+  useEffect(() => {
+    setMessageShort(
+      assigneeData?.filter(
+        (item: any) => item.assignedTo === form.getFieldsValue().assigned
+      )[0]
+    );
+  }, [changeAssignee]);
+  const shortMessage: any = () => {
+    if (messageShort?.status === assigneesStatus.account) {
+      return (
+        <p style={{ width: "200px", marginTop: "3%" }}>
+          Assignee
+          <span className="text-red-small">{assigneesMessage.account}</span>
+        </p>
+      );
+    }
+    if (messageShort?.status === assigneesStatus.project) {
+      return (
+        <p style={{ width: "200px", marginTop: "3%" }}>
+          Assignee
+          <span className="text-red-small">{assigneesMessage.project}</span>
+        </p>
+      );
+    }
+    if (messageShort?.status === assigneesStatus.submittal) {
+      return (
+        <p style={{ width: "200px", marginTop: "3%" }}>
+          Assignee
+          <span className="text-red-small">{assigneesMessage.submittal}</span>
+        </p>
+      );
+    }
+    return <p style={{ width: "200px", marginTop: "3%" }}>Assignee</p>;
+  };
   const addNewAssignee = (data: any) => {
     const payload = { companyName: companieselected, assignee: data };
     dispatch(newAssignee(payload));
@@ -185,11 +240,12 @@ function SubmittalEdit(props: EditSubmittalLogs) {
         </Form.Item>
         <AssigneeDropdown
           name="assigned"
-          title="Assignee"
+          title={shortMessage}
           showNewButton
           form={form}
           data={assigneeData}
           showModal={showAssigneeModal}
+          setChangeAssignee={setChangeAssignee}
         />
 
         <section className="mt-2">
@@ -211,6 +267,7 @@ function SubmittalEdit(props: EditSubmittalLogs) {
           </div>
         </section>
       </Form>
+
       <AddCompanyModal
         companyOptions={companyData}
         onOkClick={addNewCompany}

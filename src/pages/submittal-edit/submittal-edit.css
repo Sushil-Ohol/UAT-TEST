@@ -122,4 +122,9 @@
   margin-left: 40%;
 }
 
-
+.text-red-small {
+  color: red;
+  padding-left: 4%;
+  font-size: 12px;
+  display: inline;
+}

@@ -11,6 +11,7 @@ import {
 import NewDiscussion from "./new-discussion";
 import AccountMenu from "./account-menu";
 import DocumentView from "./document-view";
+import AssignedTooltip from "./assigned-tooltip";
 
 import AssigneeDropdown, { SelectOption } from "./assignee-dropdown";
 
@@ -27,5 +28,6 @@ export {
   AccountMenu,
   DocumentView,
   AssigneeDropdown,
-  SelectOption
+  SelectOption,
+  AssignedTooltip
 };

@@ -20,6 +20,7 @@ function SelectField(props: Props) {
         showSearch={showSearch}
         optionFilterProp="children"
         filterOption={filterOption}
+        // defaultValue="Luke"
       >
         {children}
       </Select>

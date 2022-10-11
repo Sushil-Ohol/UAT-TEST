@@ -1,4 +1,6 @@
 // import { DropDownData } from "constants/index.js";
+import { Tooltip } from "antd";
+import { SelectOption } from "components";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
@@ -57,10 +59,18 @@ export const companyEditCellRenderer = (params: any) => {
 
 export const assignedCellRenderer = (props: any) => {
   return (
-    <>
-      <p className="colFirstValue">{props.value.assignedTo}</p>
-      <p className="colSecondValue">{props.value.destination}</p>
-    </>
+    <Tooltip title={<SelectOption item={props.value} />} placement="leftBottom">
+      <p
+        className={
+          props.value?.status !== ""
+            ? "colFirstValue text-red-font"
+            : "colFirstValue"
+        }
+      >
+        {props.value && props.value.assignedTo}
+      </p>
+      <p className="colSecondValue">{props.value && props.value.destination}</p>
+    </Tooltip>
   );
 };
 

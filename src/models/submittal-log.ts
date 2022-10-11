@@ -8,10 +8,9 @@ export type DependsOn = {
 
 export type Assignee = {
   assignedTo: string;
-
   destination: string;
-
   email?: string;
+  status: string;
 };
 
 export type SubmittalLog = {
