@@ -124,7 +124,7 @@ function AddAssigneeModal({
       <p>
         <b>
           Note : Send Invite Button click will send an email with instructions
-          to join the project.Once they join, they will have access to all the
+          to join the project. Once they join, they will have access to all the
           details of this project.
         </b>
       </p>
