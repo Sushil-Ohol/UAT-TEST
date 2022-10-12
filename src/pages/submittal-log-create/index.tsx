@@ -2,6 +2,7 @@ import { Form, Input, Button, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
+import { voidStartingSpaceInput } from "utils/inpututils";
 import { DATE_FORMAT_MMDDYYY } from "../../constants";
 import "./submittal-log-create.css";
 
@@ -58,6 +59,7 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
           className="discriptionArea"
           placeholder="Enter Submittal ID"
           maxLength={40}
+          onInput={voidStartingSpaceInput}
         />
       </Form.Item>
       <Form.Item
@@ -70,6 +72,7 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
           className="discriptionArea"
           placeholder="Enter Submittal title"
           maxLength={40}
+          onInput={voidStartingSpaceInput}
         />
       </Form.Item>
       <Form.Item name="description" label="Description">

@@ -18,10 +18,10 @@ function SearchableDropdown({
   return (
     <div className="search-align">
       <Row>
-        <Col span={4}>
+        <Col span={3}>
           <SearchIcon className="search-icon" />
         </Col>
-        <Col span={20}>
+        <Col span={21}>
           <Select
             className="search-input"
             showSearch

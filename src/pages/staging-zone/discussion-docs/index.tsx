@@ -14,6 +14,8 @@ import "./discussion-docs.css";
 import { DownloadIcon, CopyIcon } from "components/svg-icons";
 import { PostProjectFile } from "services/projects-service";
 import Dragger from "antd/lib/upload/Dragger";
+import { imgExtentions } from "constants/index";
+import { ImageThumbnailViewer, PdfThumbnailViewer } from "components";
 import { CopyDocumentModal } from "popups";
 import { updateDocs } from "store/slices/submittalsSlices";
 
@@ -205,10 +207,14 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       {discussionId !== "" &&
         uploadedDate &&
         uploadedDate.map((messageDay) => (
-          <div key={messageDay} style={{ paddingBottom: "10%" }}>
+          <div
+            key={messageDay}
+            style={{ paddingBottom: "10%", overflow: "auto" }}
+          >
             <Divider style={{ color: "#0000007F" }}>{messageDay}</Divider>
             {filterByDate &&
               filterByDate[messageDay].map((data: ConversationDoc) => {
+                const fileExtension = data.fileName.split(".").pop();
                 return (
                   <div
                     key={data.id}
@@ -240,6 +246,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           {moment(data.uploadDate, "h:mm a").format("h:mm a")}
                         </span>
                       </div>
+
                       <p
                         className={
                           currentUser === data.uploadedBy
@@ -247,6 +254,22 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                             : "otherUserFilenName"
                         }
                       >
+                        {data.fileName &&
+                          fileExtension!.toLowerCase() === "pdf" && (
+                            <PdfThumbnailViewer
+                              data={data}
+                              onClick={onDocumentClick}
+                            />
+                          )}
+                        {data.fileName &&
+                          imgExtentions.includes(
+                            fileExtension!.toLowerCase()
+                          ) && (
+                            <ImageThumbnailViewer
+                              data={data}
+                              onClick={onDocumentClick}
+                            />
+                          )}
                         <div
                           onClick={() => {
                             onDocumentClick(true, {
@@ -268,7 +291,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           tabIndex={0}
                           className="selected-document"
                         >
-                          {" "}
                           {data.fileName}{" "}
                         </div>
                         <span className="downloadIcon">
@@ -315,7 +337,11 @@ function DiscussionDocs(props: DiscussionDocsProps) {
               })}
           </div>
         ))}
-
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       {discussionId !== "" ? (
         <div className="uploadFileDiv">
           <Dragger {...draggerProps}>

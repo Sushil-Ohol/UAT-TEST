@@ -8,6 +8,7 @@ import {
   DateCellEditor
 } from "components";
 import { camelCase } from "utils/stringutil";
+import { voidStartingSpaceInput } from "utils/inpututils";
 
 interface Props {
   onNewColumnAddition: Function;
@@ -113,6 +114,7 @@ function AddNewColumn({ onNewColumnAddition, gridRef }: Props) {
               name="name"
               className="add-new-column-input"
               placeholder="Enter column name"
+              onInput={voidStartingSpaceInput}
             />
           </Form.Item>
           <Form.Item
