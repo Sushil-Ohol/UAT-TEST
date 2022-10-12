@@ -227,6 +227,7 @@ const CompanyOptions = [
     ]
   }
 ];
+export const imgExtentions = ["png", "jpg", "jpeg", "gif"];
 const DependsOnOptions = ["All", "1079", "2098"];
 const PastDueOptions = ["Past due date", "Due today", "Next 3 days", "Custom"];
 const ProcureByOptions = ["Before", "After"];

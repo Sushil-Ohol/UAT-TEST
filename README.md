@@ -83,22 +83,24 @@ In that file you'll find two sections:
 
 ## `dependencies`
 
-| Package            | Description                                                                                                            |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| bootstrap          | Current version of the bootstrap file.                                                                                 |
-| react              | Current version of react.                                                                                              |
-| react-router-dom   | Current version of react-router-dom.                                                                                   |
-| axios              | Package used to interact with http call.(https://www.npmjs.com/package/axios)                                          |
-| axios-auth-refresh | Used to intercept request and tokens.                                                                                  |
-| react-dropzone     | React hook to create a HTML5-compliant drag'n'drop zone for files.(https://react-dropzone.js.org/).                    |
-| antd design        | Package used to for React UI component.(https://www.npmjs.com/package/antd)                                            |
-| ag grid            | AG Grid is a fully-featured and highly customizable JavaScript data grid.(https://www.npmjs.com/package/ag-grid-react) |
-| ag grid community  | AG Grid Community is free and open-sourced under the MIT license.(https://www.npmjs.com/package/ag-grid-community)     |
-| ant-design-icons   | Added antd icons(https://ant.design/components/icon/)                                                                  |
-| react-redux   | Added antd icons(https://react-redux.js.org)                                                                  |
-| @reduxjs/toolkit   | Added antd icons(https://redux-toolkit.js.org)                                                                  |
-| moment   | For Date Manipulation(https://github.com/moment/moment)                                                                  |
-| axios-mock-adapter   | For Mocking API Response(https://www.npmjs.com/package/axios-mock-adapter)                                                                  |
+| Package                    | Description                                                                                                            |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| bootstrap                  | Current version of the bootstrap file.                                                                                 |
+| react                      | Current version of react.                                                                                              |
+| react-router-dom           | Current version of react-router-dom.                                                                                   |
+| axios                      | Package used to interact with http call.(https://www.npmjs.com/package/axios)                                          |
+| axios-auth-refresh         | Used to intercept request and tokens.                                                                                  |
+| react-dropzone             | React hook to create a HTML5-compliant drag'n'drop zone for files.(https://react-dropzone.js.org/).                    |
+| antd design                | Package used to for React UI component.(https://www.npmjs.com/package/antd)                                            |
+| ag grid                    | AG Grid is a fully-featured and highly customizable JavaScript data grid.(https://www.npmjs.com/package/ag-grid-react) |
+| ag grid community          | AG Grid Community is free and open-sourced under the MIT license.(https://www.npmjs.com/package/ag-grid-community)     |
+| ant-design-icons           | Added antd icons(https://ant.design/components/icon/)                                                                  |
+| react-redux                | Added antd icons(https://react-redux.js.org)                                                                           |
+| @reduxjs/toolkit           | Added antd icons(https://redux-toolkit.js.org)                                                                         |
+| moment                     | For Date Manipulation(https://github.com/moment/moment)                                                                |
+| react-pdf-viewer-core      | Thumbnail view(https://www.npmjs.com/package/@react-pdf-viewer/core)                                                   |
+| react-pdf-viewer-thumbnail | Thumbnail view (https://www.npmjs.com/package/@react-pdf-viewer/thumbnail)                                             |
+| pdfjs-dist                 | Rendering PDF(https://www.npmjs.com/package/pdfjs-dist)                                                                |
 
 ## `devDependencies`
 

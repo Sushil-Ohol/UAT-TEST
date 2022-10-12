@@ -6,6 +6,16 @@
   padding: 3% 0;
   z-index: 1;
   border-bottom: 1px solid darkgrey;
+  padding-bottom: 7%;
+}
+.discussionDetails-top {
+  height: 61px;
+  position: sticky;
+  top: 0px;
+  background-color: #f7f6f4;
+  padding: 3% 0;
+  z-index: 1;
+  border-top: 1px solid darkgrey;
 }
 .discussionDetails-top {
   height: 61px;
@@ -25,7 +35,7 @@
 }
 
 .archieveBtn {
-  padding: 2px;
+  padding: 2px 12px;
   float: right;
   margin-right: 13px;
   margin-top: 2px;
@@ -85,6 +95,8 @@
 }
 .discussion-count {
   font-weight: 600;
-  padding: 1.5% 1.5%;
+  font-size: 16px;
+  margin: 1% 1.5%;
   float: left;
+  /* margin-left: 3px; */
 }

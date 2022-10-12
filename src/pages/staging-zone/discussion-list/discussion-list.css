@@ -7,20 +7,22 @@
   width: 100%;
   height: 61px;
   border-bottom: 1px solid darkgrey;
-  padding: 3.5%;
-  display: flex;
+  padding: 3% 3.2% 0% 3.2%;
+  /* display: flex;
   align-items: center;
+  justify-content: space-between; */
   background: #f7f6f4 0% 0% no-repeat padding-box;
+  padding-bottom: 7%;
 }
 .discussion-header .new-discussion-btn {
-  margin: 0px 9.7%;
+  margin: 15% 9.7%;
   font: normal normal normal 14px "Inter";
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
   padding-right: 13px;
   height: 28px;
-  margin-left: 24%;
+  margin-left: 0%;
 }
 .discussion-header .new-discussion-btn .add-icon {
   font-size: 13px;
@@ -28,7 +30,7 @@
 }
 .discussion-header .search-input {
   border: none;
-  width: 98%;
+  width: 100%;
   height: 30px;
   padding-right: 1%;
 }
@@ -47,6 +49,15 @@
 .discussion-header .ant-input-group-addon {
   background-color: transparent;
   width: 12%;
+}
+.add-new-discussion .ant-btn-default {
+  background-color: white;
+  color: #007aff;
+  border: 1px solid #007aff;
+}
+.add-new-discussion .ant-btn-default:hover {
+  background-color: #007aff;
+  color: white;
 }
 .discussion .ant-list-split .ant-list-item {
   border-bottom: 1px solid #f0f0f0;
@@ -125,7 +136,7 @@ div .ant-tooltip-inner {
   background: #0000000d 0% 0% no-repeat padding-box;
   opacity: 1;
   height: 30px;
-  width: 96%;
+  width: 98%;
   padding: 1%;
   margin: 0%;
 }
@@ -181,6 +192,7 @@ div .ant-tooltip-inner {
   letter-spacing: 0px;
   color: #000000fa;
   opacity: 1;
+  font-weight: 600;
 }
 .add-new-discussion .ant-modal-body {
   background: #f7f6f4 0% 0% no-repeat padding-box;
@@ -240,4 +252,13 @@ div .ant-tooltip-inner {
   margin: 3px 0px 10px 0px;
   border: 0px;
   height: 43px;
+}
+.wrapper-input-search {
+  margin-top: 0.5%;
+}
+svg[data-icon="close"] {
+  color: black;
+}
+.add-new-discussion .ant-modal-body {
+  padding: 2% 4%;
 }
