@@ -1,10 +1,13 @@
 // react/jsx-no-bind
-import { Form, Modal, Input, message, Select } from "antd";
+import { Form, Modal, Input, message, Select, Steps, Button } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import "./add-assignee.css";
 import { assigneesStatus, DropDownData, ErrorMessages } from "constants/index";
+import { useState } from "react";
 
 const { Option } = Select;
+
+const { Step } = Steps;
 
 interface AddAssigneeModalProps {
   onOkClick: Function;
@@ -23,6 +26,91 @@ function AddAssigneeModal({
 }: AddAssigneeModalProps) {
   const [form] = useForm();
 
+  const steps = [
+    {
+      title: "Details",
+      content: (
+        <Form layout="vertical" name="control-hooks" preserve form={form}>
+          <Form.Item
+            name="assigneeUserName"
+            label="Assignee Name"
+            className="add-new-assignee-label"
+            rules={[
+              {
+                required: true,
+                message: ErrorMessages.AssigneeName
+              },
+              {
+                validator: (_, value) =>
+                  !value.includes(" ")
+                    ? Promise.resolve()
+                    : Promise.reject(new Error("No spaces allowed"))
+              }
+            ]}
+          >
+            <Input
+              name="assigneeUserName"
+              className="add-new-assignee-input"
+              placeholder="Enter Assignee name"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="assigneeRole"
+            label="Assignee Role"
+            className="add-new-assignee-label"
+            rules={[
+              {
+                required: true,
+                message: ErrorMessages.AssigneeRole
+              }
+            ]}
+          >
+            <Select
+              showSearch
+              optionFilterProp="children"
+              className="roleSelect"
+            >
+              {DropDownData.RoleOptions.map((data: any) => (
+                <Option key={data}>{data}</Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="assigneeEmailId"
+            label="Assignee Email"
+            className="add-new-assignee-label"
+            rules={[
+              { type: "email", message: ErrorMessages.AssigneeEmail },
+              {
+                required: true,
+                message: ErrorMessages.AssigneeEmailRequired
+              }
+            ]}
+          >
+            <Input
+              name="emailId"
+              className="add-new-assignee-input"
+              placeholder="Enter an email id"
+            />
+          </Form.Item>
+        </Form>
+      )
+    },
+    {
+      title: "Confirm",
+      content: (
+        <p>
+          <b>
+            Sending an invite will email instructions to join the project. Once
+            they join, they will have access to all the details of this project.
+          </b>
+        </p>
+      )
+    }
+  ];
+
   const isAssigneeExists = (assigneeUserName: string): boolean => {
     const filteredAssigneeData = assigneeOptions.filter(
       (company: any) => company.name === selectedCompany
@@ -38,16 +126,23 @@ function AddAssigneeModal({
     return false;
   };
 
+  const data = {
+    assigneeEmailId: "",
+    assigneeUserName: "",
+    assigneeRole: ""
+  };
+  const [formData, setformData] = useState(data);
+
   const handleAssigneeOk = () => {
-    form.validateFields().then((values) => {
-      if (!isAssigneeExists(values.assigneeUserName)) {
-        const data = {
-          assignedTo: values.assigneeUserName,
-          destination: values.assigneeRole,
-          email: values.assigneeEmailId,
+    form.validateFields().then(() => {
+      if (!isAssigneeExists(formData.assigneeUserName)) {
+        const assigneedata = {
+          assignedTo: formData.assigneeUserName,
+          destination: formData.assigneeRole,
+          email: formData.assigneeEmailId,
           status: assigneesStatus.newAssignee
         };
-        onOkClick(data);
+        onOkClick(assigneedata);
         form.resetFields();
       } else {
         message.error("Assignee already exists for selected company");
@@ -55,79 +150,67 @@ function AddAssigneeModal({
     });
   };
 
+  const [current, setCurrent] = useState(0);
+
+  const next = async () => {
+    await form
+      .validateFields(["assigneeUserName", "assigneeRole", "assigneeEmailId"])
+      .then((values) => {
+        setformData(values);
+      });
+    setCurrent(current + 1);
+  };
+
+  const prev = () => {
+    setCurrent(current - 1);
+  };
+
   return (
     <Modal
       destroyOnClose
       title="New Assignee"
       visible={show}
-      onOk={handleAssigneeOk}
       onCancel={onCancelClick}
-      okText="Send Invite"
+      footer={null}
       className="add-new-assignee"
     >
-      <Form layout="vertical" name="control-hooks" preserve={false} form={form}>
-        <Form.Item
-          name="assigneeUserName"
-          label="Assignee Name"
-          className="add-new-assignee-label"
-          rules={[
-            {
-              required: true,
-              message: ErrorMessages.AssigneeName
-            }
-          ]}
-        >
-          <Input
-            name="assigneeUserName"
-            className="add-new-assignee-input"
-            placeholder="Enter Assignee name"
-          />
-        </Form.Item>
+      <Steps progressDot current={current} labelPlacement="vertical">
+        {steps.map((item) => (
+          <Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
 
-        <Form.Item
-          name="assigneeRole"
-          label="Assignee Role"
-          className="add-new-assignee-label"
-          rules={[
-            {
-              required: true,
-              message: ErrorMessages.AssigneeRole
-            }
-          ]}
-        >
-          <Select showSearch optionFilterProp="children" className="roleSelect">
-            {DropDownData.RoleOptions.map((data: any) => (
-              <Option key={data}>{data}</Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        <Form.Item
-          name="assigneeEmailId"
-          label="Assignee Email"
-          className="add-new-assignee-label"
-          rules={[
-            { type: "email", message: ErrorMessages.AssigneeEmail },
-            {
-              required: true,
-              message: ErrorMessages.AssigneeEmailRequired
-            }
-          ]}
-        >
-          <Input
-            name="emailId"
-            className="add-new-assignee-input"
-            placeholder="Enter an email id"
-          />
-        </Form.Item>
-      </Form>
-      <p>
-        <b>
-          Note : Send Invite Button click will send an email with instructions
-          to join the project. Once they join, they will have access to all the
-          details of this project.
-        </b>
-      </p>
+      <div className="steps-content">{steps[current].content}</div>
+      <div className="steps-action">
+        {current < steps.length - 1 && (
+          <Button className="cancelBtn" onClick={() => onCancelClick()}>
+            Cancel
+          </Button>
+        )}
+        {current < steps.length - 1 && (
+          <Button className="nextBtn" type="primary" onClick={() => next()}>
+            Next
+          </Button>
+        )}
+        {current > 0 && (
+          <Button
+            className="backBtn"
+            style={{ margin: "0 8px" }}
+            onClick={() => prev()}
+          >
+            Back
+          </Button>
+        )}
+        {current === steps.length - 1 && (
+          <Button
+            className="inviteBtn"
+            type="primary"
+            onClick={() => handleAssigneeOk()}
+          >
+            Invite
+          </Button>
+        )}
+      </div>
     </Modal>
   );
 }
