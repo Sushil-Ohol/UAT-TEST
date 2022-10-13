@@ -149,26 +149,3 @@
   opacity: 1;
 }
 
-.ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon {
-  background: #65d154 0% 0% no-repeat padding-box;
-  opacity: 1;
-}
-
-.ant-steps-item-process .ant-steps-item-icon {
-  border: 1px solid #65d154;
-}
-
-.ant-steps-item-icon {
-  width: 16px;
-  height: 16px;
-  margin-left: 10px;
-  margin-top: 12px;
-  margin-right: 5px;
-  border-radius: 0px;
-  background-color: black;
-  border-radius: 50%;
-}
-
-.ant-steps {
-  margin-left: 25%;
-}

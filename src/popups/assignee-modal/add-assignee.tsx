@@ -28,6 +28,7 @@ function AddAssigneeModal({
 
   const steps = [
     {
+      step: 1,
       title: "Details",
       content: (
         <Form layout="vertical" name="control-hooks" preserve form={form}>
@@ -42,9 +43,12 @@ function AddAssigneeModal({
               },
               {
                 validator: (_, value) =>
-                  !value.includes(" ")
+                  !value.startsWith(" ")
                     ? Promise.resolve()
-                    : Promise.reject(new Error("No spaces allowed"))
+                    : Promise.reject(
+                        new Error("String does not start with space")
+                      ),
+                message: "String does not start with space"
               }
             ]}
           >
@@ -99,12 +103,13 @@ function AddAssigneeModal({
       )
     },
     {
+      step: 2,
       title: "Confirm",
       content: (
         <p>
           <b>
             Sending an invite will email instructions to join the project. Once
-            they join, they will have access to all the details of this project.
+            they join, they will have access of this project.
           </b>
         </p>
       )
@@ -174,42 +179,44 @@ function AddAssigneeModal({
       footer={null}
       className="add-new-assignee"
     >
-      <Steps progressDot current={current} labelPlacement="vertical">
-        {steps.map((item) => (
-          <Step key={item.title} title={item.title} />
-        ))}
-      </Steps>
+      <div className="companyAssigneeStepper">
+        <Steps current={current} labelPlacement="vertical">
+          {steps.map((item) => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
 
-      <div className="steps-content">{steps[current].content}</div>
-      <div className="steps-action">
-        {current < steps.length - 1 && (
-          <Button className="cancelBtn" onClick={() => onCancelClick()}>
-            Cancel
-          </Button>
-        )}
-        {current < steps.length - 1 && (
-          <Button className="nextBtn" type="primary" onClick={() => next()}>
-            Next
-          </Button>
-        )}
-        {current > 0 && (
-          <Button
-            className="backBtn"
-            style={{ margin: "0 8px" }}
-            onClick={() => prev()}
-          >
-            Back
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button
-            className="inviteBtn"
-            type="primary"
-            onClick={() => handleAssigneeOk()}
-          >
-            Invite
-          </Button>
-        )}
+        <div className="steps-content">{steps[current].content}</div>
+        <div className="steps-action">
+          {current < steps.length - 1 && (
+            <Button className="cancelBtn" onClick={() => onCancelClick()}>
+              Cancel
+            </Button>
+          )}
+          {current < steps.length - 1 && (
+            <Button className="nextBtn" type="primary" onClick={() => next()}>
+              Next
+            </Button>
+          )}
+          {current > 0 && (
+            <Button
+              className="backBtn"
+              style={{ margin: "0 8px" }}
+              onClick={() => prev()}
+            >
+              Back
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button
+              className="inviteBtn"
+              type="primary"
+              onClick={() => handleAssigneeOk()}
+            >
+              Invite
+            </Button>
+          )}
+        </div>
       </div>
     </Modal>
   );
