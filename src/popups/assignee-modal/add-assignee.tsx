@@ -31,7 +31,12 @@ function AddAssigneeModal({
       step: 1,
       title: "Details",
       content: (
-        <Form layout="vertical" name="control-hooks" preserve form={form}>
+        <Form
+          layout="vertical"
+          name="control-hooks"
+          preserve={false}
+          form={form}
+        >
           <Form.Item
             name="assigneeUserName"
             label="Assignee Name"
@@ -167,6 +172,9 @@ function AddAssigneeModal({
   };
 
   const prev = () => {
+    form.setFieldValue("assigneeUserName", formData.assigneeUserName);
+    form.setFieldValue("assigneeRole", formData.assigneeRole);
+    form.setFieldValue("assigneeEmailId", formData.assigneeEmailId);
     setCurrent(current - 1);
   };
 
