@@ -5,12 +5,14 @@ function SearchDropdown({
   placeholder,
   data,
   onSelect,
-  selectedValue = ""
+  selectedValue = "",
+  hasCurrentAccess
 }: {
   placeholder: string;
   data: any;
   onSelect: Function;
   selectedValue: string;
+  hasCurrentAccess: boolean;
 }) {
   const { Option } = Select;
   const onChange = (value: string) => {
@@ -44,6 +46,7 @@ function SearchDropdown({
               .toLowerCase()
               .includes(input.toLowerCase())
           }
+          disabled={hasCurrentAccess}
         >
           {data.map((item: any) => (
             <Option value={item.submittalId} key={item.submittalId}>

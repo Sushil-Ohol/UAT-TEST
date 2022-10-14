@@ -6,9 +6,10 @@ type Props = {
   title: string;
   value: string | undefined;
   onChange: (data: moment.Moment | null) => void;
+  hasCurrentAccess: boolean;
 };
 function DateField(props: Props) {
-  const { title, value, onChange } = props;
+  const { title, value, onChange, hasCurrentAccess } = props;
   return (
     <>
       <div>
@@ -31,6 +32,7 @@ function DateField(props: Props) {
         format="MM-DD-YYYY"
         value={value ? moment(value, "MM-DD-YYYY") : undefined}
         onChange={onChange}
+        disabled={hasCurrentAccess}
       />
     </>
   );

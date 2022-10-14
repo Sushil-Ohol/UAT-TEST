@@ -1,9 +1,16 @@
-function LockIcon() {
+/* eslint-disable react/require-default-props */
+
+type Props = {
+  style?: React.CSSProperties;
+};
+function LockIcon(props: Props) {
+  const { style } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="12"
       height="16"
+      style={style}
       viewBox="0 0 12 16"
     >
       <path

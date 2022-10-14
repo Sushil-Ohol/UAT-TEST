@@ -7,9 +7,18 @@ type Props = {
   showSearch: boolean;
   filterOption: boolean | ((inputValue: string, option?: any) => boolean);
   children: React.ReactNode[];
+  hasCurrentAccess: boolean;
 };
 function SelectField(props: Props) {
-  const { title, value, onChange, showSearch, filterOption, children } = props;
+  const {
+    title,
+    value,
+    onChange,
+    showSearch,
+    filterOption,
+    children,
+    hasCurrentAccess
+  } = props;
   return (
     <>
       <p className="heading">{title}</p>
@@ -21,6 +30,7 @@ function SelectField(props: Props) {
         optionFilterProp="children"
         filterOption={filterOption}
         // defaultValue="Luke"
+        disabled={hasCurrentAccess}
       >
         {children}
       </Select>
