@@ -31,7 +31,10 @@ function Nav() {
           display: "flex",
           alignItems: "center",
           justifyContent:
-            location.pathname === "/projects" ? "flex-end" : "space-between"
+            location.pathname === "/projects" ||
+            location.pathname === "/project/new"
+              ? "flex-end"
+              : "space-between"
         }}
       >
         {projectId !== "" && (
