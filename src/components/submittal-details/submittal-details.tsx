@@ -24,10 +24,13 @@ import { RootState } from "store/slices";
 import { ClearIcon, PlusIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { PostProjectFile } from "services/projects-service";
-import { AttachmentConfirmationModal } from "popups";
-import { updateField, updateSubmittal } from "store/slices/submittalsSlices";
+import { AttachmentConfirmationModal, RegainConfirmationModal } from "popups";
+import {
+  setSelectedSubmittal,
+  updateField,
+  updateSubmittal
+} from "store/slices/submittalsSlices";
 import { SelectOption } from "components";
-import ConfirmationModal from "popups/submittal-details-confirmation-modal";
 import {
   assigneesMessage,
   assigneesStatus,
@@ -36,6 +39,7 @@ import {
 import SearchDropdown from "./search-dropdown";
 import SelectField from "./select-field";
 import DateField from "./date-field";
+import SaveBtnConfirmation from "./savebtn-confirmation";
 
 const { Option } = Select;
 
@@ -44,10 +48,11 @@ export type SubmittalDetailsProps = {
   docs: ConversationDoc[];
   submittalTitle: string;
   handleDocuments: any;
+  disabled: boolean;
 };
 function SubmitalDetails(props: SubmittalDetailsProps) {
-  const { submittalData, docs, submittalTitle, handleDocuments } = props;
-
+  const { submittalData, docs, submittalTitle, handleDocuments, disabled } =
+    props;
   const dispatch = useAppDispatch();
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
   const [fileLoading, setFileLoading] = useState<boolean>(false);
@@ -68,7 +73,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const submittalsList = useAppSelector(
     (state: RootState) => state.submittals.list
   );
-
+  const { selectedSubmittalLog } = useAppSelector((state) => state.submittals);
   const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
     (data: SubmittalLog) => ({
       submittalId: data.id.toString(),
@@ -107,6 +112,10 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       })
     );
   }, [updatedData.dependsOn]);
+
+  useEffect(() => {
+    if (selectedSubmittalLog) setUpdatedData(selectedSubmittalLog);
+  }, [selectedSubmittalLog]);
 
   useEffect(() => {
     setUpdatedData((prev: SubmittalLog) => {
@@ -235,10 +244,12 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
 
   const onCompanyAssigneeChange = () => {
     dispatch(updateSubmittal(updatedData));
+    dispatch(setSelectedSubmittal(updatedData));
     message.success("Data successfully updated");
     setShowConfirmationModal(false);
     setIsOnlyStatusChange(false);
     setIsCompanyAssigneeChange(false);
+    setIsAllFieldsChange(false);
   };
 
   const onStatusChange = () => {
@@ -251,10 +262,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const saveSubmittal = () => {
     if (isOnlyStatusChange && !isCompanyAssigneeChange && !isAllFieldsChange) {
       setShowConfirmationModal(true);
-    } else if (
-      (isOnlyStatusChange || isCompanyAssigneeChange) &&
-      !isAllFieldsChange
-    ) {
+    } else if (isCompanyAssigneeChange) {
       setShowConfirmationModal(true);
     } else if (
       !isOnlyStatusChange &&
@@ -302,6 +310,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     <Button
                       className="add-new-column-btn"
                       onClick={() => removeDependent(data.submittalId)}
+                      disabled={disabled}
                     >
                       <ClearIcon />
                     </Button>
@@ -361,6 +370,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     <Button
                       className="add-new-column-btn"
                       onClick={() => removeDocs(data.id)}
+                      disabled={disabled}
                     >
                       <ClearIcon />
                     </Button>
@@ -472,6 +482,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     .toLowerCase()
                     .includes(input.toLowerCase())
                 }
+                hasCurrentAccess={disabled}
               >
                 {companyOptions.map((item: any) => (
                   <Option key={item.name} value={item.name}>
@@ -493,6 +504,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     .toLowerCase()
                     .includes(input.toString().toLowerCase())
                 }
+                hasCurrentAccess={disabled}
               >
                 {updatedData?.company.name in assigneeOption &&
                   assigneeOption[updatedData?.company.name].map((item: any) => (
@@ -515,6 +527,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                 }}
                 showSearch={false}
                 filterOption
+                hasCurrentAccess={disabled}
               >
                 {statusOptions.map((data: any) => (
                   <Option key={data}>{data}</Option>
@@ -538,6 +551,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                   });
                   setIsAllFieldsChange(true);
                 }}
+                hasCurrentAccess={disabled}
               />
             </Col>
             <Col span={4}>
@@ -557,6 +571,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                   });
                   setIsAllFieldsChange(true);
                 }}
+                hasCurrentAccess={disabled}
               />
             </Col>
           </Row>
@@ -578,6 +593,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                       });
                       setIsAllFieldsChange(true);
                     }}
+                    disabled={disabled}
                   />
                 </Col>
                 <Col
@@ -599,12 +615,14 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                         data={onlySubmittalsTitleId}
                         onSelect={onSubmittalSearch}
                         selectedValue={selectedDepends?.submittalId || ""}
+                        hasCurrentAccess={disabled}
                       />
                     </Col>
                     <Col span={1}>
                       <Button
                         className="add-new-column-btn"
                         onClick={addDependent}
+                        disabled={disabled}
                       >
                         <PlusIcon />
                       </Button>
@@ -637,7 +655,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
                     customRequest={fileUploadRequest}
                     // onChange={(info) => addDocument(info)}
                   >
-                    <Button className="add-new-column-btn">
+                    <Button className="add-new-column-btn" disabled={disabled}>
                       {fileLoading ? <Spin size="small" /> : <PlusIcon />}
                     </Button>
                   </Upload>
@@ -656,7 +674,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         </section>
         <section>{hasInsights && insightsList}</section>
       </Row>
-      <ConfirmationModal
+      <SaveBtnConfirmation
         onClick={saveSubmittal}
         isCompanyAssigneeChange={isCompanyAssigneeChange}
         showConfirmationModal={showConfirmationModal}
@@ -664,6 +682,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         onCompanyAssigneeChange={onCompanyAssigneeChange}
         onCancel={handleCancel}
         updatedData={updatedData}
+        hasCurrentAccess={disabled}
       />
       <Row
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
@@ -726,6 +745,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         handleOk={attachDocument}
         type="Submittal details"
       />
+      <RegainConfirmationModal />
     </div>
   );
 }

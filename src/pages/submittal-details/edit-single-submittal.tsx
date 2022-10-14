@@ -18,12 +18,16 @@ import { EditIcon, ExpandIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
 import { SubmittalLog } from "models/submittal-log";
 import StagingZone from "pages/staging-zone";
-
+import { RegainEditAccessWarning } from "popups";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
-import { updateDocs, updateField } from "store/slices/submittalsSlices";
+import {
+  setSelectedSubmittal,
+  updateDocs,
+  updateField
+} from "store/slices/submittalsSlices";
 import "./submittal-details.css";
 
 const { TabPane } = Tabs;
@@ -44,6 +48,27 @@ function SubmittalDetailspage(props: any) {
   const [height, setHeight] = useState(505);
   const [isResizing, setIsResizing] = useState(false);
   const [isDocumentView, setIsDocumentView] = useState(false);
+  const [hasCurrentAccess, setHasCurrentAccess] = useState(false);
+  const { selectedSubmittalLog } = useAppSelector((state) => state.submittals);
+  const { currentUser } = useAppSelector((state) => state.auth);
+  const [currentAccess, setCurrentAccess] = useState<string>("");
+
+  useEffect(() => {
+    if (currentUser && selectedSubmittalLog) {
+      const getCurrentAccess =
+        currentUser.company.name === selectedSubmittalLog.company.name
+          ? "You"
+          : selectedSubmittalLog.company.name;
+
+      setCurrentAccess(getCurrentAccess);
+      if (getCurrentAccess === "You") {
+        setHasCurrentAccess(true);
+      } else {
+        setHasCurrentAccess(false);
+      }
+    }
+  }, [currentUser, selectedSubmittalLog]);
+
   const goToSubmittalPage = () => {
     dispatch(updateDocs({ submittalId: location.state.data.id, docs }));
     history.goBack();
@@ -54,6 +79,7 @@ function SubmittalDetailspage(props: any) {
       (data) => data.id === location.state.data.id
     );
     if (selectedSubmittal) {
+      dispatch(setSelectedSubmittal(selectedSubmittal));
       setUpdatedData(selectedSubmittal);
       setDocs(selectedSubmittal.docs ? selectedSubmittal.docs : []);
     }
@@ -113,11 +139,15 @@ function SubmittalDetailspage(props: any) {
       <Title
         level={5}
         className="submittalTitle"
-        editable={{
-          icon: <EditIcon style={{ marginLeft: "1.56vh" }} />,
-          tooltip: "",
-          onChange: (e) => updateSubmittalTitle(e)
-        }}
+        editable={
+          currentAccess === "You"
+            ? {
+                icon: <EditIcon style={{ marginLeft: "1.56vh" }} />,
+                tooltip: "",
+                onChange: (e) => updateSubmittalTitle(e)
+              }
+            : false
+        }
       >
         {updatedData?.submittal}
       </Title>
@@ -198,9 +228,10 @@ function SubmittalDetailspage(props: any) {
             </Title>
             <SubmittalTitle />
           </Space>
-          <div>
+          <Space>
+            <RegainEditAccessWarning currentAccess={currentAccess} />
             <Button className="subDetailsSplitBtn">Split Submittal</Button>
-          </div>
+          </Space>
         </Col>
       </Row>
       <div>
@@ -212,7 +243,10 @@ function SubmittalDetailspage(props: any) {
           <TabPane
             tab="Submittal Details"
             key="1"
-            style={{ minHeight: "80vh" }}
+            style={{
+              minHeight: "80vh",
+              opacity: hasCurrentAccess ? "1.0" : "0.5"
+            }}
           >
             {updatedData ? (
               <SubmittalDetails
@@ -220,6 +254,7 @@ function SubmittalDetailspage(props: any) {
                 docs={docs}
                 submittalTitle={submittalTitle}
                 handleDocuments={handleDocuments}
+                disabled={!hasCurrentAccess}
               />
             ) : (
               <Spin size="large" />

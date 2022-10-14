@@ -19,7 +19,8 @@ type SubmittalState = {
   loading: boolean;
   companies: Company[];
   assignees: ListWithDictionary<Assignee>;
-  selectedSubmittalLog: SubmittalLog;
+  selectedSubmittalLog: SubmittalLog | null;
+  showRegainEditModal: boolean;
 };
 
 export const initialState: SubmittalState = {
@@ -28,21 +29,8 @@ export const initialState: SubmittalState = {
   loading: false,
   companies: DropDownData.CompanyOptions,
   assignees: {},
-  selectedSubmittalLog: {
-    id: "",
-    submittal: "",
-    description: "",
-    notification: 0,
-    comments: 0,
-    revision: 0,
-    status: "",
-    dueBy: "",
-    governingDate: "",
-    company: { name: "", email: "" },
-    dependsOn: [],
-    assigned: { assignedTo: "", destination: "", email: "", status: "" },
-    docs: []
-  }
+  selectedSubmittalLog: null,
+  showRegainEditModal: false
 };
 
 export const getSubmittalList = createAsyncThunk(
@@ -123,6 +111,15 @@ const submittalSlice = createSlice({
       payload.forEach((element: any) => {
         state.assignees[element.name] = element.assignees;
       });
+    },
+    setSelectedSubmittal: (
+      state,
+      { payload }: PayloadAction<SubmittalLog | null>
+    ) => {
+      state.selectedSubmittalLog = payload;
+    },
+    setRegainEditModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.showRegainEditModal = payload;
     }
   },
   extraReducers: (builder) => {
@@ -153,5 +150,7 @@ export const {
   newCompany,
   newAssignee,
   updateDocs,
-  updateField
+  updateField,
+  setSelectedSubmittal,
+  setRegainEditModal
 } = submittalSlice.actions;

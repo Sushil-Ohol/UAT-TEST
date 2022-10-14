@@ -1,0 +1,9 @@
+.dropDownBtn.ant-btn[disabled] {
+  color: #000000;
+  border-color: #000000;
+  background: #ffffff;
+}
+
+.dropDownBtn.ant-btn {
+  color: #000000 !important;
+}

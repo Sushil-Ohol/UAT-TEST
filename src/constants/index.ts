@@ -326,6 +326,20 @@ export const CopyDocumentModalContent = {
   General: "This will be associated with the selected Submittal."
 };
 
+export const CompanyChangeWarningMessages = {
+  firstMsg:
+    "Currently {companyName} has access to edit this submittal. To avoid conflicts, you cannot make edits while it is being worked on.",
+  secondMsg: "Force regain edit access",
+  thirdMsg: "{companyName} will lose edit access until you pass it back"
+};
+
+export const RegainEditConfirmationMessages = {
+  firstMsg: "Force regain edit access?",
+  secondMsg: "You are about to revoke edit access to the submittal.",
+  thirdMsg:
+    'This might lead to loss of unsaved work for the user; "{currentUserEmail}". Are you sure you want to continue?'
+};
+
 export const DropDownData = {
   CompanyOptions,
   StatusOptions,
