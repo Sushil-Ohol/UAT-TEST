@@ -157,6 +157,13 @@
   margin-top: 20px;
 }
 
+.subDetailsAction {
+  color: black;
+  font-weight: bold;
+  margin-top: 12px;
+  font-size: 15px;
+}
+
 .subDetailsBlockedBtn {
   border: none;
   padding: 0;
@@ -169,6 +176,45 @@
   padding: 0;
   background: none;
   margin-left: 90px;
+}
+
+.actionItemCard {
+  width: 100%;
+  margin-top: 40px;
+    padding: 12px;
+}
+
+.actionItemsCheckBox {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.rowActionItems {
+  margin-top: 20px;
+}
+
+.subDetailsInsightsCard {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  background-color: white;
+}
+
+.subDetailsInsightsTitle {
+  color: black;
+  font-weight: bold;
+  margin-top: 12px;
+  font-size: 15px;
+}
+
+.subDetailsInsightSummary {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.subDetailsInsightDescription {
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .submittalDetailsPageIdCol {

@@ -7,11 +7,17 @@ import "./material-list.css";
 import { Drawer } from "antd";
 import MaterialCreateComponent from "pages/material-create";
 
+import { materialCellRenderer } from "components/cell-renders";
 import { setProjectId } from "store/slices/homeSlice";
 import { useAppDispatch } from "store";
 import { useParams } from "react-router-dom";
 import MaterialListFilterBar from "./filter-bar";
 import materialsData from "../../assets/data/materials.json";
+
+interface Insight {
+  summary: string;
+  description: string;
+}
 
 interface MaterialGrid {
   id: number;
@@ -24,6 +30,7 @@ interface MaterialGrid {
   diliverBy: string;
   dependsOn: string;
   submittal: string;
+  insights?: Insight[];
 }
 
 function Materials() {
@@ -39,21 +46,30 @@ function Materials() {
       headerName: "ID",
       checkboxSelection: true,
       headerCheckboxSelection: true,
+      minWidth: 20,
+      maxWidth: 125,
       cellRendererParams: {
         checkbox: true
       }
     },
     {
       field: "qty",
-      headerName: "QTY"
+      headerName: "QTY",
+      minWidth: 20,
+      maxWidth: 100
     },
     {
       field: "units",
-      headerName: "UNITS"
+      headerName: "UNITS",
+      minWidth: 20,
+      maxWidth: 100
     },
     {
       field: "material",
-      headerName: "MATERIAL"
+      headerName: "MATERIAL",
+      cellRenderer: materialCellRenderer,
+      minWidth: 200,
+      maxWidth: 350
     },
     {
       field: "status",
@@ -87,8 +103,7 @@ function Materials() {
     },
     { field: "dependsOn", headerName: "DEPENDS ON" },
 
-    { field: "submittal", headerName: "SUBMITTAL" },
-    { field: "", headerName: "" }
+    { field: "submittal", headerName: "SUBMITTAL" }
   ]);
 
   React.useEffect(() => {
@@ -144,12 +159,6 @@ function Materials() {
     setRowData([...data]);
   }, []);
 
-  const onFirstDataRendered = useCallback(() => {
-    setTimeout(() => {
-      gridRef.current!.api.getDisplayedRowAtIndex(1)!.setExpanded(true);
-    }, 0);
-  }, []);
-
   const onCellEditRequest = useCallback(() => {}, []);
 
   const onNewClick = () => {
@@ -190,7 +199,6 @@ function Materials() {
           paginationAutoPageSize
           masterDetail
           onGridReady={onGridReady}
-          onFirstDataRendered={onFirstDataRendered}
           onCellEditRequest={onCellEditRequest}
         />
       </div>
