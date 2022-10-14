@@ -145,6 +145,12 @@
         "uploadDate": "10-06-2022",
         "annotationCount": 2
       }
+    ],
+    "insights": [
+      {
+        "summary": "Previous submittals of this kind have taken ~3 rounds of reviewing.",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+      }
     ]
   },
   {
@@ -221,8 +227,26 @@
       "name": "B Construction",
       "email": "contact@bconstruct.com"
     },
-    "dependsOn": [{ "submittalId": "1007", "submittal": "UNIT MASONRY" }],
-    "assigned": { "assignedTo": "James", "destination": "Project Manager" }
+    "dependsOn": [
+      {
+        "submittalId": "1007",
+        "submittal": "UNIT MASONRY"
+      }
+    ],
+    "assigned": {
+      "assignedTo": "James",
+      "destination": "Project Manager"
+    },
+    "insights": [
+      {
+        "summary": "Previous submittals of this kind have taken ~6 rounds of reviewing.",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+      },
+      {
+        "summary": "Other similar submittals have usually overrun their allocated period",
+        "description": "Consider whether their due date could be extended, or aim to prioritise this submittal."
+      }
+    ]
   },
   {
     "id": 1009,

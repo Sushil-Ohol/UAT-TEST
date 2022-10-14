@@ -1,4 +1,5 @@
-[{
+[
+    {
         "id": "1001",
         "qty": "30",
         "units": "m",
@@ -28,5 +29,25 @@
         "deliverBy": "27-08-2022",
         "dependsOn": "13029 2098",
         "submittal": "89402"
-
+    },
+    {
+        "id": "1003",
+        "qty": "30",
+        "units": "m",
+        "material": "C25 Concrete",
+        "status": "Pending",
+        "comments": 0,
+        "revision": 1,
+        "assigned": "Luke",
+        "contractor": "ABC Construction",
+        "procureBy": "20-08-2022",
+        "deliverBy": "27-08-2022",
+        "dependsOn": "",
+        "submittal": "1027",
+        "insights": [
+            {
+                "summary": "This material usually gets rejected by the architect",
+                "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+            }
+        ]
     }]

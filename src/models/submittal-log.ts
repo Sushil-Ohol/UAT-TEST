@@ -13,6 +13,11 @@ export type Assignee = {
   status: string;
 };
 
+export type Insight = {
+  summary: string;
+  description: string;
+};
+
 export type SubmittalLog = {
   id: string;
   submittal: string;
@@ -27,6 +32,7 @@ export type SubmittalLog = {
   dependsOn: DependsOn[];
   assigned: Assignee;
   docs?: ConversationDoc[];
+  insights?: Insight[];
 };
 export type SubmittalListResponse = BaseResponse & {
   response: SubmittalLog[];

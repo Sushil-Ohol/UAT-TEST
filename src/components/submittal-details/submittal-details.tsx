@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { BulbOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -438,6 +438,24 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     return "ASSIGNED";
   };
 
+  const { insights } = submittalData;
+
+  const hasInsights = insights != null && insights.length > 0;
+  const insightsList = insights?.map((insight: any) => {
+    return (
+      <>
+        <Checkbox className="subDetailsInsight">
+          <span className="subDetailsInsightSummary">{insight.summary}</span>
+          <br />
+          <span className="subDetailsInsightDescription">
+            {insight.description}
+          </span>
+        </Checkbox>
+        <br />
+      </>
+    );
+  });
+
   return (
     <div style={{ height: "100%", position: "relative" }}>
       <div className="detailsContent">
@@ -630,6 +648,14 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
           </Row>
         </Space>
       </div>
+      <Row className="subDetailsInsightsCard">
+        <section>
+          <BulbOutlined />
+          &nbsp;
+          <span className="subDetailsInsightsTitle">Insights</span>
+        </section>
+        <section>{hasInsights && insightsList}</section>
+      </Row>
       <ConfirmationModal
         onClick={saveSubmittal}
         isCompanyAssigneeChange={isCompanyAssigneeChange}
