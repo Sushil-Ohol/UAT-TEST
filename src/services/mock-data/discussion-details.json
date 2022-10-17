@@ -95,7 +95,7 @@
       {
         "id": "1",
         "fileName": "test.pdf",
-        "url": "/mock-files/concrete1.pdf",
+        "url": "/mock-files/Concrete1.pdf",
         "uploadedBy": "John",
         "uploadDate": "2022-09-14 2:36 pm",
         "annotationCount": 2,
@@ -104,7 +104,7 @@
       {
         "id": "2",
         "fileName": "test2.pdf",
-        "url": "/mock-files/concrete2.pdf",
+        "url": "/mock-files/Concrete2.pdf",
         "uploadedBy": "James",
         "uploadDate": "2022-09-15 3:40 pm",
         "annotationCount": 2,
@@ -113,7 +113,7 @@
       {
         "id": "3",
         "fileName": "test3.pdf",
-        "url": "/mock-files/concrete3.pdf",
+        "url": "/mock-files/Concrete3.pdf",
         "uploadedBy": "John",
         "uploadDate": "2022-09-16 3:40 pm",
         "annotationCount": 2,

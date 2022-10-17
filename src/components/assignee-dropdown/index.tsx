@@ -17,33 +17,33 @@ export function SelectOption({ item }: any) {
         width: "100%"
       }}
     >
-      {assigneesStatus.account !== item.status && (
+      {assigneesStatus.account !== item?.status && (
         <Tooltip title={assigneesStatus.present} placement="topLeft">
           <MaskGroupIcon /> <span style={{ display: "none" }}>text</span>
         </Tooltip>
       )}
-      {assigneesStatus.account === item.status && (
+      {assigneesStatus.account === item?.status && (
         <Tooltip title={assigneesStatus.account} placement="topLeft">
           <ProfileDottedIcon /> <span style={{ display: "none" }}>text</span>
         </Tooltip>
       )}
-      {assigneesStatus.project === item.status && (
+      {assigneesStatus.project === item?.status && (
         <Tooltip title={assigneesStatus.project} placement="topLeft">
           <FolderDottedIcon /> <span style={{ display: "none" }}>text</span>
         </Tooltip>
       )}
-      {assigneesStatus.submittal === item.status && (
+      {assigneesStatus.submittal === item?.status && (
         <Tooltip title={assigneesStatus.submittal} placement="topLeft">
           <SubmittalIcon /> <span style={{ display: "none" }}>text</span>
         </Tooltip>
       )}
-      <span className="assignee-dropdown-heading">{item.assignedTo}</span>
+      <span className="assignee-dropdown-heading">{item?.assignedTo}</span>
       <br />{" "}
       <span className="assignee-dropdown-sub-heading">
-        {item.destination} • {item.email}
+        {item?.destination} • {item?.email}
       </span>
       <br />
-      <span className="assignee-dropdown-sub-heading-red">{item.status}</span>
+      <span className="assignee-dropdown-sub-heading-red">{item?.status}</span>
     </p>
   );
 }

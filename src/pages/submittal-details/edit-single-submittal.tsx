@@ -302,19 +302,19 @@ function SubmittalDetailspage(props: any) {
             )}
           </TabPane>
           <TabPane tab="Attachments" key="2">
-            Attachments
+            <div className="attachments">Attachments</div>
           </TabPane>
           <TabPane tab="Materials" key="3">
-            Materials
+            <div className="materials">Materials</div>
           </TabPane>
           <TabPane tab="Discussion" key="4">
-            Discussion
+            <div className="discussion">Discussion</div>
           </TabPane>
           <TabPane tab="Submission" key="5">
-            Submission
+            <div className="submission">Submission</div>
           </TabPane>
           <TabPane tab="Activity" key="6">
-            Activity
+            <div className="activity">Activity</div>
           </TabPane>
         </Tabs>
       </div>

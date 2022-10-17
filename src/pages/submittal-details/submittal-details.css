@@ -68,7 +68,7 @@
   align-items: center;
   justify-content: flex-start;
   height: inherit;
-/*   border-right: 2px solid #0000000d; */
+  /*   border-right: 2px solid #0000000d; */
 }
 
 .splitBtnCol {
@@ -181,7 +181,7 @@
 .actionItemCard {
   width: 100%;
   margin-top: 40px;
-    padding: 12px;
+  padding: 12px;
 }
 
 .actionItemsCheckBox {
@@ -292,4 +292,19 @@
 .submittalTitleCol {
   display: flex;
   align-items: center;
+}
+.attachments {
+  height: 75vh;
+}
+.materials {
+  height: 75vh;
+}
+.discussion {
+  height: 75vh;
+}
+.submission {
+  height: 75vh;
+}
+.activity {
+  height: 75vh;
 }
