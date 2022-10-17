@@ -240,7 +240,7 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
       ) : (
         <div className="discussions-no-message">
           {discussionListData.length === 0 ? (
-            "No discussions are available for this project."
+            "No discussion is available for this project."
           ) : (
             <>
               <p> {discussionDetailsMessages.message}</p>

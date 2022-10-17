@@ -198,7 +198,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
         fileName: file.name,
         url: URL.createObjectURL(file),
         uploadedBy: currentUser,
-        uploadDate: moment(new Date(), "YYYY-MM-DD").format("MM-DD-YYYY"),
+        uploadDate: moment().toDate(),
         annotationCount: 1,
         uploadDocument: true
       };
@@ -440,18 +440,11 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       ) : (
         <div className="discussions-no-docs">
           {discussionList.length === 0 ? (
-            "No discussions are available for this project."
+            "No discussion is available for this project."
           ) : (
             <>
               <p> {discussionDetailsMessages.message}</p>
-              <p>
-                {discussionDetailsMessages.descFirst}
-                <b>
-                  {discussionDetailsMessages.boldTextFirst} <br />
-                  {discussionDetailsMessages.boldTextSecond}
-                </b>
-                {discussionDetailsMessages.descSecond}
-              </p>
+              <p>Please select a discussion to attach a file.</p>
             </>
           )}
         </div>
