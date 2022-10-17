@@ -440,7 +440,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       ) : (
         <div className="discussions-no-docs">
           {discussionList.length === 0 ? (
-            "No discussions is available for this project."
+            "No discussion is available for this project."
           ) : (
             <>
               <p> {discussionDetailsMessages.message}</p>
