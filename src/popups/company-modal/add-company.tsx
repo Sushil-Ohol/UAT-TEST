@@ -163,6 +163,7 @@ function AddCompanyModal({
     assigneeRole: ""
   };
   const [formData, setformData] = useState(data);
+  const [current, setCurrent] = useState(0);
 
   const handleCompanyOk = () => {
     form.validateFields().then(() => {
@@ -182,14 +183,12 @@ function AddCompanyModal({
         };
         onOkClick(companyData);
         setformData(data);
-        form.resetFields();
+        setCurrent(0);
       } else {
         message.error("Company already exists");
       }
     });
   };
-
-  const [current, setCurrent] = useState(0);
 
   const next = async () => {
     await form

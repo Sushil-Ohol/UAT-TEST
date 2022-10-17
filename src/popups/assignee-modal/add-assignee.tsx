@@ -142,6 +142,7 @@ function AddAssigneeModal({
     assigneeRole: ""
   };
   const [formData, setformData] = useState(data);
+  const [current, setCurrent] = useState(0);
 
   const handleAssigneeOk = () => {
     form.validateFields().then(() => {
@@ -154,14 +155,12 @@ function AddAssigneeModal({
         };
         onOkClick(assigneedata);
         setformData(data);
-        form.resetFields();
+        setCurrent(0);
       } else {
         message.error("Assignee already exists for selected company");
       }
     });
   };
-
-  const [current, setCurrent] = useState(0);
 
   const next = async () => {
     await form
