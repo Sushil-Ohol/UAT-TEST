@@ -163,7 +163,7 @@ function DiscussionList(props: DiscussionListProps) {
       />
       {data.length === 0 && (
         <div className="discussion-list-no-message">
-          <p>No discussions are available for this project.</p>
+          <p>No discussions is available for this project.</p>
           <p>
             Project discussions can be of 2 types,
             <br /> Associated and Disassociated with <br /> Submittals.

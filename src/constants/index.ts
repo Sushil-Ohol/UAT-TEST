@@ -27,7 +27,7 @@ export const AttachmentConfirmationMessages: any = {
     "This will give access to everyone in this {type} including external users outside of your org."
 };
 export const discussionDetailsMessages = {
-  message: "No discussions are selected.",
+  message: "No discussions is selected.",
   descFirst: " Please select a discussion from the",
   boldTextFirst: " left",
   boldTextSecond: " panel",
