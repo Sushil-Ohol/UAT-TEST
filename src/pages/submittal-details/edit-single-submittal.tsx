@@ -42,12 +42,16 @@ function SubmittalDetailspage(props: any) {
   const [submittalDetailsId, setSubmittalDetailsId] = useState<any>();
   const { Title } = Typography;
   const dispatch = useAppDispatch();
+  const [submittalDocs, setSubmittalDocs] = useState<ConversationDoc[]>([]);
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
   const [submittalTitle, setSubmittalTitle] = useState<string>("");
   const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
   const [height, setHeight] = useState(505);
   const [isResizing, setIsResizing] = useState(false);
   const [isDocumentView, setIsDocumentView] = useState(false);
+  const selectedDisscusition: any = useAppSelector(
+    (state: RootState) => state.stagingZone.selectedDiscussion
+  );
   const [hasCurrentAccess, setHasCurrentAccess] = useState(false);
   const { selectedSubmittalLog } = useAppSelector((state) => state.submittals);
   const { currentUser } = useAppSelector((state) => state.auth);
@@ -70,7 +74,6 @@ function SubmittalDetailspage(props: any) {
   }, [currentUser, selectedSubmittalLog]);
 
   const goToSubmittalPage = () => {
-    dispatch(updateDocs({ submittalId: location.state.data.id, docs }));
     history.goBack();
   };
 
@@ -111,18 +114,56 @@ function SubmittalDetailspage(props: any) {
     }
   }, [updatedData?.submittal]);
 
-  const handleDocuments = (action: string, document: ConversationDoc) => {
-    // console.log(action, document);
+  useEffect(() => {
+    const selectedSubmittal = submittalList.filter(
+      (data) => +data.id === parseInt(selectedDisscusition?.topicId, 10)
+    )[0];
+
+    setSubmittalDocs(selectedSubmittal?.docs ? selectedSubmittal.docs : []);
+  }, [selectedDisscusition]);
+  const handleDocuments = (
+    action: string,
+    document: ConversationDoc,
+    dargValue: boolean
+  ) => {
     switch (action) {
       case "Add": {
         const tempDocs = [...docs];
         const index = tempDocs.findIndex((item) => item.id === document.id);
         if (index > -1) {
           message.error("Document already exist");
+        } else if (
+          location.state.data.id.toString() !== selectedDisscusition?.topicId &&
+          selectedDisscusition?.topicId !== undefined &&
+          showStagingZone &&
+          !dargValue
+        ) {
+          const indeX = submittalDocs.findIndex(
+            (item) => item.id === document.id
+          );
+          if (indeX > -1) {
+            message.error("Document already exist");
+          } else {
+            setSubmittalDocs([...submittalDocs, document]);
+            dispatch(
+              updateDocs({
+                submittalId: parseInt(selectedDisscusition?.topicId, 10),
+                docs: [...submittalDocs, document]
+              })
+            );
+            message.success("Document Added successfully");
+          }
         } else {
           setDocs([...docs, document]);
+          dispatch(
+            updateDocs({
+              submittalId: location.state.data.id,
+              docs: [...docs, document]
+            })
+          );
           message.success("Document Added successfully");
         }
+
         break;
       }
       case "Remove":

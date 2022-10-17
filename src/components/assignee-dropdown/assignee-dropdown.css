@@ -1,20 +1,26 @@
 .assignee-dropdown-heading {
+  text-align: left;
   font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
   color: #000000;
-  letter-spacing: 0;
+  opacity: 1;
   font-weight: 600;
 }
 
 .assignee-dropdown-sub-heading {
-  font: normal normal normal 12px/15px Inter;
+  text-align: left;
+  font: normal normal normal 1.1vh/15px Inter;
+  letter-spacing: 0px;
   color: #0000007f;
-  letter-spacing: 0;
+  opacity: 1;
 }
 
 .assignee-dropdown-sub-heading-red {
+  text-align: left;
   font: normal normal normal 12px/15px Inter;
-  color: #ff3535 !important;
-  letter-spacing: 0;
+  letter-spacing: 0px;
+  color: #ff3535;
+  opacity: 1;
 }
 .folder-dotted-icon {
   margin-top: 1%;

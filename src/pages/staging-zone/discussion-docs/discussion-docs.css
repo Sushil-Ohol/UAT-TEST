@@ -143,3 +143,30 @@
   color: #007aff;
   border: 1px solid #007aff;
 }
+.discussions-no-docs {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0px;
+  color: #afafaf;
+  opacity: 1;
+}
+.uploadFileDiv .ant-upload.ant-upload-drag {
+  background-color: transparent;
+}
+.thumbnail-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.document-list {
+  margin-left: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

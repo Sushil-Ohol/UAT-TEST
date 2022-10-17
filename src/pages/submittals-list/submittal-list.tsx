@@ -554,6 +554,7 @@ function SubmittalList() {
             ? moment(data.dueBy).format(DATE_FORMAT_MMDDYYY)
             : newData[index].dueBy
       };
+
       await dispatch(updateSubmittal(newItem));
       newData[index] = newItem;
       gridRef.current!.api.setRowData(newData);

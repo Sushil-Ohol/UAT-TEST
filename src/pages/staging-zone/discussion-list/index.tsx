@@ -42,7 +42,7 @@ function DiscussionList(props: DiscussionListProps) {
           .length > 0 &&
           selectedData[0]?.id.toString()) ||
         ""
-      : submittalDetailsId || "1000";
+      : submittalDetailsId;
 
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
@@ -75,19 +75,26 @@ function DiscussionList(props: DiscussionListProps) {
     if (existDiscussion) {
       message.error("Topic name exists, please enter a unique name.");
     } else {
-      const newTopicId = (data.length + 1000).toString();
+      const randomId = data.some(
+        (item: any) => item.topicId === selectedData[0]?.id.toString()
+      );
       const newDiscussion = {
-        topicId: newTopicId,
+        id: data.length + 1,
+        topicId:
+          ((randomId || selectedData.length !== 1) &&
+            Math.floor(1000000000 + Math.random() * 9000000000).toString()) ||
+          selectedData[0]?.id.toString(),
         topicName,
         unreadCount: 0,
         documentCount: 0,
-        type: selectedData.length === 1 ? "related" : "general",
-        relation: selectedData.length === 1 ? "submittalLog" : "",
-        recordId: selectedData.length === 1 ? selectedData[0].id : ""
+        type:
+          ((randomId || selectedData.length !== 1) && "general") || "related",
+        relation: randomId ? "" : "submittalLog",
+        recordId: randomId ? "" : selectedData[0]?.id
       };
       dispatch(addNewDiscussion(newDiscussion));
-      setSelectedTopicId(newTopicId);
-      onDiscussionClick(newTopicId);
+      setSelectedTopicId(newDiscussion.topicId);
+      onDiscussionClick(newDiscussion.topicId);
       scrollerTop?.scrollTo(0, 0);
     }
   };
@@ -154,6 +161,23 @@ function DiscussionList(props: DiscussionListProps) {
         dataSource={data}
         renderItem={(item: any) => discussionCard(item)}
       />
+      {data.length === 0 && (
+        <div className="discussion-list-no-message">
+          <p>No discussions are available for this project.</p>
+          <p>
+            Project discussions can be of 2 types,
+            <br /> Associated and Disassociated with <br /> Submittals.
+          </p>
+          <p>
+            <b>Associated:</b> Select a Submittal prior to <br /> clicking on
+            &quot;+ Start new discussion&quot;.
+          </p>
+          <p>
+            <b> Disassociated:</b> Deselect Submittals prior <br /> to clicking
+            on &quot;+ Start new discussion &quot;.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

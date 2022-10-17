@@ -30,8 +30,13 @@ import ProfileDottedIcon from "./profile-dotted";
 import FolderDottedIcon from "./folder-dotted";
 import SubmittalIcon from "./submittal-icon";
 import MaskGroupIcon from "./mask-group-icon";
+import DocumentListIcon from "./document-list-icon";
+import ThumbnailIcon from "./thumbnail-icon";
+import DownArrowIcon from "./down-arrow-icon";
 
 export {
+  DownArrowIcon,
+  ThumbnailIcon,
   AppLogoIcon,
   SpecificationdocIcon,
   DrawingsetIcon,
@@ -63,5 +68,6 @@ export {
   ProfileDottedIcon,
   FolderDottedIcon,
   SubmittalIcon,
-  MaskGroupIcon
+  MaskGroupIcon,
+  DocumentListIcon
 };

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Divider, message, Spin } from "antd";
+import { Button, Col, Divider, message, Row, Spin } from "antd";
 import { ConversationDoc } from "models/discussion";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
@@ -11,13 +11,23 @@ import {
   newDocument
 } from "store/slices/staging-zone-slice";
 import "./discussion-docs.css";
-import { DownloadIcon, CopyIcon } from "components/svg-icons";
+import {
+  DownloadIcon,
+  CopyIcon,
+  ThumbnailIcon,
+  DocumentListIcon
+} from "components/svg-icons";
 import { PostProjectFile } from "services/projects-service";
 import Dragger from "antd/lib/upload/Dragger";
-import { imgExtentions } from "constants/index";
+import {
+  discussionDetailsMessages,
+  discussionDocsMessages,
+  imgExtentions
+} from "constants/index";
 import { ImageThumbnailViewer, PdfThumbnailViewer } from "components";
 import { CopyDocumentModal } from "popups";
 import { updateDocs } from "store/slices/submittalsSlices";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export type DiscussionDocsProps = {
   className: string;
@@ -31,6 +41,8 @@ export type DiscussionDocsProps = {
 };
 
 function DiscussionDocs(props: DiscussionDocsProps) {
+  const [fileUpload, setFileUpload] = useState(false);
+  const [thumbnail, setThumbnail] = useState(false);
   const [isCopyDocumentModalOpen, setIsCopyDocumentModalOpen] = useState(false);
   const [copiedDocument, setCopiedDocument] = useState<any>({});
   const [submittalDocs, setSubmittalDocs] = useState<ConversationDoc[]>([]);
@@ -41,20 +53,28 @@ function DiscussionDocs(props: DiscussionDocsProps) {
     documentView,
     onDocumentSelect,
     selectedData,
-    submittalDetailsId,
     updatedData,
     handleDocuments
   } = props;
   const [filterByDate, setFilterByDate] = useState<any>();
   const [uploadedDate, setUploadDate] = useState<string[]>();
+  const importFile = useRef<any>();
   const dispatch = useAppDispatch();
   const bottomRef = useRef<any>(null);
   const documentsData = useAppSelector(
     (state: RootState) => state.stagingZone.documents
   );
-
+  const discussionList = useAppSelector(
+    (state: RootState) => state.stagingZone.discussionList
+  );
   const submittalList = useAppSelector(
     (state: RootState) => state.submittals.list
+  );
+  const selectedDiscussionType: any = useAppSelector(
+    (state: RootState) => state.stagingZone.selectedDiscussion
+  );
+  const discussionListData = useAppSelector(
+    (state: RootState) => state.stagingZone.documents
   );
 
   const showCopyDocumentModal = (data: any) => {
@@ -67,7 +87,10 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       handleDocuments("Add", copiedDocument);
       setIsCopyDocumentModalOpen(false);
     } else {
-      const newDoc = documentsData[discussionId].list[copiedDocument.id - 1];
+      const newDoc =
+        documentsData[selectedDiscussionType?.topicId].list[
+          copiedDocument.id - 1
+        ];
 
       const index = submittalDocs.filter((item) => item.id === newDoc.id);
 
@@ -78,7 +101,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
         setSubmittalDocs([...submittalDocs, newDoc]);
         dispatch(
           updateDocs({
-            submittalId: selectedData[0].id,
+            submittalId: parseInt(selectedDiscussionType?.topicId, 10),
             docs: [...submittalDocs, newDoc]
           })
         );
@@ -114,14 +137,15 @@ function DiscussionDocs(props: DiscussionDocsProps) {
     if (discussionId !== "" && !documentsData[discussionId]) {
       loadDiscussionDetails();
     }
-  }, [discussionId]);
+  }, [discussionId, discussionListData]);
 
   useEffect(() => {
     const selectedSubmittal = submittalList.find(
-      (data) => data.id === (selectedData.length === 1 && selectedData[0].id)
+      (data) => +data.id === parseInt(selectedDiscussionType?.topicId, 10)
     );
+
     setSubmittalDocs(selectedSubmittal?.docs ? selectedSubmittal.docs : []);
-  }, [selectedData]);
+  }, [selectedData, selectedDiscussionType]);
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -185,7 +209,9 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       isLoding(false);
     }
   };
-
+  const handleOpenFileInput = () => {
+    importFile.current.click();
+  };
   const draggerProps: UploadProps = {
     showUploadList: false,
     disabled: dragFile,
@@ -196,13 +222,73 @@ function DiscussionDocs(props: DiscussionDocsProps) {
     }
   };
   const dragStart = (data: any, event: any) => {
-    event.dataTransfer.setData("application/json", JSON.stringify(data));
+    event.dataTransfer.setData(
+      "application/json",
+      JSON.stringify({ data, drag: true })
+    );
   };
-
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    addNewFile(e.target.files && e.target.files[0], setFileUpload);
+  };
   return (
     <div className={className}>
       <div className="discussionDocs">
         <div className="document-count">Documents({totalDocs})</div>
+        <div>
+          {fileUpload ? (
+            <Spin size="small" className="importBtn" />
+          ) : (
+            <Row>
+              <Col span={1} offset={20}>
+                <Button
+                  className="importBtn"
+                  disabled={discussionId === ""}
+                  onClick={handleOpenFileInput}
+                >
+                  <DownloadOutlined />
+                  Import a file
+                </Button>
+              </Col>
+              <Col
+                onClick={(e: any) => {
+                  if (discussionId !== "") {
+                    setThumbnail(true);
+                  }
+                  return e.preventdefault();
+                }}
+                span={1}
+                className="thumbnail-icon"
+              >
+                <ThumbnailIcon color={thumbnail ? "#007AFF" : "#808080"} />
+              </Col>
+              <Col
+                span={1}
+                className="document-list"
+                onClick={(e: any) => {
+                  if (discussionId !== "") {
+                    setThumbnail(false);
+                  }
+                  return e.preventdefault();
+                }}
+              >
+                <DocumentListIcon
+                  color={
+                    thumbnail
+                      ? "#808080"
+                      : (discussionId === "" && "#808080") || "#007AFF"
+                  }
+                />
+              </Col>
+            </Row>
+          )}
+          <input
+            ref={importFile}
+            style={{ display: "none" }}
+            multiple
+            type="file"
+            onChange={handleFileUpload}
+          />
+        </div>
       </div>
       {discussionId !== "" &&
         uploadedDate &&
@@ -255,6 +341,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                         }
                       >
                         {data.fileName &&
+                          thumbnail &&
                           fileExtension!.toLowerCase() === "pdf" && (
                             <PdfThumbnailViewer
                               data={data}
@@ -262,6 +349,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                             />
                           )}
                         {data.fileName &&
+                          thumbnail &&
                           imgExtentions.includes(
                             fileExtension!.toLowerCase()
                           ) && (
@@ -298,12 +386,12 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                             <DownloadIcon />
                           </a>
                         </span>
-                        <span
-                          title="You can copy this document to selected sumbittal"
-                          className="copyIcon"
-                        >
-                          {(selectedData.length === 1 ||
-                            submittalDetailsId) && (
+
+                        {selectedDiscussionType.type === "related" && (
+                          <span
+                            title="You can copy this document to selected sumbittal"
+                            className="copyIcon"
+                          >
                             <div
                               onClick={() => showCopyDocumentModal(data)}
                               onKeyDown={showCopyDocumentModal}
@@ -312,19 +400,20 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                             >
                               <CopyIcon />
                             </div>
-                          )}
-                          <CopyDocumentModal
-                            isCopyDocumentModalOpen={isCopyDocumentModalOpen}
-                            handleCancel={handleCancel}
-                            handleOk={handleOk}
-                            isCopyDocumentModalTitle="Confirm"
-                            selectedData={
-                              updatedData.id === undefined
-                                ? selectedData
-                                : [{ ...updatedData }]
-                            }
-                          />
-                        </span>
+                            <CopyDocumentModal
+                              isCopyDocumentModalOpen={isCopyDocumentModalOpen}
+                              handleCancel={handleCancel}
+                              handleOk={handleOk}
+                              isCopyDocumentModalTitle="Confirm"
+                              selectedData={[
+                                {
+                                  id: selectedDiscussionType?.topicId,
+                                  submittal: selectedDiscussionType?.topicName
+                                }
+                              ]}
+                            />
+                          </span>
+                        )}
                       </p>
                     </div>
                     <br />
@@ -337,11 +426,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
               })}
           </div>
         ))}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+
       {discussionId !== "" ? (
         <div className="uploadFileDiv">
           <Dragger {...draggerProps}>
@@ -353,7 +438,34 @@ function DiscussionDocs(props: DiscussionDocsProps) {
           </Dragger>
         </div>
       ) : (
-        <h4>No Documents </h4>
+        <div className="discussions-no-docs">
+          {discussionList.length === 0 ? (
+            "No discussions are available for this project."
+          ) : (
+            <>
+              <p> {discussionDetailsMessages.message}</p>
+              <p>
+                {discussionDetailsMessages.descFirst}
+                <b>
+                  {discussionDetailsMessages.boldTextFirst} <br />
+                  {discussionDetailsMessages.boldTextSecond}
+                </b>
+                {discussionDetailsMessages.descSecond}
+              </p>
+            </>
+          )}
+        </div>
+      )}
+      {discussionId !== "" && uploadedDate?.length === 0 && (
+        <div className="discussions-no-docs">
+          <p>{discussionDocsMessages.message}</p>
+          <p>
+            {discussionDocsMessages.descFirst}{" "}
+            <b>{discussionDocsMessages.boldText}</b>{" "}
+            {discussionDocsMessages.descSecond} <br />{" "}
+            {discussionDocsMessages.descThird}
+          </p>
+        </div>
       )}
     </div>
   );

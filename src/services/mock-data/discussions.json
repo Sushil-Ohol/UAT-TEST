@@ -1,5 +1,6 @@
 [
   {
+    "id": "1",
     "topicId": "1000",
     "topicName": "Piping Package",
     "unreadCount": 3,
@@ -7,13 +8,15 @@
     "type": "general"
   },
   {
+    "id": "2",
     "topicId": "1001",
     "topicName": "CONCRETE FORMING AND ACCESSORIES",
     "unreadCount": 3,
     "documentCount": 2,
-    "type": "general"
+    "type": "related"
   },
   {
+    "id": "3",
     "topicId": "1002",
     "topicName": "CONCRETE REINFORCING AND EMBEDDED METAL ASSEMBLIES",
     "unreadCount": 2,
@@ -23,6 +26,7 @@
     "recordId": "P0001"
   },
   {
+    "id": "4",
     "topicId": "1003",
     "topicName": "PLACE CONCRETE",
     "unreadCount": 4,
@@ -32,6 +36,7 @@
     "recordId": "P0001"
   },
   {
+    "id": "5",
     "topicId": "1004",
     "topicName": "TENSIONED CONCRETE",
     "unreadCount": 5,
@@ -41,6 +46,7 @@
     "recordId": "P0001"
   },
   {
+    "id": "6",
     "topicId": "1005",
     "topicName": "LIGHTWEIGHT INSULATING CONCRETE",
     "unreadCount": 3,

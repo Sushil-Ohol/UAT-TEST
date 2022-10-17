@@ -18,9 +18,11 @@ export type ConversationDoc = {
 };
 
 export type Discussion = {
+  id: string;
   topicId: string;
   topicName: string;
   unreadCount: number;
+  type: string;
   documentCount: number;
   chats?: Conversation[];
   docs?: ConversationDoc[];

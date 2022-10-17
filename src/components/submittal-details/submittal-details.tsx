@@ -15,7 +15,6 @@ import {
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Link from "antd/lib/typography/Link";
-// import React from "react";
 import "./submittal-details.css";
 import { DependsOn, SubmittalLog } from "models/submittal-log";
 import moment from "moment";
@@ -245,7 +244,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   const onCompanyAssigneeChange = () => {
     dispatch(updateSubmittal(updatedData));
     dispatch(setSelectedSubmittal(updatedData));
-    message.success("Data successfully updated");
+    message.success("Data successfully updated..");
     setShowConfirmationModal(false);
     setIsOnlyStatusChange(false);
     setIsCompanyAssigneeChange(false);
@@ -409,17 +408,33 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
 
   const attachDocument = () => {
     if (selectedDocument) {
-      const newDoc: ConversationDoc = {
-        fileName: selectedDocument.fileName,
-        annotationCount: selectedDocument.annotationCount,
-        id: selectedDocument.id,
-        uploadDate: selectedDocument.uploadDate,
-        uploadedBy: selectedDocument.uploadedBy,
-        url: selectedDocument.url,
-        uploadDocument: true
-      };
-      handleDocuments("Add", newDoc);
-      setShowAttachDocConfirmModal(false);
+      if (selectedDocument.drag) {
+        const newDoc: ConversationDoc = {
+          fileName: selectedDocument.data.fileName,
+          annotationCount: selectedDocument.data.annotationCount,
+          id: selectedDocument.data.id,
+          uploadDate: selectedDocument.data.uploadDate,
+          uploadedBy: selectedDocument.data.uploadedBy,
+          url: selectedDocument.data.url,
+          uploadDocument: true
+        };
+
+        handleDocuments("Add", newDoc, selectedDocument.drag);
+        setShowAttachDocConfirmModal(false);
+      } else {
+        const newDoc: ConversationDoc = {
+          fileName: selectedDocument.fileName,
+          annotationCount: selectedDocument.annotationCount,
+          id: selectedDocument.id,
+          uploadDate: selectedDocument.uploadDate,
+          uploadedBy: selectedDocument.uploadedBy,
+          url: selectedDocument.url,
+          uploadDocument: true
+        };
+
+        handleDocuments("Add", newDoc);
+        setShowAttachDocConfirmModal(false);
+      }
     }
   };
   const shortMessage: any = () => {

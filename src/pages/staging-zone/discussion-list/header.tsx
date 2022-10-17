@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Row, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchableDropdown } from "components/widgets";
@@ -6,6 +6,7 @@ import NewDiscussionPopup from "components/new-discussion";
 import { NewConversationContent } from "constants/index";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices";
+import "./discussion-list.css";
 
 export type DicussionListHeaderProps = {
   selectedData: any;
@@ -26,16 +27,28 @@ function DiscussionHeader(props: DicussionListHeaderProps) {
     onCancelClickHandle
   } = props;
   const { Option } = Select;
+  const [isGeneric, setIsGeneric] = useState(false);
   const data: any = useSelector(
     (state: RootState) => state.stagingZone.discussionList
   );
 
+  useEffect(() => {
+    if (selectedData.length > 0) {
+      setIsGeneric(
+        !data?.some(
+          (item: any) => item.topicId === selectedData[0]?.id.toString()
+        )
+      );
+    }
+  }, [selectedData, data]);
   return (
     <div>
       <Row className="discussion-header">
         <Col span={1}>
           <Button
-            onClick={() => setShowNewConPopup(true)}
+            onClick={() => {
+              setShowNewConPopup(true);
+            }}
             size="middle"
             className="new-discussion-btn"
             icon={<PlusOutlined className="add-icon" />}
@@ -43,19 +56,15 @@ function DiscussionHeader(props: DicussionListHeaderProps) {
             Start new discussion
           </Button>
           <NewDiscussionPopup
-            isGeneric={selectedData.length === 1}
+            isGeneric={isGeneric}
             show={showNewConPopup}
             selectedData={selectedData}
             addBtnClick={onAddHandle}
             onCancel={onCancelClickHandle}
-            title={
-              selectedData.length === 1
-                ? "Add Discussion"
-                : "Add General Discussion"
-            }
-            addBtnText={selectedData.length === 1 ? "Continue" : "Add"}
+            title={isGeneric ? "Add Discussion" : "Add General Discussion"}
+            addBtnText={isGeneric ? "Continue" : "Add"}
             modelContent={
-              selectedData.length === 1
+              isGeneric
                 ? NewConversationContent.Submittal
                 : NewConversationContent.General
             }
@@ -69,12 +78,14 @@ function DiscussionHeader(props: DicussionListHeaderProps) {
           />
         </Col>
       </Row>
-      <Select
-        defaultValue="Recently edited"
-        className="discussion-select-input"
-      >
-        <Option value="Recently edited">Recently edited</Option>
-      </Select>
+      {data.length > 0 && (
+        <Select
+          defaultValue="Recently edited"
+          className="discussion-select-input"
+        >
+          <Option value="Recently edited">Recently edited</Option>
+        </Select>
+      )}
     </div>
   );
 }

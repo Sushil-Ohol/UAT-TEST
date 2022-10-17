@@ -26,6 +26,20 @@ export const AttachmentConfirmationMessages: any = {
   subHeading:
     "This will give access to everyone in this {type} including external users outside of your org."
 };
+export const discussionDetailsMessages = {
+  message: "No discussions are selected.",
+  descFirst: " Please select a discussion from the",
+  boldTextFirst: " left",
+  boldTextSecond: " panel",
+  descSecond: ", to view/contribute to discussions."
+};
+export const discussionDocsMessages = {
+  message: "No documents uploaded.",
+  descFirst: "Please",
+  boldText: "drag and drop",
+  descSecond: "it to the button below",
+  descThird: "to attach a file to this discussion."
+};
 
 export const steps = [
   {

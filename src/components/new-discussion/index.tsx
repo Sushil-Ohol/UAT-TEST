@@ -50,7 +50,8 @@ function NewDiscussionPopup({
             <div className="topic-title">
               Discussion Name :
               <div className="topic-heading">
-                {selectedData[0].id}: {selectedData[0].submittal}
+                {selectedData.length > 0 &&
+                  `${selectedData[0].id}: ${selectedData[0].submittal}`}
               </div>
             </div>
           </div>

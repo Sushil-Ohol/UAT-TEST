@@ -98,5 +98,18 @@
   font-size: 16px;
   margin: 1% 1.5%;
   float: left;
-  /* margin-left: 3px; */
+}
+
+.discussions-no-message {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0px;
+  color: #afafaf;
+  opacity: 1;
 }

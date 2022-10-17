@@ -262,3 +262,19 @@ svg[data-icon="close"] {
 .add-new-discussion .ant-modal-body {
   padding: 2% 4%;
 }
+.discussion .ant-list-empty-text {
+  display: none;
+}
+.discussion-list-no-message {
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0px;
+  color: #afafaf;
+  opacity: 1;
+  height: 85%;
+  width: 100%;
+}

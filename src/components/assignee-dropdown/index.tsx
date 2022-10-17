@@ -27,7 +27,6 @@ export function SelectOption({ item }: any) {
           <ProfileDottedIcon /> <span style={{ display: "none" }}>text</span>
         </Tooltip>
       )}
-      &nbsp;
       {assigneesStatus.project === item.status && (
         <Tooltip title={assigneesStatus.project} placement="topLeft">
           <FolderDottedIcon /> <span style={{ display: "none" }}>text</span>
@@ -38,7 +37,6 @@ export function SelectOption({ item }: any) {
           <SubmittalIcon /> <span style={{ display: "none" }}>text</span>
         </Tooltip>
       )}
-      &nbsp;{" "}
       <span className="assignee-dropdown-heading">{item.assignedTo}</span>
       <br />{" "}
       <span className="assignee-dropdown-sub-heading">

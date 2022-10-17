@@ -11,6 +11,8 @@ import {
 } from "store/slices/staging-zone-slice";
 import { Conversation } from "models/discussion";
 import "./discussion-details.css";
+import { discussionDetailsMessages } from "constants/index";
+import { DownArrowIcon } from "components/svg-icons";
 
 export type DiscussionDetailsProps = {
   className: string;
@@ -30,6 +32,9 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
   const topRef = useRef<any>();
   const chatMessages = useAppSelector(
     (state: RootState) => state.stagingZone.discussions
+  );
+  const discussionListData = useAppSelector(
+    (state: RootState) => state.stagingZone.discussionList
   );
   const dispatch = useAppDispatch();
 
@@ -129,7 +134,10 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
         <div className="chatMessageParent">
           <div
             ref={bottomRef}
-            style={{ overflowY: "scroll", height: `${height}px` }}
+            style={{
+              overflowY: "scroll",
+              height: (msgDate?.length === 0 && "0px") || `${height}px`
+            }}
             id="chatSection"
           >
             {msgDate &&
@@ -196,6 +204,12 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
           </div>
         </div>
       )}
+      {discussionId !== "" && msgDate?.length === 0 && (
+        <div className="discussions-no-message">
+          <p> Start the discussion from below.</p>
+          <DownArrowIcon />
+        </div>
+      )}
       {discussionId !== "" ? (
         <div className="sendMsgDiv">
           <Input
@@ -224,7 +238,23 @@ function DiscussionDetails(props: DiscussionDetailsProps) {
           />
         </div>
       ) : (
-        <h3> No Messages</h3>
+        <div className="discussions-no-message">
+          {discussionListData.length === 0 ? (
+            "No discussions are available for this project."
+          ) : (
+            <>
+              <p> {discussionDetailsMessages.message}</p>
+              <p>
+                {discussionDetailsMessages.descFirst}
+                <b>
+                  {discussionDetailsMessages.boldTextFirst} <br />
+                  {discussionDetailsMessages.boldTextSecond}
+                </b>
+                {discussionDetailsMessages.descSecond}
+              </p>
+            </>
+          )}
+        </div>
       )}
       <div ref={inputdiv} />
     </div>

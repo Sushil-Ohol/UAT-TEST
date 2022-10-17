@@ -62,13 +62,11 @@ const submittalSlice = createSlice({
     },
     updateDocs: (
       state,
-      {
-        payload
-      }: PayloadAction<{ submittalId: string; docs: ConversationDoc[] }>
+      { payload }: PayloadAction<{ submittalId: any; docs: ConversationDoc[] }>
     ) => {
-      const dataIndex = state.list.findIndex(
-        (data) => data.id === payload.submittalId
-      );
+      const dataIndex = state.list.findIndex((data) => {
+        return data.id === payload.submittalId;
+      });
       state.list[dataIndex].revision =
         payload.docs.length > 0 ? payload.docs.length : null;
       state.list[dataIndex].docs = payload.docs;
@@ -89,7 +87,6 @@ const submittalSlice = createSlice({
       state.list[dataIndex][payload.field] = payload.value;
     },
     setSubmittalList: (state, { payload }: PayloadAction<SubmittalLog[]>) => {
-      // console.log(payload);
       state.list = payload;
     },
     newCompany: (state, { payload }: PayloadAction<any>) => {
