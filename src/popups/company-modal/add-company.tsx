@@ -181,6 +181,7 @@ function AddCompanyModal({
           ]
         };
         onOkClick(companyData);
+        setformData(data);
         form.resetFields();
       } else {
         message.error("Company already exists");

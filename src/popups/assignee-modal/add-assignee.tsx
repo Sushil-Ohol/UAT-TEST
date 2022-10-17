@@ -153,6 +153,7 @@ function AddAssigneeModal({
           status: assigneesStatus.newAssignee
         };
         onOkClick(assigneedata);
+        setformData(data);
         form.resetFields();
       } else {
         message.error("Assignee already exists for selected company");
