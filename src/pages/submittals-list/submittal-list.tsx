@@ -532,6 +532,10 @@ function SubmittalList() {
         };
       }
 
+      if (field === "assigned" && !event.newValue) {
+        newItem[field!] = event.oldValue;
+      }
+
       immutableRowData = immutableRowData.map((oldItem) => {
         return oldItem.id === newItem.id ? newItem : oldItem;
       });
@@ -540,6 +544,9 @@ function SubmittalList() {
       );
       dispatch(setSubmittalList(immutableRowData));
       gridRef.current!.api.onFilterChanged();
+      gridRef.current!.api.refreshCells({
+        force: true
+      });
     },
     [immutableRowData]
   );
