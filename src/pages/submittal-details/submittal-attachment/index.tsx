@@ -86,13 +86,19 @@ function SubmittalAttachments({
         )}
       </Col>
       <Col span={documentList ? 23 : 19} style={{ padding: "0px auto" }}>
-        <DocumentView
-          file={
-            selectedDocument.uploadDocument
-              ? `${selectedDocument.url}`
-              : `${window.location.origin}${selectedDocument.url}`
-          }
-        />
+        {documents.length > 0 ? (
+          <DocumentView
+            file={
+              selectedDocument.uploadDocument
+                ? `${selectedDocument.url}`
+                : `${window.location.origin}${selectedDocument.url}`
+            }
+          />
+        ) : (
+          <div className="document-not-selected">
+            <h2>Please select a document from the left panel to view</h2>
+          </div>
+        )}
       </Col>
     </Row>
   );

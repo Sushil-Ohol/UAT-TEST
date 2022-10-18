@@ -345,7 +345,14 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           fileExtension!.toLowerCase() === "pdf" && (
                             <PdfThumbnailViewer
                               data={data}
-                              onClick={onDocumentClick}
+                              onClick={() => {
+                                onDocumentClick(true, {
+                                  fileName: data.fileName,
+                                  fileUrl: data.url,
+                                  id: data.id,
+                                  uploadDocument: data.uploadDocument
+                                });
+                              }}
                             />
                           )}
                         {data.fileName &&
@@ -355,7 +362,14 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           ) && (
                             <ImageThumbnailViewer
                               data={data}
-                              onClick={onDocumentClick}
+                              onClick={() => {
+                                onDocumentClick(true, {
+                                  fileName: data.fileName,
+                                  fileUrl: data.url,
+                                  id: data.id,
+                                  uploadDocument: data.uploadDocument
+                                });
+                              }}
                             />
                           )}
                         <div
@@ -367,14 +381,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                               uploadDocument: data.uploadDocument
                             });
                           }}
-                          onKeyDown={() => {
-                            onDocumentClick(true, {
-                              fileName: data.fileName,
-                              fileUrl: data.url,
-                              id: data.id,
-                              uploadDocument: data.uploadDocument
-                            });
-                          }}
+                          onKeyDown={() => null}
                           role="button"
                           tabIndex={0}
                           className="selected-document"
@@ -426,16 +433,30 @@ function DiscussionDocs(props: DiscussionDocsProps) {
               })}
           </div>
         ))}
-
+      {discussionId !== "" && uploadedDate?.length === 0 && (
+        <div className="discussions-no-docs">
+          <p>{discussionDocsMessages.message}</p>
+          <p>
+            {discussionDocsMessages.descFirst}{" "}
+            <b>{discussionDocsMessages.boldText}</b>{" "}
+            {discussionDocsMessages.descSecond} <br />{" "}
+            {discussionDocsMessages.descThird}
+          </p>
+        </div>
+      )}
       {discussionId !== "" ? (
-        <div className="uploadFileDiv">
-          <Dragger {...draggerProps}>
-            {dragFile ? (
-              <Spin size="small" className="ant-upload-text " />
-            ) : (
-              <p className="ant-upload-text">Click or drop a file to upload</p>
-            )}
-          </Dragger>
+        <div>
+          <div className="uploadFileDiv">
+            <Dragger {...draggerProps}>
+              {dragFile ? (
+                <Spin size="small" className="ant-upload-text " />
+              ) : (
+                <p className="ant-upload-text">
+                  Click or drop a file to upload
+                </p>
+              )}
+            </Dragger>
+          </div>
         </div>
       ) : (
         <div className="discussions-no-docs">
@@ -447,17 +468,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
               <p>Please select a discussion to attach a file.</p>
             </>
           )}
-        </div>
-      )}
-      {discussionId !== "" && uploadedDate?.length === 0 && (
-        <div className="discussions-no-docs">
-          <p>{discussionDocsMessages.message}</p>
-          <p>
-            {discussionDocsMessages.descFirst}{" "}
-            <b>{discussionDocsMessages.boldText}</b>{" "}
-            {discussionDocsMessages.descSecond} <br />{" "}
-            {discussionDocsMessages.descThird}
-          </p>
         </div>
       )}
     </div>

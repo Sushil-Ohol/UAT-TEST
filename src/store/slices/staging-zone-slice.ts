@@ -18,13 +18,15 @@ type StagingZoneState = {
   selectedDiscussion: Discussion | null;
   discussions: ListWithDictionary<Conversation>;
   documents: ListWithDictionary<ConversationDoc>;
+  isStagingZone: boolean;
 };
 
 export const initialState: StagingZoneState = {
   discussionList: [],
   selectedDiscussion: null,
   discussions: {},
-  documents: {}
+  documents: {},
+  isStagingZone: false
 };
 
 export const GetDiscussions = createAsyncThunk("discussion/list", async () => {
@@ -82,6 +84,9 @@ const stagingZoneSlice = createSlice({
       state.documents[payload.discussionId].list = state.documents[
         payload.discussionId
       ].list.filter((item) => item.id !== payload.id);
+    },
+    stagingZone: (state, { payload }: PayloadAction<any>) => {
+      state.isStagingZone = payload.isStagingZone;
     }
   },
   extraReducers: (builder) => {
@@ -118,5 +123,6 @@ export const {
   newMessage,
   addNewDiscussion,
   newDocument,
-  deleteDocument
+  deleteDocument,
+  stagingZone
 } = stagingZoneSlice.actions;

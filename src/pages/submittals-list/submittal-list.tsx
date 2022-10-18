@@ -55,6 +55,7 @@ import { RootState } from "store/slices";
 import DropdownOption from "components/cell-editor/SubmittalStatusDropdownCtrl";
 import { FolderOutlined } from "@ant-design/icons";
 import { DropdownOptionCellEditor } from "components/cell-editor";
+import { stagingZone } from "store/slices/staging-zone-slice";
 import { DATE_FORMAT_MMDDYYY } from "../../constants";
 import {
   ChatIcon,
@@ -112,7 +113,11 @@ function SubmittalList() {
   const [showNewDrawer, setShowNewDrawer] = useState(false);
   const [showLogDrawer, setShowLogDrawer] = useState(false);
   const [showSubmittalEdit, setShowSubmittalEdit] = useState(false);
-  const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
+  const isStagingZone: boolean = useAppSelector(
+    (state: RootState) => state.stagingZone.isStagingZone
+  );
+  const [showStagingZone, setShowStagingZone] =
+    useState<boolean>(isStagingZone);
   const [selectedRows, setSelectedRows] = useState(0);
   const [selectedRowsData, setSelectedRowsData] = useState([]);
   const [height, setHeight] = useState(490);
@@ -492,10 +497,12 @@ function SubmittalList() {
 
   const onStagingZoneClick = () => {
     setShowStagingZone(true);
+    dispatch(stagingZone({ isStagingZone: true }));
   };
 
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
+    dispatch(stagingZone({ isStagingZone: false }));
     setHeight(490);
   };
 
