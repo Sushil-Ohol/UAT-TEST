@@ -39,7 +39,7 @@ function SaveBtnConfirmation(props: Props) {
         onClick={onClick}
         disabled={hasCurrentAccess}
       >
-        Save
+        Submit
       </Button>
       {isCompanyAssigneeChange ? (
         <CompanyChangeConfirmation

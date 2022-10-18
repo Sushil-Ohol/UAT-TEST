@@ -1,3 +1,5 @@
+/* eslint-disable react/no-danger */
+
 import { WarningFilled } from "@ant-design/icons";
 import { Modal } from "antd";
 import { RegainEditConfirmationMessages } from "constants/index";
@@ -14,6 +16,7 @@ function RegainConfirmationModal() {
   const { showRegainEditModal, selectedSubmittalLog } = useAppSelector(
     (state) => state.submittals
   );
+
   const { currentUser } = useAppSelector((state) => state.auth);
   const onCancel = () => {
     dispatch(setRegainEditModal(false));
@@ -54,10 +57,15 @@ function RegainConfirmationModal() {
         <p>{RegainEditConfirmationMessages.secondMsg}</p>
         <p>
           <WarningFilled style={{ color: "#FF3535", marginRight: "8px" }} />
-          {RegainEditConfirmationMessages.thirdMsg.replace(
-            "{currentUserEmail}",
-            currentUser ? currentUser.email : ""
-          )}
+          <p
+            style={{ display: "inline" }}
+            dangerouslySetInnerHTML={{
+              __html: `${RegainEditConfirmationMessages.thirdMsg.replace(
+                "{currentUserEmail}",
+                currentUser ? currentUser.email : ""
+              )}`
+            }}
+          />
         </p>
       </>
     </Modal>

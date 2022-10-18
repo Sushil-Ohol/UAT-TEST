@@ -263,7 +263,7 @@ function SubmittalDetailspage(props: any) {
             justifyContent: "space-between"
           }}
         >
-          <Space style={{ marginLeft: "1.80vw" }}>
+          <Space className="submittalDetailsHeading">
             <Title level={5} className="submittalDetailsPageId">
               {updatedData?.id}
             </Title>

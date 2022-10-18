@@ -33,8 +33,9 @@ function CompanyChangeConfirmation(props: Props) {
       <>
         <p>This will:</p>
         <p>
-          Pass edit access to {updatedData.assigned.email} from{" "}
-          {updatedData.company.name} with the status {updatedData.status}
+          Pass edit access to <b>{updatedData.assigned.email}</b> from{" "}
+          <b>{updatedData.company.name}</b> with the status{" "}
+          <b>{updatedData.status}</b>
         </p>
         <p>
           <LockIcon /> You will not be able to edit the submittal or reply to

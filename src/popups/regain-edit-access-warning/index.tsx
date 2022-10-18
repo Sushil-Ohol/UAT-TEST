@@ -21,12 +21,16 @@ function RegainEditAccessWarning(props: { currentAccess: string | undefined }) {
 
   const menu = (
     <Card style={{ width: 415 }}>
-      <p style={{ margin: "14px", color: "#0000007F" }}>
-        {CompanyChangeWarningMessages.firstMsg.replace(
-          "{companyName}",
-          companyName
-        )}
-      </p>
+      <p
+        // eslint-disable-next-line
+        dangerouslySetInnerHTML={{
+          __html: `${CompanyChangeWarningMessages.firstMsg.replace(
+            "{companyName}",
+            companyName
+          )}`
+        }}
+        style={{ margin: "14px", color: "#0000007F" }}
+      />
       <Divider style={{ margin: "0px" }} />
       <div style={{ padding: "0px 14px 14px" }}>
         <p style={{ color: "#FF3535", marginBottom: "0px" }}>
@@ -44,12 +48,16 @@ function RegainEditAccessWarning(props: { currentAccess: string | undefined }) {
             {CompanyChangeWarningMessages.secondMsg}{" "}
           </Button>
         </p>
-        <p style={{ margin: "0px", marginLeft: "22px", color: "#0000007F" }}>
-          {CompanyChangeWarningMessages.thirdMsg.replace(
-            "{companyName}",
-            companyName
-          )}
-        </p>
+        <p
+          // eslint-disable-next-line
+          dangerouslySetInnerHTML={{
+            __html: `${CompanyChangeWarningMessages.thirdMsg.replace(
+              "{companyName}",
+              companyName
+            )}`
+          }}
+          style={{ margin: "0px", marginLeft: "22px", color: "#0000007F" }}
+        />
       </div>
     </Card>
   );

@@ -308,3 +308,12 @@
 .activity {
   height: 75vh;
 }
+
+.submittalDetailsHeading {
+  margin-left: 1.8vw;
+  width: 75%;
+}
+
+.submittalDetailsHeading > .ant-space-item:last-child {
+  width: 100%;
+}

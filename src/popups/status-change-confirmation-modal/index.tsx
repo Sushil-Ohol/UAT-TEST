@@ -32,8 +32,12 @@ function StatusChangeConfirmation(props: Props) {
     >
       <p>Update submittal status to &quot;{updatedData.status}&quot;?</p>
       <p>
-        You are about to update the submittal status to &quot;
-        {updatedData.status}&quot;.
+        You are about to update the submittal status to{" "}
+        <b>
+          &quot;
+          {updatedData.status}&quot;
+        </b>
+        .
       </p>
     </Modal>
   );
