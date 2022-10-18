@@ -2,11 +2,12 @@ import { thumbnailPlugin } from "@react-pdf-viewer/thumbnail";
 import { Viewer, Worker } from "components/index";
 import PageThumbnailPlugin from "./page-thumbnail-plugin";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import "./thumbnail-viewer.css";
 
 export function PdfThumbnailViewer(props: any) {
   const { data, onClick } = props;
-  const thumbnailPluginInstance = thumbnailPlugin();
-  const { Cover } = thumbnailPluginInstance;
+  const thumbnailPluginInstance = thumbnailPlugin({ thumbnailWidth: 300 });
+  const { Thumbnails, Cover } = thumbnailPluginInstance;
   const pageThumbnailPluginInstance = PageThumbnailPlugin({
     PageThumbnail: <Cover getPageIndex={() => 0} />
   });
@@ -33,10 +34,12 @@ export function PdfThumbnailViewer(props: any) {
         <div
           style={{
             flex: 1,
-            width: "200px",
+            width: "auto",
             marginLeft: "20px"
           }}
         >
+          <Thumbnails />
+
           <Viewer
             fileUrl={`${process.env.PUBLIC_URL}${data.url}`}
             plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]}
