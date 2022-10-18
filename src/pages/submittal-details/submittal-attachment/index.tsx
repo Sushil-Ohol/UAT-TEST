@@ -1,6 +1,7 @@
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Spin, Upload } from "antd";
 import { DocumentSection, DocumentView } from "components";
+import { noDocumentMessage } from "constants/index";
 import { ConversationDoc } from "models/discussion";
 import { useState } from "react";
 import { PostProjectFile } from "services/projects-service";
@@ -96,7 +97,7 @@ function SubmittalAttachments({
           />
         ) : (
           <div className="document-not-selected">
-            <h2>Please select a document from the left panel to view</h2>
+            <h2>{noDocumentMessage}</h2>
           </div>
         )}
       </Col>

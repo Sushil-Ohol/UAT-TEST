@@ -401,7 +401,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                           >
                             <div
                               onClick={() => showCopyDocumentModal(data)}
-                              onKeyDown={showCopyDocumentModal}
+                              onKeyDown={() => null}
                               role="button"
                               tabIndex={0}
                             >
