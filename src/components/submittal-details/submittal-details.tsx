@@ -482,7 +482,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
   });
 
   return (
-    <div style={{ height: "100%", position: "relative" }}>
+    <div style={{ height: "100%" }}>
       <div className="detailsContent">
         <Space direction="vertical" size={30} style={{ display: "flex" }}>
           <Row justify="space-between">

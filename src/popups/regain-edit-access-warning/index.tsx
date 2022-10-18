@@ -64,7 +64,7 @@ function RegainEditAccessWarning(props: { currentAccess: string | undefined }) {
   return (
     <Dropdown
       overlay={menu}
-      disabled={currentAccess === "You"}
+      disabled={currentAccess !== "C Construction"}
       placement="bottomRight"
       trigger={["click"]}
     >
@@ -72,7 +72,7 @@ function RegainEditAccessWarning(props: { currentAccess: string | undefined }) {
         <LockIcon
           style={{
             marginRight: "8px",
-            fill: currentAccess === "You" ? "#000000" : "#FF3535"
+            fill: currentAccess !== "C Construction" ? "#000000" : "#FF3535"
           }}
         />
         {currentAccess}
