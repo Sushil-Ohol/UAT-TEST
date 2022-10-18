@@ -59,7 +59,6 @@ function SubmittalDetailspage(props: any) {
 
   useEffect(() => {
     if (currentUser && selectedSubmittalLog) {
-      const getCurrentAccess =
       // const getCurrentAccess =
       //   currentUser.company.name === selectedSubmittalLog.company.name
       //     ? "You"
