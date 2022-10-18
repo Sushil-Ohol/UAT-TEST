@@ -293,6 +293,13 @@
   display: flex;
   align-items: center;
 }
+.add-new-column-btn {
+  text-align: left;
+  font: normal normal normal 16px/20px Inter;
+  letter-spacing: 0px;
+  color: #0000007f;
+  opacity: 1;
+}
 .attachments {
   height: 75vh;
 }

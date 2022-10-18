@@ -28,6 +28,7 @@ import {
   updateDocs,
   updateField
 } from "store/slices/submittalsSlices";
+import SubmittalAttachments from "./submittal-attachment";
 import "./submittal-details.css";
 
 const { TabPane } = Tabs;
@@ -302,7 +303,11 @@ function SubmittalDetailspage(props: any) {
             )}
           </TabPane>
           <TabPane tab="Attachments" key="2">
-            <div className="attachments">Attachments</div>
+            <SubmittalAttachments
+              documents={docs}
+              submittalData={updatedData}
+              handleDocuments={handleDocuments}
+            />
           </TabPane>
           <TabPane tab="Materials" key="3">
             <div className="materials">Materials</div>

@@ -14,10 +14,12 @@ import AccountMenu from "./account-menu";
 import { ImageThumbnailViewer, PdfThumbnailViewer } from "./thumbnail-viewer";
 import DocumentView from "./document-view";
 import AssignedTooltip from "./assigned-tooltip";
+import DocumentSection from "./document-section";
 
 import AssigneeDropdown, { SelectOption } from "./assignee-dropdown";
 
 export {
+  DocumentSection,
   FileUpload,
   Header,
   Navbar,
