@@ -59,17 +59,6 @@ function SubmittalDetailspage(props: any) {
 
   useEffect(() => {
     if (currentUser && selectedSubmittalLog) {
-      // const getCurrentAccess =
-      //   currentUser.company.name === selectedSubmittalLog.company.name
-      //     ? "You"
-      //     : selectedSubmittalLog.company.name;
-
-      // setCurrentAccess(getCurrentAccess);
-      // if (getCurrentAccess === "You") {
-      //   setHasCurrentAccess(true);
-      // } else {
-      //   setHasCurrentAccess(false);
-      // }
       setCurrentAccess(selectedSubmittalLog.company.name);
       if (selectedSubmittalLog.company.name === "C Construction") {
         setHasCurrentAccess(false);
