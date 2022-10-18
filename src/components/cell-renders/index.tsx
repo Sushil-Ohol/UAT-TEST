@@ -119,7 +119,10 @@ export const companyEditCellRenderer = (params: any) => {
 
 export const assignedCellRenderer = (props: any) => {
   return (
-    <Tooltip title={<SelectOption item={props.value} />} placement="leftBottom">
+    <Tooltip
+      title={props.value ? <SelectOption item={props.value} /> : ""}
+      placement="leftBottom"
+    >
       <p
         className={
           props.value?.status !== ""

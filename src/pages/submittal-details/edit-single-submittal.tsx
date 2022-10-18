@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store";
 import { RootState } from "store/slices";
+import { stagingZone } from "store/slices/staging-zone-slice";
 import {
   setSelectedSubmittal,
   updateDocs,
@@ -46,7 +47,11 @@ function SubmittalDetailspage(props: any) {
   const [submittalDocs, setSubmittalDocs] = useState<ConversationDoc[]>([]);
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
   const [submittalTitle, setSubmittalTitle] = useState<string>("");
-  const [showStagingZone, setShowStagingZone] = useState<boolean>(false);
+  const isStagingZone: boolean = useAppSelector(
+    (state: RootState) => state.stagingZone.isStagingZone
+  );
+  const [showStagingZone, setShowStagingZone] =
+    useState<boolean>(isStagingZone);
   const [height, setHeight] = useState(505);
   const [isResizing, setIsResizing] = useState(false);
   const [isDocumentView, setIsDocumentView] = useState(false);
@@ -193,6 +198,7 @@ function SubmittalDetailspage(props: any) {
 
   const onStagingZoneClose = () => {
     setShowStagingZone(false);
+    dispatch(stagingZone({ isStagingZone: false }));
     setHeight(505);
   };
 
@@ -321,7 +327,10 @@ function SubmittalDetailspage(props: any) {
       <Row className="subDetailsNavbar">
         <Col style={{ padding: "10px", width: "100%" }}>
           <Button
-            onClick={() => setShowStagingZone(!showStagingZone)}
+            onClick={() => {
+              dispatch(stagingZone({ isStagingZone: true }));
+              setShowStagingZone(!showStagingZone);
+            }}
             size="large"
             className="staging-zone-btn"
           >

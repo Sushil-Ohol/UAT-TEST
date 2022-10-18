@@ -26,6 +26,8 @@ export const AttachmentConfirmationMessages: any = {
   subHeading:
     "This will give access to everyone in this {type} including external users outside of your org."
 };
+export const noDocumentMessage =
+  "Please select a document from the left panel to view";
 export const discussionDetailsMessages = {
   message: "No discussion is selected.",
   descFirst: " Please select a discussion from the",

@@ -12,7 +12,9 @@ const DropdownOptionCellEditor = forwardRef((props: any, ref) => {
   useImperativeHandle(ref, () => {
     return {
       getValue() {
-        return data?.filter((item: any) => item.assignedTo === value)[0];
+        return value !== undefined
+          ? data?.filter((item: any) => item.assignedTo === value)[0]
+          : props.value;
       }
     };
   });

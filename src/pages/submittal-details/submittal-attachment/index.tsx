@@ -1,6 +1,7 @@
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Spin, Upload } from "antd";
 import { DocumentSection, DocumentView } from "components";
+import { noDocumentMessage } from "constants/index";
 import { ConversationDoc } from "models/discussion";
 import { useState } from "react";
 import { PostProjectFile } from "services/projects-service";
@@ -86,13 +87,19 @@ function SubmittalAttachments({
         )}
       </Col>
       <Col span={documentList ? 23 : 19} style={{ padding: "0px auto" }}>
-        <DocumentView
-          file={
-            selectedDocument.uploadDocument
-              ? `${selectedDocument.url}`
-              : `${window.location.origin}${selectedDocument.url}`
-          }
-        />
+        {documents.length > 0 ? (
+          <DocumentView
+            file={
+              selectedDocument.uploadDocument
+                ? `${selectedDocument.url}`
+                : `${window.location.origin}${selectedDocument.url}`
+            }
+          />
+        ) : (
+          <div className="document-not-selected">
+            <h2>{noDocumentMessage}</h2>
+          </div>
+        )}
       </Col>
     </Row>
   );
