@@ -31,6 +31,7 @@ function SelectField(props: Props) {
         filterOption={filterOption}
         // defaultValue="Luke"
         disabled={hasCurrentAccess}
+        virtual={false}
       >
         {children}
       </Select>

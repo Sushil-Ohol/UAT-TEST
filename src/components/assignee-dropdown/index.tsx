@@ -104,6 +104,7 @@ function AssigneeDropdown(props: any) {
             .toLowerCase()
             .includes(input.toString().toLowerCase())
         }
+        virtual={false}
       >
         {data?.length > 0 &&
           data
