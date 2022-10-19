@@ -243,7 +243,9 @@ function SubmittalDetailspage(props: any) {
   });
 
   useEffect(() => {
-    setSubmittalDetailsId(location.state.data.id.toString());
+    setSubmittalDetailsId(
+      selectedDisscusition?.id || location.state.data.id.toString()
+    );
   }, [showStagingZone]);
   return (
     <div style={{ margin: "0px  1.39vw", marginBottom: "1.95vh" }}>
