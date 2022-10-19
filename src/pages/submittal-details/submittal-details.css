@@ -249,6 +249,12 @@
   width: auto;
   background: transparent;
   box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+  height: 5vh;
+}
+.sub-details-navbar-staging-zone {
+  width: auto;
+  background: white;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
   height: 5.66vh;
 }
 
@@ -301,19 +307,20 @@
   opacity: 1;
 }
 .attachments {
-  height: 75vh;
+  height: 73.9vh;
+  /* margin-bottom: 1%; */
 }
 .materials {
-  height: 75vh;
+  height: 73.9vh;
 }
 .discussion {
-  height: 75vh;
+  height: 73.9vh;
 }
 .submission {
-  height: 75vh;
+  height: 73.9vh;
 }
 .activity {
-  height: 75vh;
+  height: 73.9vh;
 }
 
 .submittalDetailsHeading {

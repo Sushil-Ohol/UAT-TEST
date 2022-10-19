@@ -11,7 +11,7 @@ export type DocumentSectionProps = {
   handleDocuments: Function;
   submittalData: any;
   selectedDocument: ConversationDoc;
-  setSelectedDocument: Function;
+  setSelectedDocument: any;
 };
 function DocumentSection({
   documents,
@@ -61,10 +61,9 @@ function DocumentSection({
                     ? "depends-on-rowData-active"
                     : "depends-on-rowData"
                 }
-                onClick={() => setSelectedDocument(data)}
               >
                 <Col span={22} style={{ display: "flex" }}>
-                  <Space>
+                  <Space onClick={() => setSelectedDocument(data)}>
                     <span>{data.fileName}</span>
                   </Space>
                 </Col>
@@ -78,7 +77,10 @@ function DocumentSection({
                 >
                   <Button
                     className="add-new-column-btn"
-                    onClick={() => removeDocs(data.id)}
+                    onClick={() => {
+                      setSelectedDocument({});
+                      removeDocs(data.id);
+                    }}
                   >
                     <ClearIcon />
                   </Button>

@@ -1,5 +1,5 @@
 .button-full-screen {
-  height: 80vh;
+  height: 75vh;
   width: 20px;
   display: flex;
   justify-content: center;
@@ -16,9 +16,17 @@
   color: white;
 }
 .document-not-selected {
+  background: #0000000d 0% 0% no-repeat padding-box;
+  opacity: 1;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.document-not-selected h2 {
+  text-align: center;
+  letter-spacing: 0px;
+  color: #afafaf;
+  opacity: 1;
 }

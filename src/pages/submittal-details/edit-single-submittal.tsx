@@ -287,8 +287,9 @@ function SubmittalDetailspage(props: any) {
             tab="Submittal Details"
             key="1"
             style={{
-              minHeight: "80vh",
-              opacity: hasCurrentAccess ? "1.0" : "0.5"
+              minHeight: "73.9vh",
+              opacity: hasCurrentAccess ? "1.0" : "0.5",
+              position: "relative"
             }}
           >
             {updatedData ? (
@@ -303,7 +304,7 @@ function SubmittalDetailspage(props: any) {
               <Spin size="large" />
             )}
           </TabPane>
-          <TabPane tab="Attachments" key="2">
+          <TabPane tab="Attachments" key="2" className="attachments">
             <SubmittalAttachments
               documents={docs}
               submittalData={updatedData}
@@ -324,7 +325,8 @@ function SubmittalDetailspage(props: any) {
           </TabPane>
         </Tabs>
       </div>
-      <Row className="subDetailsNavbar">
+      <br />
+      <Row className="sub-details-navbar-staging-zone">
         <Col style={{ padding: "10px", width: "100%" }}>
           <Button
             onClick={() => {

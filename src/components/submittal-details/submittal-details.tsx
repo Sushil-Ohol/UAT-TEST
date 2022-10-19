@@ -703,14 +703,7 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
         className="actionItemCard"
       >
-        <Col
-          span={24}
-          style={{
-            marginBottom: "1.95vh",
-            height: "2.05vh",
-            padding: "0px"
-          }}
-        >
+        <Col span={24} className="action-item-col">
           <ExclamationCircleOutlined />
           &nbsp;
           <span className="subDetailsAction">Action items</span>

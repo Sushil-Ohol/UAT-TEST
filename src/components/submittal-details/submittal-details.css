@@ -69,10 +69,10 @@
   width: 100%;
   margin: 0px !important;
   position: absolute;
-  bottom: 0;
-  margin-bottom: 20px !important;
+  bottom: -1%;
+  margin-bottom: 0px !important;
   background-color: white;
-  height: 16.5vh;
+  height: 14.5vh;
   padding: 1.95vh;
 }
 
@@ -110,4 +110,9 @@
 .text-red {
   color: red;
   padding-left: 2%;
+}
+.action-item-col {
+  margin-bottom: 1.95vh;
+  height: 2.05vh;
+  padding: 0px;
 }
