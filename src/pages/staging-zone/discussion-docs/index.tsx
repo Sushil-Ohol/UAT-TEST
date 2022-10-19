@@ -430,14 +430,6 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                         <div ref={bottomRef} />
                       </p>
                     </div>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-
-                    <br />
                   </div>
                 );
               })}
