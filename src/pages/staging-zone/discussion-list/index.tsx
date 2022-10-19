@@ -36,20 +36,24 @@ function DiscussionList(props: DiscussionListProps) {
     (state: RootState) => state.stagingZone.discussionList
   );
 
+  const { selectedDiscussion } = useSelector(
+    (state: RootState) => state.stagingZone
+  );
+
   const rowId =
     selectedData.length === 1
       ? (data.filter((item) => item.topicId === selectedData[0]?.id.toString())
           .length > 0 &&
           selectedData[0]?.id.toString()) ||
         ""
-      : submittalDetailsId;
+      : submittalDetailsId || selectedDiscussion?.topicId;
 
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
   React.useEffect(() => {
     loadList();
-    onClick(rowId);
-    setSelectedTopicId(rowId);
+    onClick(selectedTopicId);
+    setSelectedTopicId(selectedTopicId);
   }, []);
   React.useEffect(() => {
     if (selectedData.length <= 1) {
