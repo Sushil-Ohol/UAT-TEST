@@ -41,7 +41,6 @@ function SubmittalDetailspage(props: any) {
     (state: RootState) => state.submittals.list
   );
   const [updatedData, setUpdatedData] = useState<SubmittalLog | null>(null);
-  const [submittalDetailsId, setSubmittalDetailsId] = useState<any>();
   const { Title } = Typography;
   const dispatch = useAppDispatch();
   const [submittalDocs, setSubmittalDocs] = useState<ConversationDoc[]>([]);
@@ -58,6 +57,7 @@ function SubmittalDetailspage(props: any) {
   const selectedDisscusition: any = useAppSelector(
     (state: RootState) => state.stagingZone.selectedDiscussion
   );
+  const [submittalDetailsId, setSubmittalDetailsId] = useState<any>();
   const [hasCurrentAccess, setHasCurrentAccess] = useState(false);
   const { selectedSubmittalLog } = useAppSelector((state) => state.submittals);
   const { currentUser } = useAppSelector((state) => state.auth);
@@ -169,6 +169,12 @@ function SubmittalDetailspage(props: any) {
       }
       case "Remove":
         setDocs(docs.filter((d: ConversationDoc) => d.id !== document.id));
+        dispatch(
+          updateDocs({
+            submittalId: location.state.data.id,
+            docs: docs.filter((d: ConversationDoc) => d.id !== document.id)
+          })
+        );
         break;
       default:
         setDocs(docs);
@@ -243,7 +249,9 @@ function SubmittalDetailspage(props: any) {
   });
 
   useEffect(() => {
-    setSubmittalDetailsId(location.state.data.id.toString());
+    setSubmittalDetailsId(
+      selectedDisscusition?.topicId || location.state.data.id.toString()
+    );
   }, [showStagingZone]);
   return (
     <div style={{ margin: "0px  1.39vw", marginBottom: "1.95vh" }}>

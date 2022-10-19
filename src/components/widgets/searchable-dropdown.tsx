@@ -23,6 +23,7 @@ function SearchableDropdown({
         </Col>
         <Col span={21}>
           <Select
+            virtual={false}
             className="search-input"
             showSearch
             allowClear
