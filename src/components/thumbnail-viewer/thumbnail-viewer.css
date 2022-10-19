@@ -1,17 +1,18 @@
-.rpv-thumbnail__cover, .rpv-thumbnail__label{
-    display: none;
+.rpv-thumbnail__cover,
+.rpv-thumbnail__label {
+  display: none;
 }
 
 .rpv-thumbnail__list div {
-    display: none;
+  display: none;
 }
 
 .rpv-thumbnail__list div:nth-child(1) {
-    display: block;
+  display: block;
 }
 
-.rpv-thumbnail__container{
-    max-height: 300px;
-    overflow: hidden;
-    margin: 0 auto;
+.rpv-thumbnail__container {
+  max-height: 300px;
+  overflow: hidden;
+  margin: 0 auto;
 }
