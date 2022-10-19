@@ -186,6 +186,9 @@ function DiscussionDocs(props: DiscussionDocsProps) {
 
       setUploadDate(keys);
     }
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 2000);
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [documentsData[discussionId], documentsData[discussionId]?.list]);
 
@@ -253,6 +256,9 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                 onClick={(e: any) => {
                   if (discussionId !== "") {
                     setThumbnail(true);
+                    setTimeout(() => {
+                      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+                    }, 2000);
                   }
                   return e.preventdefault();
                 }}
@@ -295,7 +301,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
         uploadedDate.map((messageDay) => (
           <div
             key={messageDay}
-            style={{ paddingBottom: "10%", overflow: "auto" }}
+            style={{ paddingBottom: "15%", overflow: "auto" }}
           >
             <Divider style={{ color: "#0000007F" }}>{messageDay}</Divider>
             {filterByDate &&
@@ -421,13 +427,9 @@ function DiscussionDocs(props: DiscussionDocsProps) {
                             />
                           </span>
                         )}
+                        <div ref={bottomRef} />
                       </p>
                     </div>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <div ref={bottomRef} />
                   </div>
                 );
               })}
