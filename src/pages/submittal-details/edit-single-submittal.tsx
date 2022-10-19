@@ -312,11 +312,17 @@ function SubmittalDetailspage(props: any) {
               <Spin size="large" />
             )}
           </TabPane>
-          <TabPane tab="Attachments" key="2" className="attachments">
+          <TabPane
+            tab="Attachments"
+            key="2"
+            className="attachments"
+            style={{ opacity: hasCurrentAccess ? "1.0" : "0.5" }}
+          >
             <SubmittalAttachments
               documents={docs}
               submittalData={updatedData}
               handleDocuments={handleDocuments}
+              disabled={!hasCurrentAccess}
             />
           </TabPane>
           <TabPane tab="Materials" key="3">

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import { Button, Col, Row, Space } from "antd";
 import { ClearIcon } from "components/svg-icons";
 import { ConversationDoc } from "models/discussion";
@@ -12,13 +13,15 @@ export type DocumentSectionProps = {
   submittalData: any;
   selectedDocument: ConversationDoc;
   setSelectedDocument: any;
+  disabled?: boolean;
 };
 function DocumentSection({
   documents,
   handleDocuments,
   submittalData,
   selectedDocument,
-  setSelectedDocument
+  setSelectedDocument,
+  disabled
 }: DocumentSectionProps) {
   const assigneeOption: any = useAppSelector(
     (state) => state.submittals.assignees
@@ -81,6 +84,7 @@ function DocumentSection({
                       setSelectedDocument({});
                       removeDocs(data.id);
                     }}
+                    disabled={disabled}
                   >
                     <ClearIcon />
                   </Button>

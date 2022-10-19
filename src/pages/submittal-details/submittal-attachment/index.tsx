@@ -14,7 +14,8 @@ import "./submittal-attachment.css";
 function SubmittalAttachments({
   documents,
   handleDocuments,
-  submittalData
+  submittalData,
+  disabled
 }: any) {
   const [fileLoading, setFileLoading] = useState<boolean>(false);
   const [selectedDocument, setSelectedDocument] = useState<any>({});
@@ -56,13 +57,19 @@ function SubmittalAttachments({
           handleDocuments={handleDocuments}
           selectedDocument={selectedDocument}
           setSelectedDocument={setSelectedDocument}
+          disabled={disabled}
         />
         <Upload
           showUploadList={false}
           customRequest={fileUploadRequest}
           // onChange={(info) => addDocument(info)}
+          disabled={disabled}
         >
-          <Button type="text" className="add-new-column-btn">
+          <Button
+            type="text"
+            className="add-new-column-btn"
+            disabled={disabled}
+          >
             {fileLoading ? <Spin size="small" /> : "+ Add more files"}
           </Button>
         </Upload>
