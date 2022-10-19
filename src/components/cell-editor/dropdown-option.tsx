@@ -25,6 +25,7 @@ const DropdownOptionCellEditor = forwardRef((props: any, ref) => {
       onChange={(event: any) => setValue(event)}
       showSearch
       filterOption
+      virtual={false}
     >
       {data?.map((item: any) => (
         <Option key={item.assignedTo} value={item.assigned}>
