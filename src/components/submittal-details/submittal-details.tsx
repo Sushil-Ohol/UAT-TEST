@@ -73,6 +73,9 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
     (state: RootState) => state.submittals.list
   );
   const { selectedSubmittalLog } = useAppSelector((state) => state.submittals);
+  const selectedDisscusition = useAppSelector(
+    (state) => state.stagingZone.selectedDiscussion
+  );
   const onlySubmittalsTitleId = submittalsList.map<DependsOn>(
     (data: SubmittalLog) => ({
       submittalId: data.id.toString(),
@@ -391,7 +394,11 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
       uploadDocument: true,
       url: URL.createObjectURL(info)
     };
-    handleDocuments("Add", newdoc);
+    handleDocuments(
+      "Add",
+      newdoc,
+      !(submittalData?.id.toString() === selectedDisscusition?.topicId)
+    );
   };
   const fileUploadRequest = async ({ file, onSuccess }: any) => {
     setFileLoading(true);

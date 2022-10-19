@@ -47,6 +47,7 @@ function SearchDropdown({
               .includes(input.toLowerCase())
           }
           disabled={hasCurrentAccess}
+          virtual={false}
         >
           {data.map((item: any) => (
             <Option value={item.submittalId} key={item.submittalId}>
