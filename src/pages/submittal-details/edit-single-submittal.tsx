@@ -44,6 +44,7 @@ function SubmittalDetailspage(props: any) {
   const { Title } = Typography;
   const dispatch = useAppDispatch();
   const [submittalDocs, setSubmittalDocs] = useState<ConversationDoc[]>([]);
+  const [tabIndex, setTabIndex] = useState<string>("1");
   const [docs, setDocs] = useState<ConversationDoc[]>([]);
   const [submittalTitle, setSubmittalTitle] = useState<string>("");
   const isStagingZone: boolean = useAppSelector(
@@ -62,7 +63,7 @@ function SubmittalDetailspage(props: any) {
   const { selectedSubmittalLog } = useAppSelector((state) => state.submittals);
   const { currentUser } = useAppSelector((state) => state.auth);
   const [currentAccess, setCurrentAccess] = useState<string>("");
-
+  const [selectedDocument, setSelectedDocument] = useState<any>({});
   useEffect(() => {
     if (currentUser && selectedSubmittalLog) {
       setCurrentAccess(selectedSubmittalLog.company.name);
@@ -287,7 +288,10 @@ function SubmittalDetailspage(props: any) {
       </Row>
       <div>
         <Tabs
-          defaultActiveKey="1"
+          onChange={(activeKey: any) => {
+            setTabIndex(activeKey.toString());
+          }}
+          activeKey={tabIndex}
           className="TabsClass"
           style={{ height: "100%" }}
         >
@@ -295,7 +299,7 @@ function SubmittalDetailspage(props: any) {
             tab="Submittal Details"
             key="1"
             style={{
-              minHeight: "73.9vh",
+              minHeight: "73.5vh",
               opacity: hasCurrentAccess ? "1.0" : "0.5",
               position: "relative"
             }}
@@ -307,6 +311,8 @@ function SubmittalDetailspage(props: any) {
                 submittalTitle={submittalTitle}
                 handleDocuments={handleDocuments}
                 disabled={!hasCurrentAccess}
+                selectAttachmentItem={setSelectedDocument}
+                setTabIndex={setTabIndex}
               />
             ) : (
               <Spin size="large" />
@@ -323,6 +329,8 @@ function SubmittalDetailspage(props: any) {
               submittalData={updatedData}
               handleDocuments={handleDocuments}
               disabled={!hasCurrentAccess}
+              selectedDocument={selectedDocument}
+              setSelectedDocument={setSelectedDocument}
             />
           </TabPane>
           <TabPane tab="Materials" key="3">

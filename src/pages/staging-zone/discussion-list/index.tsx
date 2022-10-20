@@ -144,7 +144,7 @@ function DiscussionList(props: DiscussionListProps) {
       >
         <Tooltip title={item.topicName}>
           <div className="colFirstValue">
-            {item.topicId} &nbsp;
+            {item.type === "related" && item.topicId} &nbsp;
             {item.topicName}
           </div>
         </Tooltip>
