@@ -143,7 +143,10 @@ function DiscussionList(props: DiscussionListProps) {
         }
       >
         <Tooltip title={item.topicName}>
-          <div className="colFirstValue">{item.topicName}</div>
+          <div className="colFirstValue">
+            {item.topicId} &nbsp;
+            {item.topicName}
+          </div>
         </Tooltip>
       </List.Item>
     );
