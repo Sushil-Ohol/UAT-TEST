@@ -30,19 +30,21 @@ function SearchableDropdown({
             placeholder={placeholder}
             optionFilterProp="children"
             onChange={onChange}
-            filterOption={(input, option) =>
-              (option!.children as unknown as string)
-                .toLowerCase()
-                .includes(input.toLowerCase())
-            }
+            filterOption={(input, option) => {
+              return (
+                option!.key.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                option!.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              );
+            }}
           >
             {data.map((item: any) => (
               <Option
+                title={item.topicName}
                 value={item.topicId}
                 key={item.topicId}
                 className="select-topic-option"
               >
-                {item.topicName}
+                {item.topicId} {item.topicName}
               </Option>
             ))}
           </Select>
