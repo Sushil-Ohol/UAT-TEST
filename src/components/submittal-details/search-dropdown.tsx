@@ -1,4 +1,4 @@
-import { Col, Row, Select } from "antd";
+import { Col, Row, Select, Space } from "antd";
 import { SearchIcon } from "components/svg-icons";
 
 function SearchDropdown({
@@ -51,7 +51,10 @@ function SearchDropdown({
         >
           {data.map((item: any) => (
             <Option value={item.submittalId} key={item.submittalId}>
-              {item.submittal}
+              <Space>
+                <span>{item.submittalId}</span>
+                <span>{item.submittal}</span>
+              </Space>
             </Option>
           ))}
         </Select>

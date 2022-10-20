@@ -56,11 +56,11 @@
 }
 
 .uploadFileDiv {
-  position: fixed;
+  position: sticky;
   bottom: 0px;
   background-color: #f7f6f4;
   padding: 11px 1%;
-  width: 32%;
+  width: 100%;
 }
 
 .downloadIcon {

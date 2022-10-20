@@ -447,18 +447,14 @@ function DiscussionDocs(props: DiscussionDocsProps) {
         </div>
       )}
       {discussionId !== "" ? (
-        <div>
-          <div className="uploadFileDiv">
-            <Dragger {...draggerProps}>
-              {dragFile ? (
-                <Spin size="small" className="ant-upload-text " />
-              ) : (
-                <p className="ant-upload-text">
-                  Click or drop a file to upload
-                </p>
-              )}
-            </Dragger>
-          </div>
+        <div className="uploadFileDiv">
+          <Dragger {...draggerProps}>
+            {dragFile ? (
+              <Spin size="small" className="ant-upload-text " />
+            ) : (
+              <p className="ant-upload-text">Click or drop a file to upload</p>
+            )}
+          </Dragger>
         </div>
       ) : (
         <div className="discussions-no-docs">
