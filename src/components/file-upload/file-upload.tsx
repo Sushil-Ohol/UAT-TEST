@@ -182,7 +182,7 @@ function Fileupload({
     <Dropzone onDrop={onDrop} multiple>
       {({ getRootProps, getInputProps, isDragActive, isFileDialogActive }) => {
         return (
-          <section>
+          <section style={{ maxWidth: "270px" }}>
             <div
               {...getRootProps()}
               onMouseOver={onHoverHexagon}
