@@ -575,6 +575,10 @@ function SubmittalList() {
     });
     immutableRowData = newData;
     message.success("Updated submittals sucessfully");
+    gridRef.current!.api.refreshCells({
+      force: true
+    });
+
     gridRef.current!.api.deselectAll();
     setShowSubmittalEdit(false);
   };

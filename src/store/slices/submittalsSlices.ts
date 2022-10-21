@@ -70,6 +70,11 @@ const submittalSlice = createSlice({
       state.list[dataIndex].revision =
         payload.docs.length > 0 ? payload.docs.length : null;
       state.list[dataIndex].docs = payload.docs;
+      if (state.selectedSubmittalLog) {
+        state.selectedSubmittalLog.revision =
+          payload.docs.length > 0 ? payload.docs.length : null;
+        state.selectedSubmittalLog.docs = payload.docs;
+      }
     },
     updateField: <K extends keyof SubmittalLog>(
       state: SubmittalState,
