@@ -76,7 +76,7 @@ function SubmittalDetailspage(props: any) {
   }, [currentUser, selectedSubmittalLog]);
 
   const goToSubmittalPage = () => {
-    history.goBack();
+    history.push(`/project/details/${location.state.projectId}/submittals`);
   };
 
   useEffect(() => {
