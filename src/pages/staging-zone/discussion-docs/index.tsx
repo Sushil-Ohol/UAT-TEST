@@ -429,6 +429,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
           </p>
         </div>
       )}
+
       {discussionId !== "" ? (
         <div className="uploadFileDiv">
           <Dragger {...draggerProps}>

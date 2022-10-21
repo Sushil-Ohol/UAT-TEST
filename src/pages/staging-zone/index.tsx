@@ -71,6 +71,7 @@ function StagingZone(props: StagingZoneProps) {
       uploadDocument: false
     });
   };
+
   return (
     <div id="page-wrap">
       <div

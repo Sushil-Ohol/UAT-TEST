@@ -46,7 +46,7 @@ function DiscussionList(props: DiscussionListProps) {
           .length > 0 &&
           selectedData[0]?.id.toString()) ||
         ""
-      : submittalDetailsId || selectedDiscussion?.topicId;
+      : submittalDetailsId || selectedDiscussion?.topicId || "";
 
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
