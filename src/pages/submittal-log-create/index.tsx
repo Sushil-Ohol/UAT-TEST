@@ -10,10 +10,11 @@ export type SubmittalLog = {
   onCreateClick: any;
   onCancelClick: any;
   gridRef: any;
+  submittalList: any;
 };
 
 function SubmittalLogCreateComponent(props: SubmittalLog) {
-  const { onCreateClick, onCancelClick, gridRef } = props;
+  const { onCreateClick, onCancelClick, gridRef, submittalList } = props;
   const [form] = useForm();
 
   const isSubmittalIdExists = (submittalId: string): boolean => {
@@ -24,9 +25,22 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
     return false;
   };
 
+  const isSubmittalNameExists = (submittal: string): boolean => {
+    const index = submittalList.findIndex(
+      (item: any) => item.submittal === submittal
+    );
+    if (index !== -1) {
+      return true;
+    }
+    return false;
+  };
   const onCreateButtonClick = () => {
     form.validateFields().then((values) => {
-      if (!isSubmittalIdExists(values.submittalId)) {
+      if (isSubmittalIdExists(values.submittalId)) {
+        message.error("Submittal ID already exists");
+      } else if (isSubmittalNameExists(values.submittal)) {
+        message.error("Submittal Name already exists");
+      } else {
         const data = {
           id: values.submittalId,
           submittal: values.submittal,
@@ -41,8 +55,6 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
           status: values.status || ""
         };
         onCreateClick(data);
-      } else {
-        message.error("Submittal ID already exists");
       }
     });
   };

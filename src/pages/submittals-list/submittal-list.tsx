@@ -754,6 +754,7 @@ function SubmittalList() {
             onCancelClick={onCreateLogDrawerClose}
             onCreateClick={onCreateLog}
             gridRef={gridRef}
+            submittalList={submittalState.list}
           />
         )}
       </Drawer>
