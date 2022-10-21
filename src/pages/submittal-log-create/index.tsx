@@ -27,7 +27,7 @@ function SubmittalLogCreateComponent(props: SubmittalLog) {
 
   const isSubmittalNameExists = (submittal: string): boolean => {
     const index = submittalList.findIndex(
-      (item: any) => item.submittal === submittal
+      (item: any) => item.submittal.toLowerCase() === submittal.toLowerCase()
     );
     if (index !== -1) {
       return true;
