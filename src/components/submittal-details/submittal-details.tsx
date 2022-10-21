@@ -48,10 +48,19 @@ export type SubmittalDetailsProps = {
   submittalTitle: string;
   handleDocuments: any;
   disabled: boolean;
+  selectAttachmentItem: any;
+  setTabIndex: any;
 };
 function SubmitalDetails(props: SubmittalDetailsProps) {
-  const { submittalData, docs, submittalTitle, handleDocuments, disabled } =
-    props;
+  const {
+    submittalData,
+    docs,
+    submittalTitle,
+    handleDocuments,
+    disabled,
+    selectAttachmentItem,
+    setTabIndex
+  } = props;
   const dispatch = useAppDispatch();
   const [updatedData, setUpdatedData] = useState<SubmittalLog>(submittalData);
   const [fileLoading, setFileLoading] = useState<boolean>(false);
@@ -354,7 +363,13 @@ function SubmitalDetails(props: SubmittalDetailsProps) {
         {docs
           ? docs.map((data: ConversationDoc) => {
               return (
-                <Row className="dependsOnRowData">
+                <Row
+                  className="dependsOnRowData"
+                  onClick={() => {
+                    setTabIndex("2");
+                    selectAttachmentItem(data);
+                  }}
+                >
                   <Col span={22} style={{ display: "flex" }}>
                     <Space>
                       <span>{data.fileName}</span>

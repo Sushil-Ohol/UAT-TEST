@@ -44,7 +44,8 @@ function SearchableDropdown({
                 key={item.topicId}
                 className="select-topic-option"
               >
-                {item.topicId} {item.topicName}
+                {item.type === "related" && item.topicId} &nbsp;
+                {item.topicName}
               </Option>
             ))}
           </Select>

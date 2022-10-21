@@ -255,7 +255,7 @@
   width: auto;
   background: white;
   box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
-  height: 5.66vh;
+  height: 6vh;
 }
 
 .TabsClass .ant-tabs-tab {
@@ -307,20 +307,20 @@
   opacity: 1;
 }
 .attachments {
-  height: 73.9vh;
+  height: 73.5vh;
   /* margin-bottom: 1%; */
 }
 .materials {
-  height: 73.9vh;
+  height: 73.5vh;
 }
 .discussion {
-  height: 73.9vh;
+  height: 73.5vh;
 }
 .submission {
-  height: 73.9vh;
+  height: 73.5vh;
 }
 .activity {
-  height: 73.9vh;
+  height: 73.5vh;
 }
 
 .submittalDetailsHeading {

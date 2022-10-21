@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Col, Divider, message, Row, Spin } from "antd";
+import { Col, Divider, message, Row, Spin } from "antd";
 import { ConversationDoc } from "models/discussion";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
@@ -27,7 +27,6 @@ import {
 import { ImageThumbnailViewer, PdfThumbnailViewer } from "components";
 import { CopyDocumentModal } from "popups";
 import { updateDocs } from "store/slices/submittalsSlices";
-import { DownloadOutlined } from "@ant-design/icons";
 
 export type DiscussionDocsProps = {
   className: string;
@@ -41,7 +40,6 @@ export type DiscussionDocsProps = {
 };
 
 function DiscussionDocs(props: DiscussionDocsProps) {
-  const [fileUpload, setFileUpload] = useState(false);
   const [thumbnail, setThumbnail] = useState(false);
   const [isCopyDocumentModalOpen, setIsCopyDocumentModalOpen] = useState(false);
   const [copiedDocument, setCopiedDocument] = useState<any>({});
@@ -212,9 +210,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
       isLoding(false);
     }
   };
-  const handleOpenFileInput = () => {
-    importFile.current.click();
-  };
+
   const draggerProps: UploadProps = {
     showUploadList: false,
     disabled: dragFile,
@@ -231,62 +227,49 @@ function DiscussionDocs(props: DiscussionDocsProps) {
     );
   };
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    addNewFile(e.target.files && e.target.files[0], setFileUpload);
+    addNewFile(e.target.files && e.target.files[0], null);
   };
   return (
     <div className={className}>
       <div className="discussionDocs">
         <div className="document-count">Documents({totalDocs})</div>
         <div>
-          {fileUpload ? (
-            <Spin size="small" className="importBtn" />
-          ) : (
-            <Row>
-              <Col span={1} offset={20}>
-                <Button
-                  className="importBtn"
-                  disabled={discussionId === ""}
-                  onClick={handleOpenFileInput}
-                >
-                  <DownloadOutlined />
-                  Import a file
-                </Button>
-              </Col>
-              <Col
-                onClick={(e: any) => {
-                  if (discussionId !== "") {
-                    setThumbnail(true);
-                    setTimeout(() => {
-                      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-                    }, 2000);
-                  }
-                  return e.preventdefault();
-                }}
-                span={1}
-                className="thumbnail-icon"
-              >
-                <ThumbnailIcon color={thumbnail ? "#007AFF" : "#808080"} />
-              </Col>
-              <Col
-                span={1}
-                className="document-list"
-                onClick={(e: any) => {
-                  if (discussionId !== "") {
-                    setThumbnail(false);
-                  }
-                  return e.preventdefault();
-                }}
-              >
-                <DocumentListIcon
-                  color={
-                    thumbnail
-                      ? "#808080"
-                      : (discussionId === "" && "#808080") || "#007AFF"
-                  }
-                />
-              </Col>
-            </Row>
-          )}
+          <Row>
+            <Col
+              span={1}
+              offset={20}
+              onClick={(e: any) => {
+                if (discussionId !== "") {
+                  setThumbnail(true);
+                  setTimeout(() => {
+                    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+                  }, 2000);
+                }
+                return e.preventdefault();
+              }}
+              className="thumbnail-icon"
+            >
+              <ThumbnailIcon color={thumbnail ? "#007AFF" : "#808080"} />
+            </Col>
+            <Col
+              span={1}
+              className="document-list"
+              onClick={(e: any) => {
+                if (discussionId !== "") {
+                  setThumbnail(false);
+                }
+                return e.preventdefault();
+              }}
+            >
+              <DocumentListIcon
+                color={
+                  thumbnail
+                    ? "#808080"
+                    : (discussionId === "" && "#808080") || "#007AFF"
+                }
+              />
+            </Col>
+          </Row>
           <input
             ref={importFile}
             style={{ display: "none" }}
@@ -446,6 +429,7 @@ function DiscussionDocs(props: DiscussionDocsProps) {
           </p>
         </div>
       )}
+
       {discussionId !== "" ? (
         <div className="uploadFileDiv">
           <Dragger {...draggerProps}>

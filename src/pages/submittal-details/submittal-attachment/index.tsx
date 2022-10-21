@@ -15,10 +15,12 @@ function SubmittalAttachments({
   documents,
   handleDocuments,
   submittalData,
-  disabled
+  disabled,
+  selectedDocument,
+  setSelectedDocument
 }: any) {
   const [fileLoading, setFileLoading] = useState<boolean>(false);
-  const [selectedDocument, setSelectedDocument] = useState<any>({});
+
   const [documentList, setDocumentList] = useState(false);
   const addDocument = (info: any) => {
     const newdoc: ConversationDoc = {

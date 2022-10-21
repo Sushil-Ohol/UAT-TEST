@@ -44,7 +44,7 @@ function DocumentSection({
       assigneeOption[updatedData?.company.name].filter(
         (item: any) => item.default === true
       )[0];
-    if (updatedData.assigned.assignedTo === "") {
+    if (updatedData?.assigned.assignedTo === "") {
       setUpdatedData((prev) => {
         return {
           ...prev,

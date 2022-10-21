@@ -247,7 +247,7 @@ function ProjectCreate() {
   return (
     <div
       style={{
-        height: "95vh",
+        height: "93.8vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between"

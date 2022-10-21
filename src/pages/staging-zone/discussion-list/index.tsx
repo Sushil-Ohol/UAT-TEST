@@ -46,7 +46,7 @@ function DiscussionList(props: DiscussionListProps) {
           .length > 0 &&
           selectedData[0]?.id.toString()) ||
         ""
-      : submittalDetailsId || selectedDiscussion?.topicId;
+      : submittalDetailsId || selectedDiscussion?.topicId || "";
 
   const [selectedTopicId, setSelectedTopicId] = useState(rowId);
 
@@ -144,7 +144,7 @@ function DiscussionList(props: DiscussionListProps) {
       >
         <Tooltip title={item.topicName}>
           <div className="colFirstValue">
-            {item.topicId} &nbsp;
+            {item.type === "related" && item.topicId} &nbsp;
             {item.topicName}
           </div>
         </Tooltip>
